@@ -49,6 +49,8 @@ git push origin dev # 推送 dev 分支到远程
 3. 多用 `git status`, `git branch`, `git log`
 4. 把不用的文件加入到 `.gitignore`, 例如 `.idea`
 5. 不要直接在 `dev` 分支上开发, 按步骤来, 先建立自己的私有分支, 开发后再合并
+6. 保证每一次提交都是必要的, 而不是为了保存代码就做一次提交
+7. 当合并功能分支的时候，加上 `-no-ff` 选项强制进行一次全新的commit
 
 ### 脚手架一个model后的步骤
 
