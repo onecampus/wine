@@ -159,7 +159,6 @@ rails g scaffold Order invoice_id:integer user_id:integer order_number:string sh
 rails g scaffold ProductOrder order_id:integer product_id:integer product_count:integer unit_price:string
 
 
-
 rails g scaffold Vritualcard user_id:integer money:string
 
 rails g scaffold Integral user_id:integer amount:string
@@ -176,3 +175,4 @@ rails g scaffold ProductGroup group_id:integer product_id:integer
 ### 联系我 ###
 
 * yangkang@thecampus.cc
+* sysuyangkang@gmail.com
