@@ -68,10 +68,6 @@ respond_to :html, :json
 3. 提成公式
 4. 库存管理、各渠道商产品库存情况
 
-```ruby
-
-```
-
 ### CMD ###
 
 ```ruby
@@ -150,17 +146,6 @@ rails g scaffold Integral user_id:integer amount:string
 rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
 
 rails g scaffold ProductGroup group_id:integer product_id:integer
-```
-
-
-#### cancancan with custom action
-
-```ruby
-
-```
-
-```ruby
-# note
 ```
 
 ### 测试 ###
