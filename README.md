@@ -12,11 +12,18 @@
 ### 部署 ###
 
 ```ruby
+cd wine
+cp ./config/database.yml.example ./config/database.yml
+# 编辑 database.yml, 修改为你的 mysql 数据库密码, 其他最好别动
 bundle install
-rake db:create
-rake db:migrate
-rake db:seed
-rails s
+rake db:create # 创建数据库
+rake db:migrate # 导入数据库表
+rake db:seed # 导入测试数据
+rails s # 启动开发服务器
+# 访问 http://127.0.0.1:3000/ 这是手机端, 可以缩小浏览器窗口查看
+# 后台 http://127.0.0.1:3000/admin/products 需要登陆
+# 用户名: admin@gmail.com
+# 密码　: 12345678
 ```
 
 ### 脚手架一个model后的步骤
@@ -158,10 +165,8 @@ rails g scaffold ProductGroup group_id:integer product_id:integer
 
 ### 测试 ###
 
-* 要求必须写测试
+* 无
 
 ### 联系我 ###
-
-### xxx ###
 
 * yangkang@thecampus.cc
