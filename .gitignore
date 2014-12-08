@@ -19,3 +19,5 @@
 /.vagrant
 /Vagrantfile
 /solr
+
+/config/database.yml
