@@ -1,0 +1,51 @@
+
+<%%= form_for(@<%= singular_table_name %>, :html => {:class => "form-horizontal"}) do |f| %>
+  <%% if @<%= singular_table_name %>.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%%= pluralize(@<%= singular_table_name %>.errors.count, "error") %></h2>
+        <ul>
+        <%% @<%= singular_table_name %>.errors.full_messages.each do |message| %>
+          <li><%%= message %></li>
+        <%% end %>
+        </ul>
+      </div>
+    </div>
+  <%% end %>
+
+  <% attributes.each do |attribute| -%>
+    <div class="form-group">
+      <% if attribute.password_digest? -%>
+        <%%= f.label :password, :class => "col-sm-2 control-label" do %>
+          密码 <span class="symbol required"></span>
+        <%% end %>
+        <div class="col-sm-9">
+          <%%= f.password_field :password, :class => "form-control" %>
+        </div>
+      <% else -%>
+        <%- if attribute.reference? -%>
+          <%%= f.label :<%= attribute.column_name %>, :class => "col-sm-2 control-label" do %>
+            <%%=t 'activerecord.attributes.<%= singular_table_name %>.<%= attribute.column_name %>' %> <span class="symbol required"></span>
+          <%% end %>
+          <div class="col-sm-9">
+            <%%= f.<%= attribute.field_type %> :<%= attribute.column_name %>, :class => "form-control" %>
+          </div>
+        <%- else -%>
+          <%%= f.label :<%= attribute.name %>, :class => "col-sm-2 control-label" do %>
+            <%%=t 'activerecord.attributes.<%= singular_table_name %>.<%= attribute.name %>' %> <span class="symbol required"></span>
+          <%% end %>
+          <div class="col-sm-9">
+            <%%= f.<%= attribute.field_type %> :<%= attribute.name %>, :class => "form-control" %>
+          </div>
+        <%- end -%>
+      <% end -%>
+    </div>
+  <% end -%>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<%% end %>

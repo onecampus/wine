@@ -1,0 +1,1 @@
+json.extract! @profile, :id, :user_id, :parent_id, :lft, :rgt, :depth, :mobile, :tel, :province, :city, :region, :address, :fax, :invite_code, :share_link_code, :default_address_id, :weixin_open_id, :created_at, :updated_at

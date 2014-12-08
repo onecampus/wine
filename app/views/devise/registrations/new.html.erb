@@ -1,0 +1,54 @@
+<% content_for :customer_title do %>
+注册
+<% end %>
+<div class="form-box">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'input-group') do |f| %>
+    <%= devise_error_messages! %>
+    <div class="input-row">
+      <%= f.label :username %>
+      <%= f.text_field :username, autofocus: true %>
+    </div>
+    <div class="input-row">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </div>
+    <div class="">
+      <% if @validatable %>
+      <em>(最少<%= @minimum_password_length %>个字符)</em>
+      <% end %>
+    </div>
+    <div class="input-row">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
+    <div class="input-row">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+
+    <%= f.submit '注册', class: 'btn btn-red btn-block' %>
+  <% end %>
+</div>
+
+<nav class="bar bar-tab">
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-home"></span>
+    <span class="tab-label">主页</span>
+  </a>
+  <a class="tab-item active" href="#">
+    <span class="icon icon-background-base icon-person-hover"></span>
+    <span class="tab-label">用户中心</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-cart"></span>
+    <span class="tab-label">购物</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-search"></span>
+    <span class="tab-label">搜索</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-cat"></span>
+    <span class="tab-label">分类</span>
+  </a>
+</nav>

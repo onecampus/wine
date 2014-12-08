@@ -1,0 +1,64 @@
+<% content_for :customer_title do %>
+  提成
+<% end %>
+<style type="text/css">
+  .ship-address {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+    margin: 30px auto 0 auto;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
+
+  .ship-address div {
+    border-bottom: 1px solid #ddd;
+    clear: both;
+    display: block;
+    height: 70px;
+  }
+
+  .p-l {
+    width: 10%;
+    display: block;
+    float: left;
+    line-height: 45px;
+  }
+  .p-m {
+    width: 40%;
+    display: block;
+    float: left;
+    line-height: 45px;
+  }
+  .p-r {
+    width: 40%;
+    display: block;
+    float: left;
+    line-height: 45px;
+  }
+</style>
+
+<div class="ship-address">
+  <div>
+    <p class="p-l">ID</p>
+    <p class="p-m">
+      客户
+    </p>
+    <p class="p-r">收益</p>
+  </div>
+  <div>
+    <p class="p-l">ID</p>
+    <p class="p-m">
+      客户
+    </p>
+    <p class="p-r">收益</p>
+  </div>
+  <div>
+    <p class="p-l">ID</p>
+    <p class="p-m">
+      客户
+    </p>
+    <p class="p-r">收益</p>
+  </div>
+</div>
+
+<%= render "site/shared/bottombar" %>

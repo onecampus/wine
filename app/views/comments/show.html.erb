@@ -1,0 +1,150 @@
+<% content_for :page_title do %>
+    查看<%= t 'activerecord.models.comment' %>
+<% end %>
+
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+    <ol class="breadcrumb">
+      <li>
+        <i class="clip-pencil"></i>
+        <a href="#">
+          控制面板
+        </a>
+      </li>
+      <li class="active">
+        查看<%= t 'activerecord.models.comment' %>
+      </li>
+      <li class="search-box">
+        <form class="sidebar-search">
+          <div class="form-group">
+            <input type="text" placeholder="Start Searching...">
+            <button class="submit">
+              <i class="clip-search-3"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+    </ol>
+    <div class="page-header">
+      <h1>
+        <small></small>
+      </h1>
+    </div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+
+<!-- start: PAGE CONTENT -->
+<div class="row">
+  <div class="col-sm-12">
+    <!-- start: TEXT FIELDS PANEL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        查看<%= t 'activerecord.models.comment' %>
+        <div class="panel-tools">
+          <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
+          </a>
+          <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
+            <i class="fa fa-wrench"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-refresh" href="#">
+            <i class="fa fa-refresh"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-expand" href="#">
+            <i class="fa fa-resize-full"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-close" href="#">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.commentable_id' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.commentable_id %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.commentable_type' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.commentable_type %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.title' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.title %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.body' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.body %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.subject' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.subject %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.user_id' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.user_id %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.parent_id' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.parent_id %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.lft' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.lft %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.comment.rgt' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @comment.rgt %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end: TEXT FIELDS PANEL -->
+  </div>
+</div>
+<!-- end: PAGE CONTENT-->

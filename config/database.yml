@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password: root
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: wine_development
+
+test:
+  <<: *default
+  database: wine_test
+
+production:
+  <<: *default
+  database: wine_production
+  username: root
+  password: root

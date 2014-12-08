@@ -1,0 +1,5 @@
+
+Count: #{ @categories.to_a.count }
+
+%ol.sortable_tree.expandable{ data: { max_levels: 5, rebuild_url: rebuild_cats_url, expand_node_url: expand_node_cats_url, cookie_store: :true, cookie_scope: @categories.first.class } }
+  = expandable_tree @categories

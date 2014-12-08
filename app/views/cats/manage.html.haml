@@ -1,0 +1,5 @@
+
+Count: #{ @categories.to_a.count }
+
+%ol.sortable_tree{ data: { rebuild_url: rebuild_cats_url } }
+  = sortable_tree @categories, namespace: :admin

@@ -1,0 +1,48 @@
+<% content_for :customer_title do %>
+  商品评论
+<% end %>
+<style type="text/css">
+  .comments {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+    margin: 30px auto 0 auto;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
+
+  .comments div {
+    border-bottom: 1px solid #ddd;
+    clear: both;
+    display: block;
+  }
+
+  .comment p {
+    margin: 5px;
+    line-height: 18px;
+    font-size: 18px;
+  }
+
+  .add-comment {
+    width: 80%;
+    margin: 20px auto 80px auto;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 15px 0;
+  }
+</style>
+<div class="comments">
+  <% @comments.each do |c| %>
+  <div class="comment">
+    <p><%= c.user.username %></p>
+    <p><%= c.body %></p>
+    <p><%= c.created_at.strftime("%Y-%m-%d") %></p>
+  </div>
+  <% end %>
+</div>
+
+<a href="/customer/products/<%= @product.id %>/comments/new" class="add-comment btn btn-red">添加评论</a>
+
+<%= render "site/shared/bottombar" %>

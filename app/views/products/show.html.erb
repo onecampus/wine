@@ -1,0 +1,213 @@
+<% content_for :page_title do %>
+    查看<%= t 'activerecord.models.product' %>
+<% end %>
+
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+    <ol class="breadcrumb">
+      <li>
+        <i class="clip-pencil"></i>
+        <a href="#">
+          控制面板
+        </a>
+      </li>
+      <li class="active">
+        查看<%= t 'activerecord.models.product' %>
+      </li>
+      <li class="search-box">
+        <form class="sidebar-search">
+          <div class="form-group">
+            <input type="text" placeholder="Start Searching...">
+            <button class="submit">
+              <i class="clip-search-3"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+    </ol>
+    <div class="page-header">
+      <h1>
+        <small></small>
+      </h1>
+    </div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+
+<!-- start: PAGE CONTENT -->
+<div class="row">
+  <div class="col-sm-12">
+    <!-- start: TEXT FIELDS PANEL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        查看<%= t 'activerecord.models.product' %>
+        <div class="panel-tools">
+          <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
+          </a>
+          <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
+            <i class="fa fa-wrench"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-refresh" href="#">
+            <i class="fa fa-refresh"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-expand" href="#">
+            <i class="fa fa-resize-full"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-close" href="#">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.name' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.name %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.price' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.price %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.img' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= image_tag(@product.img_url(:thumb)) if @product.img? %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.cat_id' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.cat.name %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.description' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.description %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.brand' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.brand %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.expiration_date' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.expiration_date %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.country' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.country %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.package_type' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.package_type %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.product_model' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.product_model %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.status' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.status %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.profit' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.profit %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.vip_price' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.vip_price %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.is_new' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.is_new %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.is_boutique' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.is_boutique %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.product.unit' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @product.unit %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end: TEXT FIELDS PANEL -->
+  </div>
+</div>
+<!-- end: PAGE CONTENT-->

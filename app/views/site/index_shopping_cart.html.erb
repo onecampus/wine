@@ -1,0 +1,67 @@
+<% content_for :customer_title do %>
+  购物车
+<% end %>
+<style type="text/css">
+  .product {
+    width: 100%;
+    height: 60px;
+  }
+  .ampunt-action {
+    border: 1px solid gray;
+    border-radius: 3px;
+  }
+  .ampunt-action button, p {
+    float: left;
+  }
+  .ampunt-action p {
+    margin: 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .ampunt-action button {
+    border: none;
+  }
+
+  .p-select {
+    width: 20%;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .p-img {
+    width: 25%;
+  }
+  .p-img img {
+    width: 60px;
+    height: 60px;
+  }
+  .p-intro {
+    width: 25%;
+  }
+  .p-amount {
+    width: 30%;
+  }
+</style>
+<div class="shop-cart">
+  <div class="product">
+    <div class="p-select pull-left">
+      <input type="radio" name="" />
+    </div>
+    <div class="p-img pull-left">
+      <img src="img/product/p.jpg" />
+    </div>
+    <div class="p-intro pull-left">
+      XXXXXX
+    </div>
+
+    <div class="p-amount pull-left">
+      <div class="price">Y600</div>
+      <div class="ampunt-action pull-left">
+        <button class="action-de" type="button">-</button>
+        <p>1</p>
+        <button class="action-plus" type="button">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render "site/shared/bottombar" %>

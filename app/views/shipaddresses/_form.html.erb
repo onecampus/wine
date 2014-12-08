@@ -1,0 +1,95 @@
+
+<%= form_for(@shipaddress, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @shipaddress.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@shipaddress.errors.count, "error") %></h2>
+        <ul>
+        <% @shipaddress.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :user_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.user_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :user_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :receive_name, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.receive_name' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :receive_name, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :province, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.province' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :province, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :city, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.city' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :city, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :region, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.region' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :region, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :address, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.address' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :address, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :postcode, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.postcode' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :postcode, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :tel, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.tel' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :tel, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :mobile, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.shipaddress.mobile' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :mobile, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

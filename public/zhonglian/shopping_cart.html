@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta content="zh-CN" http-equiv="content-language">
+  <meta content="众联酒业" name="description">
+  <meta content="众联酒业" name="Keywords">
+  <meta content="flowerwrong" name="author">
+  <!-- Sets initial viewport load and disables zooming  -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <!-- 是否允许全屏 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Sets the style of the status bar for a web application -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta content="telephone=no" name="format-detection">
+  <meta name="apple-touch-fullscreen" content="yes">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/format.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/form.css">
+  <style type="text/css">
+    .product {
+      width: 100%;
+      height: 60px;
+    }
+    .ampunt-action {
+      border: 1px solid gray;
+      border-radius: 3px;
+    }
+    .ampunt-action button, p {
+      float: left;
+    }
+    .ampunt-action p {
+      margin: 0;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .ampunt-action button {
+      border: none;
+    }
+
+    .p-select {
+      width: 20%;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .p-img {
+      width: 25%;
+    }
+    .p-img img {
+      width: 60px;
+      height: 60px;
+    }
+    .p-intro {
+      width: 25%;
+    }
+    .p-amount {
+      width: 30%;
+    }
+  </style>
+
+  <script src="js/vendor/modernizr.all.2.8.3.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="browsehappy">你的浏览器太老了，请更换</p>
+<![endif]-->
+
+<div class="shop-cart">
+  <div class="product">
+    <div class="p-select pull-left">
+      <input type="radio" name="" />
+    </div>
+    <div class="p-img pull-left">
+      <img src="img/product/p.jpg" />
+    </div>
+    <div class="p-intro pull-left">
+      XXXXXX
+    </div>
+
+    <div class="p-amount pull-left">
+      <div class="price">Y600</div>
+      <div class="ampunt-action pull-left">
+        <button class="action-de" type="button">-</button>
+        <p>1</p>
+        <button class="action-plus" type="button">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<nav class="bar bar-tab">
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-home"></span>
+    <span class="tab-label">主页</span>
+  </a>
+  <a class="tab-item active" href="#">
+    <span class="icon icon-background-base icon-person-hover"></span>
+    <span class="tab-label">用户中心</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-cart"></span>
+    <span class="tab-label">购物</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-search"></span>
+    <span class="tab-label">搜索</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-background-base icon-cat"></span>
+    <span class="tab-label">分类</span>
+  </a>
+</nav>
+
+
+<script src="js/vendor/jquery-1.11.1.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  (function (b, o, i, l, e, r) {
+    b.GoogleAnalyticsObject = l;
+    b[l] || (b[l] =
+      function () {
+        (b[l].q = b[l].q || []).push(arguments)
+      });
+    b[l].l = +new Date;
+    e = o.createElement(i);
+    r = o.getElementsByTagName(i)[0];
+    e.src = '//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e, r)
+  }(window, document, 'script', 'ga'));
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

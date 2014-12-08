@@ -1,0 +1,95 @@
+<%= form_for(@comment, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if @comment.errors.any? %>
+        <div id="error_explanation" class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-9">
+            <h2>保存时发生了<%= pluralize(@comment.errors.count, "error") %></h2>
+            <ul>
+              <% @comment.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :commentable_id, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.commentable_id' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :commentable_id, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :commentable_type, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.commentable_type' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :commentable_type, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :title, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.title' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :title, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :body, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.body' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_area :body, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :subject, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.subject' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :subject, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :user_id, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.user_id' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :user_id, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :parent_id, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.parent_id' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :parent_id, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :lft, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.lft' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :lft, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :rgt, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.comment.rgt' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :rgt, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

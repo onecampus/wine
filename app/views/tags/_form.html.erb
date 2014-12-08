@@ -1,0 +1,39 @@
+<%= form_for(@tag, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if @tag.errors.any? %>
+        <div id="error_explanation" class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-9">
+            <h2>保存时发生了<%= pluralize(@tag.errors.count, "error") %></h2>
+            <ul>
+              <% @tag.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.tag.name' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :name, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :taggings_count, :class => "col-sm-2 control-label" do %>
+          <%= t 'activerecord.attributes.tag.taggings_count' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :taggings_count, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>
