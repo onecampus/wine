@@ -26,6 +26,19 @@ rails s # 启动开发服务器
 # 密码　: 12345678
 ```
 
+### github workflow
+
+```bash
+git clone git@github.com:onecampus/wine.git
+git branch -r
+git checkout -b dev origin/dev # 检出 dev 分支, 并对应到本地的dev分支
+git checkout -b your_name dev # 创建自己的私有分支, start_point 为dev
+# 做修改, 提交, 注意不要推送到远程
+git checkout dev # 切换到 dev 分支
+git merge --no-ff your_name # 合并 your_name 到当前分支, 这里是 dev, 必须使用 --no-ff
+git branch -d your_name # 删除 your_name 本地分支
+```
+
 ### 脚手架一个model后的步骤
 
 1. 添加字段翻译zh-CN.yml
