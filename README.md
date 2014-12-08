@@ -36,6 +36,7 @@ git checkout -b your_name dev # 创建自己的私有分支, start_point 为dev
 # 做修改, 提交, 注意不要推送到远程
 git checkout dev # 切换到 dev 分支
 git pull # 拉取远程更新
+# 如果拉取遇到问题, 可能需要 git branch --set-upstream-to=origin/dev dev
 git merge --no-ff your_name # 合并 your_name 到当前分支, 这里是 dev, 必须使用 --no-ff
 git branch -d your_name # 删除 your_name 本地分支
 ```
