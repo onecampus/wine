@@ -47,6 +47,7 @@ git push origin dev # 推送 dev 分支到远程
 1. 在每次合并前, 都要先 `git pull` 来拉取远程更新, 然后再合并
 2. 除了我外, 其他人不要操作 `master` 分支
 3. 多用 `git status`, `git branch`, `git log`
+4. 把不用的文件加入到 `.gitignore`, 例如 `.idea`
 
 ### 脚手架一个model后的步骤
 
