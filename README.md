@@ -35,9 +35,12 @@ git checkout -b dev origin/dev # 检出 dev 分支, 并对应到本地的dev分�
 git checkout -b your_name dev # 创建自己的私有分支, start_point 为dev
 # 做修改, 提交, 注意不要推送到远程
 git checkout dev # 切换到 dev 分支
+git pull # 拉取远程更新
 git merge --no-ff your_name # 合并 your_name 到当前分支, 这里是 dev, 必须使用 --no-ff
 git branch -d your_name # 删除 your_name 本地分支
 ```
+
+注意: 在每次合并前, 都要先 `git pull` 来拉取远程更新, 然后再合并
 
 ### 脚手架一个model后的步骤
 
