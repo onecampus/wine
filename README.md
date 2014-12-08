@@ -48,6 +48,7 @@ git push origin dev # 推送 dev 分支到远程
 2. 除了我外, 其他人不要操作 `master` 分支
 3. 多用 `git status`, `git branch`, `git log`
 4. 把不用的文件加入到 `.gitignore`, 例如 `.idea`
+5. 不要直接在 `dev` 分支上开发, 按步骤来, 先建立自己的私有分支, 开发后再合并
 
 ### 脚手架一个model后的步骤
 
