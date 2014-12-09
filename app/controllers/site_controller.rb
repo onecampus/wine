@@ -16,6 +16,11 @@ class SiteController < CustomerController
     @cats = Cat.all
   end
 
+  def index_cat_products
+    @cat = Cat.find params[:cid]
+    @cat_products = @cat.products
+  end
+
   def show_product
     @product = Product.find params[:id]
   end
@@ -43,10 +48,33 @@ class SiteController < CustomerController
   end
 
   def new_ship_address
-    @ship_address = Shipaddress.new(params[:shipaddress])
+    @shipaddress = Shipaddress.new(params[:shipaddress])
+  end
+
+  def create_ship_address
+    shipaddress_params = {
+      user_id: current_user.id,
+      receive_name: params[:receive_name],
+      province: params[:province],
+      city: params[:city],
+      region: params[:region],
+      address: params[:address],
+      postcode: params[:postcode],
+      tel: params[:tel],
+      mobile: params[:mobile]
+    }
+    @shipaddress = Shipaddress.new(shipaddress_params)
+    if @shipaddress.save
+      flash.now[:alert] = '收货地址创建成功'
+      redirect_to action: :index_ship_address
+    else
+      flash.now[:alert] = '收货地址创建失败'
+      render action: :new_ship_address
+    end
   end
 
   def index_ship_address
+    @shipaddresses = current_user.shipaddresses
   end
 
   def index_shopping_cart
@@ -63,4 +91,7 @@ class SiteController < CustomerController
 
   def commission
   end
+
+  private
+
 end

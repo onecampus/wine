@@ -1,81 +1,94 @@
 <% content_for :customer_title do %>
-  众联酒业微信商城
+    众联酒业微信商城
 <% end %>
 
 <style type="text/css">
-  body {
-    background-image: url("/zhonglian/img/index/indexbg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    background-clip: content-box;
-    background-origin: content-box;
-    width: 100%;
-    height: 1000px;
-  }
-  .top {
-    height: 300px;
-    width: 100%;
-    margin: 30px 0 0 0;
-    background-image: url("/zhonglian/img/index/indexlogo.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    background-clip: content-box;
-    background-origin: content-box;
-  }
-  .top-bar {
-    width: 100%;
-    height: 100px;
-    margin: 20px 0 0 0;
-  }
-  .top-bar .top-bar-item {
-    width: 20%;
-    height: 60px;
-    float: left;
-  }
-  .top-bar .top-bar-item img {
-    width: 40px;
-    height: 40px;
-  }
-  .top-bar .top-bar-item p {
-    color: #ffffff;
-    text-align: center;
-    line-height: 16px;
-    font-size: 12px;
-  }
-  .recommend {
-    margin-left: 10px;
-  }
-  .recommend .index-btn-block {
-    display: block;
-    font-size: 14px;
-    padding: 0 0;
-    width: 30%;
-    height: 24px;
-    margin-left: 10px;
-  }
-  .recommend-item {
-    width: 50%;
-    float: left;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  .recommend-item p {
-    text-align: center;
-    color: #ffffff;
-    margin: 5px 10px;
-  }
-  .recommend-item p span:first-child {
-    float: left;
-  }
-  .recommend-item p span:last-child {
-    float: right;
-  }
-  .recommend-item p img {
-    width: 120px;
-    height: 120px;
-  }
+    body {
+        background-image: url("/zhonglian/img/index/indexbg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+        background-clip: content-box;
+        background-origin: content-box;
+        width: 100%;
+        height: 1000px;
+    }
+
+    .top {
+        height: 300px;
+        width: 100%;
+        margin: 30px 0 0 0;
+        background-image: url("/zhonglian/img/index/indexlogo.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+        background-clip: content-box;
+        background-origin: content-box;
+    }
+
+    .top-bar {
+
+        width: 100%;
+        height: 100px;
+        margin: 20px 0 0 0;
+    }
+
+    .top-bar .top-bar-item {
+        width: 20%;
+        height: 60px;
+        float: left;
+    }
+
+    .top-bar .top-bar-item img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .top-bar .top-bar-item p {
+        color: #ffffff;
+        text-align: center;
+        line-height: 16px;
+        font-size: 12px;
+    }
+
+    .recommend {
+        margin-left: 10px;
+    }
+
+    .recommend .index-btn-block {
+        display: block;
+        font-size: 14px;
+        padding: 0 0;
+        width: 30%;
+        height: 24px;
+        margin-left: 10px;
+    }
+
+    .recommend-item {
+        width: 50%;
+        float: left;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .recommend-item p {
+        text-align: center;
+        color: #ffffff;
+        margin: 5px 10px;
+    }
+
+    .recommend-item p span:first-child {
+        float: left;
+    }
+
+    .recommend-item p span:last-child {
+        float: right;
+    }
+
+    .recommend-item p img {
+        width: 120px;
+        height: 120px;
+    }
 </style>
 
 
@@ -83,23 +96,28 @@
 
 <div class="top-bar">
   <div class="top-bar-item">
-    <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png" /></a></p>
+    <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
+
     <p>全部分类</p>
   </div>
   <div class="top-bar-item">
-    <p><a href="/customer/usercenter"><img src="/zhonglian/img/index/icon_userconter.png" /></a></p>
+    <p><a href="/customer/usercenter"><img src="/zhonglian/img/index/icon_userconter.png"/></a></p>
+
     <p>用户中心</p>
   </div>
   <div class="top-bar-item">
-    <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png" /></a></p>
+    <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png"/></a></p>
+
     <p>购物车</p>
   </div>
   <div class="top-bar-item">
-    <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png" /></a></p>
+    <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png"/></a></p>
+
     <p>搜索</p>
   </div>
   <div class="top-bar-item">
-    <p><a href="#"><img src="/zhonglian/img/index/icon_miaosha.png" /></a></p>
+    <p><a href="#"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
+
     <p>团购秒杀</p>
   </div>
 </div>
@@ -107,9 +125,10 @@
 <div class="recommend">
   <button class="btn btn-red index-btn-block">精选推荐</button>
   <% @recommend_products.each do |p| %>
-  <div class="recommend-item">
-    <p><a href="customer/products/<%= p.id %>/show"><img src="<%= p.img_url %>" /></a></p>
-    <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
-  </div>
+      <div class="recommend-item">
+        <p><a href="customer/products/<%= p.id %>/show"><img src="<%= p.img_url %>"/></a></p>
+
+        <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
+      </div>
   <% end %>
 </div>
