@@ -1,42 +1,138 @@
 <% content_for :customer_title do %>
-  添加收货地址
+    添加收货地址
 <% end %>
-<div class="form-box">
-  <form class="input-group">
-    <div class="input-row">
-      <label>姓名</label>
-      <input type="text" placeholder="用户名">
-    </div>
-    <div class="input-row">
-      <label>省份</label>
-      <input type="text" placeholder="省">
-    </div>
-    <div class="input-row">
-      <label>城市</label>
-      <input type="text" placeholder="城市">
-    </div>
-    <div class="input-row">
-      <label>地区</label>
-      <input type="text" placeholder="地区">
-    </div>
-    <div class="input-row">
-      <label>街道地址</label>
-      <input type="text" placeholder="省">
-    </div>
-    <div class="input-row">
-      <label>邮编</label>
-      <input type="text" placeholder="城市">
-    </div>
-    <div class="input-row">
-      <label>手机</label>
-      <input type="text" placeholder="地区">
-    </div>
-    <div class="input-row">
-      <label>固定电话</label>
-      <input type="text" placeholder="地区">
-    </div>
 
-    <button class="btn btn-red btn-block">添加</button>
-  </form>
+<script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function MultilevelSelect(options) {
+        var getKeys = function (o) {
+            var keys = [];
+            var key;
+            for (key in o) {
+                keys.push(key);
+            }
+            return keys;
+        };
+
+        var changeOptions = function (selectNode, options) {
+            var html = '';
+            for (var i = 0; i < options.length; i++) {
+
+                <% if !@shipaddress.id.nil? %>
+                if ("<%= @shipaddress.province %>" == options[i] || "<%= @shipaddress.city %>" == options[i] || "<%= @shipaddress.region %>" == options[i]) {
+                    html += '<option selected="selected">' + options[i] + '</option>';
+                } else {
+                    html += '<option>' + options[i] + '</option>';
+                }
+                <% else %>
+                html += '<option>' + options[i] + '</option>';
+                <% end %>
+            }
+            selectNode.html(html);
+        };
+
+        var level1 = getKeys(options.data);
+        changeOptions(options.nodes[0], level1);
+
+        options.nodes[0].on("change", function (e) {
+            var selected = options.nodes[0].val();
+            var keys = getKeys(options.data[selected]);
+            changeOptions(options.nodes[1], keys);
+
+            options.nodes[1].trigger('change');
+        }).trigger("change");
+
+        options.nodes[1].on("change", function () {
+            var selected1 = options.nodes[0].val();
+            if (selected1) {
+                var selected2 = options.nodes[1].val();
+                var keys = options.data[selected1][selected2];
+                changeOptions(options.nodes[2], keys);
+            }
+        }).trigger("change");
+
+        if (options.nodes[0].attr('data-value')) {
+            options.nodes[0].val(options.nodes[0].attr('data-value'));
+            options.nodes[0].trigger('change');
+
+            options.nodes[1].val(options.nodes[1].attr('data-value'));
+            options.nodes[1].trigger('chang');
+
+            options.nodes[2].val(options.nodes[2].attr('data-value'));
+        }
+        /* else {
+         setTimeout(function() {
+         options.nodes[0].find('option:first').prop('selected', true);
+         options.nodes[0].trigger('change');
+         }, 0);
+         }
+         */
+    }
+
+
+    (function () {
+        $(document).on('ready page:load', function () {
+            if ($('.input-group').length) {
+                MultilevelSelect({
+                    data: ADMINISTRATIVE_DIVISION,
+                    nodes: [$('#s1'), $('#s2'), $('#s3')]
+                });
+            }
+        });
+    }).call(this);
+</script>
+
+<div class="form-box">
+  <%= form_tag({controller: "site", action: "create_ship_address"}, method: "post", class: "input-group") do %>
+
+      <% if @shipaddress.errors.any? %>
+          <div id="error_explanation" class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-9">
+              <h2>保存时发生了<%= pluralize(@shipaddress.errors.count, "error") %></h2>
+              <ul>
+                <% @shipaddress.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+      <% end %>
+      <div class="input-row">
+        <label>姓名</label>
+        <input type="text" name="receive_name" placeholder="用户名">
+      </div>
+      <div class="input-row">
+        <label>省份</label>
+        <select name="province" id="s1"></select>
+      </div>
+      <div class="input-row">
+        <label>城市</label>
+        <select name="city" id="s2"></select>
+      </div>
+      <div class="input-row">
+        <label>地区</label>
+        <select name="region" id="s3"></select>
+      </div>
+      <div class="input-row">
+        <label>街道地址</label>
+        <input type="text" name="address" placeholder="街道地址">
+      </div>
+      <div class="input-row">
+        <label>邮编</label>
+        <input type="text" name="postcode" placeholder="邮编">
+      </div>
+      <div class="input-row">
+        <label>手机</label>
+        <input type="text" name="tel" placeholder="手机">
+      </div>
+      <div class="input-row">
+        <label>固定电话</label>
+        <input type="text" name="mobile" placeholder="固定电话">
+      </div>
+
+      <button class="btn btn-red btn-block">添加</button>
+  <% end %>
 </div>
 <%= render "site/shared/bottombar" %>

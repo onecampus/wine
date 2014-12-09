@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root 'site#index'
 
   get 'customer/cats' => 'site#index_cats'
+  get 'customer/cats/:cid/products' => 'site#index_cat_products'
   get 'customer/shipaddresses/new' => 'site#new_ship_address'
+  match 'customer/shipaddresses/create', to: 'site#create_ship_address', via: :post
   get 'customer/shipaddresses' => 'site#index_ship_address'
   get 'customer/products/:id/show' => 'site#show_product'
 

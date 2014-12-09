@@ -1,0 +1,18 @@
+<% content_for :customer_title do %>
+    <%= @cat.name %>商品列表
+<% end %>
+
+
+<div class="cat-top">
+  <img class="logo" src="/zhonglian/img/cat/top-logo.png" alt="logo"/>
+</div>
+
+<hr/>
+
+<div class="cat-products">
+  <% @cat_products.each_with_index do |p, index| %>
+      <%= p.name %>
+  <% end %>
+</div>
+
+<%= render "site/shared/bottombar" %>
