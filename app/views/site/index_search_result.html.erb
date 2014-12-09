@@ -61,14 +61,18 @@
     }
 </style>
 <div class="search-box">
-  <form class="search-form" action="#" method="get">
+  <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
     <input class="q" type="text" name="q" placeholder="">
-  </form>
+  <% end %>
 </div>
 <hr/>
 
 <div class="search-result">
   <p class="title">搜索结果</p>
+
+  <% @products.each do |p| %>
+    <%= p.name %><br />
+  <% end %>
 
   <div class="search-result-item">
     <p><img src="img/index/shangpin.jpg"/></p>
