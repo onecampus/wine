@@ -84,6 +84,7 @@ class SiteController < CustomerController
   end
 
   def index_search_result
+    q = params[:q]
   end
 
   def show_vip_card
@@ -91,7 +92,4 @@ class SiteController < CustomerController
 
   def commission
   end
-
-  private
-
 end
