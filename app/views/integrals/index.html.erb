@@ -75,7 +75,7 @@
 
         <% @integrals.each do |integral| %>
           <tr>
-                        <td><%= integral.user_id %></td>
+                        <td><%= integral.user.username %></td>
                         <td><%= integral.amount %></td>
                         <td class="center">
               <%= link_to(integral, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>

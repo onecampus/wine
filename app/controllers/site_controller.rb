@@ -5,7 +5,8 @@ class SiteController < CustomerController
 
   skip_before_filter :authenticate_user!, only: [:index, :index_cats,
                                                  :show_product, :index_comments,
-                                                 :index_search_result]
+                                                 :index_search_result,
+                                                 :index_cat_products]
   # skip_before_filter :verify_authenticity_token, only: [:]
 
   def index

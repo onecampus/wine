@@ -75,7 +75,7 @@
 
         <% @vritualcards.each do |vritualcard| %>
           <tr>
-                        <td><%= vritualcard.user_id %></td>
+                        <td><%= vritualcard.user.username %></td>
                         <td><%= vritualcard.money %></td>
                         <td class="center">
               <%= link_to(vritualcard, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
