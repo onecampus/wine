@@ -19,13 +19,13 @@ module Wine
       g.helper          false
     end
 
-    config.i18n.available_locales = [:"zh-CN", :zh]
-    config.i18n.default_locale = :"zh-CN"
+    config.i18n.available_locales = [:'zh-CN', :zh]
+    config.i18n.default_locale = :'zh-CN'
 
     config.active_record.default_timezone = :local
     config.time_zone = 'Beijing'
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+    # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
 end
