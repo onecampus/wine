@@ -5,7 +5,7 @@ lock '3.3.3'
 # http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano
 
 set :application, 'wine'
-set :repo_url, 'git@github.com:onecampus/wine.git'
+set :repo_url, 'https://github.com/onecampus/wine.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
