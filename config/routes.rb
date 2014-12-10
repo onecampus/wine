@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :integrals
-
-  resources :vritualcards
 
   root 'site#index'
 
@@ -40,6 +37,9 @@ Rails.application.routes.draw do
     resources :inventories
     resources :comments
     resources :tags
+
+    resources :integrals
+    resources :vritualcards
 
     resources :shipaddresses
 

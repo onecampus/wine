@@ -15,7 +15,7 @@ zh-CN:
       invoice: '发票'
       order: '订单'
       vritualcard: '虚拟会员卡'
-      inventoriy: '积分'
+      integral: '积分'
 
     attributes:
       cat:
@@ -180,9 +180,9 @@ zh-CN:
         user_id: '客户'
         money: '金额'
 
-      inventoriy:
+      integral:
         user_id: '客户'
-        money: '金额'
+        amount: '金额'
 
   ckeditor:
     page_title: 'CKEditor文件管理'

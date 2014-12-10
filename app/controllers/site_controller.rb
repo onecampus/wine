@@ -89,6 +89,7 @@ class SiteController < CustomerController
   end
 
   def show_vip_card
+    @user = current_user
   end
 
   def commission
