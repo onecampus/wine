@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20141128025612) do
     t.datetime "updated_at"
     t.string   "img"
   end
-  
+
   create_table "comments", force: true do |t|
     t.integer  "commentable_id"
     t.string   "commentable_type"
