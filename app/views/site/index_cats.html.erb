@@ -3,67 +3,143 @@
 <% end %>
 
 <style type="text/css">
-    .cats {
-        margin-bottom: 100px;
-    }
-
-    .cats img {
-        width: 100%;
-        height: 150px;
-    }
-
-    .cat-top {
-        width: 100%;
-        height: 100px;
-        background-image: url('/zhonglian/img/cat/bg-top.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 100px;
-        background-position: center;
-        display: block;
-    }
-
-    .cat-top .logo {
+.cats {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 50px;
+}
+.cats img {
+    width: 100%;
+    height: 150px;
+}
+.cat-top {
+    width: 100%;
+    height: 100px;
+    margin-top: -20px;
+    background-image: url('/zhonglian/img/cat/bg-top.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100px;
+    display: block;
+}
+.cat-top .logo {
         width: 50px;
         height: 50px;
         padding: 25px 0 25px 0;
         text-align: center;
         margin: 0 auto 0 auto;
         display: block;
-    }
+ }
 
-    .cat-even {
+.cat-even {
         width: 100%;
         height: 150px;
         margin: 0;
         padding: 0;
         clear: both;
-    }
+}
 
-    .cat-even .percent-35 {
-        height: 150px;
+.cat-even .percent-35 {
+        height: 170px;
+        margin-top: -10px;
         background-image: url('/zhonglian/img/cat/even-cat.jpg');
         background-repeat: no-repeat;
-        background-size: 100% 150px;
+        background-size: 100% 170px;
         background-position: center;
         display: block;
-    }
+ }
 
-    .cat-odd {
-        width: 100%;
-        height: 150px;
-        margin: 0;
-        padding: 0;
-        clear: both;
-    }
+.percent-65 {
+      height: 170px;
+      margin-top: -10px;
+}
 
-    .cat-odd .percent-35 {
-        height: 150px;
-        background-image: url('/zhonglian/img/cat/odd-cat.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 150px;
-        background-position: center;
-        display: block;
-    }
+.percent-65 img {
+    height: 170px;
+}
+
+.cat-even-jiantou{
+    width: 25px;
+    height: 25px;
+    background-image: url('/zhonglian/img/cat/jiantou.png');
+    background-repeat:  no-repeat;
+    background-size: 25px 25px;
+    float: right;
+    margin-right: 20px;
+    margin-top: -10px;
+}
+
+.cat-odd {
+    width: 100%;
+    height: 150px;
+    margin: 0;
+    padding: 0;
+    clear: both;
+ }
+
+.cat-odd .percent-35 {
+    height: 170px;
+    margin-top: -10px;
+    float: left;
+    background-image: url('/zhonglian/img/cat/odd-cat.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 170px;
+    display: block;
+}
+
+.cat-odd-jiantou1{
+    width: 25px;
+    height: 25px;
+    background-image: url('/zhonglian/img/cat/jiantou2.png');
+    background-repeat:  no-repeat;
+    background-size: 25px 25px;
+    float: right;
+    margin-right: 20px;
+    margin-top: -10px;
+}
+
+.cat-list {
+    text-align:  center;
+    list-style:  none;
+    margin-left: -25px;
+    margin-top: 50px;
+    text-align:  left;
+    line-height:  5px;
+}
+
+.hr-style1 {
+    width: 85%;
+    color: #828372;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid;
+}
+
+.hr-style2 {
+    width: 85%;
+    color: #ffffff;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid;
+ }
+
+.text1 {
+    color: #777772;
+    font-weight: bold;
+}
+
+.text2 {
+    color: #7b7972;
+}
+
+.text3 {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.text4 {
+    color: #ffffff;
+    letter-spacing: 8px;
+}
 </style>
 <div class="cat-top">
   <img class="logo" src="/zhonglian/img/cat/top-logo.png" alt="logo"/>
@@ -73,19 +149,47 @@
 
 <div class="cats">
   <% @cats.each_with_index do |c, index| %>
-      <% if index.even? %>
-          <div class="cat-even">
-            <div class="percent-65"><%= image_tag(c.img_url(:thumb)) if c.img? %></div>
-            <div class="percent-35"><%= c.name %></div>
-          </div>
-          <hr/>
-      <% elsif index.odd? %>
-          <div class="cat-odd">
-            <div class="percent-35"><%= c.name %></div>
-            <div class="percent-65"><img src=""/></div>
-          </div>
-          <hr/>
-      <% end %>
+    <% if index.even? %>
+    <div class="cat-even">
+      <div class="percent-65"><%= image_tag(c.img_url(:thumb)) if c.img? %></div>
+      <div class="percent-35">
+        <ul  class="cat-list">
+          <li>
+            <span class="text1"><%= c.name %></span>
+            <div class="cat-even-jiantou"></div>
+          </li>
+          <hr class="hr-style1">
+          <li>
+            <span class="text2">zhongleiyizhong</span>
+          </li>
+        <hr class="hr-style1">
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <% elsif index.odd? %>
+    <div class="cat-odd">
+      <div class="percent-35">
+        <ul  class="cat-list">
+        <li>
+          <span class="text3"><%= c.name %></span>
+          <div class="cat-odd-jiantou1"></div>
+        </li>
+        <hr class="hr-style2">
+        <li>
+          <span class="text4">zhonglei</span>
+        </li>
+        <hr class="hr-style2">
+        </ul>
+      </div>
+      <div class="percent-65"><%= image_tag(c.img_url(:thumb)) if c.img? %></div>
+    </div>
+
+    <hr/>
+    
+    <% end %>
   <% end %>
 </div>
 
