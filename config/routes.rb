@@ -26,8 +26,6 @@ Rails.application.routes.draw do
   get 'customer/usercenter' => 'site#user_center'
   get 'customer/user/vipcard' => 'site#show_vip_card'
 
-  # mount Ckeditor::Engine => '/ckeditor'
-
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'

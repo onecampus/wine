@@ -25,8 +25,6 @@
 //= require expandable_tree/hashchange
 //= require expandable_tree/initializer
 
-// for ckeditor
-
 // tags
 //= require bootstrap-tagsinput
 
