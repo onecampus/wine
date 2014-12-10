@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'site#index'
 
   # product cat
@@ -36,6 +37,9 @@ Rails.application.routes.draw do
     resources :inventories
     resources :comments
     resources :tags
+
+    resources :integrals
+    resources :vritualcards
 
     resources :shipaddresses
 
