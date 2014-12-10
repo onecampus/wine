@@ -26,7 +26,6 @@
 //= require expandable_tree/initializer
 
 // for ckeditor
-//= require ckeditor/init
 
 // tags
 //= require bootstrap-tagsinput

@@ -46,8 +46,13 @@ gem 'bootstrap-tagsinput-rails'
 # 评论
 gem 'acts_as_commentable_with_threading'
 
+# 部署
+group :development do
+  gem 'capistrano', '~> 3.3.0'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'spring'
+end
+
 gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'spring', group: :development
-
-
