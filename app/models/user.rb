@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
             }
 
   has_one :profile
+  has_one :vritualcard
+  has_one :integral
 
   has_many :inventories
   has_many :products, through: :inventories
