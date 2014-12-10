@@ -25,7 +25,5 @@ module Wine
     config.active_record.default_timezone = :local
     config.time_zone = 'Beijing'
     config.encoding = 'utf-8'
-
-    # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
   end
 end
