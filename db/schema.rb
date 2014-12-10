@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20141128025612) do
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
+    t.integer  "is_locked"
     t.integer  "parent_id"
     t.integer  "supplier_id"
     t.integer  "lft"

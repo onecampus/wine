@@ -1,95 +1,82 @@
 <% content_for :customer_title do %>
-  收货地址管理
+    收货地址管理
 <% end %>
 <style type="text/css">
-  .ship-address {
-    padding: 15px 15px 15px 15px;
-    background-color: #ffffff;
-    margin: 30px auto 0 auto;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-  }
+    .ship-address {
+        padding: 15px 15px 15px 15px;
+        background-color: #ffffff;
+        margin: 30px auto 0 auto;
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+    }
 
-  .ship-address div {
-    border-bottom: 1px solid #ddd;
-    clear: both;
-    display: block;
-    height: 70px;
-  }
+    .ship-address div {
+        border-bottom: 1px solid #ddd;
+        clear: both;
+        display: block;
+        height: 70px;
+    }
 
-  .p-l {
-    width: 10%;
-    display: block;
-    float: left;
-    line-height: 45px;
-  }
-  .p-m {
-    width: 70%;
-    display: block;
-    float: left;
-    margin: 0;
-    padding: 0;
+    .p-l {
+        width: 10%;
+        display: block;
+        float: left;
+        line-height: 45px;
+    }
 
-  }
-  .p-m span {
-    line-height: 24px;
-  }
-  .p-r {
-    width: 10%;
-    display: block;
-    float: left;
-    line-height: 45px;
-  }
+    .p-m {
+        width: 70%;
+        display: block;
+        float: left;
+        margin: 0;
+        padding: 0;
 
-  .p-r a {
-    font-size: 24px;
-    color: #dddddd;
-    margin: auto auto auto 20px;
-  }
+    }
 
-  .recharge {
-    width: 80%;
-    margin: 20px auto 20px auto;
-    display: block;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 18px;
-    padding: 15px 0;
-  }
+    .p-m span {
+        line-height: 24px;
+    }
+
+    .p-r {
+        width: 10%;
+        display: block;
+        float: left;
+        line-height: 45px;
+    }
+
+    .p-r a {
+        font-size: 24px;
+        color: #dddddd;
+        margin: auto auto auto 20px;
+    }
+
+    .recharge {
+        width: 80%;
+        margin: 20px auto 20px auto;
+        display: block;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 18px;
+        padding: 15px 0;
+    }
 </style>
 <div class="ship-address">
-  <div>
-    <p class="p-l"><input type="radio" name="shipaddress" value="id" /></p>
-    <p class="p-m">
-      <span>杨康</span>
-      <span style="float: right">13560474456</span>
-      <br />
-      <span>杨康杨康杨康杨康杨康杨康杨</span>
-    </p>
-    <p class="p-r"><a href="#">&gt;</a></p>
-  </div>
-  <div>
-    <p class="p-l"><input type="radio" name="shipaddress" value="id" /></p>
-    <p class="p-m">
-      <span>杨康</span>
-      <span style="float: right">13560474456</span>
-      <br />
-      <span>杨康杨康杨康杨康杨康杨康杨</span>
-    </p>
-    <p class="p-r"><a href="#">&gt;</a></p>
-  </div>
-  <div>
-    <p class="p-l"><input type="radio" name="shipaddress" value="id" /></p>
-    <p class="p-m">
-      <span>杨康</span>
-      <span style="float: right">13560474456</span>
-      <br />
-      <span>杨康杨康杨康杨康杨康杨康杨</span>
-    </p>
-    <p class="p-r"><a href="#">&gt;</a></p>
-  </div>
+  <% @shipaddresses.each do |ad| %>
+      <div>
+        <p class="p-l"><input type="radio" name="shipaddress" value="id"/></p>
+
+        <p class="p-m">
+          <span><%= ad.receive_name %></span>
+          <span style="float: right"><%= ad.mobile %></span>
+          <br/>
+          <span><%= ad.province %><%= ad.city %><%= ad.region %><%= ad.address %></span>
+        </p>
+
+        <p class="p-r"><a href="#">&gt;</a></p>
+      </div>
+  <% end %>
 </div>
 
-<a href="#" class="recharge btn btn-red">添加新地址</a>
+<a href="/customer/shipaddresses/new" class="recharge btn btn-red" data-no-turbolink>添加新地址</a>
 <%= render "site/shared/bottombar" %>

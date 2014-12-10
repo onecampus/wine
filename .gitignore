@@ -23,3 +23,7 @@
 /config/database.yml
 
 /.idea
+
+/config/deploy/production.rb
+/config/deploy/staging.rb
+/.capistrano
