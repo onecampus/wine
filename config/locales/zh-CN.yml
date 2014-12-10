@@ -14,6 +14,8 @@ zh-CN:
       shipaddress: '收货地址'
       invoice: '发票'
       order: '订单'
+      vritualcard: '虚拟会员卡'
+      integral: '积分'
 
     attributes:
       cat:
@@ -173,6 +175,14 @@ zh-CN:
         tel: '电话'
         supplier_id: '供应商'
         order_type: '订单类型'
+
+      vritualcard:
+        user_id: '客户'
+        money: '金额'
+
+      integral:
+        user_id: '客户'
+        amount: '金额'
 
   ckeditor:
     page_title: 'CKEditor文件管理'

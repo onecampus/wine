@@ -11,7 +11,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super
     resource.add_role :customer
-    # supplier_id
+
+    profile = Profile.new(
+      user_id: resource.id,
+      invite_code: User.generate_invite_code,
+      share_link_code: User.generate_share_link_code
+    )
+    profile.save
+    Integral.create(user_id: resource.id, amount: 0)
+    Vritualcard.create(user_id: resource.id, money: '0.00')
   end
 
   # GET /resource/edit
