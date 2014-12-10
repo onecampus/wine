@@ -10,6 +10,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
+    puts '=' * 20
+    puts params[:invite_code]
+    puts '=' * 20
     resource.add_role :customer
 
     profile = Profile.new(
