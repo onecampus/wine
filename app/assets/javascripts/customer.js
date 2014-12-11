@@ -13,4 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= retuire jqcart
+//= require lib/jquery.cookie
+//= require lib/jquery.storageapi
+//= require lib/jqcart
