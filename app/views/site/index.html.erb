@@ -133,11 +133,12 @@
 <div class="recommend">
   <button class="btn btn-red index-btn-block">精选推荐</button>
   <% @recommend_products.each do |p| %>
-    <a href="customer/products/<%= p.id %>/show">
-      <div class="recommend-item">
-        <img  class="product-img" src="<%= p.img_url %>"/>
-        <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
-      </div>
-    </a>
+      <a href="customer/products/<%= p.id %>/show">
+        <div class="recommend-item">
+          <img class="product-img" src="<%= p.img_url %>"/>
+
+          <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
+        </div>
+      </a>
   <% end %>
 </div>

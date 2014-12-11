@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= retuire jqcart
+//= require lib/jqcart
+//= require lib/jquery.cookie

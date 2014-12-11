@@ -62,7 +62,7 @@
 </style>
 <div class="search-box">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
-    <input class="q" type="text" name="q" placeholder="">
+      <input class="q" type="text" name="q" placeholder="">
   <% end %>
 </div>
 <hr/>
@@ -71,7 +71,7 @@
   <p class="title">搜索结果</p>
 
   <% @products.each do |p| %>
-    <%= p.name %><br />
+      <%= p.name %><br/>
   <% end %>
 
   <div class="search-result-item">
