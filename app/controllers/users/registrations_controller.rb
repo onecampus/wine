@@ -10,17 +10,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    puts '=' * 20
-    puts params[:invite_code]
-    puts '=' * 20
     resource.add_role :customer
 
     profile = Profile.new(
       user_id: resource.id,
-      invite_code: User.generate_invite_code,
-      share_link_code: User.generate_share_link_code
+      invite_code: User.generate_invite_code
+      # share_link_code: User.generate_share_link_code
     )
     profile.save
+
+    puts '=' * 20
+    parent_invite_code = params[:invite_code]
+    parent_user = Profile.where(invite_code: parent_invite_code).first
+    # https://github.com/collectiveidea/awesome_nested_set/wiki/Awesome-nested-set-cheat-sheet
+    profile.move_to_child_of(parent_user)
+    parent_user.reload
+    puts '=' * 20
+
     Integral.create(user_id: resource.id, amount: 0)
     Vritualcard.create(user_id: resource.id, money: '0.00')
   end
