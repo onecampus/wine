@@ -126,10 +126,12 @@ body {
 <hr class="hr-style">
 <div class="cat-products">
   <% @cat_products.each_with_index do |p, index| %>
-    <div class="product">
-      <img src="<%=p.img%>">
-      <span class="product-name text2"><%= p.name %></span><span class="product-price text1">￥<%=p.price%></span>
-    </div>
+    <a href="/customer/products/<%=p.id%>/show">
+      <div class="product">
+        <img src="<%=p.img%>">
+        <span class="product-name text2"><%= p.name %></span><span class="product-price text1">￥<%=p.price%></span>
+      </div>
+    </a>
   <% end %>
 </div>
 <%= render "site/shared/bottombar" %>
