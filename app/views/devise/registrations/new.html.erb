@@ -57,18 +57,17 @@
 <script>
 (function () {
   $(document).on('ready page:load', function () {
-    var x = $(".location");
+    var location = $(".location");
     function getLocation()
     {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       } else {
-        x.innerHTML = "你的浏览器部支持地理位置定位.";
+        location.html("你的浏览器部支持地理位置定位.");
       }
     }
     function showPosition(position) {
-      x.innerHTML="Latitude: " + position.coords.latitude +
-      "<br />Longitude: " + position.coords.longitude;
+      location.html("Latitude: " + position.coords.latitude + "<br />Longitude: " + position.coords.longitude);
     }
     getLocation();
   });
