@@ -3,21 +3,24 @@
 <% end %>
 <style type="text/css">
   body {
-    overflow: scroll;
+    overflow: auto;
   }
+
   .top-img {
     width: 100%;
     height: 200px;
   }
   .top-img img {
-    width: 100%;
+    max-width: 100%;
     height: 100%;
+    width: 100%;
   }
 
   .p-charge {
     height: 70px;
     padding: 0 20px;
     color: #787878;
+    margin: 0 auto;
   }
   .p-charge > div{
         padding:0 ;
@@ -39,7 +42,7 @@
   }
   .p-ampunt {
     height: 35px;
-    padding: 0 20px;
+    padding: 0;
     clear: both;
     width: 100%;
   }
@@ -49,7 +52,9 @@
     line-height: 30px;
     height: 30px;
   }
-
+  .p-ampunt div:first-child{
+        margin-left: 20px;
+  }
   .ampunt-action  button , .ampunt-action .p-num{
     border-style: solid;
     border-color: #dfdfdf;
@@ -71,7 +76,7 @@
   padding: 0;
   border-width: 0;
   width: 50px;
-  text-indent: 5px;
+  text-align: center;
 }
 
 .ampunt-action .action-de{
@@ -98,7 +103,7 @@
 
   .p-comments {
     padding: 0 20px;
-    height: 35px;
+    height: 40px;
     clear: both;
   }
   .p-comments p {
@@ -169,17 +174,17 @@
 //add products number and minus the products number
 
   $(document).ready(function($) {
-        var minus=$(".action-de");
-        var plus=$(".action-plus");
-        var num_input=$(".p-num");
-        var num="";
+        var minus  =   $(".action-de");
+        var plus  =  $(".action-plus");
+        var num_input  =  $(".p-num");
+        var num  =  "";
         plus.click(function() {
-          num=num_input.val();
-          num++;
-          num_input.val(num);
+              num  =  num_input.val();
+              num++;
+              num_input.val(num);
         });
         minus.click(function() {
-          if (num>0) {
+          if (num  >  0) {
               num--;
               num_input.val(num);       
           }

@@ -82,31 +82,44 @@
     color: #dddddd;
     margin: auto auto auto 20px;
   }
+  .extra-bar div a{
+    color: #666;
+  }
 </style>
+<script type="text/javascript">
+       $(".tab-item").click(function(){
+        var index=
+       });
+</script>
 <div class="main">
   <div class="top"><p>杨康</p></div>
   <div class="tab">
-    <div class="tab-item">
+    <div class="tab-item" id="tab-item1">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
 
       <p>待发货</p>
     </div>
-    <div class="tab-item">
+    <div class="tab-item" id="tab-item2">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
 
       <p>待付款</p>
     </div>
-    <div class="tab-item">
+    <div class="tab-item" id="tab-item3">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></p>
 
       <p>待收货</p>
     </div>
-    <div class="tab-item">
+    <div class="tab-item" id="tab-item4">
       <p><img src="/zhonglian/img/user_center/icon_history_order.png"/></p>
 
       <p>历史订单</p>
     </div>
   </div>
+  <div id="tab1">1</div>
+  <div id="tab2">2</div>
+  <div id="tab3">3</div>
+  <div id="tab4">4</div>
+
   <div class="extra-bar">
     <div>
       <p class="p-l"><a href="#">收货地址管理</a></p>
@@ -129,5 +142,6 @@
       <p class="p-r"><a href="#">&gt;</a></p>
     </div>
   </div>
+  
 </div>
 <%= render "site/shared/bottombar" %>
