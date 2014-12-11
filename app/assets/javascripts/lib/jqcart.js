@@ -116,6 +116,7 @@
       }
     };
 
+    // demo
     var product = {
       'id': 1,
       'name': 'dhh',
