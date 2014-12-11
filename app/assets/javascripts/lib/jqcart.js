@@ -125,7 +125,18 @@
     };
     Cart.addProduct(product);
     var productList = Cart.getProductList(); // 取出购物车商品
-    alert(productList);
+    console.log(productList);
+
+    if(Cart.existProduct(1)) {
+      Cart.updateProductNum(1, 4);
+    }
+    productList = Cart.getProductList(); // 取出购物车商品
+    console.log(productList);
+
+    if(Cart.existProduct(1)) {
+      Cart.deleteProduct(1);
+    }
+    productList = Cart.getProductList(); // 取出购物车商品
     console.log(productList);
   });
 }).call(this);
