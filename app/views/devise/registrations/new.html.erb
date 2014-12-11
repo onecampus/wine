@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-注册
+  注册
 <% end %>
 <div class="form-box">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'input-group') do |f| %>
@@ -25,10 +25,11 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-
+    <input type="hidden" name="invite_code" value="" />
     <%= f.submit '注册', class: 'btn btn-red btn-block' %>
   <% end %>
 </div>
+<div class="location"></div>
 
 <nav class="bar bar-tab">
   <a class="tab-item" href="#">
@@ -52,3 +53,23 @@
     <span class="tab-label">分类</span>
   </a>
 </nav>
+
+<script>
+(function () {
+  $(document).on('ready page:load', function () {
+    var location = $(".location");
+    function getLocation()
+    {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        location.html("你的浏览器部支持地理位置定位.");
+      }
+    }
+    function showPosition(position) {
+      location.html("Latitude: " + position.coords.latitude + "<br />Longitude: " + position.coords.longitude);
+    }
+    getLocation();
+  });
+}).call(this);
+</script>

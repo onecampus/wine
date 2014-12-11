@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-  商城
+    商城
 <% end %>
 <style type="text/css">
   body {
@@ -131,21 +131,22 @@
     clear: both;
     min-height: 150px;
   }
+
 </style>
 <div class="main">
-  <div class="top-img"><img src="<%= @product.img_url %>" /></div>
-  <hr />
+  <div class="top-img"><img src="<%= @product.img_url %>"/></div>
+  <hr/>
   <div class="p-charge">
-     <div>
-             <span><%= @product.name %></span>
-             <span>wine english name</span>
+    <div>
+      <span><%= @product.name %></span>
+      <span>wine english name</span>
     </div>
     <div>
       <span class="price">¥ <%= @product.price %></span>
       <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10</span>
     </div>
   </div>
-  <hr />
+  <hr/>
   <div class="p-ampunt">
     <div>数量:&nbsp;&nbsp;</div>
     <div class="ampunt-action">
@@ -154,18 +155,19 @@
       <button class="action-plus" type="button">+</button>
     </div>
   </div>
-  <hr />
+  <hr/>
   <div class="p-purchase">
     <button class="btn" type="button">加入购物车</button>
     <button class="btn btn-red" type="button">立即购买</button>
   </div>
-  <hr />
+  <hr/>
   <div class="p-comments">
     <a href="/customer/products/<%= @product.id %>/comments">
-      <p>商品评论&nbsp;&nbsp;<span class="comment-count">&nbsp;&nbsp;&nbsp;&nbsp;<%= @product.comment_threads.size %>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="arrow">&gt;</span></p>
+      <p>商品评论&nbsp;&nbsp;<span class="comment-count">&nbsp;&nbsp;&nbsp;&nbsp;<%= @product.comment_threads.size %>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="arrow">&gt;</span>
+      </p>
     </a>
   </div>
-  <hr />
+  <hr/>
   <div class="p-intro">
 
   </div>
@@ -192,7 +194,7 @@
             num_input.val(0);
           }
         });
-     //Ajax code goes here?
-  });
+        //Ajax code goes here?
+    });
 </script>
 <%= render "site/shared/bottombar" %>

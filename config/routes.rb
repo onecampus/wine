@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+
   root 'site#index'
-  
+
   # product cat
   get 'customer/cats' => 'site#index_cats'
   get 'customer/cats/:cid/products' => 'site#index_cat_products'
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
 
   # product
   get 'customer/products/:id/show' => 'site#show_product'
-  
+
   # product comment
   get 'customer/products/:id/comments/new' => 'site#new_comment'
   match 'customer/products/:id/comments/create', to: 'site#create_comment', via: :post
@@ -26,17 +27,20 @@ Rails.application.routes.draw do
   get 'customer/usercenter' => 'site#user_center'
   get 'customer/user/vipcard' => 'site#show_vip_card'
 
-  mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
 
   scope '/admin' do
     resources :products
     resources :inventories
     resources :comments
     resources :tags
+
+    resources :integrals
+    resources :vritualcards
 
     resources :shipaddresses
 

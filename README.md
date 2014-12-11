@@ -25,6 +25,9 @@ rails s # 启动开发服务器
 # 后台 http://127.0.0.1:3000/admin/products 需要登陆
 # 用户名: admin@gmail.com
 # 密码　: 12345678
+
+# 如果需要重置数据库
+rake db:reset
 ```
 
 ### github workflow
@@ -163,11 +166,10 @@ rails g uploader CatImg
 rails g scaffold Invoice rise:string content:text
 rails g scaffold Order invoice_id:integer user_id:integer order_number:string ship_address:string ship_method:string payment_method:string freight:string package_charge:string total_price:string buy_date:datetime order_status:integer pay_status:integer logistics_status:integer operator:integer cancel_reason:string weixin_open_id:string receive_name:string mobile:string tel:string supplier_id:integer order_type:string
 rails g scaffold ProductOrder order_id:integer product_id:integer product_count:integer unit_price:string
-
-
 rails g scaffold Vritualcard user_id:integer money:string
-
 rails g scaffold Integral user_id:integer amount:string
+
+
 
 rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
 

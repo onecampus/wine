@@ -48,22 +48,22 @@
 <div class="vipcard">
   <p>
     <span class="span-l">姓名</span>
-    <span class="span-r">陈寒</span>
+    <span class="span-r"><%= @user.username %></span>
   </p>
 
   <p>
     <span class="span-l">邀请码</span>
-    <span class="span-r">邀请码</span>
+    <span class="span-r"><%= @user.profile.invite_code %></span>
   </p>
 
   <p>
     <span class="span-l">优惠码</span>
-    <span class="span-r">优惠码</span>
+    <span class="span-r"><%= @user.profile.share_link_code %></span>
   </p>
 
   <p>
     <span class="span-l">余额</span>
-    <span class="span-r">余额</span>
+    <span class="span-r"><%= @user.vritualcard.money %></span>
   </p>
 </div>
 

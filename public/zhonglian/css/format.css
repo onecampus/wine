@@ -1,7 +1,6 @@
 a {
   text-decoration: none;
 }
-
 /*
 全局css
 */
@@ -9,26 +8,25 @@ a {
 body {
   background-color: #f2f2f2;
 }
-
 hr {
   width: 100%;
   border: 0;
   border-top: 1px solid gray;
   border-bottom: 1px solid #fff;
-  filter: Alpha(Opacity=30); /*IE*/
-  opacity: 0.3; /*火狐*/
-}
+  filter: Alpha(Opacity=30);
+  /*IE*/
 
+  opacity: 0.3;
+  /*火狐*/
+}
 .percent-65 {
   width: 65%;
   float: left;
 }
-
 .percent-35 {
   width: 35%;
   float: left;
 }
-
 .pull-left {
   float: left;
 }

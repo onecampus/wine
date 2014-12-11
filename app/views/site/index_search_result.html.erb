@@ -1,28 +1,61 @@
 <% content_for :customer_title do %>
     搜索结果
 <% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $(".q").focus(function(){
+          $(".search-box-word").hide();
+      });
+      $(".q").blur(function(){
+          $(".search-box-word").show();
+      })
+  });
+</script>
 <style type="text/css">
     .search-box {
         width: 100%;
         height: 200px;
-        background-image: url("img/search/search_bg.jpg");
+        margin-top: -20px;
+        background-image: url("/zhonglian/img/search/search_bg.jpg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
         background-clip: content-box;
         background-origin: content-box;
         text-align: center;
+    }
+
+    .search-box-item {
+        width:100%;
+        height: 50px;
         position: relative;
+        top: 70px;
     }
 
     .search-form .q {
         height: 24px;
-        width: 80%;
+        width: 70%;
+        font-size: 20px;
         border: 0 none;
-        margin: 100px auto 0 auto;
         padding: 12px 15px;
         border-radius: 5px;
         opacity: 0.5;
+        padding-left: 50px;
+    }
+
+    .search-form img {
+        width:30px;
+        height:27px;
+        position: absolute;
+        left: 12%;
+        top: 11px;
+    }
+    .search-form p {
+        position: absolute;
+        left: 23%;
+        top: -18px;
+        font-size: 25px;
+        color: #ffffff;
     }
 
     .search-result {
@@ -31,38 +64,59 @@
 
     .search-result .title {
         font-size: 24px;
-        margin: 1px 0 3px 0;
+        color: #7d7d7d;
+        margin: 1px 0 10px 2%;
     }
 
     .search-result-item {
         width: 50%;
         float: left;
-        margin-bottom: 10px;
+        margin-bottom: 50px;
         text-align: center;
     }
 
+    .search-result-item img {
+     width: 90%;
+     height: 200px;
+    }
+
     .search-result-item p {
+        width: 90%;
+        height: 20px;
+        background-color: #ffffff;
         text-align: center;
-        color: #ffffff;
-        margin: 5px 10px;
+        color: #767676;
+        margin: 0;
+        margin-left: 5%;
     }
 
     .search-result-item p span:first-child {
         float: left;
+        margin-left: 6%;
     }
 
     .search-result-item p span:last-child {
         float: right;
+        margin-right: 6%;
+        font-weight:  bold;
     }
 
     .search-result-item p img {
         width: 120px;
         height: 120px;
     }
+
+    hr {
+        margin-top: -1px;
+    }
 </style>
 <div class="search-box">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
-    <input class="q" type="text" name="q" placeholder="">
+    <div  class="search-box-item">
+      <input class="q" type="text" name="q" >
+       <img src="/zhonglian/img/search/search-white.png">
+       <p class="search-box-word">搜索</p>
+    </div>
   <% end %>
 </div>
 <hr/>
@@ -71,13 +125,12 @@
   <p class="title">搜索结果</p>
 
   <% @products.each do |p| %>
-    <%= p.name %><br />
+  <a href="/customer/products/<%=p.id%>/show">
+    <div class="search-result-item">
+      <img src="<%=p.img%>"/>
+      <p><span><%=p.name%></span><span>￥<%=p.price%></span></p>
+    </div>
+  </a>
   <% end %>
-
-  <div class="search-result-item">
-    <p><img src="img/index/shangpin.jpg"/></p>
-
-    <p><span>葡萄酒</span><span>Y 600</span></p>
-  </div>
 </div>
 <%= render "site/shared/bottombar" %>
