@@ -86,7 +86,11 @@ class SiteController < CustomerController
 
   def index_search_result
     q = params[:q]
-    @products = Product.where('name LIKE ?', "%#{q}%")
+    if q && q != ''
+      @products = Product.where('name LIKE ?', "%#{q}%")
+    else
+      @products = []
+    end
   end
 
   def show_vip_card
