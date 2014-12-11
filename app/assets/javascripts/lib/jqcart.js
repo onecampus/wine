@@ -115,6 +115,12 @@
         OrderDetail.totalAmount = JsonStr.totalAmount;
         return productList;
       },
+      //获取商品总价
+      getTotalPrice: function() {
+        var productList = Cart.getProductList();
+        var totalPrice = productList.totalAmount();
+        return totalPrice;
+      },
       //判断购物车中是否存在商品
       existProduct: function(id) {
         var shoppingCart = Utils.getParam("shoppingCart");
