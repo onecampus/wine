@@ -14,7 +14,6 @@ navbar css
   right: 0;
   z-index: 10;
 }
-
 .bar-tab {
   border-bottom: 0 none;
   border-top: 1px solid #ddd;
@@ -25,7 +24,6 @@ navbar css
   table-layout: fixed;
   width: 100%;
 }
-
 .bar-tab .tab-item {
   color: #929292;
   display: table-cell;
@@ -35,11 +33,10 @@ navbar css
   width: 1%;
   border-right: 1px solid #ddd;
 }
-
-.bar-tab .tab-item.active, .bar-tab .tab-item:active {
+.bar-tab .tab-item.active,
+.bar-tab .tab-item:active {
   color: #aa0c40;
 }
-
 .bar-tab .tab-item .icon {
   height: 24px;
   padding-bottom: 0;
@@ -47,7 +44,6 @@ navbar css
   top: 3px;
   width: 24px;
 }
-
 .bar .icon {
   font-size: 24px;
   padding-bottom: 10px;
@@ -55,60 +51,47 @@ navbar css
   position: relative;
   z-index: 20;
 }
-
 .icon {
   display: inline-block;
   font-size: 24px;
   line-height: 1;
   text-decoration: none;
 }
-
 .icon-background-base {
   background-repeat: no-repeat;
   background-size: 24px 24px;
   background-position: center;
 }
-
 .icon-home {
   background-image: url("../img/navbar/home-gray.png");
 }
-
 .icon-home-hover {
   background-image: url("../img/navbar/home-red.png");
 }
-
 .icon-person {
   background-image: url("../img/navbar/usercenter-gray.png");
 }
-
 .icon-person-hover {
   background-image: url("../img/navbar/usercenter-red.png");
 }
-
 .icon-cart {
   background-image: url("../img/navbar/car-gray.png");
 }
-
 .icon-cart-hover {
   background-image: url("../img/navbar/car-red.png");
 }
-
 .icon-search {
   background-image: url("../img/navbar/search-gray.png");
 }
-
 .icon-search-hover {
   background-image: url("../img/navbar/search-red.png");
 }
-
 .icon-cat {
   background-image: url("../img/navbar/fenlei-gray.png");
 }
-
 .icon-cat-hover {
   background-image: url("../img/navbar/fenlei-red.png");
 }
-
 .bar-tab .tab-item .icon ~ .tab-label {
   display: block;
   font-size: 11px;
