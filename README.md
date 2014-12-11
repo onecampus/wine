@@ -25,6 +25,9 @@ rails s # 启动开发服务器
 # 后台 http://127.0.0.1:3000/admin/products 需要登陆
 # 用户名: admin@gmail.com
 # 密码　: 12345678
+
+# 如果需要重置数据库
+rake db:reset
 ```
 
 ### github workflow
