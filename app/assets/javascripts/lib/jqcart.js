@@ -54,6 +54,25 @@
           Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
         }
       },
+      //增加商品的数量，如果存在
+      incProductNum: function(id) {
+        var shoppingCart = Utils.getParam("shoppingCart");
+        var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        var productList = JsonStr.productList;
+
+        for(var i in productList){
+          if(productList[i].id == id) {
+            JsonStr.totalNumber = parseInt(JsonStr.totalNumber) + 1;
+            JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) + (1 * parseFloat(productList[i].price));
+            productList[i].num = productList[i].num + 1;
+
+            OrderDetail.totalNumber = JsonStr.totalNumber;
+            OrderDetail.totalAmount = JsonStr.totalAmount;
+            Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
+            return;
+          }
+        }
+      },
       //修改给买商品数量
       updateProductNum: function(id, num) {
         var shoppingCart = Utils.getParam("shoppingCart");
@@ -127,16 +146,26 @@
     var productList = Cart.getProductList(); // 取出购物车商品
     console.log(productList);
 
+
     if(Cart.existProduct(1)) {
-      Cart.updateProductNum(1, 4);
+      Cart.incProductNum(1);
     }
     productList = Cart.getProductList(); // 取出购物车商品
     console.log(productList);
+
+
+    if(Cart.existProduct(1)) {
+      Cart.updateProductNum(1, 40);
+    }
+    productList = Cart.getProductList(); // 取出购物车商品
+    console.log(productList);
+
 
     if(Cart.existProduct(1)) {
       Cart.deleteProduct(1);
     }
     productList = Cart.getProductList(); // 取出购物车商品
     console.log(productList);
+
   });
 }).call(this);
