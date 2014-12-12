@@ -2,14 +2,16 @@
     搜索结果
 <% end %>
 <script type="text/javascript">
-  $(document).ready(function(){
-      $(".q").focus(function(){
+  (function(){
+    $(document).on('ready page:load',function(){
+       $(".q").focus(function(){
           $(".search-box-word").hide();
       });
       $(".q").blur(function(){
           $(".search-box-word").show();
-      })
-  });
+      });
+    });
+  }).call(this);
 </script>
 <style type="text/css">
     .search-box {
