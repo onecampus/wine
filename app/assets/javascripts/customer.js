@@ -16,3 +16,4 @@
 //= require lib/jquery.cookie
 //= require lib/jquery.storageapi
 //= require lib/jqcart
+//= require lib/purl

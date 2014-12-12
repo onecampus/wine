@@ -25,7 +25,7 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-    <input type="hidden" name="invite_code" value="" />
+    <input type="hidden" name="invite_code" value=""  class="invite_code" />
     <%= f.submit '注册', class: 'btn btn-red btn-block' %>
   <% end %>
 </div>
@@ -71,5 +71,30 @@
     }
     getLocation();
   });
+
+$(document).on('ready page:load',function(){
+  var url  =  window.location.href;
+  var index  =  url.indexOf("?");
+  if( index  !==  -1 ){
+  var invite  =  url.substring(index+1);
+  var len  =  "invite_code=".length;
+  var invite_code  =  invite.substring(len);
+  var is_code  =  invite.substr(0,len-1);
+  if( is_code  ==  "invite_code" ){
+  $(".invite_code").val(invite_code);
+  alert("invite_code is : "+invite_code);
+  }
+  else{
+    alert("not invite_code");
+    //return false;
+  }
+}
+   else{
+     alert("no such thing!");
+    //return false;
+   }
+});
+
 }).call(this);
+
 </script>
