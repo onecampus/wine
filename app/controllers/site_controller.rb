@@ -6,7 +6,11 @@ class SiteController < CustomerController
   skip_before_filter :authenticate_user!, only: [:index, :index_cats,
                                                  :show_product, :index_comments,
                                                  :index_search_result,
-                                                 :index_cat_products]
+                                                 :index_cat_products,
+                                                 :index_wait_ship,
+                                                 :index_wait_pay,
+                                                 :index_wait_receive,
+                                                 :index_order_history]
   # skip_before_filter :verify_authenticity_token, only: [:]
 
   def index
@@ -98,5 +102,17 @@ class SiteController < CustomerController
   end
 
   def commission
+  end
+
+  def index_wait_ship
+  end
+
+  def index_wait_pay
+  end
+
+  def index_wait_receive
+  end
+
+  def index_order_history
   end
 end
