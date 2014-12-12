@@ -45,6 +45,7 @@
     padding: 0;
     clear: both;
     width: 100%;
+    color: #787878;
   }
   .p-ampunt div {
     float: left;
@@ -77,6 +78,7 @@
   border-width: 0;
   width: 50px;
   text-align: center;
+  color: #787878;
 }
 
 .ampunt-action .action-de{
@@ -99,6 +101,10 @@
     line-height: 35px;
     font-size: 14px;
     vertical-align: middle;
+    color: #787878;
+  }
+  .p-purchase .btn-red{
+    color: white;
   }
 
   .p-comments {
@@ -110,15 +116,15 @@
     width: 100%;
     line-height: 30px;
     height: 30px;
+    color: #787878;
   }
-  .p-comments a {
-    color: black;
-  }
+
   .p-comments .comment-count {
     background-color: #aa0c40;
     border-radius: 3px;
     width: 15px;
     text-align: center;
+    color: white;
   }
   .arrow {
     float: right;
@@ -130,8 +136,20 @@
     height: auto;
     clear: both;
     min-height: 150px;
+    margin-bottom: 70px;
   }
-
+  .p-intro h4{
+    color: #787878;
+    font-weight: normal;
+  }
+  .p-intro p{
+    font-size: 16px;
+  }
+  .p-intro .name{
+    color: #aa0c3f;
+    margin:  0;
+    padding: 0;
+  }
 </style>
 <div class="main">
   <div class="top-img"><img src="<%= @product.img_url %>"/></div>
@@ -143,7 +161,7 @@
     </div>
     <div>
       <span class="price">¥ <%= @product.price %></span>
-      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10</span>
+      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10元</span>
     </div>
   </div>
   <hr/>
@@ -169,7 +187,10 @@
   </div>
   <hr/>
   <div class="p-intro">
-
+            <h4>商品详情</h4>
+            <p class="name"><%= @product.name %></p>
+            <p class="name">wine english name</p>
+            <p><%= @product.description %></p>
   </div>
 </div>
 <script type="text/javascript">
