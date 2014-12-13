@@ -72,24 +72,31 @@
         text-align: center;
     }
 
-    .recommend-item p {
+    .product-inf {
         width: 80%;
-        height: 30px;
+        height: 50px;
         background-color: #ffffff;
-        text-align: center;
         color: #787878;
         margin: 0 10.5%;
-    }
-
-    .recommend-item p span:first-child {
         float: left;
-        margin: 5px 0 0 15px;
+        text-align: left;
     }
 
-    .recommend-item p span:last-child {
-        float: right;
+    .text1 {
+        margin: 0 0 0 4%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .text2 {
+        margin: 0 0 0 5%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
         font-weight: bold;
-        margin: 5px 15px 0 0;
     }
 
     .product-img {
@@ -136,8 +143,10 @@
       <a href="customer/products/<%= p.id %>/show">
         <div class="recommend-item">
           <img class="product-img" src="<%= p.img_url %>"/>
-
-          <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
+          <div class="product-inf">
+            <p class="text1"><%= p.name %></p>
+            <p class="text2">¥ <%= p.price %></p>
+           </div>
         </div>
       </a>
   <% end %>
