@@ -71,7 +71,7 @@
     getLocation();
   });
 
-$(document).on('ready page:load',function(){
+ $(document).on('ready page:load',function(){
      var url  =  $.url();
      var invite_code  =  url.param("invite_code");
      if(invite_code){
@@ -80,7 +80,7 @@ $(document).on('ready page:load',function(){
      else{
       return false;
      }
-});
+ });
 
 }).call(this);
 
