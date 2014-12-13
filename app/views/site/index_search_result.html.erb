@@ -73,7 +73,7 @@
     .search-result-item {
         width: 50%;
         float: left;
-        margin-bottom: 50px;
+        margin-bottom: 50%;
         text-align: center;
     }
 
@@ -82,30 +82,37 @@
      height: 200px;
     }
 
-    .search-result-item p {
-        width: 90%;
-        height: 20px;
-        background-color: #ffffff;
-        text-align: center;
-        color: #767676;
-        margin: 0;
-        margin-left: 5%;
-    }
-
-    .search-result-item p span:first-child {
-        float: left;
-        margin-left: 6%;
-    }
-
-    .search-result-item p span:last-child {
-        float: right;
-        margin-right: 6%;
-        font-weight:  bold;
-    }
-
     .search-result-item p img {
         width: 120px;
         height: 120px;
+    }
+
+
+    .product-inf {
+        width: 90%;
+        height: 50px;
+        background-color: #ffffff;
+        color: #787878;
+        margin-left: 5%;
+        float: left;
+        text-align: left;
+    }
+
+    .text1 {
+        margin: 0 0 0 4%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .text2 {
+        margin: 0 0 0 5%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: bold;
     }
 
     hr {
@@ -130,7 +137,10 @@
   <a href="/customer/products/<%=p.id%>/show">
     <div class="search-result-item">
       <img src="<%=p.img%>"/>
-      <p><span><%=p.name%></span><span>￥<%=p.price%></span></p>
+       <div class="product-inf">
+         <p class="text1"><%= p.name %></p>
+         <p class="text2">¥ <%= p.price %></p>
+        </div>
     </div>
   </a>
   <% end %>
