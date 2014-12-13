@@ -2,10 +2,13 @@
     会员中心
 <% end %>
 <style type="text/css">
+    body {
+        margin-top: -18px;
+    }
     .vipcard {
         padding: 15px;
         background-color: #ffffff;
-        margin: 30px auto 0 auto;
+        margin: 0 auto 0 auto;
         border-bottom: 1px solid #ddd;
         border-top: 1px solid #ddd;
     }
@@ -16,7 +19,7 @@
 
     .span-l {
         width: 30%;
-        margin-left: 10%;
+        maring-left: 5%;
         display: block;
         float: left;
         line-height: 45px;
@@ -27,8 +30,8 @@
     .span-r {
         width: 65%;
         display: block;
+        margin-left: 40%;
         line-height: 45px;
-        margin-left: 20px;
         color: #666;
         font-size: 20px;
     }
@@ -51,12 +54,12 @@
     <span class="span-r"><%= @user.username %></span>
   </p>
 
-  <p>
+  <p class="invite_code">
     <span class="span-l">邀请码</span>
     <span class="span-r"><%= @user.profile.invite_code %></span>
   </p>
 
-  <p>
+  <p class="link_code">
     <span class="span-l">优惠码</span>
     <span class="span-r"><%= @user.profile.share_link_code %></span>
   </p>
@@ -68,4 +71,19 @@
 </div>
 
 <a href="#" class="recharge btn btn-red">充值</a>
+
+<script type="text/javascript">
+    (function () {
+      $(document).on('ready page:load', function () {
+        var $invite_code = $(".invite_code").find(".span-r");
+        var $link_code = $(".link_code").find(".span-r");
+        if (!$invite_code.text()) {
+          $invite_code.css("clear","both");
+        }
+        if (!$link_code.text()) {
+          $link_code.css("clear","both");
+        }
+      });
+    }).call(this);
+</script>
 <%= render "site/shared/bottombar" %>

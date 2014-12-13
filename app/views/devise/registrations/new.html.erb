@@ -53,7 +53,6 @@
     <span class="tab-label">分类</span>
   </a>
 </nav>
-
 <script>
 (function () {
   $(document).on('ready page:load', function () {
@@ -72,28 +71,16 @@
     getLocation();
   });
 
-$(document).on('ready page:load',function(){
-  var url  =  window.location.href;
-  var index  =  url.indexOf("?");
-  if( index  !==  -1 ){
-  var invite  =  url.substring(index+1);
-  var len  =  "invite_code=".length;
-  var invite_code  =  invite.substring(len);
-  var is_code  =  invite.substr(0,len-1);
-  if( is_code  ==  "invite_code" ){
-  $(".invite_code").val(invite_code);
-  alert("invite_code is : "+invite_code);
-  }
-  else{
-    alert("not invite_code");
-    //return false;
-  }
-}
-   else{
-     alert("no such thing!");
-    //return false;
-   }
-});
+ $(document).on('ready page:load',function(){
+     var url  =  $.url();
+     var invite_code  =  url.param("invite_code");
+     if(invite_code){
+     $(".invite_code").val(invite_code[0]);
+     }
+     else{
+      return false;
+     }
+ });
 
 }).call(this);
 
