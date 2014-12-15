@@ -1,6 +1,7 @@
 <% content_for :customer_title do %>
     商城
 <% end %>
+<script type="text/javascript" src="app/assets/javascripts/lib/jqcart.js"></script>
 <style type="text/css">
   body {
     overflow: auto;
@@ -103,7 +104,10 @@
     vertical-align: middle;
     color: #787878;
   }
-  .p-purchase .btn-red{
+  .p-purchase .btn-add {
+    background-color: #dfdfdf;
+  }
+  .p-purchase .btn-red {
     color: white;
   }
 
@@ -153,12 +157,13 @@
   }
 </style>
 <div class="main">
+  <input class="product-id" type="hidden" value="<%= @product.id %>">
   <div class="top-img"><img src="<%= @product.img_url %>"/></div>
   <hr/>
   <div class="p-charge">
     <div>
-      <span><%= @product.name %></span>
-      <span>wine english name</span>
+      <span class="product-name"><%= @product.name %></span>
+      <span class="product-englishname">wine english name</span>
     </div>
     <div>
       <span class="price">¥ <%= @product.price %></span>
@@ -176,7 +181,7 @@
   </div>
   <hr/>
   <div class="p-purchase">
-    <button class="btn" type="button">加入购物车</button>
+    <button id="input-shoppingcart" class="btn btn-add" type="button">加入购物车</button>
     <button class="btn btn-red" type="button">立即购买</button>
   </div>
   <hr/>
@@ -210,7 +215,7 @@
         minus.click(function() {
           if (num  >  0) {
               num--;
-              num_input.val(num);       
+              num_input.val(num);
           }
           else{
             num_input.val(0);

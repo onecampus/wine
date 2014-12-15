@@ -63,7 +63,7 @@
     .p-intro {
         margin-top: -15px;
         padding: 0;
-        width: 28%;
+        width: 23%;
     }
 
     .p-intro p {
@@ -71,8 +71,9 @@
     }
 
     .p-amount {
-        width: 30%;
+        width: 35%;
         text-align: center;
+        margin-left: 0;
         margin-right: 1%;
     }
 
@@ -102,7 +103,7 @@
         letter-spacing: 4px;
         padding: 0 3px 0 5px;
     }
-   
+
     .text1 {
         color: #7e7e7e;
     }
@@ -111,77 +112,23 @@
         color:  #7e7e7e;
         font-weight: bold;
     }
+
+    .mesg {
+      margin-left: 20px;
+      display:none;
+    }
 </style>
 <div class="shop-cart">
-  <div class="product">
-
-    <div class="p-select pull-left">
-      <input class="checkbox" type="checkbox" name="" id="checkbox2"/>
-    </div>
-
-    <div class="p-img pull-left">
-      <img src="/zhonglian/img/index/shangpin.jpg"/>
-    </div>
-
-    <div class="p-intro pull-left">
-      <p>
-        <span>阔士西拉子加本纳苏维翁红葡</span><br>
-        <span>Sauvignon</span><br>
-        <span>SOUTHERN CROSSShiraz Cabernet</span>
-      </p>
-    </div>
-
-    <div class="p-amount pull-right">
-      <div class="price" id="checkbox2-price">¥ 600</div>
-
-      <div class="ampunt-action pull-left">
-        <button class="action-de" type="button">-</button>
-        <p class="number">1</p>
-        <button class="action-plus" type="button">+</button>
-      </div>
-
-    </div>
-  </div>
-  <hr>
-    <div class="product">
-
-    <div class="p-select pull-left">
-      <input class= "checkbox" type="checkbox" name="" id="checkbox1"/>
-    </div>
-
-    <div class="p-img pull-left">
-      <img src="/zhonglian/img/index/shangpin.jpg"/>
-    </div>
-
-    <div class="p-intro pull-left">
-      <p class="text1">
-        <span>阔士西拉子加本纳苏维翁红葡</span><br/>
-        <span>Sauvignon</span><br/>
-        <span>SOUTHERN CROSSShiraz Cabernet</span>
-      </p>
-    </div>
-
-    <div class="p-amount pull-right">
-      <div class="price text2" id="checkbox1-price">¥ 600</div>
-
-      <div class="ampunt-action pull-left">
-        <button class="action-de" type="button">-</button>
-        <p class="number">1</p>
-        <button class="action-plus" type="button">+</button>
-      </div>
-
-    </div>
-  </div>
-  <hr>
+  <h3 class="mesg text2">购物车为空</h3>
   <div class="select">
     <button class="allselect">全选</button>
     <button class="inselect">反选</button>
   </div>
-    <div class="products-inf  pull-right">
-     <span class="text1">运费:</span><span class="text2">20</span>
-     <span class="text1">合计:</span><span class="text2 total">0</span>
-     <a class="account">结算</a>
-   </div>
+  <div class="products-inf  pull-right">
+    <span class="text1">运费:</span><span class="text2">20</span>
+    <span class="text1">合计:</span><span class="text2 total">0</span>
+    <a class="account">结算</a>
+  </div>
 
 </div>
 <%= render "site/shared/bottombar" %>

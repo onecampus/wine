@@ -28,12 +28,15 @@
           JsonStr = Object;
         if (shoppingCart === null || shoppingCart === "") {
           //第一次加入商品
+          totalproduct = totalproduct + 1;
           JsonStr = {
             "productList": [{
               "id": product.id,
               "name": product.name,
+              "englishname": product.englishname,
               "num": product.num,
-              "price": product.price
+              "price": product.price,
+              "img": product.img
             }],
             "totalNumber": product.num,
             "totalAmount": (product.price * product.num)
@@ -55,8 +58,10 @@
             productList.push({
               "id": product.id,
               "name": product.name,
+              "englishname": product.englishname,
               "num": product.num,
-              "price": product.price
+              "price": product.price,
+              "img": product.img
             });
           }
           //重新计算总价
@@ -154,21 +159,32 @@
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
     };
-
+    $("#input-shoppingcart").click(function(){
+      var name = $(".product-name").text();
+      var englishname = $(".product-englishname").text();
+      var price = $(".price").text();
+      var num = $(".p-num").val();
+      var id = $(".product-id").val();
+      var img = $(".top-img").children().attr("src");
+      var product = {
+        'id': id,
+        'name': name,
+        'englishname': englishname,
+        'num': num,
+        'price': price,
+        'img': img
+      };
+      Cart.addProduct(product);
+    });
     // demo
-    var product = {
-      'id': 1,
-      'name': 'dhh',
-      'num': 2,
-      'price': 199.98
-    };
 
 
-    Cart.addProduct(product);
-    var productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
+    //Cart.addProduct(product);
+    //var productList = Cart.getProductList(); // 取出购物车商品
+    //console.log(productList);
+    //cart.deleteProduct(product);
 
-
+    /*
     if (Cart.existProduct(1)) {
       Cart.incProductNum(1);
     }
@@ -188,6 +204,7 @@
     }
     productList = Cart.getProductList(); // 取出购物车商品
     console.log(productList);
+    */
 
   });
 }).call(this);
