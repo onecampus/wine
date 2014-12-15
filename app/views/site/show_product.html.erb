@@ -1,23 +1,26 @@
 <% content_for :customer_title do %>
-  商城
+    商城
 <% end %>
 <style type="text/css">
   body {
-    overflow: scroll;
+    overflow: auto;
   }
+
   .top-img {
     width: 100%;
     height: 200px;
   }
   .top-img img {
-    width: 100%;
+    max-width: 100%;
     height: 100%;
+    width: 100%;
   }
 
   .p-charge {
     height: 70px;
     padding: 0 20px;
     color: #787878;
+    margin: 0 auto;
   }
   .p-charge > div{
         padding:0 ;
@@ -39,9 +42,10 @@
   }
   .p-ampunt {
     height: 35px;
-    padding: 0 20px;
+    padding: 0;
     clear: both;
     width: 100%;
+    color: #787878;
   }
   .p-ampunt div {
     float: left;
@@ -49,7 +53,9 @@
     line-height: 30px;
     height: 30px;
   }
-
+  .p-ampunt div:first-child{
+        margin-left: 20px;
+  }
   .ampunt-action  button , .ampunt-action .p-num{
     border-style: solid;
     border-color: #dfdfdf;
@@ -71,7 +77,8 @@
   padding: 0;
   border-width: 0;
   width: 50px;
-  text-indent: 5px;
+  text-align: center;
+  color: #787878;
 }
 
 .ampunt-action .action-de{
@@ -94,26 +101,30 @@
     line-height: 35px;
     font-size: 14px;
     vertical-align: middle;
+    color: #787878;
+  }
+  .p-purchase .btn-red{
+    color: white;
   }
 
   .p-comments {
     padding: 0 20px;
-    height: 35px;
+    height: 40px;
     clear: both;
   }
   .p-comments p {
     width: 100%;
     line-height: 30px;
     height: 30px;
+    color: #787878;
   }
-  .p-comments a {
-    color: black;
-  }
+
   .p-comments .comment-count {
     background-color: #aa0c40;
     border-radius: 3px;
     width: 15px;
     text-align: center;
+    color: white;
   }
   .arrow {
     float: right;
@@ -125,22 +136,36 @@
     height: auto;
     clear: both;
     min-height: 150px;
+    margin-bottom: 70px;
+  }
+  .p-intro h4{
+    color: #787878;
+    font-weight: normal;
+  }
+  .p-intro p{
+    font-size: 16px;
+    font-weight: normal;
+  }
+  .p-intro .name{
+    color: #aa0c3f;
+    margin:  0;
+    padding: 0;
   }
 </style>
 <div class="main">
-  <div class="top-img"><img src="<%= @product.img_url %>" /></div>
-  <hr />
+  <div class="top-img"><img src="<%= @product.img_url %>"/></div>
+  <hr/>
   <div class="p-charge">
-     <div>
-             <span><%= @product.name %></span>
-             <span>wine english name</span>
+    <div>
+      <span><%= @product.name %></span>
+      <span>wine english name</span>
     </div>
     <div>
       <span class="price">¥ <%= @product.price %></span>
-      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10</span>
+      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10元</span>
     </div>
   </div>
-  <hr />
+  <hr/>
   <div class="p-ampunt">
     <div>数量:&nbsp;&nbsp;</div>
     <div class="ampunt-action">
@@ -149,37 +174,41 @@
       <button class="action-plus" type="button">+</button>
     </div>
   </div>
-  <hr />
+  <hr/>
   <div class="p-purchase">
     <button class="btn" type="button">加入购物车</button>
     <button class="btn btn-red" type="button">立即购买</button>
   </div>
-  <hr />
+  <hr/>
   <div class="p-comments">
     <a href="/customer/products/<%= @product.id %>/comments">
-      <p>商品评论&nbsp;&nbsp;<span class="comment-count">&nbsp;&nbsp;&nbsp;&nbsp;<%= @product.comment_threads.size %>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="arrow">&gt;</span></p>
+      <p>商品评论&nbsp;&nbsp;<span class="comment-count">&nbsp;&nbsp;&nbsp;&nbsp;<%= @product.comment_threads.size %>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="arrow">&gt;</span>
+      </p>
     </a>
   </div>
-  <hr />
+  <hr/>
   <div class="p-intro">
-
+            <h4>商品详情</h4>
+            <p class="name"><%= @product.name %></p>
+            <p class="name">wine english name</p>
+            <p><%= @product.description %></p>
   </div>
 </div>
 <script type="text/javascript">
 //add products number and minus the products number
 
   $(document).ready(function($) {
-        var minus=$(".action-de");
-        var plus=$(".action-plus");
-        var num_input=$(".p-num");
-        var num="";
+        var minus  =   $(".action-de");
+        var plus  =  $(".action-plus");
+        var num_input  =  $(".p-num");
+        var num  =  "";
         plus.click(function() {
-          num=num_input.val();
-          num++;
-          num_input.val(num);
+              num  =  num_input.val();
+              num++;
+              num_input.val(num);
         });
         minus.click(function() {
-          if (num>0) {
+          if (num  >  0) {
               num--;
               num_input.val(num);       
           }
@@ -187,7 +216,7 @@
             num_input.val(0);
           }
         });
-     //Ajax code goes here?
-  });
+        //Ajax code goes here?
+    });
 </script>
 <%= render "site/shared/bottombar" %>

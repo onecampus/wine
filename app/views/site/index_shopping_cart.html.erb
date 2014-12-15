@@ -1,15 +1,30 @@
 <% content_for :customer_title do %>
     购物车
 <% end %>
+<script type="text/javascript" src="/zhonglian/js/index_shopping_cart.js"></script>
 <style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background-image: url(/zhonglian/img/cat/shopcart-top.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .shop-cart {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
     .product {
         width: 100%;
-        height: 60px;
+        height: 100px;
+        margin-top: 50px;
     }
 
     .ampunt-action {
         border: 1px solid gray;
         border-radius: 3px;
+        margin-left: 23%;
     }
 
     .ampunt-action button, p {
@@ -27,48 +42,146 @@
     }
 
     .p-select {
-        width: 20%;
+        width: 15%;
         text-align: center;
-        margin: 20px 0;
+        margin: 15px 0 0 0;
+    }
+
+    .p-select input {
+        width: 10px;
     }
 
     .p-img {
-        width: 25%;
+        width: 80px;
     }
 
     .p-img img {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 80px;
     }
 
     .p-intro {
-        width: 25%;
+        margin-top: -15px;
+        padding: 0;
+        width: 28%;
+    }
+
+    .p-intro p {
+        font-size: 0.7em;
     }
 
     .p-amount {
         width: 30%;
+        text-align: center;
+        margin-right: 1%;
+    }
+
+    .allselect {
+        text-align: left;
+        margin-left: 20px;
+    }
+
+    .products-inf {
+        margin: 10px 20px 80px 0;
+    }
+
+    .products-inf  span {
+        margin-right: 10px;
+    }
+
+    .account {
+        background-color: #ffffff;
+        border: 1px solid #aa0c40;
+        color: #aa0c40;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1px;
+        text-align: center;
+        white-space: nowrap;
+        letter-spacing: 4px;
+        padding: 0 3px 0 5px;
+    }
+   
+    .text1 {
+        color: #7e7e7e;
+    }
+
+    .text2 {
+        color:  #7e7e7e;
+        font-weight: bold;
     }
 </style>
 <div class="shop-cart">
   <div class="product">
+
     <div class="p-select pull-left">
-      <input type="radio" name=""/>
-    </div>
-    <div class="p-img pull-left">
-      <img src="img/product/p.jpg"/>
-    </div>
-    <div class="p-intro pull-left">
-      XXXXXX
+      <input class="checkbox" type="checkbox" name="" id="checkbox2"/>
     </div>
 
-    <div class="p-amount pull-left">
-      <div class="price">Y600</div>
+    <div class="p-img pull-left">
+      <img src="/zhonglian/img/index/shangpin.jpg"/>
+    </div>
+
+    <div class="p-intro pull-left">
+      <p>
+        <span>阔士西拉子加本纳苏维翁红葡</span><br>
+        <span>Sauvignon</span><br>
+        <span>SOUTHERN CROSSShiraz Cabernet</span>
+      </p>
+    </div>
+
+    <div class="p-amount pull-right">
+      <div class="price" id="checkbox2-price">¥ 600</div>
+
       <div class="ampunt-action pull-left">
         <button class="action-de" type="button">-</button>
-        <p>1</p>
+        <p class="number">1</p>
         <button class="action-plus" type="button">+</button>
       </div>
+
     </div>
   </div>
+  <hr>
+    <div class="product">
+
+    <div class="p-select pull-left">
+      <input class= "checkbox" type="checkbox" name="" id="checkbox1"/>
+    </div>
+
+    <div class="p-img pull-left">
+      <img src="/zhonglian/img/index/shangpin.jpg"/>
+    </div>
+
+    <div class="p-intro pull-left">
+      <p class="text1">
+        <span>阔士西拉子加本纳苏维翁红葡</span><br/>
+        <span>Sauvignon</span><br/>
+        <span>SOUTHERN CROSSShiraz Cabernet</span>
+      </p>
+    </div>
+
+    <div class="p-amount pull-right">
+      <div class="price text2" id="checkbox1-price">¥ 600</div>
+
+      <div class="ampunt-action pull-left">
+        <button class="action-de" type="button">-</button>
+        <p class="number">1</p>
+        <button class="action-plus" type="button">+</button>
+      </div>
+
+    </div>
+  </div>
+  <hr>
+  <div class="select">
+    <button class="allselect">全选</button>
+    <button class="inselect">反选</button>
+  </div>
+    <div class="products-inf  pull-right">
+     <span class="text1">运费:</span><span class="text2">20</span>
+     <span class="text1">合计:</span><span class="text2 total">0</span>
+     <a class="account">结算</a>
+   </div>
+
 </div>
 <%= render "site/shared/bottombar" %>

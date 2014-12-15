@@ -2,10 +2,13 @@
     会员中心
 <% end %>
 <style type="text/css">
+    body {
+        margin-top: -18px;
+    }
     .vipcard {
-        padding: 15px 15px 15px 15px;
+        padding: 15px;
         background-color: #ffffff;
-        margin: 30px auto 0 auto;
+        margin: 0 auto 0 auto;
         border-bottom: 1px solid #ddd;
         border-top: 1px solid #ddd;
     }
@@ -16,23 +19,29 @@
 
     .span-l {
         width: 30%;
+        maring-left: 5%;
         display: block;
         float: left;
         line-height: 45px;
+        color: #999;
+        font-size: 20px;
     }
 
     .span-r {
         width: 65%;
         display: block;
+        margin-left: 40%;
         line-height: 45px;
+        color: #666;
+        font-size: 20px;
     }
 
     .recharge {
         width: 80%;
-        margin: 20px auto 20px auto;
+        margin: 20px auto 70px auto;
         display: block;
         text-align: center;
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
         line-height: 18px;
         padding: 15px 0;
@@ -42,24 +51,39 @@
 <div class="vipcard">
   <p>
     <span class="span-l">姓名</span>
-    <span class="span-r">陈寒</span>
+    <span class="span-r"><%= @user.username %></span>
   </p>
 
-  <p>
+  <p class="invite_code">
     <span class="span-l">邀请码</span>
-    <span class="span-r">邀请码</span>
+    <span class="span-r"><%= @user.profile.invite_code %></span>
   </p>
 
-  <p>
+  <p class="link_code">
     <span class="span-l">优惠码</span>
-    <span class="span-r">优惠码</span>
+    <span class="span-r"><%= @user.profile.share_link_code %></span>
   </p>
 
   <p>
     <span class="span-l">余额</span>
-    <span class="span-r">余额</span>
+    <span class="span-r"><%= @user.vritualcard.money %></span>
   </p>
 </div>
 
 <a href="#" class="recharge btn btn-red">充值</a>
+
+<script type="text/javascript">
+    (function () {
+      $(document).on('ready page:load', function () {
+        var $invite_code = $(".invite_code").find(".span-r");
+        var $link_code = $(".link_code").find(".span-r");
+        if (!$invite_code.text()) {
+          $invite_code.css("clear","both");
+        }
+        if (!$link_code.text()) {
+          $link_code.css("clear","both");
+        }
+      });
+    }).call(this);
+</script>
 <%= render "site/shared/bottombar" %>

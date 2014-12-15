@@ -61,34 +61,49 @@
         padding: 0 0;
         width: 30%;
         height: 24px;
-        margin-left: 10px;
+        margin-left: 4.2%;
     }
 
     .recommend-item {
         width: 50%;
         float: left;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
+        margin-left: -5px;
         text-align: center;
     }
 
-    .recommend-item p {
-        text-align: center;
-        color: #ffffff;
-        margin: 5px 10px;
-    }
-
-    .recommend-item p span:first-child {
+    .product-inf {
+        width: 80%;
+        height: 50px;
+        background-color: #ffffff;
+        color: #787878;
+        margin: 0 10.5%;
         float: left;
+        text-align: left;
     }
 
-    .recommend-item p span:last-child {
-        float: right;
+    .text1 {
+        margin: 0 0 0 4%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
-    .recommend-item p img {
-        width: 120px;
-        height: 120px;
+    .text2 {
+        margin: 0 0 0 5%;
+        width: 90%;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: bold;
     }
+
+    .product-img {
+        width: 80%;
+        height: 200px;
+    }
+
 </style>
 
 
@@ -125,10 +140,14 @@
 <div class="recommend">
   <button class="btn btn-red index-btn-block">精选推荐</button>
   <% @recommend_products.each do |p| %>
-      <div class="recommend-item">
-        <p><a href="customer/products/<%= p.id %>/show"><img src="<%= p.img_url %>"/></a></p>
-
-        <p><span><%= p.name %></span><span>¥ <%= p.price %></span></p>
-      </div>
+      <a href="customer/products/<%= p.id %>/show">
+        <div class="recommend-item">
+          <img class="product-img" src="<%= p.img_url %>"/>
+          <div class="product-inf">
+            <p class="text1"><%= p.name %></p>
+            <p class="text2">¥ <%= p.price %></p>
+           </div>
+        </div>
+      </a>
   <% end %>
 </div>

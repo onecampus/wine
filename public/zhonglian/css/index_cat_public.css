@@ -1,0 +1,38 @@
+.cat-even {
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  padding: 0;
+  clear: both;
+}
+
+  .cat-even .percent-35 {
+  height: 170px;
+  margin-top: -10px;
+  background-image: url('/zhonglian/img/cat/even-cat.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 170px;
+  background-position: center;
+  display: block;
+ }
+
+ .percent-65 {
+  height: 170px;
+  margin-top: -10px;
+}
+
+.percent-65 img {
+  height: 170px;
+  width: 100%;
+}
+
+.cat-even-jiantou{
+  width: 25px;
+  height: 25px;
+  background-image: url('/zhonglian/img/cat/jiantou.png');
+  background-repeat:  no-repeat;
+  background-size: 25px 25px;
+  float: right;
+  margin-right: 20px;
+  margin-top: -10px;
+}

@@ -1,18 +1,18 @@
 
 .form-box {
-  background-color: #fff;
+  background-color: #ffffff;
   height: auto;
   padding: 5px 10px 5px 10px;
   margin: 25px 0 15px 0;
 }
 
 .input-group {
-  background-color: #fff;
+  background-color: #ffffff;
   text-align: center;
 }
 
 .input-row {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
   height: 45px;
   overflow: hidden;
 }
@@ -34,8 +34,8 @@
 }
 
 .btn {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
   border-radius: 3px;
   color: #333;
   cursor: pointer;

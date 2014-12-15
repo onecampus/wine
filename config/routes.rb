@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'site#index'
 
   # product cat
@@ -23,7 +24,11 @@ Rails.application.routes.draw do
 
   # user center
   get 'customer/cart' => 'site#index_shopping_cart'
-  get 'customer/usercenter' => 'site#user_center'
+  get 'customer/users/center' => 'site#user_center'
+  get 'customer/users/wait/ship' => 'site#index_wait_ship'
+  get 'customer/users/wait/pay' => 'site#index_wait_pay'
+  get 'customer/users/wait/receive' => 'site#index_wait_receive'
+  get 'customer/users/order/history' => 'site#index_order_history'
   get 'customer/user/vipcard' => 'site#show_vip_card'
 
   devise_for :users, controllers: {
@@ -31,11 +36,15 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+
   scope '/admin' do
     resources :products
     resources :inventories
     resources :comments
     resources :tags
+
+    resources :integrals
+    resources :vritualcards
 
     resources :shipaddresses
 
@@ -55,4 +64,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get 'weixin' => 'weixin#show'
+  match 'weixin', to: 'weixin#create', via: :post
 end
