@@ -32,8 +32,10 @@
             "productList": [{
               "id": product.id,
               "name": product.name,
+              "englishname": product.englishname,
               "num": product.num,
-              "price": product.price
+              "price": product.price,
+              "img": product.img
             }],
             "totalNumber": product.num,
             "totalAmount": (product.price * product.num)
@@ -55,8 +57,10 @@
             productList.push({
               "id": product.id,
               "name": product.name,
+              "englishname": product.englishname,
               "num": product.num,
-              "price": product.price
+              "price": product.price,
+              "img": product.img
             });
           }
           //重新计算总价
@@ -154,40 +158,31 @@
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
     };
-
-    // demo
-    var product = {
-      'id': 1,
-      'name': 'dhh',
-      'num': 2,
-      'price': 199.98
-    };
-
-
-    Cart.addProduct(product);
-    var productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
-
-    if (Cart.existProduct(1)) {
-      Cart.incProductNum(1);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
-
-    if (Cart.existProduct(1)) {
-      Cart.updateProductNum(1, 40);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
-
-    if (Cart.existProduct(1)) {
-      Cart.deleteProduct(1);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
+    /*
+    加入购物车
+    */
+    $("#input-shoppingcart").click(function(){
+      var name = $(".product-name").text(),
+          englishname = $(".product-englishname").text(),
+          price = $(".price").text(),
+          num = $(".p-num").val(),
+          id = $(".product-id").val(),
+          img = $(".top-img").children().attr("src");
+      var product = {
+        'id': id,
+        'name': name,
+        'englishname': englishname,
+        'num': num,
+        'price': price,
+        'img': img
+      };
+      Cart.addProduct(product);
+      $(".shoppingcart-animate").show(10);
+      for (i=0;i<15;i++){
+        $(".shoppingcart-animate").animate({left:'+=1%',top:'+=40%'},80);
+      }
+      $(".shoppingcart-animate").hide(10);
+      $(".shoppingcart-animate").css({"left":"41%","top":"25px"});
+    });
   });
 }).call(this);
