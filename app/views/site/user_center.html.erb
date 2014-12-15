@@ -2,35 +2,42 @@
     用户中心
 <% end %>
 <style type="text/css">
-
+  body {
+    margin-top: -19px;
+  }
   .main {
     width: 100%;
     height: auto;
   }
 
   .top {
-    background-image: url("./img/user_center/user_center_bg.jpg");
+    background-image: url("/zhonglian/img/user_center/user_center_bg.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
     width: 100%;
-    height: 100px;
+    height: 190px;
+    margin: 0;
+    padding: 0;
   }
 
-  .top p {
+  .top p:first-child {
     margin: 0;
-    padding: 30px 0 0 0;
+    padding: 25px 0 0 0;
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #fff;
   }
-
   .tab {
     width: 100%;
     height: 80px;
+    margin-top: 26px;
+    margin-bottom:8px;
   }
-
   .tab .tab-item {
+    background-color: #cfcdcb;
+    opacity: 0.4;
+    padding-top: 10px;
     float: left;
     width: 25%;
     height: 80px;
@@ -40,17 +47,16 @@
     text-align: center;
     margin: 0 auto 10px auto;
     padding: 0;
+    color: #444;
   }
-
   .extra-bar {
     width: 80%;
     margin: 20px auto 70px auto;
-    border: 1px solid #dddddd;
+    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
-    background-color: #ffffff;
+    background-color: #fff;
   }
-
   .extra-bar div {
     border-bottom: 1px solid #ddd;
     clear: both;
@@ -67,7 +73,7 @@
 
   .p-l a {
     font-size: 24px;
-    color: #dddddd;
+    color: #ddd;
     margin: auto auto auto 20px;
   }
 
@@ -80,7 +86,7 @@
 
   .p-r a {
     font-size: 24px;
-    color: #dddddd;
+    color: #ddd;
     margin: auto auto auto 20px;
   }
   .extra-bar div a{
@@ -88,39 +94,32 @@
   }
 
 </style>
-<script type="text/javascript">
-       $(".tab-item").click(function(){
-        var index=
-       });
-</script>
 <div class="main">
-  <div class="top"><p>杨康</p></div>
+  <div class="top">
+    <p>杨康</p>
   <div class="tab">
-    <div class="tab-item" id="tab-item1">
+    <div class="tab-item">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
 
       <p>待发货</p>
     </div>
-    <div class="tab-item" id="tab-item2">
+    <div class="tab-item">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
 
       <p>待付款</p>
     </div>
-    <div class="tab-item" id="tab-item3">
+    <div class="tab-item">
       <p><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></p>
 
       <p>待收货</p>
     </div>
-    <div class="tab-item" id="tab-item4">
+    <div class="tab-item">
       <p><img src="/zhonglian/img/user_center/icon_history_order.png"/></p>
 
       <p>历史订单</p>
     </div>
   </div>
-  <div id="tab1">1</div>
-  <div id="tab2">2</div>
-  <div id="tab3">3</div>
-  <div id="tab4">4</div>
+ </div>
 
   <div class="extra-bar">
     <div>
@@ -144,6 +143,6 @@
       <p class="p-r"><a href="#">&gt;</a></p>
     </div>
   </div>
-  
+
 </div>
 <%= render "site/shared/bottombar" %>

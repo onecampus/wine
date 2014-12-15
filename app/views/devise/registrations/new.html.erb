@@ -1,6 +1,61 @@
 <% content_for :customer_title do %>
   注册
 <% end %>
+<style type="text/css">
+  select {
+    margin:  7px auto;
+    font-size: 16px;
+  }
+  .mask {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: #666;
+    z-index: 20;
+    box-shadow: 0 0 3px #666;
+  }
+  .back {
+    z-index: 11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background:#000;
+    opacity:0.5;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    display:none;
+  }
+  .action {
+    margin: 16px auto;
+    text-align: center;
+  }
+  .action a {
+    background-color: #aa0c4f;
+    color: #fff;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 20px;
+  }
+  .action a:first-child {
+    margin-right: 20px;
+  }
+  .action a:last-child {
+    margin-left: 20px;
+  }
+  body {
+    margin-top: -25px;
+  }
+</style>
 <div class="form-box">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'input-group') do |f| %>
     <%= devise_error_messages! %>
@@ -26,10 +81,32 @@
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
     <input type="hidden" name="invite_code" value=""  class="invite_code" />
+    <input type="hidden" name="province" value="" class="province" />
+    <input type="hidden" name="city" value="" class="city" />
+    <input type="hidden" name="region" value="" class="region" />
     <%= f.submit '注册', class: 'btn btn-red btn-block' %>
   <% end %>
 </div>
-<div class="location"></div>
+  <div class="back"></div>
+  <div class="mask">
+    <div class="input-row">
+      <label>省份</label>
+      <select name="province" id="s1" ></select>
+    </div>
+    <div class="input-row">
+      <label>城市</label>
+      <select name="city" id="s2"></select>
+    </div>
+    <div class="input-row">
+      <label>地区</label>
+      <select name="region" id="s3"></select>
+    </div>
+    <div class="action">
+      <a href="javascript:void(0)" class="confirm">确定</a>
+      <a href="javascript:void(0)" class="cancel">取消</a>
+    </div>
+  </div>
+
 
 <nav class="bar bar-tab">
   <a class="tab-item" href="#">
@@ -53,34 +130,86 @@
     <span class="tab-label">分类</span>
   </a>
 </nav>
+<script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
+<script src="/backend/assets/js/multilevel-select.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script>
 (function () {
   $(document).on('ready page:load', function () {
-    var location = $(".location");
-    function getLocation()
+
+    MultilevelSelect({
+      data: ADMINISTRATIVE_DIVISION,
+      nodes: [$('#s1'), $('#s2'), $('#s3')]
+    });
+
+  });
+  $(document).on('ready page:load', function () {
+    function getLocationDemoA()
     {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPositionDemoA);
       } else {
-        location.html("你的浏览器部支持地理位置定位.");
+        location.html("你的浏览器不支持地理位置定位.");
       }
     }
-    function showPosition(position) {
-      location.html("Latitude: " + position.coords.latitude + "<br />Longitude: " + position.coords.longitude);
+    function showPositionDemoA(position) {
+      var location = $('.location');
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+      var point = new BMap.Point(lon,lat);
+      var geoc = new BMap.Geocoder();
+      geoc.getLocation(point, function(rs){
+        var addComp = rs.addressComponents;
+        var $username = $('#user_username');
+        $username.blur();
+        var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
+        if (confirms) {
+          var $back = $('.back');
+          var $confirm = $('.confirm');
+          var $cancel = $('.cancel');
+          var $mask = $('.mask');
+          $back.show();
+          $back.height($(document).height());
+          $mask.slideDown(800);
+          $confirm.click(function () {
+            var province = $('#s1 option:selected').text();
+            var city = $('#s2 option:selected').text();
+            var region = $('#s3 option:selected').text();
+            $('.province').val(province);
+            $('.city').val(city);
+            $('.region').val(region);
+            $back.hide();
+            $mask.slideUp(800);
+            $username.focus();
+          });
+          $cancel.click(function () {
+            $('.province').val(addComp.province);
+            $('.city').val(addComp.city);
+            $('.region').val(addComp.district);
+            $back.hide();
+            $mask.slideUp(800);
+            $username.focus();
+          });
+        }else{
+          $username.focus();
+          $('.province').val(addComp.province);
+          $('.city').val(addComp.city);
+          $('.region').val(addComp.district);
+        }
+      });
     }
-    getLocation();
+    getLocationDemoA();
   });
-
- $(document).on('ready page:load',function(){
-     var url  =  $.url();
-     var invite_code  =  url.param("invite_code");
-     if(invite_code){
-     $(".invite_code").val(invite_code[0]);
-     }
-     else{
+  $(document).on('ready page:load',function(){
+    var url  =  $.url();
+    var invite_code  =  url.param("invite_code");
+    if(invite_code){
+      $(".invite_code").val(invite_code[0]);
+    }
+    else{
       return false;
-     }
- });
+    }
+  });
 
 }).call(this);
 
