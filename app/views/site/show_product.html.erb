@@ -11,6 +11,7 @@
     width: 100%;
     height: 200px;
   }
+
   .top-img img {
     max-width: 100%;
     height: 100%;
@@ -23,24 +24,30 @@
     color: #787878;
     margin: 0 auto;
   }
+
   .p-charge > div{
         padding:0 ;
         margin: 0 auto;
   }
+
   .p-charge>div:first-child>span:first-child,.p-charge .freight{
     font-size: 18px;
   }
+
   .p-charge>div  span{
     margin-right: 2px;
     text-align: justify;
   }
+
   .p-charge>div:first-child>span:nth-child(2){
     font-size: 12px;
   }
+
   .p-charge .price {
     color: #aa0c40;
     font-size: 30px;
   }
+
   .p-ampunt {
     height: 35px;
     padding: 0;
@@ -48,15 +55,18 @@
     width: 100%;
     color: #787878;
   }
+
   .p-ampunt div {
     float: left;
     vertical-align: middle;
     line-height: 30px;
     height: 30px;
   }
+
   .p-ampunt div:first-child{
-        margin-left: 20px;
+    margin-left: 20px;
   }
+
   .ampunt-action  button , .ampunt-action .p-num{
     border-style: solid;
     border-color: #dfdfdf;
@@ -64,33 +74,38 @@
     float: left;
     line-height: 30px;
   }
-.ampunt-action button{
-  width: 30px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  background-color: #dfdfdf;
-}
-.ampunt-action .p-num{
-  margin: 0;
-  padding: 0;
-  border-width: 0;
-  width: 50px;
-  text-align: center;
-  color: #787878;
-}
 
-.ampunt-action .action-de{
-  border-width: 1px 0 1px 1px;
-  border-radius: 5px 0 0 5px;
-}
-.ampunt-action .action-plus{
-  border-width: 1px 1px 1px 0;
-  border-radius: 0 5px 5px 0;
-}
+  .ampunt-action button{
+    width: 30px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    background-color: #dfdfdf;
+  }
+
+  .ampunt-action .p-num{
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    width: 50px;
+    text-align: center;
+    color: #787878;
+  }
+
+  .ampunt-action .action-de{
+    border-width: 1px 0 1px 1px;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .ampunt-action .action-plus{
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 5px 5px 0;
+  }
+
   .p-purchase {
+    position: relative;
     height: 60px;
     padding: 0 10px;
     clear: both;
@@ -104,9 +119,11 @@
     vertical-align: middle;
     color: #787878;
   }
+
   .p-purchase .btn-add {
     background-color: #dfdfdf;
   }
+
   .p-purchase .btn-red {
     color: white;
   }
@@ -116,6 +133,7 @@
     height: 40px;
     clear: both;
   }
+
   .p-comments p {
     width: 100%;
     line-height: 30px;
@@ -130,6 +148,7 @@
     text-align: center;
     color: white;
   }
+
   .arrow {
     float: right;
     font-size: 20px;
@@ -142,18 +161,35 @@
     min-height: 150px;
     margin-bottom: 70px;
   }
+
   .p-intro h4{
     color: #787878;
     font-weight: normal;
   }
+
   .p-intro p{
     font-size: 16px;
     font-weight: normal;
   }
+  
   .p-intro .name{
     color: #aa0c3f;
     margin:  0;
     padding: 0;
+  }
+
+  .shoppingcart-animate {
+    position: absolute;
+    left: 41%;
+    top: 25px;
+    width: 25%;
+    height: 60%;
+    display: none;
+  }
+
+  .shoppingcart-animate img {
+    width: 25%;
+    height: 60%;
   }
 </style>
 <div class="main">
@@ -182,6 +218,7 @@
   <hr/>
   <div class="p-purchase">
     <button id="input-shoppingcart" class="btn btn-add" type="button">加入购物车</button>
+    <div class="shoppingcart-animate"><img src="/zhonglian/img/navbar/car-red.png"></div>
     <button class="btn btn-red" type="button">立即购买</button>
   </div>
   <hr/>

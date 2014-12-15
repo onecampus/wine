@@ -28,7 +28,6 @@
           JsonStr = Object;
         if (shoppingCart === null || shoppingCart === "") {
           //第一次加入商品
-          totalproduct = totalproduct + 1;
           JsonStr = {
             "productList": [{
               "id": product.id,
@@ -159,13 +158,16 @@
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
     };
+    /*
+    加入购物车
+    */
     $("#input-shoppingcart").click(function(){
-      var name = $(".product-name").text();
-      var englishname = $(".product-englishname").text();
-      var price = $(".price").text();
-      var num = $(".p-num").val();
-      var id = $(".product-id").val();
-      var img = $(".top-img").children().attr("src");
+      var name = $(".product-name").text(),
+          englishname = $(".product-englishname").text(),
+          price = $(".price").text(),
+          num = $(".p-num").val(),
+          id = $(".product-id").val(),
+          img = $(".top-img").children().attr("src");
       var product = {
         'id': id,
         'name': name,
@@ -175,36 +177,12 @@
         'img': img
       };
       Cart.addProduct(product);
+      $(".shoppingcart-animate").show(10);
+      for (i=0;i<15;i++){
+        $(".shoppingcart-animate").animate({left:'+=1%',top:'+=40%'},80);
+      }
+      $(".shoppingcart-animate").hide(10);
+      $(".shoppingcart-animate").css({"left":"41%","top":"25px"});
     });
-    // demo
-
-
-    //Cart.addProduct(product);
-    //var productList = Cart.getProductList(); // 取出购物车商品
-    //console.log(productList);
-    //cart.deleteProduct(product);
-
-    /*
-    if (Cart.existProduct(1)) {
-      Cart.incProductNum(1);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
-
-    if (Cart.existProduct(1)) {
-      Cart.updateProductNum(1, 40);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-
-
-    if (Cart.existProduct(1)) {
-      Cart.deleteProduct(1);
-    }
-    productList = Cart.getProductList(); // 取出购物车商品
-    console.log(productList);
-    */
-
   });
 }).call(this);
