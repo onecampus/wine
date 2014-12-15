@@ -1,149 +1,53 @@
 <% content_for :customer_title do %>
     用户中心
 <% end %>
-<style type="text/css">
+<link rel="stylesheet" href="/zhonglian/css/user_center.css">
 
-  .main {
-    width: 100%;
-    height: auto;
-  }
-
-  .top {
-    background-image: url("./img/user_center/user_center_bg.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    width: 100%;
-    height: 100px;
-  }
-
-  .top p {
-    margin: 0;
-    padding: 30px 0 0 0;
-    text-align: center;
-    font-size: 24px;
-    color: #ffffff;
-  }
-
-  .tab {
-    width: 100%;
-    height: 80px;
-  }
-
-  .tab .tab-item {
-    float: left;
-    width: 25%;
-    height: 80px;
-  }
-
-  .tab .tab-item p {
-    text-align: center;
-    margin: 0 auto 10px auto;
-    padding: 0;
-  }
-
-  .extra-bar {
-    width: 80%;
-    margin: 20px auto 70px auto;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    padding: 15px;
-    background-color: #ffffff;
-  }
-
-  .extra-bar div {
-    border-bottom: 1px solid #ddd;
-    clear: both;
-    display: block;
-    height: 70px;
-  }
-
-  .p-l {
-    width: 80%;
-    display: block;
-    float: left;
-    line-height: 45px;
-  }
-
-  .p-l a {
-    font-size: 24px;
-    color: #dddddd;
-    margin: auto auto auto 20px;
-  }
-
-  .p-r {
-    width: 15%;
-    display: block;
-    float: left;
-    line-height: 45px;
-  }
-
-  .p-r a {
-    font-size: 24px;
-    color: #dddddd;
-    margin: auto auto auto 20px;
-  }
-  .extra-bar div a{
-    color: #666;
-  }
-
-</style>
-<script type="text/javascript">
-       $(".tab-item").click(function(){
-        var index=
-       });
-</script>
 <div class="main">
-  <div class="top"><p>杨康</p></div>
-  <div class="tab">
-    <div class="tab-item" id="tab-item1">
-      <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
+  <div class="top">
+    <p>杨康</p>
+    <div class="tab">
+      <div class="tab-item">
+        <p><a href="/customer/users/wait/ship"><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></a></p>
 
-      <p>待发货</p>
-    </div>
-    <div class="tab-item" id="tab-item2">
-      <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
+        <p>待发货</p>
+      </div>
+      <div class="tab-item active">
+        <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
 
-      <p>待付款</p>
-    </div>
-    <div class="tab-item" id="tab-item3">
-      <p><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></p>
+        <p>待付款</p>
+      </div>
+      <div class="tab-item">
+        <p><a href="/customer/users/wait/receive"><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></a></p>
 
-      <p>待收货</p>
-    </div>
-    <div class="tab-item" id="tab-item4">
-      <p><img src="/zhonglian/img/user_center/icon_history_order.png"/></p>
+        <p>待收货</p>
+      </div>
+      <div class="tab-item">
+        <p><a href="/customer/users/order/history"><img src="/zhonglian/img/user_center/icon_history_order.png"/></a></p>
 
-      <p>历史订单</p>
-    </div>
-  </div>
-  <div id="tab1">1</div>
-  <div id="tab2">2</div>
-  <div id="tab3">3</div>
-  <div id="tab4">4</div>
-
-  <div class="extra-bar">
-    <div>
-      <p class="p-l"><a href="#">收货地址管理</a></p>
-
-      <p class="p-r"><a href="#">&gt;</a></p>
-    </div>
-    <div>
-      <p class="p-l"><a href="#">我的会员卡</a></p>
-
-      <p class="p-r"><a href="#">&gt;</a></p>
-    </div>
-    <div>
-      <p class="p-l"><a href="#">我的提成</a></p>
-
-      <p class="p-r"><a href="#">&gt;</a></p>
-    </div>
-    <div>
-      <p class="p-l"><a href="#">帮助</a></p>
-
-      <p class="p-r"><a href="#">&gt;</a></p>
+        <p>历史订单</p>
+      </div>
     </div>
   </div>
-  
+  <div class="history_order">
+    <p>订单编号：<span>12345</span></p>
+    <div class="ordered_product">
+      <img src="/zhonglian/img/user_center/icon_wait_to_receive.png" class="left" />
+      <p class="right">
+        <span class="order_price">￥600元</span>
+        <span class="order_num">×2</span>
+      </p>
+      <p class="middle">
+        <span>chinese name白兰地</span>
+        <span>english namebrandy</span>
+      </p>
+    </div>
+    <div>
+      <span class="freight">运费：￥10元</span>
+      <span class="sum"></span>
+      <a href="#">付款</a>
+    </div>
+  </div>
 </div>
+<script type="text/javascript" src="/zhonglian/js/user_center.js"></script>
 <%= render "site/shared/bottombar" %>
