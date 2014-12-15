@@ -114,6 +114,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    netrc (0.7.9)
     orm_adapter (0.5.0)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -138,6 +139,8 @@ GEM
       json (~> 1.4)
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
+    rest_client (1.8.2)
+      netrc (~> 0.7.7)
     rolify (3.4.1)
     sass (3.2.19)
     sass-rails (4.0.4)
@@ -210,6 +213,7 @@ DEPENDENCIES
   mini_magick
   mysql2
   rails (= 4.1.8)
+  rest_client
   rolify
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

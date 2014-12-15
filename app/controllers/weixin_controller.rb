@@ -1,8 +1,6 @@
 # encoding: UTF-8
 require 'json'
-require 'net/http'
-require 'open-uri'
-require 'cgi'
+require 'rest_client'
 
 class WeixinController < ApplicationController
   skip_before_filter :verify_authenticity_token
@@ -37,43 +35,118 @@ class WeixinController < ApplicationController
     end
   end
 
-  private
-
-  def http_get(domain, path, params)
-    return Net::HTTP.get(domain, "#{path}?".concat(params.collect { |k, v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&'))) if not params.nil?
-    Net::HTTP.get(domain, path)
+  def create_custom_menu(access_token)
+    menus = {
+      button: [
+        {
+          name: '我的微网',
+          sub_button: [
+            {
+              type: 'view',
+              name: '会员',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '天天有喜',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '官网',
+              url: 'http://203.195.172.200'
+            }
+          ]
+        },
+        {
+          name: '优生活',
+          sub_button: [
+            {
+              type: 'view',
+              name: '优社区',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '一起嗨皮',
+              url: 'http://203.195.172.200'
+            }
+          ]
+        },
+        {
+          name: '微商城',
+          sub_button: [
+            {
+              type: 'view',
+              name: '进口酒类',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '其他进口酒类',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '舌尖上的特产',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '最强推荐',
+              url: 'http://203.195.172.200'
+            },
+            {
+              type: 'view',
+              name: '订单查询',
+              url: 'http://203.195.172.200'
+            }
+          ]
+        }
+      ]
+    }
+    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}"
+    res = RestClient.post url, menus.to_json, content_type: :json, accept: :json
+    JSON.parse res
   end
+
+  def get_oauth_code
+    url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://203.195.172.200&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+    RestClient.get url
+  end
+
+  def get_oauth_access_token(code, appid = 'wxa2bbd3b7a22039df', secret = '724bbaea1bce4c09865c2c47acbf450d')
+    url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{appid}&secret=#{secret}&code=#{code}&grant_type=authorization_code"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
+  def refresh_oauth_access_token(appid = 'wxa2bbd3b7a22039df', refresh_token)
+    url = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=#{appid}&grant_type=refresh_token&refresh_token=#{refresh_token}"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
+  def get_user_info(openid, access_token)
+    url = "https://api.weixin.qq.com/sns/userinfo?access_token=#{access_token}&openid=#{openid}&lang=zh_CN"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
+  private
 
   def render_text
     render 'text', formats: :xml
   end
 
-  def render_text_which_start_with
-    render 'text_which_start_with', formats: :xml
-  end
-
-  def render_image
-    render 'image', formats: :xml
-  end
-
-  def render_voice
-    render 'voice', formats: :xml
-  end
-
-  def render_video
-    render 'video', formats: :xml
-  end
-
-  def render_music
-    render 'music', formats: :xml
-  end
-
-  def render_image_and_text
-    render 'image_and_text', formats: :xml
-  end
-
   def check_weixin_legality
     array = ['rubywine', params[:timestamp], params[:nonce]].sort
     render text: 'Forbidden', status: 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+  end
+
+  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
+    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
   end
 end
