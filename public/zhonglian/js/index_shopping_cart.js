@@ -134,7 +134,7 @@
           $("#product"+i).children(".p-amount").children(".ampunt-action").append(number);
           var buttonplus = $("<button></button>").addClass("action-plus").attr("type","button").text("+");
           $("#product"+i).children(".p-amount").children(".ampunt-action").append(buttonplus);
-
+          $("#product"+i).after("<hr>");
 
       }
     }
