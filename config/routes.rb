@@ -64,4 +64,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get 'weixin' => 'weixin#show'
+  match 'weixin', to: 'weixin#create', via: :post
 end

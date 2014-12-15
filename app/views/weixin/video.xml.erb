@@ -1,0 +1,11 @@
+<xml>
+  <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+  <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+  <CreateTime><%= Time.now.to_i %></CreateTime>
+  <MsgType><![CDATA[video]]></MsgType>
+  <Video>
+    <MediaId><![CDATA[media_id]]></MediaId>
+    <Title><![CDATA[title]]></Title>
+    <Description><![CDATA[description]]></Description>
+  </Video>
+</xml>

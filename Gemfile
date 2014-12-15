@@ -46,6 +46,9 @@ gem 'bootstrap-tagsinput-rails'
 # 评论
 gem 'acts_as_commentable_with_threading'
 
+# 微信xml解析
+gem 'actionpack-xml_parser'
+
 # 部署
 group :development do
   gem 'capistrano', '~> 3.3.0'
