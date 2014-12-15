@@ -115,7 +115,7 @@ class WeixinController < ApplicationController
     RestClient.get url
   end
 
-  def get_oauth_access_token(code, appid = 'wxa2bbd3b7a22039df', secret)
+  def get_oauth_access_token(code, appid = 'wxa2bbd3b7a22039df', secret = '724bbaea1bce4c09865c2c47acbf450d')
     url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{appid}&secret=#{secret}&code=#{code}&grant_type=authorization_code"
     res = RestClient.get url, {accept: :json}
     JSON.parse res
@@ -144,7 +144,7 @@ class WeixinController < ApplicationController
     render text: 'Forbidden', status: 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
   end
 
-  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret)
+  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
     url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
     res = RestClient.get url, {accept: :json}
     JSON.parse res
