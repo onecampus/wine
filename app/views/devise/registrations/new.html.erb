@@ -4,17 +4,53 @@
 <style type="text/css">
   select {
     margin:  7px auto;
+    font-size: 16px;
   }
   .mask {
     display: none;
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    height: 150px;
-    margin-top: -75px;
-    margin-left: -100px;
-    background-color: yellow;
+    width: 80%;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: #666;
+    z-index: 20;
+    box-shadow: 0 0 3px #666;
+  }
+  .back {
+    z-index: 11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background:#000;
+    opacity:0.5;
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    display:none;
+  }
+  .action {
+    margin: 16px auto;
+    text-align: center;
+  }
+  .action a {
+    background-color: #aa0c4f;
+    color: #fff;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 20px;
+  }
+  .action a:first-child {
+    margin-right: 20px;
+  }
+  .action a:last-child {
+    margin-left: 20px;
   }
   body {
     margin-top: -25px;
@@ -51,7 +87,7 @@
     <%= f.submit '注册', class: 'btn btn-red btn-block' %>
   <% end %>
 </div>
-
+  <div class="back"></div>
   <div class="mask">
     <div class="input-row">
       <label>省份</label>
@@ -64,6 +100,10 @@
     <div class="input-row">
       <label>地区</label>
       <select name="region" id="s3"></select>
+    </div>
+    <div class="action">
+      <a href="javascript:void(0)" class="confirm">确定</a>
+      <a href="javascript:void(0)" class="cancel">取消</a>
     </div>
   </div>
 
@@ -120,11 +160,38 @@
       var geoc = new BMap.Geocoder();
       geoc.getLocation(point, function(rs){
         var addComp = rs.addressComponents;
+        var $username = $('#user_username');
+        $username.blur();
         var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
         if (confirms) {
-          $('.form-box').hide();
-          $('.mask').slideDown(200);
+          var $back = $('.back');
+          var $confirm = $('.confirm');
+          var $cancel = $('.cancel');
+          var $mask = $('.mask');
+          $back.show();
+          $back.height($(document).height());
+          $mask.slideDown(800);
+          $confirm.click(function () {
+            var province = $('#s1 option:selected').text();
+            var city = $('#s2 option:selected').text();
+            var region = $('#s3 option:selected').text();
+            $('.province').val(province);
+            $('.city').val(city);
+            $('.region').val(region);
+            $back.hide();
+            $mask.slideUp(800);
+            $username.focus();
+          });
+          $cancel.click(function () {
+            $('.province').val(addComp.province);
+            $('.city').val(addComp.city);
+            $('.region').val(addComp.district);
+            $back.hide();
+            $mask.slideUp(800);
+            $username.focus();
+          });
         }else{
+          $username.focus();
           $('.province').val(addComp.province);
           $('.city').val(addComp.city);
           $('.region').val(addComp.district);
