@@ -86,6 +86,7 @@ class SiteController < CustomerController
   end
 
   def user_center
+    @user = current_user
   end
 
   def index_search_result
@@ -101,9 +102,6 @@ class SiteController < CustomerController
     @user = current_user
   end
 
-  def commission
-  end
-
   def index_wait_ship
   end
 
@@ -114,5 +112,8 @@ class SiteController < CustomerController
   end
 
   def index_order_history
+  end
+
+  def commission
   end
 end
