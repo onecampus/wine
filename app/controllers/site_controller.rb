@@ -10,7 +10,8 @@ class SiteController < CustomerController
                                                  :index_wait_ship,
                                                  :index_wait_pay,
                                                  :index_wait_receive,
-                                                 :index_order_history]
+                                                 :index_order_history,
+                                                 :create_order]
   skip_before_filter :verify_authenticity_token, only: [:create_order]
 
   def index
@@ -104,16 +105,14 @@ class SiteController < CustomerController
 
   def create_order
     # shipaddress
-    ship_address_id = params[:ship_address_id]
-    shipaddress = Shipaddress.find ship_address_id
+    shipaddress = Shipaddress.find params[:ship_address_id]
 
     # invoice
-    has_invoice_id = params[:has_invoice_id]
+    invoice = nil
+    has_invoice_id = params[:has_invoice_id].to_i
     if has_invoice_id == 0
     elsif has_invoice_id == 1
-      rise = params[:rise] # 抬头
-      content = params[:content] # 发票内容
-      invoice = Invoice.new(rise: rise, content: content)
+      invoice = Invoice.new(rise: params[:invoice][:rise], content: params[:invoice][:content])
     else
       render json: { status: 'falied', msg: 'has_invoice_id is not 0 or 1',
                      data: '' }
@@ -122,60 +121,60 @@ class SiteController < CustomerController
 
     # order
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
-    ship_method = params[:ship_method] # 送货方式
-    payment_method = params[:payment_method] # 支付方式
-    unless invoice.nil?
-      invoice_id = invoice.id
-    end
+    invoice_id = invoice.nil? ? nil : invoice.id
 
-    user_id = current_user.id
-    total_price = unit_price.to_i * product_count.to_i # 总价,通过计算获得
-    buy_date = Time.now # 购买日期
-    order_status = '未处理' # 未处理，已提交，已取消，已退货
-    pay_status = '未付款' # 未付款，已付款
-    logistics_status = '未备货' # 未备货,已备货，已发货，已收货
-    weixin_open_id = ''
-    receive_name = shipaddress.receive_name # 收货人姓名
-    mobile = shipaddress.mobile
-    tel = shipaddress.tel
-    supplier_id = current_user.customer.supplier_id # 渠道商id
-    order_type = '普通订单' # 普通订单，团购订单
+    products = params[:products]
+    total_price = 0.00
+
     order = Order.new(
-      user_id: user_id,
+      user_id: current_user.id,
       ship_address: ship_address,
-      ship_method: ship_method,
-      payment_method: payment_method,
+      ship_method: params[:ship_method],
+      payment_method: params[:payment_method],
       invoice_id: invoice_id,
       total_price: total_price,
-      buy_date: buy_date,
-      order_status: order_status,
-      pay_status: pay_status,
-      logistics_status: logistics_status,
-      weixin_open_id: weixin_open_id,
-      receive_name: receive_name,
-      mobile: mobile,
-      tel: tel,
-      supplier_id: supplier_id,
-      order_type: order_type
+      buy_date: Time.now,
+      order_status: '未处理',
+      pay_status: '未付款',
+      logistics_status: '未备货',
+      weixin_open_id: '',
+      receive_name: shipaddress.receive_name,
+      mobile: shipaddress.mobile,
+      tel: shipaddress.tel,
+      supplier_id: current_user.profile.supplier_id,
+      order_type: '普通订单'
     )
 
-    # product_order
-    order_id = order.id
-    product_count = params[:product_count]
-    product_id = params[:product_id]
-    product = Product.find product_id
-    unit_price = product.price
-
-    product_order = ProductOrder.new(order_id: order_id, product_id: product_id,
-                                     product_count: product_count,
-                                     unit_price: unit_price)
-
     Invoice.transaction do
-      Order.transaction do
-        ProductOrder.transaction do
+      ProductOrder.transaction do
+        Order.transaction do
           invoice.save!
           order.save!
-          product_order.save!
+
+          # product_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product = Product.find(product_id)
+            unit_price = product.price
+            product_count = p[:product_count].to_i
+
+            product_order = ProductOrder.new(
+              order_id: order.id,
+              product_id: product_id,
+              product_count: product_count,
+              unit_price: product.price
+            )
+            p_o_list.push product_order
+
+            total_price += unit_price.to_f * product_count
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.save!
           render json: { status: 'success', msg: 'create order success',
                          data: '' }
           return
