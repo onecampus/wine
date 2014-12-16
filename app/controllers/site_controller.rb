@@ -108,6 +108,7 @@ class SiteController < CustomerController
     shipaddress = Shipaddress.find ship_address_id
 
     # invoice
+    has_invoice_id = params[:has_invoice_id]
     if has_invoice_id == 0
     elsif has_invoice_id == 1
       rise = params[:rise] # 抬头
@@ -123,10 +124,8 @@ class SiteController < CustomerController
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
     ship_method = params[:ship_method] # 送货方式
     payment_method = params[:payment_method] # 支付方式
-    if !invoice.nil?
-      invoice_id = invoice.id # 发票id
-    else
-      invoice_id = 0
+    unless invoice.nil?
+      invoice_id = invoice.id
     end
 
     user_id = current_user.id
@@ -136,9 +135,9 @@ class SiteController < CustomerController
     pay_status = '未付款' # 未付款，已付款
     logistics_status = '未备货' # 未备货,已备货，已发货，已收货
     weixin_open_id = ''
-    receive_name = receive_name # 收货人姓名
-    mobile = mobile
-    tel = tel
+    receive_name = shipaddress.receive_name # 收货人姓名
+    mobile = shipaddress.mobile
+    tel = shipaddress.tel
     supplier_id = current_user.customer.supplier_id # 渠道商id
     order_type = '普通订单' # 普通订单，团购订单
     order = Order.new(
