@@ -103,10 +103,11 @@ class SiteController < CustomerController
   end
 
   def create_order
-    # 送货地址
+    # shipaddress
     ship_address_id = params[:ship_address_id]
+    shipaddress = Shipaddress.find ship_address_id
 
-    # 发票
+    # invoice
     if has_invoice_id == 0
     elsif has_invoice_id == 1
       rise = params[:rise] # 抬头
@@ -118,16 +119,8 @@ class SiteController < CustomerController
       return
     end
 
-    # 订单数据
-    product_count = params[:product_count]
-
-    customer_id = current_user.id
-    product_id = params[:product_id]
-    product = Product.find product_id
-    unit_price = product.price
-    user_id = current_user.id
-
-    ship_address = 'province#city#region#postcode' # 省:市:区:详细地址:postcode邮编
+    # order
+    ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
     ship_method = params[:ship_method] # 送货方式
     payment_method = params[:payment_method] # 支付方式
     if !invoice.nil?
@@ -136,6 +129,7 @@ class SiteController < CustomerController
       invoice_id = 0
     end
 
+    user_id = current_user.id
     total_price = unit_price.to_i * product_count.to_i # 总价,通过计算获得
     buy_date = Time.now # 购买日期
     order_status = '未处理' # 未处理，已提交，已取消，已退货
@@ -168,7 +162,10 @@ class SiteController < CustomerController
 
     # product_order
     order_id = order.id
-    product_id = product.id
+    product_count = params[:product_count]
+    product_id = params[:product_id]
+    product = Product.find product_id
+    unit_price = product.price
 
     product_order = ProductOrder.new(order_id: order_id, product_id: product_id,
                                      product_count: product_count,
@@ -177,7 +174,6 @@ class SiteController < CustomerController
     Invoice.transaction do
       Order.transaction do
         ProductOrder.transaction do
-          ship_address.save!
           invoice.save!
           order.save!
           product_order.save!
