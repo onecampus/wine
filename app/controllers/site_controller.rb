@@ -11,7 +11,7 @@ class SiteController < CustomerController
                                                  :index_wait_pay,
                                                  :index_wait_receive,
                                                  :index_order_history]
-  # skip_before_filter :verify_authenticity_token, only: [:]
+  skip_before_filter :verify_authenticity_token, only: [:create_order]
 
   def index
     @recommend_products = Product.last 8
@@ -86,6 +86,7 @@ class SiteController < CustomerController
   end
 
   def user_center
+    @user = current_user
   end
 
   def index_search_result
@@ -101,7 +102,91 @@ class SiteController < CustomerController
     @user = current_user
   end
 
-  def commission
+  def create_order
+    # 送货地址
+    ship_address_id = params[:ship_address_id]
+
+    # 发票
+    if has_invoice_id == 0
+    elsif has_invoice_id == 1
+      rise = params[:rise] # 抬头
+      content = params[:content] # 发票内容
+      invoice = Invoice.new(rise: rise, content: content)
+    else
+      render json: { status: 'falied', msg: 'has_invoice_id is not 0 or 1',
+                     data: '' }
+      return
+    end
+
+    # 订单数据
+    product_count = params[:product_count]
+
+    customer_id = current_user.id
+    product_id = params[:product_id]
+    product = Product.find product_id
+    unit_price = product.price
+    user_id = current_user.id
+
+    ship_address = 'province#city#region#postcode' # 省:市:区:详细地址:postcode邮编
+    ship_method = params[:ship_method] # 送货方式
+    payment_method = params[:payment_method] # 支付方式
+    if !invoice.nil?
+      invoice_id = invoice.id # 发票id
+    else
+      invoice_id = 0
+    end
+
+    total_price = unit_price.to_i * product_count.to_i # 总价,通过计算获得
+    buy_date = Time.now # 购买日期
+    order_status = '未处理' # 未处理，已提交，已取消，已退货
+    pay_status = '未付款' # 未付款，已付款
+    logistics_status = '未备货' # 未备货,已备货，已发货，已收货
+    weixin_open_id = ''
+    receive_name = receive_name # 收货人姓名
+    mobile = mobile
+    tel = tel
+    supplier_id = current_user.customer.supplier_id # 渠道商id
+    order_type = '普通订单' # 普通订单，团购订单
+    order = Order.new(
+      user_id: user_id,
+      ship_address: ship_address,
+      ship_method: ship_method,
+      payment_method: payment_method,
+      invoice_id: invoice_id,
+      total_price: total_price,
+      buy_date: buy_date,
+      order_status: order_status,
+      pay_status: pay_status,
+      logistics_status: logistics_status,
+      weixin_open_id: weixin_open_id,
+      receive_name: receive_name,
+      mobile: mobile,
+      tel: tel,
+      supplier_id: supplier_id,
+      order_type: order_type
+    )
+
+    # product_order
+    order_id = order.id
+    product_id = product.id
+
+    product_order = ProductOrder.new(order_id: order_id, product_id: product_id,
+                                     product_count: product_count,
+                                     unit_price: unit_price)
+
+    Invoice.transaction do
+      Order.transaction do
+        ProductOrder.transaction do
+          ship_address.save!
+          invoice.save!
+          order.save!
+          product_order.save!
+          render json: { status: 'success', msg: 'create order success',
+                         data: '' }
+          return
+        end
+      end
+    end
   end
 
   def index_wait_ship
@@ -114,5 +199,8 @@ class SiteController < CustomerController
   end
 
   def index_order_history
+  end
+
+  def commission
   end
 end
