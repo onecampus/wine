@@ -1,38 +1,36 @@
 <% content_for :page_title do %>
   查看<%=t 'activerecord.models.order' %>
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
-        </a>
-      </li>
-      <li class="active">
-        查看<%=t 'activerecord.models.order' %>
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
+      </a>
+    </li>
+    <li class="active">
+      查看<%=t 'activerecord.models.order' %>
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <!-- start: PAGE CONTENT -->
 <div class="row">
   <div class="col-sm-12">
@@ -60,7 +58,6 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.invoice_id' %></div>
             <div class="col-sm-9">
@@ -69,7 +66,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.user_id' %></div>
             <div class="col-sm-9">
@@ -78,7 +74,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.order_number' %></div>
             <div class="col-sm-9">
@@ -87,7 +82,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.ship_address' %></div>
             <div class="col-sm-9">
@@ -96,7 +90,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.ship_method' %></div>
             <div class="col-sm-9">
@@ -105,7 +98,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.payment_method' %></div>
             <div class="col-sm-9">
@@ -114,7 +106,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.freight' %></div>
             <div class="col-sm-9">
@@ -123,7 +114,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.package_charge' %></div>
             <div class="col-sm-9">
@@ -132,7 +122,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.total_price' %></div>
             <div class="col-sm-9">
@@ -141,7 +130,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.buy_date' %></div>
             <div class="col-sm-9">
@@ -150,7 +138,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.order_status' %></div>
             <div class="col-sm-9">
@@ -159,7 +146,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.pay_status' %></div>
             <div class="col-sm-9">
@@ -168,7 +154,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.logistics_status' %></div>
             <div class="col-sm-9">
@@ -177,7 +162,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.operator' %></div>
             <div class="col-sm-9">
@@ -186,7 +170,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.cancel_reason' %></div>
             <div class="col-sm-9">
@@ -195,7 +178,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.weixin_open_id' %></div>
             <div class="col-sm-9">
@@ -204,7 +186,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.receive_name' %></div>
             <div class="col-sm-9">
@@ -213,7 +194,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.mobile' %></div>
             <div class="col-sm-9">
@@ -222,7 +202,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.tel' %></div>
             <div class="col-sm-9">
@@ -231,7 +210,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.supplier_id' %></div>
             <div class="col-sm-9">
@@ -240,7 +218,6 @@
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.order_type' %></div>
             <div class="col-sm-9">
@@ -249,7 +226,7 @@
               </div>
             </div>
           </div>
-                  </div>
+        </div>
       </div>
     </div>
     <!-- end: TEXT FIELDS PANEL -->
