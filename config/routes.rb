@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'customer/products/search' => 'site#index_search_result'
 
   # order
+  get 'customer/orders/settlement' => 'site#order_settlement'
   match 'customer/orders/create', to: 'site#create_order', via: :post
 
   get 'customer/commission' => 'site#commission'

@@ -103,6 +103,9 @@ class SiteController < CustomerController
     @user = current_user
   end
 
+  def order_settlement
+  end
+
   def create_order
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
