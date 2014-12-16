@@ -12,6 +12,9 @@ class Ability
       can :manage, Tag
       can :manage, Integral
       can :manage, Vritualcard
+      can :manage, Order
+      can :manage, ProductOrder
+      can :manage, Invoice
     elsif user.has_role? :customer
       can :manage, Site
     else

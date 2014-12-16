@@ -1,8 +1,10 @@
 class InvoicesController < ApplicationController
+  authorize_resource
+  respond_to :html, :json
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
 
   def index
-    @invoices = Invoice.all
+    @invoices = Invoice.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@invoices)
   end
 

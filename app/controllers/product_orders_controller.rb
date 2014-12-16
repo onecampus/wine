@@ -1,8 +1,10 @@
 class ProductOrdersController < ApplicationController
+  authorize_resource
+  respond_to :html, :json
   before_action :set_product_order, only: [:show, :edit, :update, :destroy]
 
   def index
-    @product_orders = ProductOrder.all
+    @product_orders = ProductOrder.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@product_orders)
   end
 

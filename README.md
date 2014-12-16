@@ -62,7 +62,7 @@ git push origin dev # 推送 dev 分支到远程
 2. 修改model对应关系
 3. controller里面添加分页和
 ```ruby
-.paginate(:page => params[:page], :per_page => 10).order('id DESC')
+.paginate(page: params[:page], per_page: 10).order('id DESC')
 
 authorize_resource
 respond_to :html, :json

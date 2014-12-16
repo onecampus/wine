@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :product_orders
-
-  resources :orders
-
-  resources :invoices
-
   root 'site#index'
 
   # product cat
@@ -44,15 +38,18 @@ Rails.application.routes.draw do
 
 
   scope '/admin' do
+
+    resources :integrals
+    resources :vritualcards
+    resources :shipaddresses
+
+    resources :product_orders
+    resources :orders
+    resources :invoices
     resources :products
     resources :inventories
     resources :comments
     resources :tags
-
-    resources :integrals
-    resources :vritualcards
-
-    resources :shipaddresses
 
     resources :roles
     resources :users

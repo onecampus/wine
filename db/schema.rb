@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210075858) do
+ActiveRecord::Schema.define(version: 20141216034156) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -81,6 +81,48 @@ ActiveRecord::Schema.define(version: 20141210075858) do
     t.integer  "user_id"
     t.integer  "product_id"
     t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoices", force: true do |t|
+    t.string   "rise"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.integer  "invoice_id"
+    t.integer  "user_id"
+    t.string   "order_number"
+    t.string   "ship_address"
+    t.string   "ship_method"
+    t.string   "payment_method"
+    t.string   "freight"
+    t.string   "package_charge"
+    t.string   "total_price"
+    t.datetime "buy_date"
+    t.integer  "order_status"
+    t.integer  "pay_status"
+    t.integer  "logistics_status"
+    t.integer  "operator"
+    t.string   "cancel_reason"
+    t.string   "weixin_open_id"
+    t.string   "receive_name"
+    t.string   "mobile"
+    t.string   "tel"
+    t.integer  "supplier_id"
+    t.string   "order_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_orders", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.integer  "product_count"
+    t.string   "unit_price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

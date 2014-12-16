@@ -1,8 +1,10 @@
 class OrdersController < ApplicationController
+  authorize_resource
+  respond_to :html, :json
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   def index
-    @orders = Order.all
+    @orders = Order.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@orders)
   end
 
