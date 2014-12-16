@@ -62,7 +62,7 @@ git push origin dev # 推送 dev 分支到远程
 2. 修改model对应关系
 3. controller里面添加分页和
 ```ruby
-.paginate(:page => params[:page], :per_page => 10).order('id DESC')
+.paginate(page: params[:page], per_page: 10).order('id DESC')
 
 authorize_resource
 respond_to :html, :json
@@ -163,11 +163,12 @@ rails g scaffold Inventory user_id:integer product_id:integer amount:integer
 rails g scaffold Shipaddress user_id:integer receive_name:string province:string city:string region:string address:string postcode:string tel:string mobile:string
 rails g migration add_img_to_cats img:string
 rails g uploader CatImg
+rails g scaffold Vritualcard user_id:integer money:string
+rails g scaffold Integral user_id:integer amount:string
+
 rails g scaffold Invoice rise:string content:text
 rails g scaffold Order invoice_id:integer user_id:integer order_number:string ship_address:string ship_method:string payment_method:string freight:string package_charge:string total_price:string buy_date:datetime order_status:integer pay_status:integer logistics_status:integer operator:integer cancel_reason:string weixin_open_id:string receive_name:string mobile:string tel:string supplier_id:integer order_type:string
 rails g scaffold ProductOrder order_id:integer product_id:integer product_count:integer unit_price:string
-rails g scaffold Vritualcard user_id:integer money:string
-rails g scaffold Integral user_id:integer amount:string
 
 
 

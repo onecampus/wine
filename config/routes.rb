@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get 'customer/products/:id/comments' => 'site#index_comments'
   get 'customer/products/search' => 'site#index_search_result'
 
+  # order
+  match 'customer/orders/create', to: 'site#create_order', via: :post
+
   get 'customer/commission' => 'site#commission'
 
   # user center
@@ -38,15 +41,18 @@ Rails.application.routes.draw do
 
 
   scope '/admin' do
+
+    resources :integrals
+    resources :vritualcards
+    resources :shipaddresses
+
+    resources :product_orders
+    resources :orders
+    resources :invoices
     resources :products
     resources :inventories
     resources :comments
     resources :tags
-
-    resources :integrals
-    resources :vritualcards
-
-    resources :shipaddresses
 
     resources :roles
     resources :users

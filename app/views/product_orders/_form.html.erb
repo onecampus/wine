@@ -1,0 +1,55 @@
+
+<%= form_for(@product_order, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @product_order.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@product_order.errors.count, "error") %></h2>
+        <ul>
+        <% @product_order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :order_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.product_order.order_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :order_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :product_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.product_order.product_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :product_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :product_count, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.product_order.product_count' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :product_count, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :unit_price, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.product_order.unit_price' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :unit_price, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>
