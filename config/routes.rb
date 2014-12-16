@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :product_orders
+
+  resources :orders
+
+  resources :invoices
+
   root 'site#index'
 
   # product cat
