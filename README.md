@@ -170,6 +170,10 @@ rails g scaffold Invoice rise:string content:text
 rails g scaffold Order invoice_id:integer user_id:integer order_number:string ship_address:string ship_method:string payment_method:string freight:string package_charge:string total_price:string buy_date:datetime order_status:integer pay_status:integer logistics_status:integer operator:integer cancel_reason:string weixin_open_id:string receive_name:string mobile:string tel:string supplier_id:integer order_type:string
 rails g scaffold ProductOrder order_id:integer product_id:integer product_count:integer unit_price:string
 
+rails g scaffold PrizeAct name:string desc:string prize_type:string start_time:datetime end_time:datetime is_open:integer join_num:integer person_limit:integer
+rails g scaffold PrizeConfig pan_cat_id:string prize_name:string min:string max:string prize_content:string prize_inventory:integer chance:integer
+rails g scaffold PrizeUser user_id:integer prize_id:integer
+rails g scaffold PrizeUserNumber user_id:integer number:integer
 
 
 rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
