@@ -36,78 +36,31 @@ class WeixinController < ApplicationController
   end
 
   def create_custom_menu(access_token)
-    menus = {
-      button: [
-        {
-          name: '我的微网',
-          sub_button: [
-            {
-              type: 'view',
-              name: '会员',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '天天有喜',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '官网',
-              url: 'http://203.195.172.200'
-            }
-          ]
-        },
-        {
-          name: '优生活',
-          sub_button: [
-            {
-              type: 'view',
-              name: '优社区',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '一起嗨皮',
-              url: 'http://203.195.172.200'
-            }
-          ]
-        },
-        {
-          name: '微商城',
-          sub_button: [
-            {
-              type: 'view',
-              name: '进口酒类',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '其他进口酒类',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '舌尖上的特产',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '最强推荐',
-              url: 'http://203.195.172.200'
-            },
-            {
-              type: 'view',
-              name: '订单查询',
-              url: 'http://203.195.172.200'
-            }
-          ]
-        }
-      ]
-    }
+    menus = { button: [] }
+    top_mus = WxMenu.where(level: 1).last 3
+    top_mus.each do |tm|
+      tmp_hash = {
+        name: tm.name,
+        sub_button: []
+      }
+      WxMenu.where(level: 2, parent_id: tm.id).last(5).each do |sm|
+        tmp_hash[:sub_button].push(
+          type: 'view',
+          name: sm.name,
+          url: sm.url
+        )
+      end
+      menus[:button].push tmp_hash
+    end
+
     url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}"
     res = RestClient.post url, menus.to_json, content_type: :json, accept: :json
-    JSON.parse res
+    res_hash = JSON.parse res
+    if res_hash[:errcode] == 0 && res_hash[:errmsg] == 'ok'
+      render json: { status: 'success', msg: 'create menu success' }
+    else
+      render json: { status: 'error', msg: 'create menu failed' }
+    end
   end
 
   private

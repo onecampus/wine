@@ -1,6 +1,37 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.wx_menu' %>管理
 <% end %>
+
+<link href="/plugins/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script>
+(function() {
+  $(document).on('ready page:load', function() {
+    $.fn.editable.defaults.mode = 'popup';
+    $('.wx-menu-editable').editable();
+
+    $('.publish-menu').on('click', function() {
+      $.ajax({
+        type: "GET",
+        url: "/admin/weixin/menus/create/json",
+        dataType: "json",
+        success: function(data) {
+          // code
+          alert(data);
+        },
+        complete: function(XMLHttpRequest, textStatus){
+          // code
+        },
+        error: function(){
+          // code
+        }
+      });
+      return false;
+    });
+  });
+}).call(this);
+</script>
+
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
   <ol class="breadcrumb">
@@ -57,16 +88,29 @@
       <ul>
       <% @wx_menus.each do |mu| %>
         <li>
-          <%= mu.name %>
+          <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
+            <%= mu.name %>
+          </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
+            <%= mu.url %>
+          </a>
           <ul>
             <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
             <% subs.each do |submu| %>
-              <li><%= submu.name %></li>
+              <li>
+                <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
+                  <%= submu.name %>
+                </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
+                  <%= submu.url %>
+                </a>
+              </li>
             <% end %>
           </ul>
         </li>
       <% end %>
       </ul>
+      <%= submit_tag("发布", class: "btn btn-yellow btn-block publish-menu") %>
     </div>
   </div>
 </div>

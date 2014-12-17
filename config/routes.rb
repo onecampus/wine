@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   scope '/admin' do
 
     resources :wx_menus
+    match 'wx_menus/update/json', to: 'wx_menus#update_via_json', via: :post
+    get 'weixin/menus/create/json' => 'wx_menus#create_weixin_menu'
 
     resources :prize_user_numbers
     resources :prize_users
