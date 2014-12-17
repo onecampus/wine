@@ -14,7 +14,9 @@ class SiteController < CustomerController
                                                  :create_order,
                                                  :big_whell_ajax]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
-                                                        :big_whell_ajax]
+                                                        :big_whell_ajax,
+                                                        :create_ship_address_via_ajax,
+                                                        :create_invoice_via_ajax]
 
   def index
     @recommend_products = Product.last 8
