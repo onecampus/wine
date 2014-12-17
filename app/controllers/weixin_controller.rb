@@ -26,10 +26,10 @@ class WeixinController < ApplicationController
     elsif query_type == 'text'
       query = params[:xml][:Content]
       if query == '帮助' || query == 'help' || query == '?' || query == '？'
-        @reply_text = 'welcome'
+        @reply_text = '点击微信菜单进行您的活动吧.'
         render_text
       elsif query[0...1].to_i.to_s == query[0...1]
-        @reply_text = 'welcome to china'
+        @reply_text = '感谢你对我们的支持,输入 帮助 或者 help 或者 ? 获取帮助信息.'
         render_text
       end
     end
@@ -110,6 +110,23 @@ class WeixinController < ApplicationController
     JSON.parse res
   end
 
+  private
+
+  def render_text
+    render 'text', formats: :xml
+  end
+
+  def check_weixin_legality
+    array = ['rubywine', params[:timestamp], params[:nonce]].sort
+    render text: 'Forbidden', status: 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+  end
+
+  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
+    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
   def get_oauth_code
     url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://203.195.172.200&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
     RestClient.get url
@@ -129,23 +146,6 @@ class WeixinController < ApplicationController
 
   def get_user_info(openid, access_token)
     url = "https://api.weixin.qq.com/sns/userinfo?access_token=#{access_token}&openid=#{openid}&lang=zh_CN"
-    res = RestClient.get url, {accept: :json}
-    JSON.parse res
-  end
-
-  private
-
-  def render_text
-    render 'text', formats: :xml
-  end
-
-  def check_weixin_legality
-    array = ['rubywine', params[:timestamp], params[:nonce]].sort
-    render text: 'Forbidden', status: 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
-  end
-
-  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
-    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
     res = RestClient.get url, {accept: :json}
     JSON.parse res
   end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :wx_menus
+
   root 'site#index'
 
   # product cat
