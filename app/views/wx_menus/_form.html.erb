@@ -1,0 +1,87 @@
+
+<%= form_for(@wx_menu, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @wx_menu.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@wx_menu.errors.count, "error") %></h2>
+        <ul>
+        <% @wx_menu.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :name, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.name' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :name, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :msg, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.msg' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_area :msg, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :url, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.url' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :url, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :msg_or_url, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.msg_or_url' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :msg_or_url, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :button_type, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.button_type' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :button_type, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :key, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.key' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :key, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :parent_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.parent_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :parent_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :level, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.wx_menu.level' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :level, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>
