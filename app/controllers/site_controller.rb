@@ -203,8 +203,102 @@ class SiteController < CustomerController
   end
 
   def big_whell_ajax
+    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_hash = {}
+    prizes.each_with_index do |p, index|
+      min = p.min.split(',')
+      max = p.max.split(',')
+      p.min = min if min.size > 1
+      p.max = max if max.size > 1
+      prize_hash[index] = p
+    end
+
+    result = get_result(prize_hash)
+    render json: result
   end
 
   def commission
+  end
+
+  private
+
+  def get_result(prize_hash)
+    result = {}
+    hash = {}
+    count = {}
+    prize_hash.each do |_, value|
+      hash[value.id] = value.chance
+      count[value.id] = value.prize_inventory
+    end
+    rid = get_rand(hash, count) # 根据概率获取奖项id
+    res = PrizeConfig.find rid # 中奖项
+
+    prize_act = res.prize_act unless res.prize_act.nil?
+    if prize_act
+      prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                        prize_act_id: prize_act.id).first
+      if prize_num.nil?
+        prize_num = PrizeUserNumber.new(
+          user_id: current_user.id,
+          number: prize_act.person_limit,
+          prize_act_id: prize_act.id
+        )
+        prize_num.save!
+      end
+
+      if prize_num.number == 0 # 该用户剩余抽奖次数该用户剩余抽奖次数
+        result[:num] = 0
+        result[:prize_name] = nil
+        result[:angle] = 0
+      else
+        num = prize_num.number -= 1
+        prize_num.save!
+        result[:num] = num
+
+        min = res.min
+        max = res.max
+
+        if min.is_a? Array
+          i = rand(0..(min.size - 1))
+          result[:angle] = rand(min[i]..max[i])
+        else
+          min = res.min.to_i
+          max = res.max.to_i
+          result[:angle] = rand(min..max)
+        end
+        result[:prize_name] = res.prize_name
+      end
+      res.prize_inventory -= 1
+      res.save!
+    end
+    result
+  end
+
+  def get_rand(pro_arr, pro_count)
+    result = 0
+    pro_sum = 0
+    # 概率数组的总概率精度  获取库存不为0的
+    pro_count.each do |key, val|
+      if val == 0
+        next
+      else
+        pro_sum += pro_arr[key]
+      end
+    end
+    # 概率数组循环
+    pro_arr.each do |key, val|
+      if pro_count[key] == 0
+        next
+      else
+        rand_num = rand(1..pro_sum) # 关键
+        if rand_num <= val
+          result = key
+          break
+        else
+          pro_sum -= val
+        end
+      end
+    end
+    result
   end
 end

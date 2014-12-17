@@ -95,7 +95,7 @@ prize_act = PrizeAct.new(
   end_time: Time.now + 3600 * 24,
   is_open: 1,
   join_num: 0,
-  person_limit: 1
+  person_limit: 30
 )
 prize_act.save!
 
@@ -175,6 +175,7 @@ prize_config7 = PrizeConfig.new(
   chance: 50
 )
 prize_config7.save!
+
 
 time_end = Time.now
 time = time_end - time_start
