@@ -87,6 +87,95 @@ end
   end
 end
 
+prize_act = PrizeAct.new(
+  name: '送iphone7',
+  desc: '送iphone7，大转盘活动',
+  prize_type: 'bigwheel',
+  start_time: Time.now,
+  end_time: Time.now + 3600 * 24,
+  is_open: 1,
+  join_num: 0,
+  person_limit: 30
+)
+prize_act.save!
+
+prize_config1 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '一等奖',
+  min: '1',
+  max: '29',
+  prize_content: 'iphone 6',
+  prize_inventory: 8,
+  chance: 1
+)
+prize_config1.save!
+
+prize_config2 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '二等奖',
+  min: '302',
+  max: '328',
+  prize_content: 'iphone 5',
+  prize_inventory: 8,
+  chance: 2
+)
+prize_config2.save!
+
+prize_config3 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '三等奖',
+  min: '242',
+  max: '268',
+  prize_content: '现金500',
+  prize_inventory: 8,
+  chance: 5
+)
+prize_config3.save!
+
+prize_config4 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '四等奖',
+  min: '182',
+  max: '208',
+  prize_content: '现金300',
+  prize_inventory: 8,
+  chance: 7
+)
+prize_config4.save!
+
+prize_config5 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '五等奖',
+  min: '122',
+  max: '148',
+  prize_content: '现金200',
+  prize_inventory: 8,
+  chance: 10
+)
+prize_config5.save!
+
+prize_config6 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '六等奖',
+  min: '62',
+  max: '88',
+  prize_content: '现金100',
+  prize_inventory: 8,
+  chance: 25
+)
+prize_config6.save!
+
+prize_config7 = PrizeConfig.new(
+  prize_act_id: prize_act.id,
+  prize_name: '七等奖',
+  min: '32,92,152,212,272,332',
+  max: '58,118,178,238,298,358',
+  prize_content: '小熊宝宝一个',
+  prize_inventory: 8,
+  chance: 50
+)
+prize_config7.save!
+
 
 time_end = Time.now
 time = time_end - time_start

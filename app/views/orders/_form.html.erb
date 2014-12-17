@@ -1,0 +1,210 @@
+<%= form_for(@order, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@order.errors.count, "error") %></h2>
+        <ul>
+          <% @order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :invoice_id, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.invoice_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :invoice_id, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :user_id, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.user_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :user_id, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :order_number, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.order_number' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :order_number, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :ship_address, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.ship_address' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :ship_address, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :ship_method, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.ship_method' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :ship_method, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :payment_method, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.payment_method' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :payment_method, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :freight, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.freight' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :freight, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :package_charge, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.package_charge' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :package_charge, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :total_price, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.total_price' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :total_price, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :buy_date, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.buy_date' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.datetime_select :buy_date, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :order_status, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.order_status' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :order_status, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :pay_status, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.pay_status' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :pay_status, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :logistics_status, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.logistics_status' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :logistics_status, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :operator, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.operator' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :operator, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cancel_reason, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.cancel_reason' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :cancel_reason, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :weixin_open_id, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.weixin_open_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :weixin_open_id, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :receive_name, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.receive_name' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :receive_name, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :mobile, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.mobile' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :mobile, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :tel, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.tel' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :tel, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :supplier_id, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.supplier_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :supplier_id, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :order_type, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.order.order_type' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :order_type, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+    </div>
+  </div>
+<% end %>

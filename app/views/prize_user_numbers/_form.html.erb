@@ -1,0 +1,47 @@
+
+<%= form_for(@prize_user_number, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @prize_user_number.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@prize_user_number.errors.count, "error") %></h2>
+        <ul>
+        <% @prize_user_number.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :user_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.prize_user_number.user_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :user_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :number, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.prize_user_number.number' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :number, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :prize_act_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.prize_user_number.prize_act_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :prize_act_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

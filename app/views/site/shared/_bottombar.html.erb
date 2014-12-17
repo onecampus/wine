@@ -1,14 +1,29 @@
-<nav class="bar bar-tab">
+<style type="text/css">
+  .shopping-cart-mark {
+    position: absolute;
+    left: -15px;
+    width: 13px;
+    height: 13px;
+    background: #ffffff;
+    border: 1px solid #7c0045;
+    border-radius: 20px;
+    font-size: 0.5em;
+    color: #7c0045;
+    text-align: center;
+    padding:1px;
+}
+</style>
+<nav class="bar bar-tab" data-no-turbolink>
   <a class="tab-item" href="/">
     <span class="icon icon-background-base icon-home"></span>
     <span class="tab-label">主页</span>
   </a>
-  <a class="tab-item active" href="/customer/usercenter">
+  <a class="tab-item active" href="/customer/users/center">
     <span class="icon icon-background-base icon-person-hover"></span>
     <span class="tab-label">用户中心</span>
   </a>
   <a class="tab-item" href="/customer/cart">
-    <span class="icon icon-background-base icon-cart"></span>
+    <span class="icon icon-background-base icon-cart"><div class="shopping-cart-mark"></div></span>
     <span class="tab-label">购物车</span>
   </a>
   <a class="tab-item" href="/customer/products/search">

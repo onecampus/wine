@@ -15,7 +15,7 @@ function MultilevelSelect(options) {
       keys.push(key);
     }
     return keys;
-  }
+  };
 
   var changeOptions = function(selectNode, options) {
     var html = '';
@@ -23,7 +23,7 @@ function MultilevelSelect(options) {
       html += '<option>' + options[i] + '</option>';
     }
     selectNode.html(html);
-  }
+  };
 
   var level1 = getKeys(options.data);
   changeOptions(options.nodes[0], level1);
