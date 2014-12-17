@@ -13,7 +13,8 @@ class SiteController < CustomerController
                                                  :index_order_history,
                                                  :create_order,
                                                  :big_whell_ajax]
-  skip_before_filter :verify_authenticity_token, only: [:create_order, :big_whell_ajax]
+  skip_before_filter :verify_authenticity_token, only: [:create_order,
+                                                        :big_whell_ajax]
 
   def index
     @recommend_products = Product.last 8
@@ -80,6 +81,26 @@ class SiteController < CustomerController
     end
   end
 
+  def create_ship_address_via_ajax
+    shipaddress_params = {
+      user_id: current_user.id,
+      receive_name: params[:receive_name],
+      province: params[:province],
+      city: params[:city],
+      region: params[:region],
+      address: params[:address],
+      postcode: params[:postcode],
+      tel: params[:tel],
+      mobile: params[:mobile]
+    }
+    @shipaddress = Shipaddress.new(shipaddress_params)
+    if @shipaddress.save
+      render json: { status: 'success', msg: 'create ship address success.', data: @shipaddress.id }
+    else
+      render json: { status: 'failed', msg: 'create ship address failed.' }
+    end
+  end
+
   def index_ship_address
     @shipaddresses = current_user.shipaddresses
   end
@@ -107,21 +128,22 @@ class SiteController < CustomerController
   def order_settlement
   end
 
+  def create_invoice_via_ajax
+    @invoice = Invoice.new(rise: params[:rise], content: params[:content])
+    if @invoice.save
+      render json: { status: 'success', msg: 'create invoice success.',
+                     data: @invoice.id }
+    else
+      render json: { status: 'failed', msg: 'create invoice failed.' }
+    end
+  end
+
   def create_order
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
-
     # invoice
     invoice = nil
-    has_invoice_id = params[:has_invoice_id].to_i
-    if has_invoice_id == 0
-    elsif has_invoice_id == 1
-      invoice = Invoice.new(rise: params[:invoice][:rise], content: params[:invoice][:content])
-    else
-      render json: { status: 'falied', msg: 'has_invoice_id is not 0 or 1',
-                     data: '' }
-      return
-    end
+    invoice = Invoice.find(params[:invoice_id]) unless params[:invoice_id].blank?
 
     # order
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
@@ -149,40 +171,36 @@ class SiteController < CustomerController
       order_type: '普通订单'
     )
 
-    Invoice.transaction do
-      ProductOrder.transaction do
-        Order.transaction do
-          invoice.save!
-          order.save!
+    ProductOrder.transaction do
+      Order.transaction do
+        order.save!
 
-          # product_order
-          p_o_list = []
-          products.each do |_, p|
-            product_id = p[:product_id].to_i
-            product = Product.find(product_id)
-            unit_price = product.price
-            product_count = p[:product_count].to_i
+        # product_order
+        p_o_list = []
+        products.each do |_, p|
+          product_id = p[:product_id].to_i
+          product = Product.find(product_id)
+          unit_price = product.price
+          product_count = p[:product_count].to_i
 
-            product_order = ProductOrder.new(
-              order_id: order.id,
-              product_id: product_id,
-              product_count: product_count,
-              unit_price: product.price
-            )
-            p_o_list.push product_order
+          product_order = ProductOrder.new(
+            order_id: order.id,
+            product_id: product_id,
+            product_count: product_count,
+            unit_price: product.price
+          )
+          p_o_list.push product_order
 
-            total_price += unit_price.to_f * product_count
-          end
-
-          total_price = total_price.round(2)
-
-          p_o_list.each(&:save!)
-          order.total_price = total_price
-          order.save!
-          render json: { status: 'success', msg: 'create order success',
-                         data: '' }
-          return
+          total_price += unit_price.to_f * product_count
         end
+
+        total_price = total_price.round(2)
+
+        p_o_list.each(&:save!)
+        order.total_price = total_price
+        order.save!
+        render json: { status: 'success', msg: 'create order success' }
+        return
       end
     end
   end
