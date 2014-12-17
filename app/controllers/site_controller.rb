@@ -104,6 +104,7 @@ class SiteController < CustomerController
   end
 
   def order_settlement
+    @shipaddresses = current_user.shipaddresses
   end
 
   def create_order
