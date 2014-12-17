@@ -14,7 +14,7 @@ class SiteController < CustomerController
                                                  :create_order,
                                                  :big_whell_ajax]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
-                                                        :big_whell_ajax,
+                                                        :big_wheel_ajax,
                                                         :create_ship_address_via_ajax,
                                                         :create_invoice_via_ajax]
 
@@ -223,7 +223,7 @@ class SiteController < CustomerController
   def big_wheel
   end
 
-  def big_whell_ajax
+  def big_wheel_ajax
     prizes = PrizeConfig.where(prize_act_id: 1)
     prize_hash = {}
     prizes.each_with_index do |p, index|
