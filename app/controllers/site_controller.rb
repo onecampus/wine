@@ -291,6 +291,11 @@ class SiteController < CustomerController
       end
       res.prize_inventory -= 1
       res.save!
+      prize_user = PrizeUser.new(
+        user_id: current_user.id,
+        prize_config_id: res.id
+      )
+      prize_user.save!
     end
     result
   end
