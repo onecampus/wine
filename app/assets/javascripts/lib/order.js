@@ -15,8 +15,8 @@
           rise: "a",
           content: "b"
         },
-        ship_method: 'a',
-        payment_method: 'b',
+        ship_method: 'express',
+        payment_method: 'weixinpayment',
         products: [
           {
             product_id: 1,

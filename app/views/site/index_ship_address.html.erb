@@ -31,7 +31,7 @@
         float: left;
         margin: 10px 0 0 0;
         padding: 0;
-        
+
     }
 
     .p-m span {
@@ -71,7 +71,7 @@
 <div class="ship-address">
   <% @shipaddresses.each do |ad| %>
       <div>
-        <p class="p-l"><input type="radio" name="shipaddress" value="id"/></p>
+        <p class="p-l"><input type="radio" name="shipaddress" value="<%= ad.id %>"/></p>
 
         <p class="p-m">
           <span><%= ad.receive_name %></span>
@@ -87,3 +87,12 @@
 
 <a href="/customer/shipaddresses/new" class="recharge btn btn-red" data-no-turbolink>添加新地址</a>
 <%= render "site/shared/bottombar" %>
+<script>
+  (function () {
+    $(document).on('ready page:load',function(){
+      var adId = ($("input[type='radio']:checked").val());
+      
+  });
+  }).call(this);
+
+</script>

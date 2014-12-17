@@ -36,7 +36,8 @@
               "englishname": product.englishname,
               "num": product.num,
               "price": product.price,
-              "img": product.img
+              "img": product.img,
+              "buyMark": product.buyMark
             }],
             "totalNumber": product.num,
             "totalAmount": (product.price * product.num)
@@ -61,7 +62,8 @@
               "englishname": product.englishname,
               "num": product.num,
               "price": product.price,
-              "img": product.img
+              "img": product.img,
+              "buyMark": product.buyMark
             });
           }
           //重新计算总价
@@ -168,14 +170,16 @@
           price = $(".price").text(),
           num = $(".p-num").val(),
           id = $(".product-id").val(),
-          img = $(".top-img").children().attr("src");
+          img = $(".top-img").children().attr("src"),
+          buyMark = false;
       var product = {
         'id': id,
         'name': name,
         'englishname': englishname,
         'num': num,
         'price': price,
-        'img': img
+        'img': img,
+        'buyMark': buyMark
       };
       Cart.addProduct(product);
       showShoppingCartItem();
