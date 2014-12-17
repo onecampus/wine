@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   # activity prize
   get 'customer/big/wheel' => 'site#big_wheel'
   match 'customer/big/wheel', to: 'site#big_wheel_ajax', via: :post
+  get 'customer/scratch/off' => 'site#scratch_off'
+  match 'customer/scratch/off', to: 'site#scratch_off_ajax', via: :post
 
   scope '/admin' do
 
