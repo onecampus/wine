@@ -4,8 +4,7 @@ class WxMenusController < ApplicationController
   before_action :set_wx_menu, only: [:show, :edit, :update, :destroy]
 
   def index
-    @wx_menus = WxMenu.all.paginate(page: params[:page], per_page: 10).order('id DESC')
-    respond_with(@wx_menus)
+    @wx_menus = WxMenu.where(level: 1).last 3
   end
 
   def show
