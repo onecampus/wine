@@ -1,0 +1,123 @@
+<% content_for :page_title do %>
+  未确认<%=t 'activerecord.models.order' %>
+<% end %>
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+<ol class="breadcrumb">
+  <li>
+    <i class="clip-pencil"></i>
+    <a href="#">
+      控制面板
+    </a>
+  </li>
+  <li class="active">
+    <%=t 'activerecord.models.order' %>管理
+  </li>
+  <li class="search-box">
+    <form class="sidebar-search">
+      <div class="form-group">
+        <input type="text" placeholder="Start Searching...">
+        <button class="submit">
+          <i class="clip-search-3"></i>
+        </button>
+      </div>
+    </form>
+  </li>
+</ol>
+<div class="page-header">
+  <h1>
+    <small></small>
+  </h1>
+</div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    <%=t 'activerecord.models.order' %>管理
+    <div class="panel-tools">
+      <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
+      </a>
+      <a data-toggle="modal" href="#panel-config" class="btn btn-xs btn-link panel-config">
+        <i class="fa fa-wrench"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-refresh">
+        <i class="fa fa-refresh"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-expand">
+        <i class="fa fa-resize-full"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-close">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12 space20">
+        <a class="btn btn-green add-row" href="/admin/orders/new">
+          添加
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table id="" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th><%=t 'activerecord.attributes.order.invoice_id' %></th>
+            <th><%=t 'activerecord.attributes.order.user_id' %></th>
+            <th><%=t 'activerecord.attributes.order.order_number' %></th>
+            <th><%=t 'activerecord.attributes.order.ship_address' %></th>
+            <th><%=t 'activerecord.attributes.order.total_price' %></th>
+            <th><%=t 'activerecord.attributes.order.buy_date' %></th>
+            <th><%=t 'activerecord.attributes.order.order_status' %></th>
+            <th><%=t 'activerecord.attributes.order.pay_status' %></th>
+            <th><%=t 'activerecord.attributes.order.logistics_status' %></th>
+            <th><%=t 'activerecord.attributes.order.receive_name' %></th>
+            <th><%=t 'activerecord.attributes.order.mobile' %></th>
+            <th><%=t 'activerecord.attributes.order.tel' %></th>
+            <th><%=t 'activerecord.attributes.order.supplier_id' %></th>
+            <th><%=t 'activerecord.attributes.order.order_type' %></th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+          <tr>
+            <td><% if order.invoice_id.nil? %>不需要<% else %>需要<% end %></td>
+            <td><%= order.user.username %></td>
+            <td><%= order.order_number %></td>
+            <td><%= order.ship_address %></td>
+            <td><%= order.total_price %></td>
+            <td><%= order.buy_date %></td>
+            <td><%= order.order_status %></td>
+            <td><%= order.pay_status %></td>
+            <td><%= order.logistics_status %></td>
+            <td><%= order.receive_name %></td>
+            <td><%= order.mobile %></td>
+            <td><%= order.tel %></td>
+            <td><%= order.supplier_id %></td>
+            <td><%= order.order_type %></td>
+            <td class="center">
+              <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+              <i class="fa fa-trash-o"></i>
+              删除
+              <% end %>
+              <%= link_to(order, class: "btn btn-xs btn-primary") do %>
+              <i class="fa fa-share"></i>
+              查看
+              <% end %>
+              <%= link_to(edit_order_path(order), class: "btn btn-xs btn-green") do %>
+              <i class="fa fa-edit"></i>
+              编辑
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= will_paginate @orders, renderer: BootstrapPagination::Rails %>
+</div>

@@ -72,14 +72,26 @@
         text-align: center;
     }
 
+    .product {
+      width: 90%;
+      height: auto;
+      float: left;
+      text-align: left;
+      margin-left: 10%;
+
+    }
+
     .product-inf {
-        width: 80%;
+        width: 90%;
         height: 50px;
         background-color: #ffffff;
         color: #787878;
-        margin: 0 10.5%;
-        float: left;
-        text-align: left;
+    }
+
+
+    .product-img {
+      width: 90%;
+      height: 150px;
     }
 
     .text1 {
@@ -98,12 +110,6 @@
         overflow: hidden;
         font-weight: bold;
     }
-
-    .product-img {
-        width: 80%;
-        height: 200px;
-    }
-
 </style>
 
 
@@ -142,11 +148,13 @@
   <% @recommend_products.each do |p| %>
       <a href="customer/products/<%= p.id %>/show">
         <div class="recommend-item">
-          <img class="product-img" src="<%= p.img_url %>"/>
-          <div class="product-inf">
-            <p class="text1"><%= p.name %></p>
-            <p class="text2">¥ <%= p.price %></p>
-           </div>
+          <div class="product">
+            <img class="product-img" src="<%= p.img_url %>"/>
+            <div class="product-inf">
+              <p class="text1"><%= p.name %></p>
+              <p class="text2">¥ <%= p.price %></p>
+            </div>
+          </div>
         </div>
       </a>
   <% end %>

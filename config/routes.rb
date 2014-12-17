@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get 'customer/products/:id/comments' => 'site#index_comments'
   get 'customer/products/search' => 'site#index_search_result'
 
+  # order
+  get 'customer/orders/settlement' => 'site#order_settlement'
+  match 'customer/orders/create', to: 'site#create_order', via: :post
+
   get 'customer/commission' => 'site#commission'
 
   # user center
@@ -28,8 +32,8 @@ Rails.application.routes.draw do
   get 'customer/users/wait/ship' => 'site#index_wait_ship'
   get 'customer/users/wait/pay' => 'site#index_wait_pay'
   get 'customer/users/wait/receive' => 'site#index_wait_receive'
-  get 'customer/users/order/history' => 'site#index_order_history'
-  get 'customer/user/vipcard' => 'site#show_vip_card'
+  get 'customer/users/orders/history' => 'site#index_order_history'
+  get 'customer/users/vipcard' => 'site#show_vip_card'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -38,15 +42,26 @@ Rails.application.routes.draw do
 
 
   scope '/admin' do
+
+    resources :integrals
+    resources :vritualcards
+    resources :shipaddresses
+
+    resources :product_orders
+    resources :orders
+    get 'orders/wait/sure' => 'orders#index_orders_unsure'
+    get 'orders/wait/ship' => 'orders#index_orders_wait_ship'
+    get 'orders/already/ship' => 'orders#index_orders_already_ship'
+    get 'orders/already/receive' => 'orders#index_orders_already_receive'
+    get 'orders/already/ok' => 'orders#index_orders_already_ok'
+    get 'orders/wait/back' => 'orders#index_orders_back'
+    get 'orders/already/cancel' => 'orders#index_orders_canceled'
+
+    resources :invoices
     resources :products
     resources :inventories
     resources :comments
     resources :tags
-
-    resources :integrals
-    resources :vritualcards
-
-    resources :shipaddresses
 
     resources :roles
     resources :users
