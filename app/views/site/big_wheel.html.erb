@@ -2,57 +2,149 @@
   转盘抽奖
 <% end %>
 <style type="text/css">
-  .demo{width:417px; height:417px; position:relative; margin:50px auto}
-  #disk{width:417px; height:417px; background:url("/zhonglian/img/big_wheel/disk.jpg") no-repeat}
-  #start{width:163px; height:320px; position:absolute; top:46px; left:130px; cursor:pointer;}
-  #start img{cursor:pointer}
-</style>
-<script type="text/javascript" src="__PUBLIC__/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/jQueryRotate.2.2.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/jquery.easing.min.js"></script>
-<script type="text/javascript">
-  $(function(){
-    lottery();
-  });
-  function lottery(){
-    $("#startbtn").click(function(){
-      $.ajax({
-        type: 'POST',
-        url: '/customer/big/wheel',
-        dataType: 'json',
-        cache: false,
-        error: function(){
-          alert('出错了！');
-          return false;
-        },
-        success:function(json){
-          var a = parseInt(json.angle); //角度
-          var p = json.praisename;//奖项
-          var n = json.num;//剩余抽奖次数
-          if(p!="" && a!=0){
-            $("#startbtn").rotate({
-              duration:3000, //转动时间
-              angle: 0, //默认角度
-              animateTo:3600+a, //转动角度
-              easing: $.easing.easeOutSine,
-              callback: function(){
-                var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
-                $("#startbtn").rotate({angle:0});
-                $("#startbtn").css("cursor","pointer");
-                if(!con){
-                  $("#startbtn").unbind('click').css("cursor","default");
-                }
-              }
-            });
-          }else{
-            alert("您已经没有抽奖次数了！");
-          }
-        }
-      })
-    })
+  /*.demo{width:417px; height:417px; position:relative; margin:50px auto}*/
+  /*#disk{
+    vertical-align: middle;
+    height: auto;
+    max-width: 100%;
+    background:url("/zhonglian/img/big_wheel/disk.jpg") no-repeat
+  }*/
+/*  #start{width:163px;
+     height:320px; position:absolute; top:46px; left:130px; cursor:pointer;}
+  #start img{cursor:pointer}*/
+  body {
+    padding: 0;
+    margin: 0;
   }
-</script>
-<div class="demo">
-  <div id="disk"></div>
+  #header {
+    background-color: red;
+    width: 90%;
+    margin: 0 auto;
+    word-wrap: break-word;
+  }
+  #header a {
+    float: left;
+  }
+  #header span {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    display: block;
+  }
+  .container {
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
+    clear: both;
+  }
+  #disk {
+    width: 100%;
+    height: auto;
+  }
+  img {
+    margin: 0 auto;
+  }
+  #disk img {
+    vertical-align: middle;
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  #start {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -82px;
+    margin-top: -160px;
+  }
+  #records {
+    background-color: green;
+    width: 90%;
+    margin: 0 auto;
+    word-wrap: break-word;
+  }
+  #records a {
+    float: right;
+    display: block;
+    width: 45%;
+  }
+  #records span {
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+  }
+</style>
+<div id="header">
+  <a href="#">返回</a>
+  <span>幸运大转盘</span>
+</div>
+<div class="container">
+  <div id="disk"><img src="/zhonglian/img/big_wheel/disk.jpg" /></div>
   <div id="start"><img src="/zhonglian/img/big_wheel/start.png" id="startbtn"></div>
 </div>
+<div id="records">
+  <span>获奖记录</span>
+  <a href="#">前往</a>
+</div>
+<script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
+<script type="text/javascript">
+$(function(){
+  //lottery();
+  $("#startbtn").click(function(){
+    $(this).rotate({
+      duration:3000, //转动时间
+      angle: 0, //默认角度
+      animateTo:3600, //转动角度
+      easing: $.easing.easeOutSine,
+      callback: function(){
+        var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
+        $("#startbtn").rotate({angle:0});
+        $("#startbtn").css("cursor","pointer");
+        if(!con){
+          $("#startbtn").unbind('click').css("cursor","default");
+        }
+      }
+    });
+  });
+});
+/*function lottery(){
+  $("#startbtn").click(function(){
+    $.ajax({
+      type: 'POST',
+      url: '/customer/big/wheel',
+      dataType: 'json',
+      cache: false,
+      error: function(){
+        alert('出错了！');
+        return false;
+      },
+      success:function(json){
+        var a = parseInt(json.angle); //角度
+        var p = json.praisename;//奖项
+        var n = json.num;//剩余抽奖次数
+        if(p!="" && a!=0){
+          $("#startbtn").rotate({
+            duration:3000, //转动时间
+            angle: 0, //默认角度
+            animateTo:3600+a, //转动角度
+            easing: $.easing.easeOutSine,
+            callback: function(){
+              var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
+              $("#startbtn").rotate({angle:0});
+              $("#startbtn").css("cursor","pointer");
+              if(!con){
+                $("#startbtn").unbind('click').css("cursor","default");
+              }
+            }
+          });
+        }else{
+          alert("您已经没有抽奖次数了！");
+        }
+      }
+    })
+  })
+}*/
+</script>
