@@ -11,8 +11,9 @@ class SiteController < CustomerController
                                                  :index_wait_pay,
                                                  :index_wait_receive,
                                                  :index_order_history,
-                                                 :create_order]
-  skip_before_filter :verify_authenticity_token, only: [:create_order]
+                                                 :create_order,
+                                                 :big_whell_ajax]
+  skip_before_filter :verify_authenticity_token, only: [:create_order, :big_whell_ajax]
 
   def index
     @recommend_products = Product.last 8
@@ -196,6 +197,12 @@ class SiteController < CustomerController
   end
 
   def index_order_history
+  end
+
+  def big_wheel
+  end
+
+  def big_whell_ajax
   end
 
   def commission

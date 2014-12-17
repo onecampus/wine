@@ -15,6 +15,10 @@ class Ability
       can :manage, Order
       can :manage, ProductOrder
       can :manage, Invoice
+      can :manage, PrizeAct
+      can :manage, PrizeConfig
+      can :manage, PrizeUserNumber
+      can :manage, PrizeUser
     elsif user.has_role? :customer
       can :manage, Site
     else
