@@ -1,8 +1,10 @@
 class WxMenusController < ApplicationController
+  authorize_resource
+  respond_to :html, :json
   before_action :set_wx_menu, only: [:show, :edit, :update, :destroy]
 
   def index
-    @wx_menus = WxMenu.all
+    @wx_menus = WxMenu.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@wx_menus)
   end
 

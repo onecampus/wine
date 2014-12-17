@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :wx_menus
-
   root 'site#index'
 
   # product cat
@@ -51,6 +49,8 @@ Rails.application.routes.draw do
   match 'customer/scratch/off', to: 'site#scratch_off_ajax', via: :post
 
   scope '/admin' do
+
+    resources :wx_menus
 
     resources :prize_user_numbers
     resources :prize_users

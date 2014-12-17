@@ -20,9 +20,20 @@ zh-CN:
       prize_act: '抽奖活动'
       prize_config: '奖项配置'
       prize_user_number: '用户抽奖次数'
-      prize_users: '获奖名单'
+      prize_user: '获奖名单'
+      wx_menu: '微信菜单'
 
     attributes:
+      wx_menu:
+        name: '菜单名称'
+        msg: '回复消息'
+        url: '跳转地址'
+        msg_or_url: '回复消息还是跳转'
+        button_type: '按钮类型'
+        key: '事件值'
+        parent_id: '父菜单'
+        level: '层级'
+
       prize_users:
         user_id: '用户'
         prize_config_id: '奖品'
