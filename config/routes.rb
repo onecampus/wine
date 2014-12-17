@@ -43,6 +43,11 @@ Rails.application.routes.draw do
 
   scope '/admin' do
 
+    resources :prize_user_numbers
+    resources :prize_users
+    resources :prize_configs
+    resources :prize_acts
+
     resources :integrals
     resources :vritualcards
     resources :shipaddresses

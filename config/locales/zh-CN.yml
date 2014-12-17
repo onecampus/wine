@@ -17,8 +17,40 @@ zh-CN:
       product_order: '商品-订单'
       vritualcard: '虚拟会员卡'
       integral: '积分'
+      prize_act: '抽奖活动'
+      prize_config: '奖项配置'
+      prize_user_number: '用户抽奖次数'
+      prize_users: '获奖名单'
 
     attributes:
+      prize_users:
+        user_id: '用户'
+        prize_config_id: '奖品'
+
+      prize_user_number:
+        user_id: '用户'
+        number: '次数'
+        prize_act_id: '抽奖活动'
+
+      prize_act:
+        name: '活动名称'
+        desc: '活动描述'
+        prize_type: '抽奖类型'
+        start_time: '开始时间'
+        end_time: '截止时间'
+        is_open: '是否开启状态'
+        join_num: '参加人数'
+        person_limit: '个人抽奖次数限制'
+
+      prize_config:
+        prize_act_id: '抽奖活动'
+        prize_name: '获奖等级'
+        min: '最小角度'
+        max: '最大角度'
+        prize_content: '奖品'
+        prize_inventory: '奖品库存'
+        chance: '获奖概率'
+
       cat:
         name: '分类名称'
         title: '标题'

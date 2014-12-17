@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216034156) do
+ActiveRecord::Schema.define(version: 20141217050017) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -114,6 +114,46 @@ ActiveRecord::Schema.define(version: 20141216034156) do
     t.string   "tel"
     t.integer  "supplier_id"
     t.string   "order_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prize_acts", force: true do |t|
+    t.string   "name"
+    t.string   "desc"
+    t.string   "prize_type"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "is_open"
+    t.integer  "join_num"
+    t.integer  "person_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prize_configs", force: true do |t|
+    t.string   "prize_act_id"
+    t.string   "prize_name"
+    t.string   "min"
+    t.string   "max"
+    t.string   "prize_content"
+    t.integer  "prize_inventory"
+    t.integer  "chance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prize_user_numbers", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "number"
+    t.integer  "prize_act_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prize_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "prize_config_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
