@@ -54,6 +54,21 @@
          	  total();
          }
       });
+
+      $(".account").click(function(){
+        $(".checkbox").each(function(){
+          if(($(this).is(':checked'))==true){
+            var id= ($(this).parent().siblings("input").val());
+            updateBuyMark(id,true);
+          }
+          if(($(this).is(':checked'))==false){
+            var id= ($(this).parent().siblings("input").val());
+            updateBuyMark(id,false);
+          }
+        });
+        $(this).attr("href","/customer/orders/settlement");
+      });
+
     });
 }).call(this);
   /*
@@ -72,10 +87,24 @@
     	});
     }
 
-    function getlocalStorager(){
+    function getlocalStorager() {
       var shoppingCart = $.localStorage.get("shoppingCart");
       var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
       return JsonStr.productList;
+    }
+
+    function updateBuyMark(id,mark) {
+      var shoppingCart = $.localStorage.get("shoppingCart");
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      var productList = JsonStr.productList;
+      //查找购物车中是否有该商品
+      for (var i in productList) {
+        if (productList[i].id == id) {
+          productList[i].buyMark = mark;
+        }
+      }
+      //保存购物车
+      $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
     }
 
     function showProduct() {
@@ -102,6 +131,8 @@
           var id = "product" + i;
           var product = $("<div></div>").addClass("product").attr("id",id);
           $(".select").before(product);
+          var productId = $("<input>").attr("type","hidden").attr("value",productList[i].id);
+          $("#product"+i).append(productId);
           var pselect = $("<div></div>").addClass("p-select").addClass("pull-left");
           $("#product"+i).append(pselect);
 

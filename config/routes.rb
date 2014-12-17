@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # customer shipaddress
   get 'customer/shipaddresses/new' => 'site#new_ship_address'
   match 'customer/shipaddresses/create', to: 'site#create_ship_address', via: :post
+  match 'customer/shipaddresses/create/json', to: 'site#create_ship_address_via_ajax', via: :post
   get 'customer/shipaddresses' => 'site#index_ship_address'
 
   # product
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   get 'customer/products/search' => 'site#index_search_result'
 
   # order
+  match 'customer/invoice/create/json', to: 'site#create_invoice_via_ajax', via: :post
   get 'customer/orders/settlement' => 'site#order_settlement'
   match 'customer/orders/create', to: 'site#create_order', via: :post
 
