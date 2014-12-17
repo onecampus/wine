@@ -12,8 +12,8 @@
     top: 50%;
     left: 50%;
     width: 80%;
-    height: 200px;
-    margin-top: -100px;
+    height: 250px;
+    margin-top: -125px;
     margin-left: -40%;
     background-color: #fff;
     border-radius: 5px;
@@ -21,6 +21,34 @@
     color: #666;
     z-index: 20;
     box-shadow: 0 0 3px #666;
+  }
+  #mask {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 180px;
+    margin-top: -90px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: #666;
+    z-index: 20;
+    box-shadow: 0 0 3px #666;
+  }
+  #mask p {
+    margin: 10px auto;
+  }
+  #mask p span {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .mask div:first-child {
+    padding-top: 5px;
+    font-size:20px;
+    font-weight: bold;
   }
   .back {
     z-index: 11;
@@ -45,6 +73,11 @@
     border-radius: 5px;
     padding: 4px 8px;
     font-size: 20px;
+  }
+  #mask .action a {
+    display: block;
+    margin: 10px 30px;
+    padding: 4px 12px;
   }
   .action a:first-child {
     margin-right: 20px;
@@ -89,6 +122,7 @@
 </div>
   <div class="back"></div>
   <div class="mask">
+    <div class="input-row">请选择城市：</div>
     <div class="input-row">
       <label>省份</label>
       <select name="province" id="s1" ></select>
@@ -102,11 +136,17 @@
       <select name="region" id="s3"></select>
     </div>
     <div class="action">
-      <a href="javascript:void(0)" class="confirm">确定</a>
-      <a href="javascript:void(0)" class="cancel">取消</a>
+      <a href="javascript:void(0)" class="confirm">修改</a>
+      <a href="javascript:void(0)" class="cancel">放弃</a>
     </div>
   </div>
-
+  <div id="mask">
+    <p>您现在位于<span id="province"></span><span id="city"></span><span id="region"></span>，要修改当前地址吗？</p>
+    <div class="action">
+      <a href="javascript:void(0)" id="confirm">是，我要修改</a>
+      <a href="javascript:void(0)" id="cancel">否，这个挺好</a>
+    </div>
+  </div>
 
 <nav class="bar bar-tab">
   <a class="tab-item" href="#">
@@ -161,15 +201,25 @@
       geoc.getLocation(point, function(rs){
         var addComp = rs.addressComponents;
         var $username = $('#user_username');
+        var $back = $('.back');
+        var $hintMask = $('#mask');
+        var $confirmId = $('#confirm');
+        var $cancelId = $('#cancel');
+        var confirms;
         $username.blur();
-        var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
-        if (confirms) {
-          var $back = $('.back');
+        //var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
+        $back.show();
+        $back.height($(document).height());
+        $hintMask.slideDown(800,function () {
+          $('#province').text(addComp.province);
+          $('#city').text(addComp.city);
+          $('#region').text(addComp.district);
+        });
+        $confirmId.click(function () {
           var $confirm = $('.confirm');
           var $cancel = $('.cancel');
           var $mask = $('.mask');
-          $back.show();
-          $back.height($(document).height());
+          $hintMask.slideUp(800)
           $mask.slideDown(800);
           $confirm.click(function () {
             var province = $('#s1 option:selected').text();
@@ -190,12 +240,16 @@
             $mask.slideUp(800);
             $username.focus();
           });
-        }else{
+        });
+        $cancelId.click(function () {
           $username.focus();
+          $hintMask.slideUp(800);
+          $back.hide();
           $('.province').val(addComp.province);
           $('.city').val(addComp.city);
           $('.region').val(addComp.district);
-        }
+        });
+
       });
     }
     getLocationDemoA();
