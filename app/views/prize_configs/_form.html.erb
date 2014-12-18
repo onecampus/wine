@@ -1,4 +1,3 @@
-
 <%= form_for(@prize_config, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @prize_config.errors.any? %>
     <div id="error_explanation" class="form-group">
@@ -6,74 +5,62 @@
       <div class="col-sm-9">
         <h2>保存时发生了<%= pluralize(@prize_config.errors.count, "error") %></h2>
         <ul>
-        <% @prize_config.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+          <% @prize_config.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
         </ul>
       </div>
     </div>
   <% end %>
-
-      <div class="form-group">
-                <%= f.label :prize_act_id, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.prize_act_id' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :prize_act_id, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :prize_name, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.prize_name' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :prize_name, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :min, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.min' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :min, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :max, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.max' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :max, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :prize_content, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.prize_content' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :prize_content, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :prize_inventory, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.prize_inventory' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.number_field :prize_inventory, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :chance, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_config.chance' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.number_field :chance, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-      <label class="col-sm-2 control-label" for="submit"></label>
-      <div class="col-sm-9">
-        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
-      </div>
+  <div class="form-group">
+    <%= f.label :prize_act_id, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_config.prize_act_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:prize_act_id, options_for_select(@act_arr, @prize_config.prize_act.id)) %>
     </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :prize_name, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_config.prize_name' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :prize_name, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :prize_content, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_config.prize_content' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :prize_content, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :prize_inventory, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_config.prize_inventory' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :prize_inventory, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :chance, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_config.chance' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :chance, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+    </div>
+  </div>
 <% end %>
