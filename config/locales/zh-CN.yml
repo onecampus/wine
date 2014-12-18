@@ -34,7 +34,7 @@ zh-CN:
         parent_id: '父菜单'
         level: '层级'
 
-      prize_users:
+      prize_user:
         user_id: '用户'
         prize_config_id: '奖品'
 

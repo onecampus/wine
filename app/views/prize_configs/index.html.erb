@@ -1,38 +1,36 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.prize_config' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
-        </a>
-      </li>
-      <li class="active">
-        <%=t 'activerecord.models.prize_config' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
+      </a>
+    </li>
+    <li class="active">
+      <%=t 'activerecord.models.prize_config' %>管理
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
@@ -58,7 +56,8 @@
     <div class="row">
       <div class="col-md-12 space20">
         <a class="btn btn-green add-row" href="/admin/prize_configs/new">
-          添加 <i class="fa fa-plus"></i>
+          添加
+          <i class="fa fa-plus"></i>
         </a>
       </div>
     </div>
@@ -66,40 +65,42 @@
       <table id="" class="table table-bordered table-hover">
         <thead>
           <tr>
-                  <th><%=t 'activerecord.attributes.prize_config.prize_act_id' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.prize_name' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.min' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.max' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.prize_content' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.prize_inventory' %></th>
-                  <th><%=t 'activerecord.attributes.prize_config.chance' %></th>
-                  <th>操作</th>
+            <th><%=t 'activerecord.attributes.prize_config.prize_act_id' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.prize_name' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.min' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.max' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.prize_content' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.prize_inventory' %></th>
+            <th><%=t 'activerecord.attributes.prize_config.chance' %></th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
-
-        <% @prize_configs.each do |prize_config| %>
-          <tr>
-                        <td><%= prize_config.prize_act_id %></td>
-                        <td><%= prize_config.prize_name %></td>
-                        <td><%= prize_config.min %></td>
-                        <td><%= prize_config.max %></td>
-                        <td><%= prize_config.prize_content %></td>
-                        <td><%= prize_config.prize_inventory %></td>
-                        <td><%= prize_config.chance %></td>
-                        <td class="center">
-              <%= link_to(prize_config, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-                <i class="fa fa-trash-o"></i> 删除
-              <% end %>
-              <%= link_to(prize_config, class: "btn btn-xs btn-primary") do %>
-                <i class="fa fa-share"></i> 查看
-              <% end %>
-              <%= link_to(edit_prize_config_path(prize_config), class: "btn btn-xs btn-green") do %>
-                <i class="fa fa-edit"></i> 编辑
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+          <% @prize_configs.each do |prize_config| %>
+            <tr>
+              <td><%= prize_config.prize_act.name %></td>
+              <td><%= prize_config.prize_name %></td>
+              <td><%= prize_config.min %></td>
+              <td><%= prize_config.max %></td>
+              <td><%= prize_config.prize_content %></td>
+              <td><%= prize_config.prize_inventory %></td>
+              <td><%= prize_config.chance %></td>
+              <td class="center">
+                <%= link_to(prize_config, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                  <i class="fa fa-trash-o"></i>
+                  删除
+                <% end %>
+                <%= link_to(prize_config, class: "btn btn-xs btn-primary") do %>
+                  <i class="fa fa-share"></i>
+                  查看
+                <% end %>
+                <%= link_to(edit_prize_config_path(prize_config), class: "btn btn-xs btn-green") do %>
+                  <i class="fa fa-edit"></i>
+                  编辑
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
