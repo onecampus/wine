@@ -222,10 +222,13 @@ class SiteController < CustomerController
   end
 
   def big_wheel
+    @prizes = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1).prize_configs
   end
 
   def big_wheel_ajax
-    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)
+
+    prizes = prize_act.prize_configs
     prize_hash = {}
     prizes.each_with_index do |p, index|
       min = p.min.split(',')
@@ -234,6 +237,9 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
+
+    prize_act.join_num += 1
+    prize_act.save!
 
     result = get_result(prize_hash)
     render json: result
@@ -252,7 +258,6 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
-
     result = get_result(prize_hash)
     render json: result
   end
@@ -291,16 +296,20 @@ class SiteController < CustomerController
         result[:prize_name] = nil
         result[:angle] = 0
       else
-        num = prize_num.number -= 1
+        prize_num.number -= 1
         prize_num.save!
+        num = prize_num.number
         result[:num] = num
 
         min = res.min
         max = res.max
 
         if min.is_a? Array
-          i = rand(0..(min.size - 1))
-          result[:angle] = rand(min[i]..max[i])
+          _size = min.size - 1
+          i = rand(0.._size)
+          _min = min[i].to_i
+          _max = max[i].to_i
+          result[:angle] = rand(_min.._max)
         else
           min = res.min.to_i
           max = res.max.to_i
@@ -308,8 +317,14 @@ class SiteController < CustomerController
         end
         result[:prize_name] = res.prize_name
       end
-      res.prize_inventory -= 1
-      res.save!
+      if res.prize_inventory == 0
+        result[:num] = 0
+        result[:prize_name] = nil
+        result[:angle] = 0
+      else
+        res.prize_inventory -= 1
+        res.save!
+      end
       prize_user = PrizeUser.new(
         user_id: current_user.id,
         prize_config_id: res.id
@@ -324,7 +339,7 @@ class SiteController < CustomerController
     pro_sum = 0
     # 概率数组的总概率精度  获取库存不为0的
     pro_count.each do |key, val|
-      if val == 0
+      if val <= 0
         next
       else
         pro_sum += pro_arr[key]
@@ -332,7 +347,7 @@ class SiteController < CustomerController
     end
     # 概率数组循环
     pro_arr.each do |key, val|
-      if pro_count[key] == 0
+      if pro_count[key] <= 0
         next
       else
         rand_num = rand(1..pro_sum) # 关键
