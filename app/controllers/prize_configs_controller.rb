@@ -37,11 +37,12 @@ class PrizeConfigsController < ApplicationController
   end
 
   private
-    def set_prize_config
-      @prize_config = PrizeConfig.find(params[:id])
-    end
 
-    def prize_config_params
-      params.require(:prize_config).permit(:prize_act_id, :prize_name, :min, :max, :prize_content, :prize_inventory, :chance)
-    end
+  def set_prize_config
+    @prize_config = PrizeConfig.find(params[:id])
+  end
+
+  def prize_config_params
+    params.require(:prize_config).permit(:prize_act_id, :prize_name, :min, :max, :prize_content, :prize_inventory, :chance)
+  end
 end
