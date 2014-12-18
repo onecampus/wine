@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require lib/jquery.cookie
 //= require lib/jquery.storageapi
+//= require lib/jquery1.8.3
 //= require lib/jqcart
 //= require lib/order
 //= require lib/purl
