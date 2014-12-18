@@ -222,26 +222,13 @@ class SiteController < CustomerController
   end
 
   def big_wheel
-    prizes = PrizeConfig.where(prize_act_id: 1)
-    prize_hash = {}
-    prizes.each_with_index do |p, index|
-      min = p.min.split(',')
-      max = p.max.split(',')
-      p.min = min if min.size > 1
-      p.max = max if max.size > 1
-      prize_hash[index] = p
-    end
-
-    res = []
-    1.upto(50).each do |i|
-      result = get_result(prize_hash)
-      res.push result
-    end
-    @res = res
+    @prizes = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1).prize_configs
   end
 
   def big_wheel_ajax
-    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)
+
+    prizes = prize_act.prize_configs
     prize_hash = {}
     prizes.each_with_index do |p, index|
       min = p.min.split(',')
@@ -250,6 +237,9 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
+
+    prize_act.join_num += 1
+    prize_act.save!
 
     result = get_result(prize_hash)
     render json: result
