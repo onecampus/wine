@@ -1,0 +1,48 @@
+<% content_for :customer_title do %>
+  用户中心
+<% end %>
+<link rel="stylesheet" href="/zhonglian/css/user_center.css">
+<div class="main">
+  <div class="top">
+    <p>杨康</p>
+    <div class="tab">
+      <div class="tab-item active">
+        <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
+        <p>待发货</p>
+      </div>
+      <div class="tab-item">
+        <p><a href="/customer/users/wait/pay"><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></a></p>
+        <p>待付款</p>
+      </div>
+      <div class="tab-item">
+        <p><a href="/customer/users/wait/receive"><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></a></p>
+        <p>待收货</p>
+      </div>
+      <div class="tab-item">
+        <p><a href="/customer/users/orders/history"><img src="/zhonglian/img/user_center/icon_history_order.png"/></a></p>
+        <p>历史订单</p>
+      </div>
+    </div>
+  </div>
+  <div class="history_order">
+    <p>订单编号：<span>12345</span></p>
+    <div class="ordered_product">
+      <img src="/zhonglian/img/user_center/icon_wait_to_receive.png" class="left" />
+      <p class="right">
+        <span class="order_price">￥600元</span>
+        <span class="order_num">×2</span>
+      </p>
+      <p class="middle">
+        <span>chinese name白兰地</span>
+        <span>english namebrandy</span>
+      </p>
+    </div>
+    <div>
+      <span class="freight">运费：￥10元</span>
+      <span class="sum"></span>
+      <a href="#">提醒发货</a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/zhonglian/js/user_center.js"></script>
+<%= render "site/shared/bottombar" %>

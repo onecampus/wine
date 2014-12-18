@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-    商城
+  商城
 <% end %>
 <script type="text/javascript" src="app/assets/javascripts/lib/jqcart.js"></script>
 <style type="text/css">
@@ -231,35 +231,32 @@
   </div>
   <hr/>
   <div class="p-intro">
-            <h4>商品详情</h4>
-            <p class="name"><%= @product.name %></p>
-            <p class="name">wine english name</p>
-            <p><%= @product.description %></p>
+    <h4>商品详情</h4>
+    <p class="name"><%= @product.name %></p>
+    <p class="name">wine english name</p>
+    <p><%= @product.description %></p>
   </div>
 </div>
 <script type="text/javascript">
-//add products number and minus the products number
-
   $(document).ready(function($) {
-        var minus  =   $(".action-de");
-        var plus  =  $(".action-plus");
-        var num_input  =  $(".p-num");
-        var num  =  "";
-        plus.click(function() {
-              num  =  num_input.val();
-              num++;
-              num_input.val(num);
-        });
-        minus.click(function() {
-          if (num  >  0) {
-              num--;
-              num_input.val(num);
-          }
-          else{
-            num_input.val(0);
-          }
-        });
-        //Ajax code goes here?
+    var minus  =   $(".action-de");
+    var plus  =  $(".action-plus");
+    var num_input  =  $(".p-num");
+    var num  =  "";
+    plus.click(function() {
+      num  =  num_input.val();
+      num++;
+      num_input.val(num);
+    });
+    minus.click(function() {
+      if (num  >  0) {
+        num--;
+        num_input.val(num);
+      }
+      else{
+        num_input.val(0);
+      }
+    });
     });
 </script>
 <%= render "site/shared/bottombar" %>

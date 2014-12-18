@@ -2,7 +2,7 @@
   注册
 <% end %>
 <style type="text/css">
-/*  select {
+  select {
     margin:  7px auto;
     font-size: 16px;
   }
@@ -108,7 +108,7 @@
     </div>
     <div class="">
       <% if @validatable %>
-      <em>(最少<%= @minimum_password_length %>个字符)</em>
+        <em>(最少<%= @minimum_password_length %>个字符)</em>
       <% end %>
     </div>
     <div class="input-row">
@@ -119,18 +119,6 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-    <div class="input-row">
-      <label>省份</label>
-      <select name="province" id="s1" ></select>
-    </div>
-    <div class="input-row">
-      <label>城市</label>
-      <select name="city" id="s2"></select>
-    </div>
-    <div class="input-row">
-      <label>地区</label>
-      <select name="region" id="s3"></select>
-    </div>
     <input type="hidden" name="invite_code" value=""  class="invite_code" />
     <input type="hidden" name="province" value="" class="province" />
     <input type="hidden" name="city" value="" class="city" />
@@ -138,126 +126,133 @@
     <%= f.submit '注册', class: 'sign_submit btn btn-red btn-block' %>
   <% end %>
 </div>
-
+<div class="back"></div>
+<div class="mask">
+  <div class="input-row">
+    <label>省份</label>
+    <select name="province" id="s1" ></select>
+  </div>
+  <div class="input-row">
+    <label>城市</label>
+    <select name="city" id="s2"></select>
+  </div>
+  <div class="input-row">
+    <label>地区</label>
+    <select name="region" id="s3"></select>
+  </div>
+  <div class="action">
+    <a href="javascript:void(0)" class="confirm">修改</a>
+    <a href="javascript:void(0)" class="cancel">放弃</a>
+  </div>
+</div>
+<div id="mask">
+  <p>您现在位于<span id="province"></span><span id="city"></span><span id="region"></span></p>
+  <div class="action">
+    <a href="javascript:void(0)" id="confirm">是，确定修改</a>
+    <a href="javascript:void(0)" id="cancel">不，这个挺好</a>
+  </div>
+</div>
 <nav class="bar bar-tab">
-  <a class="tab-item" href="#">
+  <a class="tab-item" href="/">
     <span class="icon icon-background-base icon-home"></span>
     <span class="tab-label">主页</span>
   </a>
-  <a class="tab-item active" href="#">
+  <a class="tab-item active" href="/customer/users/center">
     <span class="icon icon-background-base icon-person-hover"></span>
     <span class="tab-label">用户中心</span>
   </a>
-  <a class="tab-item" href="#">
+  <a class="tab-item" href="/customer/cart">
     <span class="icon icon-background-base icon-cart"></span>
     <span class="tab-label">购物</span>
   </a>
-  <a class="tab-item" href="#">
+  <a class="tab-item" href="/customer/products/search">
     <span class="icon icon-background-base icon-search"></span>
     <span class="tab-label">搜索</span>
   </a>
-  <a class="tab-item" href="#">
+  <a class="tab-item" href="/customer/cats">
     <span class="icon icon-background-base icon-cat"></span>
     <span class="tab-label">分类</span>
   </a>
 </nav>
-
 <script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
 <script src="/backend/assets/js/multilevel-select.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
 <script>
-//var x=document.getElementById("demo");
-/*function getLocation()
-{
-  if (navigator.geolocation)
-    {
-      navigator.geolocation.watchPosition(showPosition);
+  function getLocationDemoA() {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPositionDemoA);
+    } else {
+      alert("你的浏览器不支持地理位置定位.");
     }
-    else{x.innerHTML="Geolocation is not supported by this browser.";}
-    }
-    function showPosition(position)
-    {
-      x.innerHTML="Latitude: " + position.coords.latitude +
-      "<br />Longitude: " + position.coords.longitude;
-    }*/
-/*function getLocationDemoA() {
-   alert('funtion work');
-  if (navigator.geolocation) {
-    alert('it does work');
-    navigator.geolocation.getCurrentPosition(showPositionDemoA);
-    alert('did it work');
-  } else {
-    alert("你的浏览器不支持地理位置定位.");
   }
-}*/
-/*function showPositionDemoA(position) {
-  var location = $('.location');
-  var lat = position.coords.latitude;
-  var lon = position.coords.longitude;
-  var point = new BMap.Point(lon,lat);
-  var geoc = new BMap.Geocoder();
-  geoc.getLocation(point, function(rs){
-    var addComp = rs.addressComponents;
-    var $username = $('#user_username');
-    var $back = $('.back');
-    var $hintMask = $('#mask');
-    var $confirmId = $('#confirm');
-    var $cancelId = $('#cancel');
-    var confirms;
-    $username.blur();
-    //var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
-    $back.show();
-    $back.height($(document).height());
-    $hintMask.slideDown(800,function () {
-      $('#province').text(addComp.province);
-      $('#city').text(addComp.city);
-      $('#region').text(addComp.district);
-    });
-    $confirmId.click(function () {
-      var $confirm = $('.confirm');
-      var $cancel = $('.cancel');
-      var $mask = $('.mask');
-      $hintMask.slideUp(800)
-      $mask.slideDown(800);
-      $confirm.click(function () {
-        var province = $('#s1 option:selected').text();
-        var city = $('#s2 option:selected').text();
-        var region = $('#s3 option:selected').text();
-        $('.province').val(province);
-        $('.city').val(city);
-        $('.region').val(region);
-        $back.hide();
-        $mask.slideUp(800);
-        $username.focus();
+  function showPositionDemoA(position) {
+    var location = $('.location');
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    var point = new BMap.Point(lon, lat);
+    var geoc = new BMap.Geocoder();
+    geoc.getLocation(point, function(rs){
+      var addComp = rs.addressComponents;
+      var $username = $('#user_username');
+      var $back = $('.back');
+      var $hintMask = $('#mask');
+      var $confirmId = $('#confirm');
+      var $cancelId = $('#cancel');
+      var confirms;
+      $username.blur();
+      //var confirms = confirm("你现在位于："+addComp.province+addComp.city+addComp.district+"！要修改地址吗？");
+      $back.show();
+      $back.height($(document).height());
+      $hintMask.slideDown(800,function () {
+        $('#province').text(addComp.province);
+        $('#city').text(addComp.city);
+        $('#region').text(addComp.district);
       });
-      $cancel.click(function () {
+      $confirmId.click(function () {
+        var $confirm = $('.confirm');
+        var $cancel = $('.cancel');
+        var $mask = $('.mask');
+        $hintMask.slideUp(800)
+        $mask.slideDown(800);
+        $confirm.click(function () {
+          var province = $('#s1 option:selected').text();
+          var city = $('#s2 option:selected').text();
+          var region = $('#s3 option:selected').text();
+          $('.province').val(province);
+          $('.city').val(city);
+          $('.region').val(region);
+          $back.hide();
+          $mask.slideUp(800);
+          $username.focus();
+        });
+        $cancel.click(function () {
+          $('.province').val(addComp.province);
+          $('.city').val(addComp.city);
+          $('.region').val(addComp.district);
+          $back.hide();
+          $mask.slideUp(800);
+          $username.focus();
+        });
+      });
+      $cancelId.click(function () {
+        $username.focus();
+        $hintMask.slideUp(800);
+        $back.hide();
         $('.province').val(addComp.province);
         $('.city').val(addComp.city);
         $('.region').val(addComp.district);
-        $back.hide();
-        $mask.slideUp(800);
-        $username.focus();
       });
-    });
-    $cancelId.click(function () {
-      $username.focus();
-      $hintMask.slideUp(800);
-      $back.hide();
-      $('.province').val(addComp.province);
-      $('.city').val(addComp.city);
-      $('.region').val(addComp.district);
-    });
 
-  });
-}*/
-(function () {
-  $(document).on('ready page:load', function () {
+    });
+  }
+
+  $(document).ready(function(){
     MultilevelSelect({
       data: ADMINISTRATIVE_DIVISION,
       nodes: [$('#s1'), $('#s2'), $('#s3')]
     });
 
-  //  getLocationDemoA();
+   getLocationDemoA();
     var province = $('#s1 option:selected').text();
     var city = $('#s2 option:selected').text();
     var region = $('#s3 option:selected').text();
@@ -270,7 +265,4 @@
       $(".invite_code").val(invite_code[0]);
     }
   });
-
-}).call(this);
-
 </script>
