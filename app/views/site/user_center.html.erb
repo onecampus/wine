@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-    用户中心
+  用户中心
 <% end %>
 <style type="text/css">
   body {
@@ -92,61 +92,54 @@
   .extra-bar div a{
     color: #666;
   }
-
 </style>
 <div class="main">
   <div class="top">
     <p><%= @user.username %></p>
-  <div class="tab">
-    <div class="tab-item">
-      <a href="/customer/users/wait/ship">
-        <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
-        <p>待发货</p>
-      </a>
-    </div>
-    <div class="tab-item">
-      <a href="/customer/users/wait/pay">
-        <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
-        <p>待付款</p>
-      </a>
-    </div>
-    <div class="tab-item">
-      <a href="/customer/users/wait/receive">
-        <p><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></p>
-        <p>待收货</p>
-      </a>
-    </div>
-    <div class="tab-item">
-      <a href="/customer/users/orders/history">
-        <p><img src="/zhonglian/img/user_center/icon_history_order.png"/></p>
-        <p>历史订单</p>
-      </a>
+    <div class="tab">
+      <div class="tab-item">
+        <a href="/customer/users/wait/ship">
+          <p><img src="/zhonglian/img/user_center/icon_wait_to_ship.png"/></p>
+          <p>待发货</p>
+        </a>
+      </div>
+      <div class="tab-item">
+        <a href="/customer/users/wait/pay">
+          <p><img src="/zhonglian/img/user_center/icon_wait_to_pay.png"/></p>
+          <p>待付款</p>
+        </a>
+      </div>
+      <div class="tab-item">
+        <a href="/customer/users/wait/receive">
+          <p><img src="/zhonglian/img/user_center/icon_wait_to_receive.png"/></p>
+          <p>待收货</p>
+        </a>
+      </div>
+      <div class="tab-item">
+        <a href="/customer/users/orders/history">
+          <p><img src="/zhonglian/img/user_center/icon_history_order.png"/></p>
+          <p>历史订单</p>
+        </a>
+      </div>
     </div>
   </div>
- </div>
-
   <div class="extra-bar">
     <div>
       <p class="p-l"><a href="/customer/shipaddresses">收货地址管理</a></p>
-
       <p class="p-r"><a href="/customer/shipaddresses">&gt;</a></p>
     </div>
     <div>
       <p class="p-l"><a href="/customer/users/vipcard">我的会员卡</a></p>
-
       <p class="p-r"><a href="/customer/users/vipcard">&gt;</a></p>
     </div>
     <div>
       <p class="p-l"><a href="/customer/commission">我的提成</a></p>
-
       <p class="p-r"><a href="/customer/commission">&gt;</a></p>
     </div>
     <div>
       <p class="p-l"><a href="#">帮助</a></p>
-
       <p class="p-r"><a href="#">&gt;</a></p>
     </div>
   </div>
-
 </div>
 <%= render "site/shared/bottombar" %>
