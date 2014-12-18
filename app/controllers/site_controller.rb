@@ -222,11 +222,11 @@ class SiteController < CustomerController
   end
 
   def big_wheel
-    @prizes = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1).prize_configs
+    @prizes = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0].prize_configs
   end
 
   def big_wheel_ajax
-    prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)
+    prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
 
     prizes = prize_act.prize_configs
     prize_hash = {}
