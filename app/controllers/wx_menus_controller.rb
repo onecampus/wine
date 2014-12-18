@@ -7,7 +7,9 @@ class WxMenusController < ApplicationController
   respond_to :html, :json
   before_action :set_wx_menu, only: [:show, :edit, :update, :destroy]
 
-  skip_before_filter :verify_authenticity_token, only: [:update_via_json]
+  skip_before_filter :verify_authenticity_token, only: [:update_via_json,
+                                                        :create_via_ajax,
+                                                        :destroy_via_ajax]
 
   def index
     @wx_menus = WxMenu.where(level: 1).last 3
@@ -34,6 +36,35 @@ class WxMenusController < ApplicationController
       render json: { status: 'success', msg: 'create menu success' }
     else
       render json: { status: 'error', msg: 'create menu failed' }
+    end
+  end
+
+  def create_via_ajax
+    wx_menu_params = {
+      name: params[:name],
+      msg: '',
+      url: params[:url],
+      msg_or_url: 1,
+      button_type: 'view',
+      key: '',
+      parent_id: params[:parent_id],
+      level: params[:level]
+    }
+    @wx_menu = WxMenu.new(wx_menu_params)
+    if @wx_menu.save
+      render json: { status: 'success', msg: 'create menu success' }
+    else
+      render json: { status: 'error', msg: 'create menu failed' }
+    end
+  end
+
+  def destroy_via_ajax
+    @wx_menu = WxMenu.find(params[:id])
+
+    if @wx_menu.destroy
+      render json: { status: 'success', msg: 'del menu success' }
+    else
+      render json: { status: 'error', msg: 'del menu failed' }
     end
   end
 

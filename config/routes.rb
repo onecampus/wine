@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     resources :wx_menus
     match 'wx_menus/update/json', to: 'wx_menus#update_via_json', via: :post
     get 'weixin/menus/create/json' => 'wx_menus#create_weixin_menu'
+    get 'wx_menus/:id/del/json' => 'wx_menus#destroy_via_ajax'
+    match 'wx_menus/create/json', to: 'wx_menus#create_via_ajax', via: :post
 
     resources :prize_user_numbers
     resources :prize_users

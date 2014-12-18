@@ -1,37 +1,118 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.wx_menu' %>管理
 <% end %>
-
 <link href="/plugins/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 <script src="/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script>
-(function() {
-  $(document).on('ready page:load', function() {
-    $.fn.editable.defaults.mode = 'popup';
-    $('.wx-menu-editable').editable();
+  (function() {
+    $(document).on('ready page:load', function() {
+      $.fn.editable.defaults.mode = 'popup';
+      $('.wx-menu-editable').editable();
 
-    $('.publish-menu').on('click', function() {
-      $.ajax({
-        type: "GET",
-        url: "/admin/weixin/menus/create/json",
-        dataType: "json",
-        success: function(data) {
-          // code
-          alert(data.msg);
-        },
-        complete: function(XMLHttpRequest, textStatus){
-          // code
-        },
-        error: function(){
-          // code
-        }
+      $('.publish-menu').on('click', function() {
+        $.ajax({
+          type: "GET",
+          url: "/admin/weixin/menus/create/json",
+          dataType: "json",
+          success: function(data) {
+            alert(data.msg);
+          },
+          complete: function(XMLHttpRequest, textStatus){
+            // code
+          },
+          error: function(){
+            // code
+          }
+        });
+        return false;
       });
-      return false;
-    });
-  });
-}).call(this);
-</script>
 
+      $('.sub-menu-add').on('click', function() {
+        parent_id = $(this).data("id");
+        $("input[name=parent_id]").val(parent_id);
+      });
+
+      $('.menu-add').on('click', function() {
+        _name = $("input[name=name]").val();
+        _url = $("input[name=url]").val();
+        _p_id = $("input[name=parent_id]").val();
+        if (_name == '' || _url == '' || _p_id == '') {
+          alert("请填写完整");
+        } else {
+          $.ajax({
+            type: "POST",
+            url: "/admin/wx_menus/create/json",
+            dataType: "json",
+            data: {
+              name: _name,
+              url: _url,
+              parent_id: _p_id,
+              level: 2
+            },
+            success: function(data) {
+              if(data.status == 'success') {
+                alert(data.msg);
+                _href = window.location.href;
+                window.location.href = _href;
+              } else {
+                alert(data.msg);
+              }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+              // code
+            },
+            error: function(){
+              // code
+            }
+          });
+        }
+        return false;
+      });
+
+
+      $('.sub-menu-del').on('click', function() {
+        _id = $(this).data("id");
+        if(_id != undefined && _id != '') {
+          if(confirm("确定删除吗")) {
+            $.ajax({
+              type: "GET",
+              url: "/admin/wx_menus/" + _id + "/del/json",
+              dataType: "json",
+              success: function(data) {
+                if(data.status == 'success') {
+                  alert(data.msg);
+                  _href = window.location.href;
+                  window.location.href = _href;
+                } else {
+                  alert(data.msg);
+                }
+              },
+              complete: function(XMLHttpRequest, textStatus){
+                // code
+              },
+              error: function(){
+                // code
+              }
+            });
+          }
+        }
+        return false;
+      });
+    });
+  }).call(this);
+</script>
+<style>
+  .top-menu {
+    list-style-type: none;
+    margin: 5px 0 5px 0;
+    border: 1px solid #0088cc;
+  }
+
+  ul li {
+    list-style-type: none;
+    margin: 5px 0 5px 0;
+  }
+</style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
   <ol class="breadcrumb">
@@ -85,32 +166,74 @@
   </div>
   <div class="panel-body">
     <div class="table-responsive">
-      <ul>
-      <% @wx_menus.each do |mu| %>
-        <li>
-          <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
-            <%= mu.name %>
-          </a>&nbsp;&nbsp;|&nbsp;&nbsp;
-          <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
-            <%= mu.url %>
-          </a>
-          <ul>
-            <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
-            <% subs.each do |submu| %>
-              <li>
-                <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
-                  <%= submu.name %>
-                </a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
-                  <%= submu.url %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      <% end %>
+      <ul class="top-menu">
+        <% @wx_menus.each do |mu| %>
+          <li>
+            <i class="fa fa-bars fa-lg"></i>&nbsp;&nbsp;
+            <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
+              <%= mu.name %>
+            </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
+              <%= mu.url %>
+            </a>&nbsp;&nbsp;
+            <a href="#" class="sub-menu-add" data-id="<%= mu.id %>" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus fa-lg"></i></a>&nbsp;&nbsp;
+            <ul class="sub-menu">
+              <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
+              <% subs.each do |submu| %>
+                <li>
+                  <i class="fa fa-toggle-right fa-lg"></i>&nbsp;&nbsp;
+                  <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称">
+                    <%= submu.name %>
+                  </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                  <a href="#" data-name="url" class="wx-menu-editable" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单链接">
+                    <%= submu.url %>
+                  </a>&nbsp;&nbsp;
+                  <a href="#" class="sub-menu-del" data-id="<%= submu.id %>"><i class="fa fa-cut fa-lg"></i></a>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
       </ul>
       <%= submit_tag("发布", class: "btn btn-yellow btn-block publish-menu") %>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加自定义菜单</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="menu_name" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_url" class="col-sm-2 control-label">
+              菜单链接
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" value="" name="url" id="menu_url" class="form-control">
+            </div>
+            <input type="hidden" name="parent_id" value="" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary menu-add">保存</button>
+      </div>
     </div>
   </div>
 </div>
