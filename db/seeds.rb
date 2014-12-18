@@ -95,7 +95,7 @@ prize_act = PrizeAct.new(
   end_time: Time.now + 3600 * 24,
   is_open: 1,
   join_num: 0,
-  person_limit: 30
+  person_limit: 300
 )
 prize_act.save!
 

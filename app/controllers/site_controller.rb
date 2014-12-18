@@ -222,6 +222,22 @@ class SiteController < CustomerController
   end
 
   def big_wheel
+    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_hash = {}
+    prizes.each_with_index do |p, index|
+      min = p.min.split(',')
+      max = p.max.split(',')
+      p.min = min if min.size > 1
+      p.max = max if max.size > 1
+      prize_hash[index] = p
+    end
+
+    res = []
+    1.upto(50).each do |i|
+      result = get_result(prize_hash)
+      res.push result
+    end
+    @res = res
   end
 
   def big_wheel_ajax
@@ -252,7 +268,6 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
-
     result = get_result(prize_hash)
     render json: result
   end
@@ -291,16 +306,20 @@ class SiteController < CustomerController
         result[:prize_name] = nil
         result[:angle] = 0
       else
-        num = prize_num.number -= 1
+        prize_num.number -= 1
         prize_num.save!
+        num = prize_num.number
         result[:num] = num
 
         min = res.min
         max = res.max
 
         if min.is_a? Array
-          i = rand(0..(min.size - 1))
-          result[:angle] = rand(min[i]..max[i])
+          _size = min.size - 1
+          i = rand(0.._size)
+          _min = min[i].to_i
+          _max = max[i].to_i
+          result[:angle] = rand(_min.._max)
         else
           min = res.min.to_i
           max = res.max.to_i
