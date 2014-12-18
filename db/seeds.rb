@@ -95,7 +95,7 @@ prize_act = PrizeAct.new(
   end_time: Time.now + 3600 * 24,
   is_open: 1,
   join_num: 0,
-  person_limit: 30
+  person_limit: 300
 )
 prize_act.save!
 
@@ -105,7 +105,7 @@ prize_config1 = PrizeConfig.new(
   min: '1',
   max: '29',
   prize_content: 'iphone 6',
-  prize_inventory: 8,
+  prize_inventory: 1,
   chance: 1
 )
 prize_config1.save!
@@ -116,7 +116,7 @@ prize_config2 = PrizeConfig.new(
   min: '302',
   max: '328',
   prize_content: 'iphone 5',
-  prize_inventory: 8,
+  prize_inventory: 2,
   chance: 2
 )
 prize_config2.save!
@@ -127,7 +127,7 @@ prize_config3 = PrizeConfig.new(
   min: '242',
   max: '268',
   prize_content: '现金500',
-  prize_inventory: 8,
+  prize_inventory: 3,
   chance: 5
 )
 prize_config3.save!
@@ -149,7 +149,7 @@ prize_config5 = PrizeConfig.new(
   min: '122',
   max: '148',
   prize_content: '现金200',
-  prize_inventory: 8,
+  prize_inventory: 20,
   chance: 10
 )
 prize_config5.save!
@@ -160,7 +160,7 @@ prize_config6 = PrizeConfig.new(
   min: '62',
   max: '88',
   prize_content: '现金100',
-  prize_inventory: 8,
+  prize_inventory: 50,
   chance: 25
 )
 prize_config6.save!
@@ -170,11 +170,106 @@ prize_config7 = PrizeConfig.new(
   prize_name: '七等奖',
   min: '32,92,152,212,272,332',
   max: '58,118,178,238,298,358',
-  prize_content: '小熊宝宝一个',
-  prize_inventory: 8,
-  chance: 50
+  prize_content: '谢谢惠顾',
+  prize_inventory: 10_000_000,
+  chance: 9950
 )
 prize_config7.save!
+
+wm1 = WxMenu.new(
+  name: '我的微网',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm1.save!
+
+names1 = [
+  '会员中心',
+  '我也加盟',
+  '天天有喜',
+  '官网首页'
+]
+names1.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm1.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm2 = WxMenu.new(
+  name: '优生活',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm2.save!
+
+names2 = [
+  '优社区',
+  '生活高手',
+  '一起嗨皮'
+]
+names2.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm2.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm3 = WxMenu.new(
+  name: '我的微网',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm3.save!
+
+names3 = [
+  '进口酒类',
+  '舌尖上的特产',
+  '最强推荐',
+  '订单查询'
+]
+names3.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm3.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
 
 
 time_end = Time.now

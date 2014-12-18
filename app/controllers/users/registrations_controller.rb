@@ -12,11 +12,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super
     resource.add_role :customer
 
-    profile = Profile.new(
+    profile_params = {
       user_id: resource.id,
-      invite_code: User.generate_invite_code
-      # share_link_code: User.generate_share_link_code
-    )
+      invite_code: User.generate_invite_code,
+      province: params[:province],
+      city: params[:city],
+      region: params[:region]
+    }
+    profile = Profile.new(profile_params)
+
+    User.with_any_role(:provider, :admin).each do |p|
+      if p.profile.province = profile.province && p.profile.city = profile.city && p.profile.region = profile.region
+        profile.supplier_id = p.id
+      else
+        profile.supplier_id = User.with_role(:admin).first.id
+      end
+    end
+    puts '==' * 20
+    puts profile.supplier_id
+    puts User.with_role(:admin)
     profile.save
 
     puts '==' * 20

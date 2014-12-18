@@ -1,4 +1,3 @@
-
 <%= form_for(@prize_act, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @prize_act.errors.any? %>
     <div id="error_explanation" class="form-group">
@@ -6,82 +5,80 @@
       <div class="col-sm-9">
         <h2>保存时发生了<%= pluralize(@prize_act.errors.count, "error") %></h2>
         <ul>
-        <% @prize_act.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+          <% @prize_act.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
         </ul>
       </div>
     </div>
   <% end %>
-
-      <div class="form-group">
-                <%= f.label :name, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.name' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :name, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :desc, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.desc' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :desc, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :prize_type, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.prize_type' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.text_field :prize_type, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :start_time, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.start_time' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.datetime_select :start_time, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :end_time, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.end_time' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.datetime_select :end_time, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :is_open, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.is_open' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.number_field :is_open, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :join_num, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.join_num' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.number_field :join_num, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-                <%= f.label :person_limit, :class => "col-sm-2 control-label" do %>
-            <%=t 'activerecord.attributes.prize_act.person_limit' %> <span class="symbol required"></span>
-          <% end %>
-          <div class="col-sm-9">
-            <%= f.number_field :person_limit, :class => "form-control" %>
-          </div>
-          </div>
-      <div class="form-group">
-      <label class="col-sm-2 control-label" for="submit"></label>
-      <div class="col-sm-9">
-        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
-      </div>
+  <div class="form-group">
+    <%= f.label :name, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.name' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :name, :class => "form-control" %>
     </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :desc, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.desc' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :desc, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :prize_type, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.prize_type' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:prize_type, options_for_select([['大转盘', 'bigwheel'], ['刮刮乐', 'scratchoff']], @prize_act.prize_type)) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :start_time, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.start_time' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.datetime_select :start_time, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :end_time, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.end_time' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.datetime_select :end_time, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :is_open, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.is_open' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:is_open, options_for_select([['开启', 1], ['关闭', 0]], @prize_act.is_open)) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :person_limit, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.prize_act.person_limit' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :person_limit, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+    </div>
+  </div>
 <% end %>
