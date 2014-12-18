@@ -15,6 +15,30 @@ cats.each do |c|
   Cat.create! c
 end
 
+
+u = User.new(
+  username: 'admin',
+  email: 'admin@gmail.com',
+  password: '12345678',
+  password_confirmation: '12345678'
+)
+u.save
+u.confirm!
+u.add_role :admin
+Profile.create(
+  user_id: u.id,
+  mobile: "135604744#{u.id}",
+  tel: "5555#{u.id}",
+  province: '广东省',
+  city: '广州市',
+  region: '番禺区',
+  address: '小谷围',
+  fax: '55555'
+)
+Integral.create(user_id: u.id, amount: 0)
+Vritualcard.create(user_id: u.id, money: '0.00')
+
+=begin
 1.upto(50).each do |i|
   if i == 1
     u = User.new(
@@ -86,6 +110,7 @@ end
     Vritualcard.create(user_id: u.id, money: '0.00')
   end
 end
+=end
 
 prize_act = PrizeAct.new(
   name: '送iphone7',
@@ -95,7 +120,7 @@ prize_act = PrizeAct.new(
   end_time: Time.now + 3600 * 24,
   is_open: 1,
   join_num: 0,
-  person_limit: 300
+  person_limit: 3
 )
 prize_act.save!
 
@@ -176,6 +201,7 @@ prize_config7 = PrizeConfig.new(
 )
 prize_config7.save!
 
+=begin
 wm1 = WxMenu.new(
   name: '我的微网',
   msg: '',
@@ -270,7 +296,96 @@ names3.each do |sn|
   )
   wm_tmp.save!
 end
+=end
 
+wm1 = WxMenu.new(
+  name: '购物专区',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm1.save!
+
+names1 = [
+  '商城主页'
+]
+names1.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm1.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm2 = WxMenu.new(
+  name: '礼品专区',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm2.save!
+
+names2 = [
+  '有奖转盘 '
+]
+names2.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/customer/big/wheel',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm2.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm3 = WxMenu.new(
+  name: '会员专区',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm3.save!
+
+names3 = [
+  '最新动态',
+  '倾情推荐',
+  '未来预告'
+]
+names3.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm3.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
 
 time_end = Time.now
 time = time_end - time_start

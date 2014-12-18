@@ -5,17 +5,15 @@
 <script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
 <script src="/backend/assets/js/multilevel-select.js" type="text/javascript"></script>
 <script>
-(function () {
-  $(document).on('ready page:load', function () {
-    MultilevelSelect({
-      data: ADMINISTRATIVE_DIVISION,
-      nodes: [$('#s1'), $('#s2'), $('#s3')]
-    });
+$(document).ready(function() {
+  MultilevelSelect({
+    data: ADMINISTRATIVE_DIVISION,
+    nodes: [$('#s1'), $('#s2'), $('#s3')]
   });
-}).call(this);
+});
+
 </script>
 <style>
-
   body {
     margin: 0;
     padding: 0;
@@ -33,6 +31,22 @@
 
   .select-address {
     width: 98%;
+    height: 70px;
+    padding : 10px 0 0 5px;
+    background-image: url("/zhonglian/img/cat/address.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 80%;
+    margin-bottom: 10px;
+  }
+
+  .confirm-address {
+    margin-left: 5px;
+    margin-top: 4px;
+    font-size: 0.7em;
+  }
+
+  .invoice {
+    width: 98%;
     height: 50px;
     padding : 10px 0 0 5px;
     background-image: url("/zhonglian/img/cat/address.jpg");
@@ -40,6 +54,10 @@
     background-size: 100% 80%;
     margin-bottom: 10px;
   }
+  .invoice-not {
+    margin-right: 10px;
+  }
+
   .address {
     position: absolute;
     left: 0;
@@ -48,6 +66,7 @@
     height: 100%;
     background: #f2f2f2;
     display: none;
+    margin-bottom: 70px;
   }
 
   .address-top {
@@ -179,10 +198,72 @@
     color: #ffffff;
     font-size: 40px;
     margin-left: 10%;
+    margin-bottom: 70px;
+  }
+
+  .address-mesg {
+    display: none;
+    text-align: center;
+    color: #aa0c40;
   }
 
   .form-box {
+    position: absolute;
+    left: 0;
+    top: -20px;
+    width: 100%;
+    height: 100%;
     display: none;
+  }
+
+  .form-box-top {
+    width: 90%;
+    height: 40px;
+    text-align: center;
+    background: #ffffff;
+    padding-top: 10px;
+
+  }
+
+  .invoice-inf {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .invoice-inf-top {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background: #ffffff;
+    padding-top: 10px;
+  }
+
+  .invoice-mesg {
+    display: none;
+    text-align: center;
+    color: #aa0c40;
+  }
+
+  .cancel-invoice {
+    font-size: 16px;
+    margin-left: 5%;
+  }
+
+  .confirm-invoice {
+    font-size: 16px;
+    margin-right: 5%;
+  }
+
+  .rise,.content {
+    width: 90%;
+    height: 25px;
+    margin-left: 5%;
+    margin-top: 10px;
+    font-size: 18px;
   }
 
   .pull-left {
@@ -208,10 +289,26 @@
   .text3 {
     color: #787878;
   }
+  .btn {
+    margin-bottom: 70px;
+  }
+
+  a {
+    color: #000000;
+  }
+
 </style>
+<input type="hidden" name="address-id" class="address-id">
 <a href="#" class="order-address">
   <div class="select-address">
-    <span>请选择收货地址</span>
+    <span class="pull-left">请选择收货地址</span><br>
+    <span class="pull-left confirm-address"></span>
+  </div>
+</a>
+<a href="#" class="invoice-need">
+  <div class="invoice">
+    <span class="pull-left">开具发票</span>
+    <span class="invoice-not pull-right">不开发票</span>
   </div>
 </a>
 <div class="address">
@@ -229,7 +326,7 @@
         <span><%= ad.receive_name %></span>
         <span style="float: right"><%= ad.mobile %></span>
         <br/>
-        <span><%= ad.province %><%= ad.city %><%= ad.region %><%= ad.address %></span>
+        <span class="selected-address"><%= ad.province %><%= ad.city %><%= ad.region %><%= ad.address %></span>
       </p>
 
       <p class="p-r"><a href="#">&gt;</a></p>
@@ -237,7 +334,7 @@
     <% end %>
   </div>
   <div class="address-foot">
-    <a href="/customer/shipaddresses/new" data-no-turbolink>
+    <a href="#" class="address-add" data-no-turbolink>
       <div class="add-address">添加新地址</div>
     </a>
   </div>
@@ -245,9 +342,15 @@
 
 
 <div class="form-box">
+  <div class="form-box-top">
+    <span>添加新地址</span>
+    <a href="#" class="cancel-add-addre pull-right">X</a>
+  </div>
+  <div class="address-mesg"><p></P></div>
+  <input type=hidden name=uid value="<%= current_user.id %>">
   <div class="input-row">
     <label>姓名</label>
-    <input type="text" name="receive_name" placeholder="用户名">
+    <input type="text" class="receive_name" name="receive_name" placeholder="用户名">
   </div>
   <div class="input-row">
     <label>省份</label>
@@ -278,9 +381,21 @@
     <input type="text" name="mobile" placeholder="固定电话">
   </div>
 
-  <button class="btn btn-red btn-block">添加</button>
+  <button class="btn-add-address btn btn-red btn-block">添加</button>
 </div>
-
+<div class="invoice-inf">
+  <input type="hidden" name="invoice-id" class="invoice-id">
+  <div class="invoice-inf-top">
+    <a href="#" class="cancel-invoice pull-left">X</a>
+    <span>开具发票</span>
+    <a href="#" class="confirm-invoice pull-right">确定</a>
+  </div>
+  <div class="invoice-mesg"><p></P></div>
+  <div>
+    <input class="rise" placeholder="请输入发票抬头">
+    <input class="content" placeholder="请输入发票内容">
+  </div>
+</div>
 
 <div class="order">
   <div class="promo-code">
