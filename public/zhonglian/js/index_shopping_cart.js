@@ -59,11 +59,13 @@
         $(".checkbox").each(function(){
           if(($(this).is(':checked'))==true){
             var id= ($(this).parent().siblings("input").val());
-            updateBuyMark(id,true);
+            var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").text();
+            updateBuyMark(id,num,true);
           }
           if(($(this).is(':checked'))==false){
             var id= ($(this).parent().siblings("input").val());
-            updateBuyMark(id,false);
+            var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").text();
+            updateBuyMark(id,num,false);
           }
         });
         $(this).attr("href","/customer/orders/settlement");
@@ -93,7 +95,7 @@
       return JsonStr.productList;
     }
 
-    function updateBuyMark(id,mark) {
+    function updateBuyMark(id,num,mark) {
       var shoppingCart = $.localStorage.get("shoppingCart");
       var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
       var productList = JsonStr.productList;
@@ -101,6 +103,7 @@
       for (var i in productList) {
         if (productList[i].id == id) {
           productList[i].buyMark = mark;
+          productList[i].num = num;
         }
       }
       //保存购物车
@@ -127,7 +130,6 @@
           price = parseFloat(price);
           var img = productList[i].img;
           var subtotal = num*price;
-
           var id = "product" + i;
           var product = $("<div></div>").addClass("product").attr("id",id);
           $(".select").before(product);
@@ -161,7 +163,7 @@
           $("#product"+i).children(".p-amount").append(ampuntaction);
           var buttondec = $("<button></button>").addClass("action-de").attr("type","button").text("-");
           $("#product"+i).children(".p-amount").children(".ampunt-action").append(buttondec);
-          var number = $("<p></P>").addClass("number").text(num);
+          var number = $("<p></P>").addClass("number").text(num).attr("value",num);
           $("#product"+i).children(".p-amount").children(".ampunt-action").append(number);
           var buttonplus = $("<button></button>").addClass("action-plus").attr("type","button").text("+");
           $("#product"+i).children(".p-amount").children(".ampunt-action").append(buttonplus);

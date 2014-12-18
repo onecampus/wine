@@ -165,6 +165,7 @@
     加入购物车
     */
     $("#input-shoppingcart").click(function(){
+      alert("aaa");
       var name = $(".product-name").text(),
           englishname = $(".product-englishname").text(),
           price = $(".price").text(),
