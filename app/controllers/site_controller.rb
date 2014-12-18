@@ -12,7 +12,8 @@ class SiteController < CustomerController
                                                  :index_wait_receive,
                                                  :index_order_history,
                                                  :create_order,
-                                                 :big_whell_ajax]
+                                                 :big_whell_ajax,
+                                                 :test]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
@@ -21,6 +22,10 @@ class SiteController < CustomerController
 
   def index
     @recommend_products = Product.last 8
+  end
+
+  def test
+
   end
 
   def index_cats
