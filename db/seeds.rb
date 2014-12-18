@@ -105,7 +105,7 @@ prize_config1 = PrizeConfig.new(
   min: '1',
   max: '29',
   prize_content: 'iphone 6',
-  prize_inventory: 8,
+  prize_inventory: 1,
   chance: 1
 )
 prize_config1.save!
@@ -116,7 +116,7 @@ prize_config2 = PrizeConfig.new(
   min: '302',
   max: '328',
   prize_content: 'iphone 5',
-  prize_inventory: 8,
+  prize_inventory: 2,
   chance: 2
 )
 prize_config2.save!
@@ -127,7 +127,7 @@ prize_config3 = PrizeConfig.new(
   min: '242',
   max: '268',
   prize_content: '现金500',
-  prize_inventory: 8,
+  prize_inventory: 3,
   chance: 5
 )
 prize_config3.save!
@@ -149,7 +149,7 @@ prize_config5 = PrizeConfig.new(
   min: '122',
   max: '148',
   prize_content: '现金200',
-  prize_inventory: 8,
+  prize_inventory: 20,
   chance: 10
 )
 prize_config5.save!
@@ -160,7 +160,7 @@ prize_config6 = PrizeConfig.new(
   min: '62',
   max: '88',
   prize_content: '现金100',
-  prize_inventory: 8,
+  prize_inventory: 50,
   chance: 25
 )
 prize_config6.save!
@@ -170,9 +170,9 @@ prize_config7 = PrizeConfig.new(
   prize_name: '七等奖',
   min: '32,92,152,212,272,332',
   max: '58,118,178,238,298,358',
-  prize_content: '小熊宝宝一个',
-  prize_inventory: 8,
-  chance: 50
+  prize_content: '谢谢惠顾',
+  prize_inventory: 10_000_000,
+  chance: 9950
 )
 prize_config7.save!
 
