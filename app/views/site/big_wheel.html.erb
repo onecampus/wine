@@ -97,7 +97,7 @@
 </div>
 <div class="container">
   <div id="disk"><img src="/zhonglian/img/big_wheel/disk.jpg" /></div>
-  <div id="start"><img src="/zhonglian/img/big_wheel/start.png" id="startbtn"></div>
+  <div id="start"><img src="/zhonglian/img/big_wheel/start.png" id="startbtn" class="true" /></div>
 </div>
 <div id="records">
   <span>获奖记录</span>
@@ -109,7 +109,9 @@ $(function(){
   lottery();
 });
 function lottery(){
-  $("#startbtn").click(function(){
+  var $startbtn = $('#startbtn');
+  $startbtn.data('flag','true');
+  $startbtn.bind('click',function(){
     $.ajax({
       type: 'POST',
       url: '/customer/big/wheel',
@@ -120,10 +122,12 @@ function lottery(){
         return false;
       },
       success:function(json){
+        if($startbtn.data('flag') == 'true'){
         var a = parseInt(json.angle); //角度
         var p = json.prize_name;//奖项
         var n = json.num;//剩余抽奖次数
         if(p!="" && a!=0){
+          $(this).data('flag','false');
           $("#startbtn").rotate({
             duration:3000, //转动时间
             angle: 0, //默认角度
@@ -138,12 +142,18 @@ function lottery(){
               var day = days[date.getDay()];
               var hour = date.getHours();
               var minute = date.getMinutes();
+              if (minute < 10) minute = '0'+minute;
               var second = date.getSeconds();
+              if (second < 10) second = '0'+second;
               var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
               var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
               $('#records span').after('<p>您在'+nowTime+'抽中了<strong>'+p+'</strong></p>');
               $("#startbtn").rotate({angle:0});
               $("#startbtn").css("cursor","pointer");
+              if(con)
+                {
+                  $startbtn.data('flag','true');
+                }
               if(!con){
                 $("#startbtn").unbind('click').css("cursor","default");
               }
@@ -152,8 +162,9 @@ function lottery(){
         }else{
           alert("您已经没有抽奖次数了！");
         }
-      }
+      }}
     })
   })
+
 }
 </script>
