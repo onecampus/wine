@@ -87,7 +87,6 @@ $(document).ready(function() {
       },
       dataType: "json",
       success: function(data) {
-        alert(data.data);
         $(".invoice-id").val(data.data);
         $(".invoice-not").text("开发票");
         $(".invoice-not").css("color", "#aa0c40")
