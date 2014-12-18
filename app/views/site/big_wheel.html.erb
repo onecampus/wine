@@ -157,3 +157,10 @@ function lottery(){
   })
 }
 </script>
+
+<% @res.each do |r| %>
+  <%= r[:num] %><br />
+  <%= r[:prize_name] %><br />
+  <%= r[:angle] %><br />
+  <hr />
+<% end %>
