@@ -27,3 +27,4 @@
 /config/deploy/production.rb
 /config/deploy/staging.rb
 /.capistrano
+/backup.html.erb

@@ -25,5 +25,7 @@ module Wine
     config.active_record.default_timezone = :local
     config.time_zone = 'Beijing'
     config.encoding = 'utf-8'
+
+    config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
   end
 end

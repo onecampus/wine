@@ -176,6 +176,101 @@ prize_config7 = PrizeConfig.new(
 )
 prize_config7.save!
 
+wm1 = WxMenu.new(
+  name: '我的微网',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm1.save!
+
+names1 = [
+  '会员中心',
+  '我也加盟',
+  '天天有喜',
+  '官网首页'
+]
+names1.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm1.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm2 = WxMenu.new(
+  name: '优生活',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm2.save!
+
+names2 = [
+  '优社区',
+  '生活高手',
+  '一起嗨皮'
+]
+names2.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm2.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
+wm3 = WxMenu.new(
+  name: '我的微网',
+  msg: '',
+  url: 'http://203.195.172.200/',
+  msg_or_url: 1,
+  button_type: 'view',
+  key: '',
+  parent_id: 0,
+  level: 1
+)
+wm3.save!
+
+names3 = [
+  '进口酒类',
+  '舌尖上的特产',
+  '最强推荐',
+  '订单查询'
+]
+names3.each do |sn|
+  wm_tmp = WxMenu.new(
+    name: sn,
+    msg: '',
+    url: 'http://203.195.172.200/',
+    msg_or_url: 1,
+    button_type: 'view',
+    key: '',
+    parent_id: wm3.id,
+    level: 2
+  )
+  wm_tmp.save!
+end
+
 
 time_end = Time.now
 time = time_end - time_start
