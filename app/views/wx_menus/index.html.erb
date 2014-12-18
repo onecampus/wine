@@ -17,7 +17,7 @@
         dataType: "json",
         success: function(data) {
           // code
-          alert(data);
+          alert(data.msg);
         },
         complete: function(XMLHttpRequest, textStatus){
           // code
@@ -114,3 +114,4 @@
     </div>
   </div>
 </div>
+<%= @res_hash %>

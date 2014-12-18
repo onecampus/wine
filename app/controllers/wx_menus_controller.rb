@@ -27,8 +27,10 @@ class WxMenusController < ApplicationController
   def create_weixin_menu
     access_token_hash = get_access_token('wxa2bbd3b7a22039df', 'client_credential', '724bbaea1bce4c09865c2c47acbf450d')
 
-    res_hash = create_custom_menu(access_token_hash[:access_token])
-    if res_hash[:errcode] == 0 && res_hash[:errmsg] == 'ok'
+    res_hash = create_custom_menu(access_token_hash['access_token'])
+    puts '-' * 20
+    puts res_hash
+    if res_hash['errcode'] == 0 && res_hash['errmsg'] == 'ok'
       render json: { status: 'success', msg: 'create menu success' }
     else
       render json: { status: 'error', msg: 'create menu failed' }
@@ -75,7 +77,13 @@ class WxMenusController < ApplicationController
 
   def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
     url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
-    res = RestClient.get url, { accept: :json }
+    res = RestClient.get url
+    JSON.parse res
+  end
+
+  def get_custom_menu(access_token)
+    url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=#{access_token}"
+    res = RestClient.get url
     JSON.parse res
   end
 
@@ -89,20 +97,16 @@ class WxMenusController < ApplicationController
       }
       WxMenu.where(level: 2, parent_id: tm.id).last(5).each do |sm|
         tmp_hash[:sub_button].push(
-        type: 'view',
-        name: sm.name,
-        url: sm.url
+          type: 'view',
+          name: sm.name,
+          url: sm.url
         )
       end
       menus[:button].push tmp_hash
     end
 
-    puts '-' * 50
-    puts menus.to_json
-    puts menus
-
     url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}"
-    res = RestClient.post url, menus.to_json, content_type: :json, accept: :json
+    res = RestClient.post url, menus.to_json
     JSON.parse res
   end
 end
