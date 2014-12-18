@@ -1,3 +1,21 @@
+
+
+function showShoppingCartItem() {
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  console.log("shoppingCart is " + shoppingCart);
+  if(shoppingCart !== null) {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    var length = productList.length;
+    if (length > 0) {
+      $(".shopping-cart-mark").show();
+      $(".shopping-cart-mark").text(length);
+    } else {
+      $(".shopping-cart-mark").hide();
+    }
+  }
+}
+
 $(document).ready(function() {
   showShoppingCartItem();
   var Utils = {
@@ -164,14 +182,14 @@ $(document).ready(function() {
   加入购物车
   */
   $("#input-shoppingcart").click(function() {
-    alert("aaa");
     var name = $(".product-name").text(),
-      englishname = $(".product-englishname").text(),
-      price = $(".price").text(),
-      num = $(".p-num").val(),
-      id = $(".product-id").val(),
-      img = $(".top-img").children().attr("src"),
-      buyMark = false;
+        englishname = $(".product-englishname").text(),
+        price = $(".price").text(),
+        num = $(".p-num").val(),
+        id = $(".product-id").val(),
+        img = $(".top-img").children().attr("src"),
+        buyMark = false;
+    console.log(img); // /uploads/4108047cc89a7d6311ceb19150479e4e.jpg
     var product = {
       'id': id,
       'name': name,
@@ -184,29 +202,20 @@ $(document).ready(function() {
     Cart.addProduct(product);
     showShoppingCartItem();
     $(".shoppingcart-animate").show(10);
+    /*
     for (i = 0; i < 15; i++) {
       $(".shoppingcart-animate").animate({
         left: '+=1%',
         top: '+=40%'
       }, 80);
     }
+    */
     $(".shoppingcart-animate").hide(10);
+    /*
     $(".shoppingcart-animate").css({
       "left": "41%",
       "top": "25px"
     });
+    */
   });
 });
-
-function showShoppingCartItem() {
-  var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-  var productList = JsonStr.productList;
-  var length = productList.length;
-  if (length > 0) {
-    $(".shopping-cart-mark").show();
-    $(".shopping-cart-mark").text(length);
-  } else {
-    $(".shopping-cart-mark").hide();
-  }
-}
