@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   root 'site#index'
 
-  get 'test' => 'site#test'
-
   # product cat
   get 'customer/cats' => 'site#index_cats'
   get 'customer/cats/:cid/products' => 'site#index_cat_products'
