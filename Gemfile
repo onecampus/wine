@@ -54,6 +54,8 @@ gem 'rest_client'
 # bootstrap editable
 # gem 'bootstrap-editable-rails'
 
+gem 'font-awesome-rails'
+
 # 部署
 group :development do
   gem 'capistrano', '~> 3.3.0'
