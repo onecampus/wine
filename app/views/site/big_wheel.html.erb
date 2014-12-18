@@ -49,8 +49,9 @@
     border-radius: 8px;
   }
   #disk {
-    width: 100%;
-    height: auto;
+    height: 200px;
+    margin: auto;
+    width: 200px;
   }
   img {
     margin: 0 auto;
@@ -64,11 +65,20 @@
   }
 
   #start {
+    height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
     position: absolute;
     top: 50%;
-    left: 50%;
-    margin-left: -82px;
-    margin-top: -160px;
+    width: 200px;
+  }
+
+  #start img {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
   }
   #records {
     width: 85%;
@@ -97,7 +107,7 @@
 </div>
 <div class="container">
   <div id="disk"><img src="/zhonglian/img/big_wheel/disk.jpg" /></div>
-  <div id="start"><img src="/zhonglian/img/big_wheel/start.png" id="startbtn" class="true" /></div>
+  <div id="start"><img data-flag="enable" src="/zhonglian/img/big_wheel/start.png" id="startbtn" /></div>
 </div>
 <div id="records">
   <span>获奖记录</span>
@@ -108,63 +118,64 @@
 $(function(){
   lottery();
 });
+
+function enableFlag() {
+  var $startbtn = $('#startbtn');
+  $startbtn.data("flag", 'enable');
+
+}
 function lottery(){
   var $startbtn = $('#startbtn');
-  $startbtn.data('flag','true');
-  $startbtn.bind('click',function(){
-    $.ajax({
-      type: 'POST',
-      url: '/customer/big/wheel',
-      dataType: 'json',
-      cache: false,
-      error: function(){
-        alert('出错了！');
-        return false;
-      },
-      success:function(json){
-        if($startbtn.data('flag') == 'true'){
-        var a = parseInt(json.angle); //角度
-        var p = json.prize_name;//奖项
-        var n = json.num;//剩余抽奖次数
-        if(p!="" && a!=0){
-          $(this).data('flag','false');
-          $("#startbtn").rotate({
-            duration:3000, //转动时间
-            angle: 0, //默认角度
-            animateTo:3600+a, //转动角度
-            easing: $.easing.easeOutSine,
-            callback: function(){
-              var date = new Date();
-              var year = date.getFullYear();
-              var month = date.getMonth()+1;
-              var days = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
-              var Day = date.getDate();
-              var day = days[date.getDay()];
-              var hour = date.getHours();
-              var minute = date.getMinutes();
-              if (minute < 10) minute = '0'+minute;
-              var second = date.getSeconds();
-              if (second < 10) second = '0'+second;
-              var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
-              var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
-              $('#records span').after('<p>您在'+nowTime+'抽中了<strong>'+p+'</strong></p>');
-              $("#startbtn").rotate({angle:0});
-              $("#startbtn").css("cursor","pointer");
-              if(con)
-                {
-                  $startbtn.data('flag','true');
-                }
-              if(!con){
-                $("#startbtn").unbind('click').css("cursor","default");
+  var _ajax = function(){
+        if($startbtn.data("flag") == 'enable') {
+          $startbtn.data("flag", 'disable');
+          $.ajax({
+            type: 'POST',
+            url: '/customer/big/wheel',
+            dataType: 'json',
+            cache: false,
+            error: function(){
+              alert('出错了！');
+              return false;
+            },
+            success:function(json){
+              var a = parseInt(json.angle); //角度
+              var p = json.prize_name;//奖项
+              var n = json.num;//剩余抽奖次数
+              if(p!="" && a!=0){
+                $("#startbtn").rotate({
+                  duration:3000, //转动时间
+                  angle: 0, //默认角度
+                  animateTo:3600+a, //转动角度
+                  easing: $.easing.easeOutSine,
+                  callback: function(){
+                    var date = new Date();
+                    var year = date.getFullYear();
+                    var month = date.getMonth()+1;
+                    var days = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+                    var Day = date.getDate();
+                    var day = days[date.getDay()];
+                    var hour = date.getHours();
+                    var minute = date.getMinutes();
+                    if (minute < 10) minute = '0'+minute;
+                    var second = date.getSeconds();
+                    if (second < 10) second = '0'+second;
+                    var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
+                    var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
+                    $('#records span').after('<p>您在'+nowTime+'抽中了<strong>'+p+'</strong></p>');
+                    $("#startbtn").rotate({angle:0});
+                    $("#startbtn").css("cursor","pointer");
+                  }
+                });
+              }else{
+                alert("您已经没有抽奖次数了！");
               }
             }
           });
-        }else{
-          alert("您已经没有抽奖次数了！");
         }
-      }}
-    })
-  })
+        setTimeout("enableFlag()", 3000);
+      }
+  $startbtn.bind('click', _ajax)
 
 }
 </script>
