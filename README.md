@@ -174,7 +174,7 @@ rails g scaffold PrizeAct name:string desc:string prize_type:string start_time:d
 rails g scaffold PrizeConfig prize_act_id:string prize_name:string min:string max:string prize_content:string prize_inventory:integer chance:integer
 rails g scaffold PrizeUser user_id:integer prize_config_id:integer
 rails g scaffold PrizeUserNumber user_id:integer number:integer prize_act_id:integer
-
+rails g migration AddGetedToPrizeUsers geted:integer
 
 rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
 

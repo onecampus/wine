@@ -151,7 +151,7 @@
 <hr class="hr-style">
 <div class="cat-products">
   <% @cat_products.each_with_index do |p, index| %>
-    <a href="/customer/products/<%= p.id %>/show">
+    <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
       <div class="product">
         <img src="<%= p.img %>">
         <div class="product-inf">

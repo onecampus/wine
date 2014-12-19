@@ -32,7 +32,8 @@ class PrizeUsersController < ApplicationController
   end
 
   def destroy
-    @prize_user.destroy
+    @prize_user.geted = 1
+    @prize_user.save
     respond_with(@prize_user)
   end
 
