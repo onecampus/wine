@@ -132,7 +132,7 @@ hr {
   <p class="title">搜索结果</p>
 
   <% @products.each do |p| %>
-  <a href="/customer/products/<%=p.id%>/show">
+  <a href="/customer/products/<%=p.id%>/show" data-no-turbolink>
     <div class="search-result-item">
       <img src="<%=p.img%>"/>
        <div class="product-inf">
