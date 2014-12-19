@@ -137,8 +137,8 @@ img {
   top: 50%;
   left: 50%;
   width: 80%;
-  height: 150px;
-  margin-top: -75px;
+  height: 120px;
+  margin-top: -60px;
   margin-left: -40%;
   background-color: #fff;
   border-radius: 5px;
@@ -149,12 +149,27 @@ img {
 }
 .mask p {
   font-wieght: bold;
-  margin: 10px 5px;
+  margin: 10px auto;
+  padding: 0 5px;
+}
+.mask p .prize, .mask p .prizecount {
+  font-weight: bold;
 }
 .mask a {
+  text-align: center;
+  display: block;
   border-radius: 5px;
-  margin: 5px 10px;
+  margin: 0 auto;
   font-size: 20px;
+  padding: 5px 10px;
+  background-color: #2a8a00;
+  color: white;
+}
+.mask div {
+  margin: 0 auto;
+}
+.space2 {
+  height: 10px;
 }
 </style>
 
@@ -171,34 +186,46 @@ img {
      <span></span>
     </div>
   </div>
+  <div class="space2"></div>
+  <div class="box" >
+    <div class="title-green">
+      <span>历史记录</span>
+    </div>
+    <div id="records" class="Detail">
+      <% @prize_users.each do |pu| %>
+      <p>您在 <%= pu.created_at.strftime("%Y-%m-%d") %> 抽中了<strong><%= PrizeConfig.find(pu.prize_config_id).prize_name %></strong></p>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div class="boxcontent boxyellow">
   <div class="box">
     <div class="title-green"><span>奖项设置：</span></div>
     <div class="Detail">
-      <p>每人最多允许抽奖次数:1000  - 已抽取 <span class="red" id="usenums">30</span> 次</p>
-      <p>一等奖: 再体验一把？！  </p>
-      <p>二等奖: 微信营销培训（这个是测试哦） </p>
-      <p>三等奖: 微易销功能手册（这个是测试哦） </p>                                            </div>
+      <p>每人最多允许抽奖次数: <%= @prize_act.person_limit %> 次 - 剩余 <span class="red" id="usenums"><%= @prize_user_number.number %></span> 次</p>
+      <% @prizes.each do |p| %>
+      <p><%= p.prize_name %>: <%= p.prize_content %></p>
+      <% end %>
     </div>
   </div>
+</div>
   <div class="boxcontent boxyellow" id="boxcontent">
     <div class="box">
       <div class="title-green">活动说明：</div>
       <div class="Detail">
         <p>亲，请点击进入大转盘抽奖活动页面，开始体验微易销。
           祝您好运哦！</p>
-          <p>活动时间:2014-04-02至2015-05-02</p>
-          <p><strong>兑奖请联系微易销总部服务热线：4008-910-114</strong></p>
+          <p>活动时间: <%= @prize_act.start_time.strftime("%Y-%m-%d") %> 至 <%= @prize_act.end_time.strftime("%Y-%m-%d") %> </p>
+          <p><strong>兑奖请联系微易销总部服务热线：400-009-2119</strong></p>
         </div>
       </div>
     </div>
 
-  <div class="footFix" id="footReturn"><a href="#">返回众联主页</a></div>
+  <div class="footFix" id="footReturn"><a href="/">返回众联主页</a></div>
   <div class="back"></div>
   <div class="mask">
    <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
-   <a href="javascript:void(0)" class="notice btn-red">知道了</a>
+   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
   </div>
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
@@ -253,8 +280,8 @@ img {
                   var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
                   $back.show();
                   $back.height($(document).height());
-                  $('prize').text(p);
-                  $('prizecount').text(n);
+                  $('.prize').text(p);
+                  $('.prizecount').text(n);
                   $mask.slideDown(800);
                   setTimeout(function(){
                     $back.hide();
