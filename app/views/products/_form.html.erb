@@ -1,153 +1,167 @@
 <%= form_for(@product, :html => {:class => "form-horizontal"}) do |f| %>
-    <% if @product.errors.any? %>
-        <div id="error_explanation" class="form-group">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-9">
-            <h2>保存时发生了<%= pluralize(@product.errors.count, "error") %></h2>
-            <ul>
-              <% @product.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+  <% if @product.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@product.errors.count, "error") %></h2>
+        <ul>
+          <% @product.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.name' %>
+      <span class="symbol required"></span>
     <% end %>
-
-    <div class="form-group">
-      <%= f.label :name, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.name' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :name, :class => "form-control" %>
-      </div>
+    <div class="col-sm-9">
+      <%= f.text_field :name, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :price, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.price' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :price, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :price, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.price' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :price, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :img, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.img' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= image_tag(@product.img_url(:thumb)) if @product.img? %>
-        <%= f.file_field :img %>
-        <p class="help-block">请上传特色图片</p>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :img, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.img' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= image_tag(@product.img_url(:thumb)) if @product.img? %>
+      <%= f.file_field :img %>
+      <p class="help-block">请上传特色图片</p>
     </div>
-    <div class="form-group">
-      <%= f.label :cat_id, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.cat_id' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= select_tag "product[cat_id]", nested_options(@categories, selected: @product.cat), class: :nested_options %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cat_id, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.cat_id' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= select_tag "product[cat_id]", nested_options(@categories, selected: @product.cat), class: :nested_options %>
     </div>
-    <div class="form-group">
-      <%= f.label :description, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.description' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_area :description, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.description' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.cktext_area :description, :class => 'ckeditor form-control' %>
     </div>
-    <div class="form-group">
-      <%= f.label :brand, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.brand' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :brand, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :brand, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.brand' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :brand, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :expiration_date, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.expiration_date' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.datetime_select :expiration_date, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :expiration_date, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.expiration_date' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.datetime_select :expiration_date, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :country, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.country' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :country, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :country, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.country' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :country, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :package_type, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.package_type' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :package_type, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :package_type, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.package_type' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :package_type, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :product_model, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.product_model' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :product_model, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :product_model, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.product_model' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :product_model, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :status, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.status' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.select(:status, options_for_select([['上架', 1], ['下架', 0]]), :class => "form-control") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :status, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.status' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:status, options_for_select([['上架', 1], ['下架', 0]]), :class => "form-control") %>
     </div>
-    <div class="form-group">
-      <%= f.label :profit, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.profit' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :profit, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :profit, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.profit' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :profit, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :vip_price, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.vip_price' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :vip_price, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :vip_price, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.vip_price' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :vip_price, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :is_new, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.is_new' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.select(:is_new, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :is_new, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.is_new' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:is_new, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
     </div>
-    <div class="form-group">
-      <%= f.label :is_boutique, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.is_boutique' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :is_boutique, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.is_boutique' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
     </div>
-    <div class="form-group">
-      <%= f.label :unit, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.unit' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :unit, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :unit, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.product.unit' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :unit, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="submit"></label>
-
-      <div class="col-sm-9">
-        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
     </div>
+  </div>
 <% end %>
