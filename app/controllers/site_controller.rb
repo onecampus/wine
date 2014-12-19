@@ -3,8 +3,10 @@
 class SiteController < CustomerController
   layout 'customer'
 
-  skip_before_filter :authenticate_user!, only: [:index, :index_cats,
-                                                 :show_product, :index_comments,
+  skip_before_filter :authenticate_user!, only: [:index,
+                                                 :index_cats,
+                                                 :show_product,
+                                                 :index_comments,
                                                  :index_search_result,
                                                  :index_cat_products,
                                                  :index_wait_ship,
@@ -12,7 +14,8 @@ class SiteController < CustomerController
                                                  :index_wait_receive,
                                                  :index_order_history,
                                                  :create_order,
-                                                 :big_whell_ajax]
+                                                 :big_whell_ajax,
+                                                 :big_wheel]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
@@ -233,13 +236,15 @@ class SiteController < CustomerController
     @prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
     # 该抽奖活动的奖品
     @prizes = @prize_act.prize_configs
-    # 当前用户抽奖剩余次数
-    @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
-    # 当前用户未领奖项
-    @prize_users = PrizeUser.where(
-      user_id: current_user.id,
-      geted: 0
-    )
+    if current_user
+      # 当前用户抽奖剩余次数
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+      # 当前用户未领奖项
+      @prize_users = PrizeUser.where(
+        user_id: current_user.id,
+        geted: 0
+      )
+    end
   end
 
   def big_wheel_ajax

@@ -44,8 +44,26 @@
   <!--[if lt IE 7]>
   <p class="browsehappy">你的浏览器太老了，请更换</p>
   <![endif]-->
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <script>
+  $(document).ready(function() {
+    if($('p .notice').text() !== '' || $('.alert').text() !== '') {
+      $.blockUI({ css: {
+          border: 'none',
+          padding: '15px',
+          backgroundColor: '#000',
+          '-webkit-border-radius': '10px',
+          '-moz-border-radius': '10px',
+          opacity: 0.5,
+          color: '#fff'
+        },
+        message: $('p .notice').text() + $('.alert').text()
+      });
+      setTimeout($.unblockUI, 2000);
+    }
+  });
+  </script>
+  <p style="display: none" class="notice"><%= notice %></p>
+  <p style="display: none" class="alert"><%= alert %></p>
 
   <%= yield %>
 

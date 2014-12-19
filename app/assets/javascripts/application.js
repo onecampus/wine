@@ -14,6 +14,7 @@
 //= require bootstrap-sprockets
 
 //= require jquery-ui
+//= require lib/jquery.blockUI
 
 //= require jquery_ujs
 //= require turbolinks
