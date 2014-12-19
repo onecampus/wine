@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
 
   has_many :shipaddresses
 
+  has_many :orders
+
   private
 
   require 'securerandom'

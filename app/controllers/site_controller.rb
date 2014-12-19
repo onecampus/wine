@@ -209,16 +209,23 @@ class SiteController < CustomerController
     end
   end
 
+  # order_status: {1: 未处理, 2: 已确定, 3: 已取消}
+  # pay_status: {1: 未付款, 2: 已付款}
+  # logistics_status: {1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
+    @orders = current_user.orders.where(order_status: 1, pay_status: 2)
   end
 
   def index_wait_pay
+    @orders = current_user.orders.where(pay_status: 1)
   end
 
   def index_wait_receive
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2)
   end
 
   def index_order_history
+    @orders = current_user.orders
   end
 
   def big_wheel
