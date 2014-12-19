@@ -37,6 +37,7 @@ zh-CN:
       prize_user:
         user_id: '用户'
         prize_config_id: '奖品'
+        geted: '是否已经领取'
 
       prize_user_number:
         user_id: '用户'
