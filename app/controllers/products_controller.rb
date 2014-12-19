@@ -37,8 +37,19 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
-    respond_with(@product)
+    if @product.orders != []
+      flash[:notice] = '该商品下包含订单，不能删除'
+    else
+      @product.destroy
+      @product.inventories.each do |i|
+        i.destroy
+      end
+      flash[:notice] = '商品删除成功'
+    end
+    respond_to do |format|
+      format.html { redirect_to products_url }
+      format.json { head :no_content }
+    end
   end
 
   private

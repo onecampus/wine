@@ -1,40 +1,40 @@
 <%= form_for(@inventory, :html => {:class => "form-horizontal"}) do |f| %>
-    <% if @inventory.errors.any? %>
-        <div id="error_explanation" class="form-group">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-9">
-            <h2>保存时发生了<%= pluralize(@inventory.errors.count, "error") %></h2>
-            <ul>
-              <% @inventory.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+  <% if @inventory.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@inventory.errors.count, "error") %></h2>
+        <ul>
+          <% @inventory.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :product_id, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.inventory.product_id' %>
+      <span class="symbol required"></span>
     <% end %>
-
-    <div class="form-group">
-      <%= f.label :product_id, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.inventory.product_id' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <p class="form-control"><%= @inventory.product.name %></p>
-        <%= f.hidden_field :product_id, :class => "form-control" %>
-      </div>
+    <div class="col-sm-9">
+      <p class="form-control"><%= @inventory.product.name if @inventory.product %></p>
+      <%= f.hidden_field :product_id, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :amount, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.inventory.amount' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.number_field :amount, :class => "form-control" %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.inventory.amount' %>
+      <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :amount, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="submit"></label>
-
-      <div class="col-sm-9">
-        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
     </div>
+  </div>
 <% end %>
