@@ -19,3 +19,4 @@
 //= require lib/jqcart
 //= require lib/order
 //= require lib/purl
+//= require lib/str_ext
