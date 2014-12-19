@@ -1,38 +1,36 @@
 <% content_for :page_title do %>
   查看<%=t 'activerecord.models.prize_user' %>
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
-        </a>
-      </li>
-      <li class="active">
-        查看<%=t 'activerecord.models.prize_user' %>
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
+      </a>
+    </li>
+    <li class="active">
+      查看<%=t 'activerecord.models.prize_user' %>
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <!-- start: PAGE CONTENT -->
 <div class="row">
   <div class="col-sm-12">
@@ -60,25 +58,31 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.prize_user.user_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @prize_user.user_id %>
+                <%= User.find(@prize_user.user_id).username %>
               </div>
             </div>
           </div>
-          
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.prize_user.prize_config_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @prize_user.prize_config_id %>
+                <%= PrizeConfig.find(@prize_user.prize_config_id).prize_content %>
               </div>
             </div>
           </div>
-                  </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.prize_user.geted' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <% if @prize_user.geted == 0 %>未领取<% elsif @prize_user.geted == 1 %>已领取<% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- end: TEXT FIELDS PANEL -->
