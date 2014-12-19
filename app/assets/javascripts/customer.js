@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require lib/jquery.blockUI
 //= require jquery_ujs
 //= require turbolinks
 //= require lib/jquery.cookie
@@ -18,3 +19,4 @@
 //= require lib/jqcart
 //= require lib/order
 //= require lib/purl
+//= require lib/str_ext
