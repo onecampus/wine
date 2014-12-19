@@ -6,4 +6,5 @@ class Order < ActiveRecord::Base
   has_many :products, through: :product_orders
 
   belongs_to :invoice
+  belongs_to :user
 end
