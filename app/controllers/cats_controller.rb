@@ -64,8 +64,16 @@ class CatsController < ApplicationController
   end
 
   def destroy
-    @cat.destroy
-    respond_with(@cat)
+    if @cat.products != []
+      flash[:notice] = '该分类下包含其他商品，不能删除'
+    else
+      @cat.destroy
+      flash[:notice] = '分类删除成功'
+    end
+    respond_to do |format|
+      format.html { redirect_to cats_url }
+      format.json { head :no_content }
+    end
   end
 
   private
