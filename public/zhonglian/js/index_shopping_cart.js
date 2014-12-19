@@ -53,7 +53,9 @@ $(document).ready(function() {
       total();
     }
   });
-
+/*
+结算
+*/
   $(".account").click(function() {
     $(".checkbox").each(function() {
       if (($(this).is(':checked')) == true) {
@@ -68,6 +70,22 @@ $(document).ready(function() {
       }
     });
     $(this).attr("href", "/customer/orders/settlement");
+  });
+  /*
+  清空购物车
+  */
+  $(".cleancart").click(function(){
+    var shoppingCart = $.localStorage.get("shoppingCart");
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    var list = [];
+    for (var i in productList) {
+      JsonStr.totalNumber = parseInt(JsonStr.totalNumber) - parseInt(productList[i].num);
+      JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) - parseInt(productList[i].num) * parseFloat(productList[i].price);
+    }
+    JsonStr.productList = list;
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+    showProduct();
   });
 
 });
@@ -114,6 +132,9 @@ function showProduct() {
   $(".totalproduct").text(length);
   if (length == 0) {
     $(".mesg").show();
+    $(".product").hide();
+    $(".shopping-cart-mark").hide();
+    $("hr").hide();
   } else {
     $(".mesg").hide();
     for (i = 0; i < length; i++) {

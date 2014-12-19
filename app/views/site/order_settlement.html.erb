@@ -23,6 +23,7 @@ $(document).ready(function() {
   .order {
     width: 90%;
     margin: 0 auto;
+    margin-bottom: 90px;
   }
 
   .order-address {
@@ -66,7 +67,7 @@ $(document).ready(function() {
     height: 100%;
     background: #f2f2f2;
     display: none;
-    margin-bottom: 70px;
+    margin-bottom: 30%;
   }
 
   .address-top {
@@ -123,7 +124,7 @@ $(document).ready(function() {
   }
 
   .submit-order {
-    margin-bottom: 70px;
+    margin-bottom: 150px;
   }
 
   .order-btn {
@@ -188,7 +189,6 @@ $(document).ready(function() {
     height: 100px;
     text-align: center;
     margin-top: 20px;
-
   }
 
   .add-address {
@@ -198,7 +198,7 @@ $(document).ready(function() {
     color: #ffffff;
     font-size: 40px;
     margin-left: 10%;
-    margin-bottom: 70px;
+    margin-bottom: 30%;
   }
 
   .address-mesg {
@@ -207,12 +207,17 @@ $(document).ready(function() {
     color: #aa0c40;
   }
 
+  .address-add-btn {
+    margin-bottom : 30%;
+  }
+
   .form-box {
     position: absolute;
     left: 0;
-    top: -20px;
-    width: 100%;
+    top: -22px;
+    width: 94%;
     height: 100%;
+    overflow-x: hidden;
     display: none;
   }
 
@@ -381,7 +386,7 @@ $(document).ready(function() {
     <input type="text" name="mobile" placeholder="固定电话">
   </div>
 
-  <button class="btn-add-address btn btn-red btn-block">添加</button>
+  <div class="address-add-btn"><button class="btn-add-address btn btn-red btn-block">添加</button></div>
 </div>
 <div class="invoice-inf">
   <input type="hidden" name="invoice-id" class="invoice-id">
