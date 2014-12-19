@@ -62,7 +62,6 @@
   <div class="form-group">
     <%= f.label :brand, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.brand' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.text_field :brand, :class => "form-control" %>
@@ -71,7 +70,6 @@
   <div class="form-group">
     <%= f.label :expiration_date, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.expiration_date' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.datetime_select :expiration_date, :class => "form-control" %>
@@ -80,7 +78,6 @@
   <div class="form-group">
     <%= f.label :country, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.country' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.text_field :country, :class => "form-control" %>
@@ -89,7 +86,6 @@
   <div class="form-group">
     <%= f.label :package_type, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.package_type' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.text_field :package_type, :class => "form-control" %>
@@ -98,7 +94,6 @@
   <div class="form-group">
     <%= f.label :product_model, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.product_model' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.text_field :product_model, :class => "form-control" %>
@@ -125,7 +120,6 @@
   <div class="form-group">
     <%= f.label :vip_price, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.vip_price' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.text_field :vip_price, :class => "form-control" %>
@@ -134,7 +128,6 @@
   <div class="form-group">
     <%= f.label :is_new, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.is_new' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.select(:is_new, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
@@ -143,7 +136,6 @@
   <div class="form-group">
     <%= f.label :is_boutique, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.is_boutique' %>
-      <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
       <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
