@@ -11,8 +11,26 @@
     color: #7c0045;
     text-align: center;
     padding:1px;
+    display: none;
 }
 </style>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var shoppingCart = $.localStorage.get("shoppingCart");
+    console.log("shoppingCart is " + shoppingCart);
+    if(shoppingCart !== null) {
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      var productList = JsonStr.productList;
+      var length = productList.length;
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      } else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
+  });
+</script>
 <nav class="bar bar-tab" data-no-turbolink>
   <a class="tab-item" href="/">
     <span class="icon icon-background-base icon-home"></span>
