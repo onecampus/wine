@@ -34,15 +34,19 @@ class PrizeUsersController < ApplicationController
   def destroy
     @prize_user.geted = 1
     @prize_user.save
-    respond_with(@prize_user)
+    respond_to do |format|
+      format.html { redirect_to prize_users_url, notice: '标记为已经领取成功' }
+      format.json { head :no_content }
+    end
   end
 
   private
-    def set_prize_user
-      @prize_user = PrizeUser.find(params[:id])
-    end
 
-    def prize_user_params
-      params.require(:prize_user).permit(:user_id, :prize_config_id)
-    end
+  def set_prize_user
+    @prize_user = PrizeUser.find(params[:id])
+  end
+
+  def prize_user_params
+    params.require(:prize_user).permit(:user_id, :prize_config_id)
+  end
 end
