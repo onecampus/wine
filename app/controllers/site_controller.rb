@@ -231,7 +231,6 @@ class SiteController < CustomerController
     # 当前用户未领奖项
     @prize_users = PrizeUser.where(
       user_id: current_user.id,
-      prize_config_id: res.id,
       geted: 0
     )
   end
