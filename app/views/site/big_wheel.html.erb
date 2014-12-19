@@ -1,178 +1,177 @@
 <% content_for :customer_title do %>
-转盘抽奖
+  转盘抽奖
 <% end %>
 <style type="text/css">
-body {
-  padding: 0;
-  margin: 0;
-  background-color: #2a8a00;
-}
-
-
-.container {
-  position: relative;
-  width: 85%;
-  height: auto;
-  margin: 0 auto;
-  clear: both;
-  border-radius: 8px;
-}
-#disk {
-  height: 200px;
-  margin: auto;
-  width: 200px;
-}
-img {
-  margin: 0 auto;
-}
-#disk img {
-  vertical-align: middle;
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-#start {
-  height: 200px;
-  left: 50%;
-  margin-left: -100px;
-  margin-top: -100px;
-  position: absolute;
-  top: 50%;
-  width: 200px;
-}
-
-#start img {
-  display: block;
-  max-height: 100%;
-  max-width: 100%;
-  vertical-align: middle;
-}
-#records p {
-  margin: 10px 5px;
-  border-radius: 8px;
-  background-color: #f2f2f2;
-  padding: 5px 0 5px 0;
-  border: 1px solid #999;
-}
-.boxcontent {
-  margin: 15px 15px 0;
-  border-radius: 5px;
-  padding: 2px;
-  background-color: #FEF8B2;
-  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  -o-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-}
-#boxcontent {
-  margin-bottom: 60px;
-}
-.boxyellow {
-  background-color: #FEF8B2;
-}
-.box {
-  border-radius: 5px;
-  font-size: 14px;
-  border: 1px dashed rgba(0, 0, 0, 0.3);
-}
-.box .title-green {
-  padding: 0 5px 0px 10px;
-  background: url(/zhonglian/img/big_wheel/title-bg-green.png) no-repeat 0 0;
-  border-radius: 3px 3px 3px 0;
-  color: #ffffff;
-  height: 22px;
-  margin: -1px;
-}
-.footFix {
-  width: 100%;
-  text-align: center;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 99;
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: #2a8a00;
   }
-#footReturn a {
-  display: block;
-  line-height: 41px;
-  color: #fff;
-  text-shadow: 1px 1px #282828;
-  font-size: 14px;
-  font-weight: bold;
-}
-#footReturn {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  width: 100%;
-  outline: 0 none;
-  overflow: visible;
-  box-sizing: border-box;
-  padding: 0;
-  height: 41px;
-  opacity: .95;
-  border-top: 1px solid #181818;
-  box-shadow: inset 0 1px 2px #b6b6b6;
-  background-color: #515151;
-}
-.back {
-  z-index: 11;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background:#000;
-  opacity:0.5;
-  filter:alpha(opacity=50);
-  -moz-opacity:0.5;
-  display:none;
-}
-.mask {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%;
-  height: 120px;
-  margin-top: -60px;
-  margin-left: -40%;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 0 5px;
-  color: #666;
-  z-index: 20;
-  box-shadow: 0 0 3px #666;
-}
-.mask p {
-  font-wieght: bold;
-  margin: 10px auto;
-  padding: 0 5px;
-}
-.mask p .prize, .mask p .prizecount {
-  font-weight: bold;
-}
-.mask a {
-  text-align: center;
-  display: block;
-  border-radius: 5px;
-  margin: 0 auto;
-  font-size: 20px;
-  padding: 5px 10px;
-  background-color: #2a8a00;
-  color: white;
-}
-.mask div {
-  margin: 0 auto;
-}
-.space2 {
-  height: 10px;
-}
-</style>
 
+
+  .container {
+    position: relative;
+    width: 85%;
+    height: auto;
+    margin: 0 auto;
+    clear: both;
+    border-radius: 8px;
+  }
+  #disk {
+    height: 200px;
+    margin: auto;
+    width: 200px;
+  }
+  img {
+    margin: 0 auto;
+  }
+  #disk img {
+    vertical-align: middle;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  #start {
+    height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    position: absolute;
+    top: 50%;
+    width: 200px;
+  }
+
+  #start img {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  #records p {
+    margin: 10px 5px;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    padding: 5px 0 5px 0;
+    border: 1px solid #999;
+  }
+  .boxcontent {
+    margin: 15px 15px 0;
+    border-radius: 5px;
+    padding: 2px;
+    background-color: #FEF8B2;
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    -o-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+  #boxcontent {
+    margin-bottom: 60px;
+  }
+  .boxyellow {
+    background-color: #FEF8B2;
+  }
+  .box {
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px dashed rgba(0, 0, 0, 0.3);
+  }
+  .box .title-green {
+    padding: 0 5px 0px 10px;
+    background: url('/zhonglian/img/big_wheel/title-bg-green.png') no-repeat 0 0;
+    border-radius: 3px 3px 3px 0;
+    color: #ffffff;
+    height: 22px;
+    margin: -1px;
+  }
+  .footFix {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    }
+  #footReturn a {
+    display: block;
+    line-height: 41px;
+    color: #fff;
+    text-shadow: 1px 1px #282828;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  #footReturn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 100%;
+    outline: 0 none;
+    overflow: visible;
+    box-sizing: border-box;
+    padding: 0;
+    height: 41px;
+    opacity: .95;
+    border-top: 1px solid #181818;
+    box-shadow: inset 0 1px 2px #b6b6b6;
+    background-color: #515151;
+  }
+  .back {
+    z-index: 11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    display: none;
+  }
+  .mask {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 120px;
+    margin-top: -60px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: #666;
+    z-index: 20;
+    box-shadow: 0 0 3px #666;
+  }
+  .mask p {
+    font-wieght: bold;
+    margin: 10px auto;
+    padding: 0 5px;
+  }
+  .mask p .prize, .mask p .prizecount {
+    font-weight: bold;
+  }
+  .mask a {
+    text-align: center;
+    display: block;
+    border-radius: 5px;
+    margin: 0 auto;
+    font-size: 20px;
+    padding: 5px 10px;
+    background-color: #2a8a00;
+    color: white;
+  }
+  .mask div {
+    margin: 0 auto;
+  }
+  .space2 {
+    height: 10px;
+  }
+</style>
 <div class="container">
   <div id="disk"><img src="/zhonglian/img/big_wheel/disk.png" /></div>
   <div id="start"><img data-flag="enable" src="/zhonglian/img/big_wheel/start.png" id="startbtn" /></div>
@@ -183,54 +182,67 @@ img {
       <span>获奖记录：</span>
     </div>
     <div id="records" class="Detail">
-     <span></span>
+      <span></span>
     </div>
   </div>
   <div class="space2"></div>
+  <% if current_user %>
   <div class="box" >
     <div class="title-green">
       <span>历史记录</span>
     </div>
     <div id="records" class="Detail">
       <% @prize_users.each do |pu| %>
-      <p>您在 <%= pu.created_at.strftime("%Y-%m-%d") %> 抽中了<strong><%= PrizeConfig.find(pu.prize_config_id).prize_name %></strong></p>
+        <p>您在
+          <%= pu.created_at.strftime("%Y-%m-%d") %>
+          抽中了<strong><%= PrizeConfig.find(pu.prize_config_id).prize_name %></strong></p>
       <% end %>
     </div>
   </div>
+  <% end %>
 </div>
 <div class="boxcontent boxyellow">
   <div class="box">
     <div class="title-green"><span>奖项设置：</span></div>
     <div class="Detail">
-      <p>每人最多允许抽奖次数: <%= @prize_act.person_limit %> 次 - 剩余 <span class="red" id="usenums"><%= @prize_user_number.number %></span> 次</p>
+      <% if current_user %>
+      <p>每人最多允许抽奖次数:
+        <%= @prize_act.person_limit %>
+        次 - 剩余
+        <span class="red" id="usenums"><%= @prize_user_number.number %></span>
+        次</p>
+      <% end %>
       <% @prizes.each do |p| %>
-      <p><%= p.prize_name %>: <%= p.prize_content %></p>
+        <p><%= p.prize_name %>:
+          <%= p.prize_content %></p>
       <% end %>
     </div>
   </div>
 </div>
-  <div class="boxcontent boxyellow" id="boxcontent">
-    <div class="box">
-      <div class="title-green">活动说明：</div>
-      <div class="Detail">
-        <p>亲，请点击进入大转盘抽奖活动页面，开始体验微易销。
+<div class="boxcontent boxyellow" id="boxcontent">
+  <div class="box">
+    <div class="title-green">活动说明：</div>
+    <div class="Detail">
+      <p>亲，请点击进入大转盘抽奖活动页面，开始体验微易销。
           祝您好运哦！</p>
-          <p>活动时间: <%= @prize_act.start_time.strftime("%Y-%m-%d") %> 至 <%= @prize_act.end_time.strftime("%Y-%m-%d") %> </p>
-          <p><strong>兑奖请联系微易销总部服务热线：400-009-2119</strong></p>
-        </div>
-      </div>
+      <p>活动时间:
+        <%= @prize_act.start_time.strftime("%Y-%m-%d") %>
+        至
+        <%= @prize_act.end_time.strftime("%Y-%m-%d") %>
+      </p>
+      <p><strong>兑奖请联系微易销总部服务热线：400-009-2119</strong></p>
     </div>
-
-  <div class="footFix" id="footReturn"><a href="/">返回众联主页</a></div>
-  <div class="back"></div>
-  <div class="mask">
-   <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
-   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
   </div>
+</div>
+<div class="footFix" id="footReturn"><a href="/">返回众联主页</a></div>
+<div class="back"></div>
+<div class="mask">
+  <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
+  <div><a href="javascript:void(0)" class="notice">知道了</a></div>
+</div>
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
 <script type="text/javascript">
-
   $(document).ready(function() {
     lottery();
   });
@@ -239,9 +251,16 @@ img {
     var $startbtn = $('#startbtn');
     $startbtn.data("flag", 'enable');
   }
-  function lottery(){
+
+  function confirmLogin() {
+    if(confirm("请先登陆, 才能进行抽奖")) {
+      window.location.href = "/users/sign_in";
+    }
+  }
+
+  function lottery() {
     var $startbtn = $('#startbtn');
-    var _ajax = function(){
+    var _ajax = function() {
       if($startbtn.data("flag") == 'enable') {
         $startbtn.data("flag", 'disable');
         $.ajax({
@@ -254,14 +273,14 @@ img {
             return false;
           },
           success:function(json){
-            var a = parseInt(json.angle); //角度
-            var p = json.prize_name;//奖项
-            var n = json.num;//剩余抽奖次数
-            if(p!="" && a!=0){
+            var a = parseInt(json.angle);  // 角度
+            var p = json.prize_name;  // 奖项
+            var n = json.num;  // 剩余抽奖次数
+            if(p != "" && a != 0) {
               $("#startbtn").rotate({
-                duration:3000, //转动时间
-                angle: 0, //默认角度
-                animateTo:3600+a, //转动角度
+                duration: 3000,  // 转动时间
+                angle: 0,  // 默认角度
+                animateTo: 3600 + a,  // 转动角度
                 easing: $.easing.easeOutSine,
                 callback: function(){
                   var $back = $('.back');
@@ -286,15 +305,15 @@ img {
                   setTimeout(function(){
                     $back.hide();
                     $mask.slideUp(800);
-                  },3000);
+                  }, 3000);
                   $('.notice').click(function(){
                     $back.hide();
                     $mask.slideUp(800);
                   });
-              //    var con = confirm('恭喜你，中得'+p+'您还有'+n+'次抽奖次数，还要再来一次吗？');
-                  $('#records span').after('<p>您在'+nowTime+'抽中了<strong>'+p+'</strong></p>');
-                  $("#startbtn").rotate({angle:0});
-                  $("#startbtn").css("cursor","pointer");
+
+                  $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
+                  $("#startbtn").rotate({angle: 0});
+                  $("#startbtn").css("cursor", "pointer");
                 }
               });
             }else{
@@ -305,6 +324,10 @@ img {
       }
       setTimeout("enableFlag()", 3000);
     }
-    $startbtn.bind('click', _ajax)
-}
+    <% if current_user %>
+    $startbtn.on('click', _ajax);
+    <% else %>
+    $startbtn.on('click', confirmLogin);
+    <% end %>
+  }
 </script>

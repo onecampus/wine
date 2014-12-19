@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require lib/jquery.blockUI
 //= require jquery_ujs
 //= require turbolinks
 //= require lib/jquery.cookie
