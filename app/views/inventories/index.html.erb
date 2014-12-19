@@ -1,38 +1,36 @@
 <% content_for :page_title do %>
-    <%= t 'activerecord.models.inventory' %>管理
+  <%= t 'activerecord.models.inventory' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
-        </a>
-      </li>
-      <li class="active">
-        <%= t 'activerecord.models.inventory' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
+      </a>
+    </li>
+    <li class="active">
+      <%= t 'activerecord.models.inventory' %>管理
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
@@ -58,30 +56,31 @@
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>
-        <tr>
-          <th><%= t 'activerecord.attributes.inventory.user_id' %></th>
-          <th><%= t 'activerecord.attributes.inventory.product_id' %></th>
-          <th><%= t 'activerecord.attributes.inventory.amount' %></th>
-          <th>操作</th>
-        </tr>
+          <tr>
+            <th><%= t 'activerecord.attributes.inventory.user_id' %></th>
+            <th><%= t 'activerecord.attributes.inventory.product_id' %></th>
+            <th><%= t 'activerecord.attributes.inventory.amount' %></th>
+            <th>操作</th>
+          </tr>
         </thead>
         <tbody>
-
-        <% @inventories.each do |inventory| %>
+          <% @inventories.each do |inventory| %>
             <tr>
-              <td><%= inventory.user.username %></td>
-              <td><%= inventory.product.name %></td>
+              <td><%= inventory.user.username if inventory.user %></td>
+              <td><%= inventory.product.name if inventory.product %></td>
               <td><%= inventory.amount %></td>
               <td class="center">
                 <%= link_to(inventory, class: "btn btn-xs btn-primary") do %>
-                    <i class="fa fa-share"></i> 查看
+                  <i class="fa fa-share"></i>
+                  查看
                 <% end %>
                 <%= link_to(edit_inventory_path(inventory), class: "btn btn-xs btn-green") do %>
-                    <i class="fa fa-edit"></i> 编辑
+                  <i class="fa fa-edit"></i>
+                  编辑
                 <% end %>
               </td>
             </tr>
-        <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>

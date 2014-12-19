@@ -1,38 +1,36 @@
 <% content_for :page_title do %>
-    <%= t 'activerecord.models.comment' %>管理
+  <%= t 'activerecord.models.comment' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
-        </a>
-      </li>
-      <li class="active">
-        <%= t 'activerecord.models.comment' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
+      </a>
+    </li>
+    <li class="active">
+      <%= t 'activerecord.models.comment' %>管理
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
@@ -55,55 +53,40 @@
     </div>
   </div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12 space20">
-        <a class="btn btn-green add-row" href="/admin/comments/new">
-          添加 <i class="fa fa-plus"></i>
-        </a>
-      </div>
-    </div>
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>
-        <tr>
-          <th><%= t 'activerecord.attributes.comment.commentable_id' %></th>
-          <th><%= t 'activerecord.attributes.comment.commentable_type' %></th>
-          <th><%= t 'activerecord.attributes.comment.title' %></th>
-          <th><%= t 'activerecord.attributes.comment.body' %></th>
-          <th><%= t 'activerecord.attributes.comment.subject' %></th>
-          <th><%= t 'activerecord.attributes.comment.user_id' %></th>
-          <th><%= t 'activerecord.attributes.comment.parent_id' %></th>
-          <th><%= t 'activerecord.attributes.comment.lft' %></th>
-          <th><%= t 'activerecord.attributes.comment.rgt' %></th>
-          <th>操作</th>
-        </tr>
+          <tr>
+            <th><%= t 'activerecord.attributes.comment.commentable_id' %></th>
+            <th><%= t 'activerecord.attributes.comment.commentable_type' %></th>
+            <th><%= t 'activerecord.attributes.comment.body' %></th>
+            <th><%= t 'activerecord.attributes.comment.user_id' %></th>
+            <th>操作</th>
+          </tr>
         </thead>
         <tbody>
-
-        <% @comments.each do |comment| %>
+          <% @comments.each do |comment| %>
             <tr>
-              <td><%= comment.commentable_id %></td>
+              <td><%= Product.find(comment.commentable_id).name %></td>
               <td><%= comment.commentable_type %></td>
-              <td><%= comment.title %></td>
               <td><%= comment.body %></td>
-              <td><%= comment.subject %></td>
-              <td><%= comment.user_id %></td>
-              <td><%= comment.parent_id %></td>
-              <td><%= comment.lft %></td>
-              <td><%= comment.rgt %></td>
+              <td><%= comment.user.username %></td>
               <td class="center">
                 <%= link_to(comment, method: :delete, data: {confirm: '确定吗?'}, class: "btn btn-xs btn-bricky") do %>
-                    <i class="fa fa-trash-o"></i> 删除
+                  <i class="fa fa-trash-o"></i>
+                  删除
                 <% end %>
                 <%= link_to(comment, class: "btn btn-xs btn-primary") do %>
-                    <i class="fa fa-share"></i> 查看
+                  <i class="fa fa-share"></i>
+                  查看
                 <% end %>
                 <%= link_to(edit_comment_path(comment), class: "btn btn-xs btn-green") do %>
-                    <i class="fa fa-edit"></i> 编辑
+                  <i class="fa fa-edit"></i>
+                  编辑
                 <% end %>
               </td>
             </tr>
-        <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>
