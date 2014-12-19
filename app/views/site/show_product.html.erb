@@ -199,11 +199,10 @@
   <div class="p-charge">
     <div>
       <span class="product-name"><%= @product.name %></span>
-      <span class="product-englishname">wine english name</span>
+      <span class="product-englishname"><%= @product.name %></span>
     </div>
     <div>
-      <span class="price">¥ <%= @product.price %></span>
-      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: 10元</span>
+      <span class="price">¥ <%= @product.price %>元</span>
     </div>
   </div>
   <hr/>
@@ -232,8 +231,7 @@
   <div class="p-intro">
     <h4>商品详情</h4>
     <p class="name"><%= @product.name %></p>
-    <p class="name">wine english name</p>
-    <p><%= @product.description %></p>
+    <div><%= raw @product.description %></div>
   </div>
 </div>
 <script type="text/javascript">
