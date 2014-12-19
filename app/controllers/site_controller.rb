@@ -222,9 +222,18 @@ class SiteController < CustomerController
   end
 
   def big_wheel
+    # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
+    # 该抽奖活动的奖品
     @prizes = @prize_act.prize_configs
+    # 当前用户抽奖剩余次数
     @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+    # 当前用户未领奖项
+    @prize_users = PrizeUser.where(
+      user_id: current_user.id,
+      prize_config_id: res.id,
+      geted: 0
+    )
   end
 
   def big_wheel_ajax
@@ -329,7 +338,8 @@ class SiteController < CustomerController
       end
       prize_user = PrizeUser.new(
         user_id: current_user.id,
-        prize_config_id: res.id
+        prize_config_id: res.id,
+        geted: 0
       )
       prize_user.save!
     end

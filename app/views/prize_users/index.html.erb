@@ -67,6 +67,7 @@
           <tr>
             <th><%=t 'activerecord.attributes.prize_user.user_id' %></th>
             <th><%=t 'activerecord.attributes.prize_user.prize_config_id' %></th>
+            <th><%=t 'activerecord.attributes.prize_user.geted' %></th>
             <th>操作</th>
           </tr>
         </thead>
@@ -75,18 +76,11 @@
             <tr>
               <td><%= User.find(prize_user.user_id).username %></td>
               <td><%= PrizeConfig.find(prize_user.prize_config_id).prize_content %></td>
+              <td><% if prize_user.geted == 0 %>未领取<% elsif prize_user.geted == 1 %>已领取<% end %></td>
               <td class="center">
                 <%= link_to(prize_user, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
                   <i class="fa fa-trash-o"></i>
-                  删除
-                <% end %>
-                <%= link_to(prize_user, class: "btn btn-xs btn-primary") do %>
-                  <i class="fa fa-share"></i>
-                  查看
-                <% end %>
-                <%= link_to(edit_prize_user_path(prize_user), class: "btn btn-xs btn-green") do %>
-                  <i class="fa fa-edit"></i>
-                  编辑
+                  标记为已经领取
                 <% end %>
               </td>
             </tr>
