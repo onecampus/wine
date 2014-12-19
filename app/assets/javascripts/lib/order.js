@@ -146,10 +146,13 @@ $(document).ready(function() {
           // code
 
           for (var i in productList) {
-            var productId = productList[i].id;
-            deleteProduct(productId);
-          }
-          alert("success");
+            if (productList[i].buyMark == true) {
+              var productId = productList[i].id;
+              deleteProduct(productId);
+              }
+            }
+          alert("购买成功");
+          showShoppingCartItem();
         },
         complete: function(XMLHttpRequest, textStatus) {
           // code
@@ -177,4 +180,20 @@ function deleteProduct(id) {
   }
   JsonStr.productList = list;
   $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+}
+
+function showShoppingCartItem() {
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  console.log("shoppingCart is " + shoppingCart);
+  if(shoppingCart !== null) {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    var length = productList.length;
+    if (length > 0) {
+      $(".shopping-cart-mark").show();
+      $(".shopping-cart-mark").text(length);
+    } else {
+      $(".shopping-cart-mark").hide();
+    }
+  }
 }
