@@ -134,10 +134,15 @@ class SiteController < CustomerController
 
   def order_settlement
     @shipaddresses = current_user.shipaddresses
+    @invoices = current_user.invoices
   end
 
   def create_invoice_via_ajax
-    @invoice = Invoice.new(rise: params[:rise], content: params[:content])
+    @invoice = Invoice.new(
+      rise: params[:rise],
+      content: params[:content],
+      user_id: current_user.id
+    )
     if @invoice.save
       render json: { status: 'success', msg: 'create invoice success.',
                      data: @invoice.id }

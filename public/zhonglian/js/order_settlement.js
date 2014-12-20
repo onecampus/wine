@@ -6,11 +6,13 @@ $(document).ready(function() {
     $(".address").fadeIn(1000);
   });
   $(".cancel").click(function() {
+    $("body").css("background","#f2f2f2");
     $("hr").show();
     $(".address").fadeOut(100);
     $(".order").show();
   });
   $(".confirm").click(function() {
+    $("body").css("background","#f2f2f2");
     var id = $('input[name="shipaddress"]:checked').val();
     var address = $('input[name="shipaddress"]:checked').parent().siblings(".p-m").children(".selected-address").text();
     $(".confirm-address").text(address);
@@ -20,6 +22,7 @@ $(document).ready(function() {
     $(".order").show();
   });
   $(".address-add").click(function() {
+    $("body").css("background","#fff");
     $("hr").hide();
     $(".order").hide();
     $(".order-address").hide();
@@ -78,7 +81,7 @@ function showProduct() {
       var account = $("<p></p>").addClass("account");
       $("#product" + i).children(".product-inf").append(account);
       var productPrice = $("<span></span>").addClass("text2").text(price);
-      var productNum = $("<span></span>").addClass("text3").text("x" + num);
+      var productNum = $("<span></span>").addClass("text3").text(" x " + num);
       $("#product" + i).children(".product-inf").children(".account").append(productPrice);
       $("#product" + i).children(".product-inf").children(".account").append(productNum);
       $("#product" + i).after("<hr>");

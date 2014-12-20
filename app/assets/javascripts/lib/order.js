@@ -157,10 +157,10 @@ $(document).ready(function() {
           showShoppingCartItem();
         },
         complete: function(XMLHttpRequest, textStatus) {
-          // code
+          // orderErrorHan(XMLHttpRequest, textStatus);
         },
-        error: function() {
-          // code
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          orderErrorHan(XMLHttpRequest, textStatus);
         }
       });
     }
@@ -184,9 +184,14 @@ function deleteProduct(id) {
   $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
 }
 
+function orderErrorHan(XMLHttpRequest, textStatus) {
+  if(XMLHttpRequest.status == 422 && textStatus == 'error') {
+    alert("订单创建失败, 您是供应商, 不能自己创建订单");
+  }
+}
+
 function showShoppingCartItem() {
   var shoppingCart = $.localStorage.get("shoppingCart");
-  console.log("shoppingCart is " + shoppingCart);
   if(shoppingCart !== null) {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
