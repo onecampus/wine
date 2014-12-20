@@ -181,6 +181,12 @@ rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer butto
 rails g migration AddFrightToProducts fright:string
 
 
+rails g migration AddPhoneToUsers phone:string
+rails g migration AddVerificationMethodToUsers verification_method :string
+rails g migration AddPhoneCodeToUsers phone_code:string
+rails g migration AddPhoneCodeSentAtToUsers phone_code_sent_at:datetime
+
+
 
 rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
 
