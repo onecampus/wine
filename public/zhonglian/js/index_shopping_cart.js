@@ -83,7 +83,13 @@ $(document).ready(function() {
     JsonStr.totalAmount = total;
     OrderDetail.totalAmount = JsonStr.totalAmount;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
-    $(this).attr("href", "/customer/orders/settlement");
+    var length = JsonStr.productList.length;
+    if(length == 0) {
+      return;
+    }
+    else{
+      $(this).attr("href", "/customer/orders/settlement");
+    }
   });
   /*
   清空购物车
