@@ -209,7 +209,7 @@
       <p>每人最多允许抽奖次数:
         <%= @prize_act.person_limit %>
         次 - 剩余
-        <span class="red" id="usenums"><%= @prize_user_number.number %></span>
+        <span class="red" id="usenums"><%= @prize_user_number.number if @prize_user_number %></span>
         次</p>
       <% end %>
       <% @prizes.each do |p| %>
@@ -298,7 +298,11 @@
                   $back.show();
                   $back.height($(document).height());
                   $('.prize').text(p);
-                  $('.prizecount').text(n);
+                  if(n ===  0) {
+                    $('.mask p').html('恭喜您获得了<span class="prize">' + p + '</span>, 您的抽奖次数已用完, 祝您下次好运。');
+                  } else {
+                    $('.prizecount').text(n);
+                  }
                   $mask.slideDown(800);
                   setTimeout(function(){
                     $back.hide();
@@ -314,7 +318,7 @@
                   $("#startbtn").css("cursor", "pointer");
                 }
               });
-            }else{
+            } else {
               alert("您已经没有抽奖次数了！");
             }
           }
@@ -322,10 +326,6 @@
       }
       setTimeout("enableFlag()", 3000);
     }
-    <% if current_user %>
     $startbtn.on('click', _ajax);
-    <% else %>
-    $startbtn.on('click', confirmLogin);
-    <% end %>
   }
 </script>
