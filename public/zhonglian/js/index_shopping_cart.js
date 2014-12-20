@@ -1,4 +1,12 @@
 $(document).ready(function() {
+  var OrderDetail = {
+    username: "",
+    phone: "",
+    address: "",
+    zipcode: "",
+    totalNumber: 0,
+    totalAmount: 0.00
+  };
   showProduct();
   total();
   $(".checkbox").click(function() {
@@ -69,6 +77,12 @@ $(document).ready(function() {
         updateBuyMark(id, num, false);
       }
     });
+    var total = $(".total").text();
+    var shoppingCart = $.localStorage.get("shoppingCart");
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    JsonStr.totalAmount = total;
+    OrderDetail.totalAmount = JsonStr.totalAmount;
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
     $(this).attr("href", "/customer/orders/settlement");
   });
   /*
@@ -95,15 +109,34 @@ $(document).ready(function() {
 合计
 */
 function total() {
-  var total = 0.00;
+  var total = 0.00,
+      productTotal = 0.00,
+      totalFreight = 0.00,
+      shoppingCart = $.localStorage.get("shoppingCart"),
+      JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length)),
+      productList = JsonStr.productList;
   $(".checkbox").each(function() {
     if (($(this).is(':checked')) == true) {
-      total = parseFloat(total);
-      subtotal = $(this).parent().siblings(".p-amount").children(".price").text();
+      productTotal = parseFloat(productTotal);
+      totalFreight = parseFloat(totalFreight);
+      var subtotal = $(this).parent().siblings(".p-amount").children(".price").text();
       subtotal = parseFloat(subtotal.substring(1, subtotal.length));
-      total = (Number(total + subtotal)).toFixed(2);
+      productTotal = (Number(productTotal + subtotal)).toFixed(2);
+
+      var productId = $(this).parent().siblings("input").val();
+      for (var i in productList) {
+        if (productList[i].id == productId) {
+          var freight = productList[i].freight;
+              freight = parseFloat(freight);
+              totalFreight = (Number(totalFreight + freight)).toFixed(2);
+        }
+      }
     }
-    $(".product-total").text(total);
+    productTotal = parseFloat(productTotal);
+    totalFreight = parseFloat(totalFreight);
+    total = (Number(totalFreight + productTotal)).toFixed(2);
+    $(".total-freight").text(totalFreight)
+    $(".product-total").text(productTotal);
     $(".total").text(total);
   });
 }
