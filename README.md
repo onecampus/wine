@@ -178,6 +178,10 @@ rails g migration AddGetedToPrizeUsers geted:integer
 
 rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
 
+rails g migration AddFrightToProducts fright:string
+
+
+
 rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
 
 rails g scaffold ProductGroup group_id:integer product_id:integer

@@ -31,6 +31,15 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :fright, :class => "col-sm-2 control-label" do %>
+    <%= t 'activerecord.attributes.product.fright' %>
+    <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.text_field :fright, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :img, :class => "col-sm-2 control-label" do %>
       <%= t 'activerecord.attributes.product.img' %>
       <span class="symbol required"></span>
