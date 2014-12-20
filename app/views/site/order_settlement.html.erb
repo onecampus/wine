@@ -395,6 +395,12 @@
     <a href="#" class="confirm-invoice pull-right">确定</a>
   </div>
   <div class="invoice-mesg"><p></P></div>
+  <div class="invoice-history">
+    <% @invoices.each do |i| %>
+      <%= i.rise %>
+      <%= i.content %>
+    <% end %>
+  </div>
   <div>
     <input class="rise" placeholder="请输入发票抬头">
     <input class="content" placeholder="请输入发票内容">
