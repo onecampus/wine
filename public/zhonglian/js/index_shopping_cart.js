@@ -85,6 +85,7 @@ $(document).ready(function() {
     }
     JsonStr.productList = list;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+    $(".freight").text(0);
     showProduct();
   });
 
@@ -131,6 +132,7 @@ function showProduct() {
   var length = productList.length;
   $(".totalproduct").text(length);
   if (length == 0) {
+    $(".freight").text(0);
     $(".mesg").show();
     $(".product").hide();
     $(".shopping-cart-mark").hide();

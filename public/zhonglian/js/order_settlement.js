@@ -22,11 +22,15 @@ $(document).ready(function() {
   $(".address-add").click(function() {
     $("hr").hide();
     $(".order").hide();
+    $(".order-address").hide();
+    $(".invoice-need").hide();
     $(".address").fadeOut(100);
     $(".form-box").fadeIn(1000);
   });
   $(".cancel-add-addre").click(function() {
     $(".form-box").hide();
+    $(".order-address").show();
+    $(".invoice-need").show();
     $(".address").fadeIn(1000);
   });
   $(".invoice-need").click(function() {
