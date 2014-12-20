@@ -75,6 +75,7 @@ Profile.create(
   user_id: customer.id,
   mobile: "135604744#{customer.id}",
   tel: "5555#{customer.id}",
+  invite_code: User.generate_invite_code,
   province: '广东省',
   city: '广州市',
   region: '番禺区',
