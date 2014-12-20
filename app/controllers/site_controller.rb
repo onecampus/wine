@@ -14,10 +14,11 @@ class SiteController < CustomerController
                                                  :index_wait_receive,
                                                  :index_order_history,
                                                  :create_order,
-                                                 :big_whell_ajax,
+                                                 :big_wheel_ajax,
                                                  :big_wheel]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
+                                                        :big_wheel,
                                                         :scratch_off_ajax,
                                                         :create_ship_address_via_ajax,
                                                         :create_invoice_via_ajax]
@@ -321,26 +322,46 @@ class SiteController < CustomerController
 
     prize_act = res.prize_act unless res.prize_act.nil?
     if prize_act
-      prize_num = PrizeUserNumber.where(user_id: current_user.id,
-                                        prize_act_id: prize_act.id).first
-      if prize_num.nil?
-        prize_num = PrizeUserNumber.new(
-          user_id: current_user.id,
-          number: prize_act.person_limit,
-          prize_act_id: prize_act.id
-        )
-        prize_num.save!
-      end
+      if current_user
+        prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                          prize_act_id: prize_act.id).first
+        if prize_num.nil?
+          prize_num = PrizeUserNumber.new(
+            user_id: current_user.id,
+            number: prize_act.person_limit,
+            prize_act_id: prize_act.id
+          )
+          prize_num.save!
+        end
 
-      if prize_num.number == 0 # 该用户剩余抽奖次数该用户剩余抽奖次数
-        result[:num] = 0
-        result[:prize_name] = nil
-        result[:angle] = 0
+        if prize_num.number == 0 # 该用户剩余抽奖次数该用户剩余抽奖次数
+          result[:num] = 0
+          result[:prize_name] = nil
+          result[:angle] = 0
+        else
+          prize_num.number -= 1
+          prize_num.save!
+          num = prize_num.number
+          result[:num] = num
+
+          min = res.min
+          max = res.max
+
+          if min.is_a? Array
+            _size = min.size - 1
+            i = rand(0.._size)
+            _min = min[i].to_i
+            _max = max[i].to_i
+            result[:angle] = rand(_min.._max)
+          else
+            min = res.min.to_i
+            max = res.max.to_i
+            result[:angle] = rand(min..max)
+          end
+          result[:prize_name] = res.prize_name
+        end
       else
-        prize_num.number -= 1
-        prize_num.save!
-        num = prize_num.number
-        result[:num] = num
+        result[:num] = 0
 
         min = res.min
         max = res.max
@@ -366,12 +387,14 @@ class SiteController < CustomerController
         res.prize_inventory -= 1
         res.save!
       end
-      prize_user = PrizeUser.new(
-        user_id: current_user.id,
-        prize_config_id: res.id,
-        geted: 0
-      )
-      prize_user.save!
+      if current_user
+        prize_user = PrizeUser.new(
+          user_id: current_user.id,
+          prize_config_id: res.id,
+          geted: 0
+        )
+        prize_user.save!
+      end
     end
     result
   end

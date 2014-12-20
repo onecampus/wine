@@ -177,6 +177,7 @@ zh-CN:
         is_new: '新品'
         is_boutique: '精品'
         unit: '单位'
+        fright: '运费'
 
       inventory:
         user_id: '供应商'

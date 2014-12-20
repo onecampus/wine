@@ -37,6 +37,8 @@ $(document).ready(function() {
       $(".address-mesg").show();
       return;
     }
+    $(".order-address").show();
+    $(".invoice-need").show();
     var params = {
       "receive_name": receive_name,
       "province": province,

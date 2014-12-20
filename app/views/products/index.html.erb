@@ -68,6 +68,7 @@
         <tr>
           <th><%= t 'activerecord.attributes.product.name' %></th>
           <th><%= t 'activerecord.attributes.product.price' %></th>
+          <th><%= t 'activerecord.attributes.product.fright' %></th>
           <th><%= t 'activerecord.attributes.product.img' %></th>
           <th><%= t 'activerecord.attributes.product.cat_id' %></th>
           <th>库存</th>
@@ -91,6 +92,7 @@
             <tr>
               <td><%= product.name %></td>
               <td><%= product.price %></td>
+              <td><%= product.fright %></td>
               <td><%= image_tag(product.img_url(:thumb)) if product.img? %></td>
               <td><%= product.cat.name %></td>
               <td><%= product.inventories.where({user_id: current_user.id}).first.amount %></td>

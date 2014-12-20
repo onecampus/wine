@@ -116,6 +116,12 @@ $(document).ready(function() {
 hr {
   margin-top: -1px;
 }
+
+.space {
+  width: 100%;
+  height: 90px;
+  float: left;
+}
 </style>
 <div class="search-box">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
@@ -142,5 +148,7 @@ hr {
     </div>
   </a>
   <% end %>
+</div>
+<div class="space">
 </div>
 <%= render "site/shared/bottombar" %>

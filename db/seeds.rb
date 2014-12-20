@@ -22,8 +22,8 @@ u = User.new(
   password: '12345678',
   password_confirmation: '12345678'
 )
-u.save
-u.confirm!
+u.skip_confirmation!
+u.save!
 u.add_role :admin
 Profile.create(
   user_id: u.id,
