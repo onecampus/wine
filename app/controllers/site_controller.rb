@@ -268,10 +268,25 @@ class SiteController < CustomerController
   end
 
   def scratch_off
+    # 抽奖活动
+    @prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
+    # 该抽奖活动的奖品
+    @prizes = @prize_act.prize_configs
+    if current_user
+      # 当前用户抽奖剩余次数
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+      # 当前用户未领奖项
+      @prize_users = PrizeUser.where(
+        user_id: current_user.id,
+        geted: 0
+      )
+    end
   end
 
   def scratch_off_ajax
-    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
+
+    prizes = prize_act.prize_configs
     prize_hash = {}
     prizes.each_with_index do |p, index|
       min = p.min.split(',')
@@ -280,6 +295,10 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
+
+    prize_act.join_num += 1
+    prize_act.save!
+
     result = get_result(prize_hash)
     render json: result
   end
