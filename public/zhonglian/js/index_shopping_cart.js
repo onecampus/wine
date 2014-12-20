@@ -103,6 +103,7 @@ function total() {
       subtotal = parseFloat(subtotal.substring(1, subtotal.length));
       total = (Number(total + subtotal)).toFixed(2);
     }
+    $(".product-total").text(total);
     $(".total").text(total);
   });
 }
