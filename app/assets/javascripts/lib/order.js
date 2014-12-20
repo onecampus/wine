@@ -94,6 +94,7 @@ $(document).ready(function() {
         $(".invoice-not").css("color", "#aa0c40")
         $(".invoice-inf").fadeOut(100);
         $("hr").show();
+        $(".invoice-hr").hide();
         $(".order").show();
         $(".order-address").show();
         $(".invoice-need").show();

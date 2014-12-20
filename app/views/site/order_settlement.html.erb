@@ -262,6 +262,15 @@
     margin-right: 5%;
   }
 
+  .invoice-item-input {
+    margin-left: 20px;
+    margin-top: 7px;
+  }
+
+  .invoice-item-inf {
+    margin-left: 20px;
+  }
+
   .rise,.content {
     width: 90%;
     height: 25px;
@@ -397,13 +406,22 @@
   <div class="invoice-mesg"><p></P></div>
   <div class="invoice-history">
     <% @invoices.each do |i| %>
-      <%= i.rise %>
-      <%= i.content %>
+      <div class="pull-left invoice-item-input">
+        <input type="radio" name="invoice" class="invoice-item-select" value="<%= i.id %>>
+        <input type="hidden" value="<%= i.id%>">
+      </div>
+      <div class="pull-left invoice-item-inf">
+        <span>发票抬头：</span><span><%= i.rise %></span><br>
+        <span>发票抬头：</span><span><%= i.content %></span>
+      </div>
+    <hr class="invoice-hr pull-left">
     <% end %>
   </div>
   <div>
     <input class="rise" placeholder="请输入发票抬头">
     <input class="content" placeholder="请输入发票内容">
+  </div>
+  <div class="space">
   </div>
 </div>
 <div class="order">
