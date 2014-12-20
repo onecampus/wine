@@ -65,6 +65,6 @@ class ProductsController < ApplicationController
                                       :country, :package_type,
                                       :product_model, :status, :profit,
                                       :vip_price, :is_new, :is_boutique,
-                                      :unit)
+                                      :unit, :fright)
     end
 end
