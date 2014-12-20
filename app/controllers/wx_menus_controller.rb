@@ -18,7 +18,7 @@ class WxMenusController < ApplicationController
   def update_via_json
     mu = WxMenu.find params[:pk]
     mu.name = params[:value] if params[:name] == 'name'
-    mu.url = params[:value] if params[:url] == 'url'
+    mu.url = params[:value] if params[:name] == 'url'
     if mu.save
       render json: { status: 'success', msg: 'update success' }
     else
