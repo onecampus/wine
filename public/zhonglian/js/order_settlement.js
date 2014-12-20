@@ -51,18 +51,13 @@ $(document).ready(function() {
   });
 });
 
-function getlocalStorager() {
+function showProduct() {
   var shoppingCart = $.localStorage.get("shoppingCart");
   var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-  return JsonStr.productList;
-}
-
-function showProduct() {
-  var productList = getlocalStorager();
-  var total = 0.00;
+  var productList = JsonStr.productList;
+  var total = JsonStr.totalAmount;
   for (var i in productList) {
     if (productList[i].buyMark == true) {
-      total = parseFloat(total);
       var imgPath = productList[i].img,
         name = productList[i].name,
         englishName = productList[i].englishname,
@@ -70,7 +65,6 @@ function showProduct() {
         price = productList[i].price,
         subtotal = (Number(parseFloat(price.substr(2, price.length)) * parseInt(num))).toFixed(2);
       subtotal = parseFloat(subtotal);
-      total = (Number(total + subtotal)).toFixed(2);
       var product = $("<div></div>").addClass("product").attr("id", "product" + i);
       $(".submit-order").before(product);
       var productImg = $("<div></div>").addClass("product-img").addClass("pull-left");
