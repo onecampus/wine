@@ -107,7 +107,7 @@ body {
   margin-right: 5px;
   font-weight: bold;
 }
-.history_order > div:last-child a {
+.history_order .right > span a {
   margin-right: 0;
   text-decoration: none;
   border-radius: 5px;
