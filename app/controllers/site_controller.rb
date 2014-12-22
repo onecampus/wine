@@ -152,6 +152,25 @@ class SiteController < CustomerController
   end
 
   def create_order
+    # share_link_code
+    share_link_code = params[:share_link_code]
+    current_user_profile = current_user.profile
+    unless share_link_code.blank?
+      parent_user = Profile.where(share_link_code: share_link_code).first
+      unless parent_user.nil?
+        current_user_profile.move_to_child_of(parent_user)
+        parent_user.reload
+      end
+    end
+
+    # invite_code
+    old_orders = current_user.orders
+    if old_orders.blank?
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+    end
+
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
     # invoice
