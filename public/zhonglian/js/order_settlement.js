@@ -38,6 +38,7 @@ $(document).ready(function() {
   });
   $(".invoice-need").click(function() {
     $("hr").hide();
+    $(".invoice-hr").show();
     $(".order").hide();
     $(".order-address").hide();
     $(".invoice-need").hide();
@@ -48,6 +49,7 @@ $(document).ready(function() {
     $(".invoice-status").val(0);
     $(".invoice-inf").fadeOut(100);
     $("hr").show();
+    $(".invoice-hr").hide();
     $(".order").show();
     $(".order-address").show();
     $(".invoice-need").show();

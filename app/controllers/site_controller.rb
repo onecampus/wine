@@ -152,6 +152,25 @@ class SiteController < CustomerController
   end
 
   def create_order
+    # share_link_code
+    share_link_code = params[:share_link_code]
+    current_user_profile = current_user.profile
+    unless share_link_code.blank?
+      parent_user = Profile.where(share_link_code: share_link_code).first
+      unless parent_user.nil?
+        current_user_profile.move_to_child_of(parent_user)
+        parent_user.reload
+      end
+    end
+
+    # invite_code
+    old_orders = current_user.orders
+    if old_orders.blank?
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+    end
+
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
     # invoice
@@ -220,7 +239,7 @@ class SiteController < CustomerController
 
   # order_status: {1: 未处理, 2: 已确定, 3: 已取消}
   # pay_status: {1: 未付款, 2: 已付款}
-  # logistics_status: {1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
+  # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
     @orders = current_user.orders.where(order_status: 1, pay_status: 2)
   end
