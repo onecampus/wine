@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   authorize_resource
   respond_to :html, :json
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :sure_order]
 
   def index
     @orders = Order.all.paginate(page: params[:page], per_page: 10).order('id DESC')
@@ -22,12 +22,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    flash[:notice] = 'Order was successfully created.' if @order.save
+    flash[:notice] = '订单创建成功.' if @order.save
     respond_with(@order)
   end
 
   def update
-    flash[:notice] = 'Order was successfully updated.' if @order.update(order_params)
+    flash[:notice] = '订单更新成功.' if @order.update(order_params)
     respond_with(@order)
   end
 
@@ -44,6 +44,16 @@ class OrdersController < ApplicationController
       page: params[:page],
       per_page: 10
     ).order('id DESC')
+  end
+
+  # 确定订单
+  def sure_order
+    @order.order_status = 2
+    if @order.save
+      render json: { status: 'success', msg: '订单已经确定成功' }
+    else
+      render json: { status: 'failed', msg: '订单确定失败' }
+    end
   end
 
   def index_orders_wait_ship
@@ -68,6 +78,10 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_already_ok
+    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 3).paginate(
+      page: params[:page],
+      per_page: 10
+    ).order('id DESC')
   end
 
   def index_orders_back

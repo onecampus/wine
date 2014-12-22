@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     resources :product_orders
     resources :orders
     get 'orders/wait/sure' => 'orders#index_orders_unsure'
+    get 'orders/:oid/sure' => 'orders#sure_order'
     get 'orders/wait/ship' => 'orders#index_orders_wait_ship'
     get 'orders/already/ship' => 'orders#index_orders_already_ship'
     get 'orders/already/receive' => 'orders#index_orders_already_receive'

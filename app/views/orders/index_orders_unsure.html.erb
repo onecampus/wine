@@ -7,7 +7,7 @@
   <li>
     <i class="clip-pencil"></i>
     <a href="#">
-      控制面板
+      <控制面板></控制面板>
     </a>
   </li>
   <li class="active">
@@ -100,9 +100,15 @@
             <td><%= order.supplier_id %></td>
             <td><%= order.order_type %></td>
             <td class="center">
-              <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-              <i class="fa fa-trash-o"></i>
-              删除
+              <% if order.order_number == 1 %>
+                <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                <i class="fa fa-trash-o"></i>
+                删除
+                <% end %>
+                <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                <i class="fa fa-trash-o"></i>
+                确定
+                <% end %>
               <% end %>
               <%= link_to(order, class: "btn btn-xs btn-primary") do %>
               <i class="fa fa-share"></i>
