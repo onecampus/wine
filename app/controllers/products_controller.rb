@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    flash[:notice] = 'Product was successfully created.' if @product.save
+    flash[:notice] = '商品创建成功.' if @product.save
 
     @inventory = Inventory.create(user_id: current_user.id,
                                   product_id: @product.id,
@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    flash[:notice] = 'Product was successfully updated.' if @product.update(product_params)
+    flash[:notice] = '商品更新成功.' if @product.update(product_params)
     respond_with(@product)
   end
 

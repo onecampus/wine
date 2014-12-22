@@ -96,18 +96,24 @@
             <td><%= order.package_charge %></td>
             <td><%= order.total_price %></td>
             <td><%= order.buy_date %></td>
-            <td><%= order.order_status %></td>
-            <td><%= order.pay_status %></td>
-            <td><%= order.logistics_status %></td>
+            <td><%= order_status order.order_status %></td>
+            <td><%= pay_status order.pay_status %></td>
+            <td><%= logistics_status order.logistics_status %></td>
             <td><%= order.receive_name %></td>
             <td><%= order.mobile %></td>
             <td><%= order.tel %></td>
             <td><%= order.order_type %></td>
             <td class="center">
-              <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-              <i class="fa fa-trash-o"></i>
-              删除
+              <% if order.order_status == 1 %>
+                <%= link_to(order, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                <i class="fa fa-trash-o"></i>
+                删除
+                <% end %>
               <% end %>
+              <a href="/admin/orders/<%= order.id %>/shiped" data-method="get" rel="nofollow" data-confirm="确定标记为已发货, 进入待收货阶段吗?" class="btn btn-xs btn-dark-grey">
+                <i class="fa clip-stack-empty"></i>
+                发货
+              </a>
               <%= link_to(order, class: "btn btn-xs btn-primary") do %>
               <i class="fa fa-share"></i>
               查看
