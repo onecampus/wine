@@ -1,4 +1,48 @@
 module ApplicationHelper
+  # order_status: {1: 未处理, 2: 已确定, 3: 已取消}
+  # pay_status: {1: 未付款, 2: 已付款}
+  # logistics_status: {1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
+  def order_status(status)
+    case status
+      when 1
+        '未处理'
+      when 2
+        '已确定'
+      when 3
+        '已取消'
+      else
+        '未知错误'
+    end
+  end
+
+  def pay_status(status)
+    case status
+      when 1
+        '未付款'
+      when 2
+        '已付款'
+      else
+        '未知错误'
+    end
+  end
+
+  def logistics_status(status)
+    case status
+      when 0
+        '订单还未处理'
+      when 1
+        '备货中'
+      when 2
+        '已发货'
+      when 3
+        '已收货'
+      when 4
+        '已退货'
+      else
+        '未知错误'
+    end
+  end
+
   def country_to_select
     [
       "中国",
