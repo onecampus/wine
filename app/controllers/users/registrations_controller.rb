@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     profile_params = {
       user_id: resource.id,
-      invite_code: User.generate_invite_code,
+      share_link_code: User.generate_share_link_code,
       province: params[:province],
       city: params[:city],
       region: params[:region]
