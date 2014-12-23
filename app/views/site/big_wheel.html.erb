@@ -245,98 +245,101 @@
   <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
 </div>
+<script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
+<script>
+var jQuery_1_7_2 = $.noConflict(true);
+</script>
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
 <script type="text/javascript">
-  function enableFlag() {
-    var $startbtn = $('#startbtn');
-    $startbtn.data("flag", 'enable');
+function enableFlag() {
+  var $startbtn = $('#startbtn');
+  $startbtn.data("flag", 'enable');
+}
+
+function confirmLogin() {
+  if(confirm("请先登陆, 才能进行抽奖")) {
+    window.location.href = "/users/sign_in?back_url=/customer/big/wheel";
   }
+}
 
-  function confirmLogin() {
-    if(confirm("请先登陆, 才能进行抽奖")) {
-      window.location.href = "/users/sign_in";
-    }
-  }
-
-  function lottery() {
-    var $startbtn = $('#startbtn');
-    var _ajax = function() {
-      if($startbtn.data("flag") == 'enable') {
-        $startbtn.data("flag", 'disable');
-        $.ajax({
-          type: 'POST',
-          url: '/customer/big/wheel',
-          dataType: 'json',
-          cache: false,
-          error: function(){
-            alert('出错了！');
-            return false;
-          },
-          success:function(json){
-            var a = parseInt(json.angle);  // 角度
-            var p = json.prize_name;  // 奖项
-            var n = json.num;  // 剩余抽奖次数
-            if(p != "" && a != 0) {
-              $("#disk-btn").rotate({
-                duration: 3000,  // 转动时间
-                angle: 0,  // 默认角度
-                animateTo: 3600 - a,  // 转动角度
-                easing: $.easing.easeOutSine,
-                callback: function(){
-                  var $back = $('.back');
-                  var $mask = $('.mask');
-                  var date = new Date();
-                  var year = date.getFullYear();
-                  var month = date.getMonth()+1;
-                  var days = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
-                  var Day = date.getDate();
-                  var day = days[date.getDay()];
-                  var hour = date.getHours();
-                  var minute = date.getMinutes();
-                  if (minute < 10) minute = '0' + minute;
-                  var second = date.getSeconds();
-                  if (second < 10) second = '0' + second;
-                  var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
-                  $back.show();
-                  $back.height($(document).height());
-                  $('.prize').text(p);
-                  if(n ===  0) {
-                    $('.mask p').html('恭喜您获得了<span class="prize">' + p + '</span>, 您的抽奖次数已用完, 祝您下次好运。');
-                  } else {
-                    $('.prizecount').text(n);
-                  }
-                  $mask.slideDown(800);
-                  setTimeout(function(){
-                    $back.hide();
-                    $mask.slideUp(800);
-                  }, 3000);
-                  $('.notice').click(function(){
-                    $back.hide();
-                    $mask.slideUp(800);
-                  });
-
-                  $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
-                  //$("#startbtn").rotate({angle: 0});
-                  //$("#startbtn").css("cursor", "pointer");
+function lottery() {
+  var $startbtn = $('#startbtn');
+  var _ajax = function() {
+    if($startbtn.data("flag") == 'enable') {
+      $startbtn.data("flag", 'disable');
+      $.ajax({
+        type: 'POST',
+        url: '/customer/big/wheel',
+        dataType: 'json',
+        cache: false,
+        error: function() {
+          alert('出错了！');
+          return false;
+        },
+        success: function(json) {
+          var a = parseInt(json.angle);  // 角度
+          var p = json.prize_name;  // 奖项
+          var n = json.num;  // 剩余抽奖次数
+          if(p != "" && a != 0) {
+            $("#disk-btn").rotate({
+              duration: 3000,  // 转动时间
+              angle: 0,  // 默认角度
+              animateTo: 3600 - a,  // 转动角度
+              easing: $.easing.easeOutSine,
+              callback: function(){
+                var $back = $('.back');
+                var $mask = $('.mask');
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth()+1;
+                var days = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+                var Day = date.getDate();
+                var day = days[date.getDay()];
+                var hour = date.getHours();
+                var minute = date.getMinutes();
+                if (minute < 10) minute = '0' + minute;
+                var second = date.getSeconds();
+                if (second < 10) second = '0' + second;
+                var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
+                $back.show();
+                $back.height($(document).height());
+                $('.prize').text(p);
+                if(n ===  0) {
+                  $('.mask p').html('恭喜您获得了<span class="prize">' + p + '</span>, 您的抽奖次数已用完, 祝您下次好运。');
+                } else {
+                  $('.prizecount').text(n);
                 }
-              });
-            } else {
-              alert("您已经没有抽奖次数了！");
-            }
-          }
-        });
-      }
-      setTimeout("enableFlag()", 3000);
-    }
-    <% if current_user %>
-    $startbtn.on('click', _ajax);
-    <% else %>
-    $startbtn.on('click', confirmLogin);
-    <% end %>
-  }
+                $mask.slideDown(800);
+                setTimeout(function(){
+                  $back.hide();
+                  $mask.slideUp(800);
+                }, 3000);
+                $('.notice').click(function(){
+                  $back.hide();
+                  $mask.slideUp(800);
+                });
 
-  $(document).ready(function() {
+                $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
+                $("#startbtn").rotate({angle: 0});
+                $("#startbtn").css("cursor", "pointer");
+              }
+            });
+          } else {
+            alert("您已经没有抽奖次数了！");
+          }
+        }
+      });
+    }
+    setTimeout("enableFlag()", 3000);
+  }
+  <% if current_user %>
+  $startbtn.on('click', _ajax);
+  <% else %>
+  $startbtn.on('click', confirmLogin);
+  <% end %>
+}
+  jQuery_1_7_2(document).ready(function($) {
     lottery();
   });
 

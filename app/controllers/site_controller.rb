@@ -447,15 +447,20 @@ class SiteController < CustomerController
     pro_sum = 0
     # 概率数组的总概率精度  获取库存不为0的
     pro_count.each do |key, val|
-      if val <= 0
+      if val == 0
         next
       else
         pro_sum += pro_arr[key]
       end
     end
+    puts '-' * 20
+    puts pro_sum
     # 概率数组循环
     pro_arr.each do |key, val|
-      if pro_count[key] <= 0
+      puts '-' * 20
+      puts pro_count[key]
+      puts val
+      if pro_count[key] == 0
         next
       else
         rand_num = rand(1..pro_sum) # 关键
