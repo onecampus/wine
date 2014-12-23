@@ -18,7 +18,8 @@ $(document).ready(function() {
     address: "",
     zipcode: "",
     totalNumber: 0,
-    totalAmount: 0.00
+    totalAmount: 0.00,
+    shareLinkCode: null
   };
   var Cart = {
     //向购物车中添加商品
@@ -40,6 +41,7 @@ $(document).ready(function() {
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -93,6 +95,7 @@ $(document).ready(function() {
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {

@@ -97,6 +97,8 @@ $(document).ready(function() {
   $(".cleancart").click(function(){
     var shoppingCart = $.localStorage.get("shoppingCart");
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var shareLinkCode = JsonStr.shareLinkCode;
+    alert(shareLinkCode);
     var productList = JsonStr.productList;
     var list = [];
     for (var i in productList) {

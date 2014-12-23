@@ -67,7 +67,7 @@ $(document).ready(function() {
     $(".invoice-id").val(0);
     $(".invoice-not").text("不开发票");
     $(".invoice-not").css("color", "#000000")
-    $(".invoice-history").fadeOut(100);
+    $(".invoice-history").hide();
     $("hr").show();
     $(".invoice-hr").hide();
     $(".order").show();
@@ -80,7 +80,7 @@ $(document).ready(function() {
     $(".invoice-id").val(id);
     $(".invoice-not").text("开发票");
     $(".invoice-not").css("color", "#aa0c40");
-    $(".invoice-history").fadeOut(100);
+    $(".invoice-history").hide();
     $("hr").show();
     $(".invoice-hr").hide();
     $(".order").show();
