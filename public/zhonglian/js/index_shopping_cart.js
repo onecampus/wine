@@ -65,11 +65,13 @@ $(document).ready(function() {
 结算
 */
   $(".account").click(function() {
+    var select = 0;
     $(".checkbox").each(function() {
       if (($(this).is(':checked')) == true) {
         var id = ($(this).parent().siblings("input").val());
         var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").text();
         updateBuyMark(id, num, true);
+        select = select + 1;
       }
       if (($(this).is(':checked')) == false) {
         var id = ($(this).parent().siblings("input").val());
@@ -84,7 +86,7 @@ $(document).ready(function() {
     OrderDetail.totalAmount = JsonStr.totalAmount;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
     var length = JsonStr.productList.length;
-    if(length == 0) {
+    if(length == 0 || select == 0) {
       return;
     }
     else{
