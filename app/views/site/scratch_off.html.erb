@@ -80,10 +80,9 @@
   <div><a href="javascript:void(0)" class="cancel">我不玩了</a></div>
 </div>
 <div class="mask">
-  <p>恭喜您刮出了<span class="prize"></span>，但是你已经没有刮奖机会了，敬请期待下次活动！</p>
+  <p>你已经没有刮奖机会了，敬请期待下次活动！</p>
   <div><a href="javascript:void(0)" class="cancel">知道了</a></div>
 </div>
-<script src="/zhonglian/js/jquery-1.4.2.js"></script>
 <script type="text/javascript" src="/zhonglian/js/scratch.js"></script>
 <script type="text/javascript">
   function confirmLogin() {
@@ -176,14 +175,14 @@
             $('.mask:last').slideDown(800);
           }
 
-          $('.confirm').bind('click', function() {
+          $('.confirm').on('click', function() {
             movenum = 0;
             $('#scratchpad').wScratchPad('reset');
             $('#scratchpad').wScratchPad('enabled',true);
             $back.hide();
             $mask.slideUp(800);
           });
-          $('.cancel').bind('click', function(){
+          $('.cancel').on('click', function(){
             $back.hide();
             $mask.slideUp(800);
           });

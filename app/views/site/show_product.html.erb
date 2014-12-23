@@ -238,23 +238,22 @@
   </div>
 </div>
 <script type="text/javascript">
-  $(document).ready(function($) {
-    var minus  =   $(".action-de");
-    var plus  =  $(".action-plus");
-    var num_input  =  $(".p-num");
-    var num  =  "";
-    plus.click(function() {
-      num  =  num_input.val();
+  $(document).ready(function() {
+    var minus = $(".action-de");
+    var plus = $(".action-plus");
+    var numInput = $(".p-num");
+    var num = 0;
+    plus.on('click', function() {
+      num = parseInt(numInput.val());
       num++;
-      num_input.val(num);
+      numInput.val(num);
     });
-    minus.click(function() {
-      if (num  >  0) {
+    minus.on('click', function() {
+      if (num > 0) {
         num--;
-        num_input.val(num);
-      }
-      else{
-        num_input.val(0);
+        numInput.val(num);
+      } else {
+        numInput.val(0);
       }
     });
     });

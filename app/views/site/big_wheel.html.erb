@@ -33,21 +33,23 @@
     border-radius: 8px;
   }
 
+
+
   #start {
-    height: 200px;
+    height: 0;
     left: 50%;
-    margin-left: -100px;
-    margin-top: -100px;
+    margin-left: -34px;
+    margin-top: -70px;
     position: absolute;
     top: 50%;
-    width: 200px;
+    width: 0;
   }
 
   #start img {
     display: block;
-    max-height: 100%;
-    max-width: 100%;
+    height: 140px;
     vertical-align: middle;
+    width: 70px;
   }
   #records p {
     margin: 10px 5px;
@@ -173,7 +175,7 @@
   }
 </style>
 <div class="container">
-  <div id="disk"><img src="/zhonglian/img/big_wheel/disk.png" /></div>
+  <div id="disk"><img src="/zhonglian/img/big_wheel/disk.png" id="disk-btn" /></div>
   <div id="start"><img data-flag="enable" src="/zhonglian/img/big_wheel/start.png" id="startbtn" /></div>
 </div>
 <div class="boxcontent boxyellow">
@@ -243,7 +245,6 @@
   <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
 </div>
-<script src="/zhonglian/js/jquery-1.4.2.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
 <script type="text/javascript">
@@ -277,10 +278,10 @@
             var p = json.prize_name;  // 奖项
             var n = json.num;  // 剩余抽奖次数
             if(p != "" && a != 0) {
-              $("#startbtn").rotate({
+              $("#disk-btn").rotate({
                 duration: 3000,  // 转动时间
                 angle: 0,  // 默认角度
-                animateTo: 3600 + a,  // 转动角度
+                animateTo: 3600 - a,  // 转动角度
                 easing: $.easing.easeOutSine,
                 callback: function(){
                   var $back = $('.back');
@@ -293,9 +294,9 @@
                   var day = days[date.getDay()];
                   var hour = date.getHours();
                   var minute = date.getMinutes();
-                  if (minute < 10) minute = '0'+minute;
+                  if (minute < 10) minute = '0' + minute;
                   var second = date.getSeconds();
-                  if (second < 10) second = '0'+second;
+                  if (second < 10) second = '0' + second;
                   var nowTime = year+'-'+month+'-'+Day+' '+day+' '+hour+':'+minute+':'+second;
                   $back.show();
                   $back.height($(document).height());
@@ -316,8 +317,8 @@
                   });
 
                   $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
-                  $("#startbtn").rotate({angle: 0});
-                  $("#startbtn").css("cursor", "pointer");
+                  //$("#startbtn").rotate({angle: 0});
+                  //$("#startbtn").css("cursor", "pointer");
                 }
               });
             } else {
@@ -329,9 +330,9 @@
       setTimeout("enableFlag()", 3000);
     }
     <% if current_user %>
-    $startbtn.bind('click', _ajax);
+    $startbtn.on('click', _ajax);
     <% else %>
-    $startbtn.bind('click', confirmLogin);
+    $startbtn.on('click', confirmLogin);
     <% end %>
   }
 
