@@ -211,6 +211,8 @@ $(document).ready(function() {
     showShoppingCartItem();
     window.location = '/customer/orders/settlement';
   });
+
+  updateShareLinkCode();
 });
 
 function showShoppingCartItem() {
@@ -227,4 +229,13 @@ function showShoppingCartItem() {
       $(".shopping-cart-mark").hide();
     }
   }
+}
+
+function updateShareLinkCode() {
+  var shareLinkCode = null;
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+  JsonStr.shareLinkCode = shareLinkCode;
+    //OrderDetail.shareLinkCode = JsonStr.shareLinkCode;
+  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
 }
