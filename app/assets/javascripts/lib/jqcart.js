@@ -18,7 +18,8 @@ $(document).ready(function() {
     address: "",
     zipcode: "",
     totalNumber: 0,
-    totalAmount: 0.00
+    totalAmount: 0.00,
+    shareLinkCode: null
   };
   var Cart = {
     //向购物车中添加商品
@@ -40,6 +41,7 @@ $(document).ready(function() {
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -93,6 +95,7 @@ $(document).ready(function() {
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -208,6 +211,8 @@ $(document).ready(function() {
     showShoppingCartItem();
     window.location = '/customer/orders/settlement';
   });
+
+  updateShareLinkCode();
 });
 
 function showShoppingCartItem() {
@@ -224,4 +229,13 @@ function showShoppingCartItem() {
       $(".shopping-cart-mark").hide();
     }
   }
+}
+
+function updateShareLinkCode() {
+  var shareLinkCode = null;
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+  JsonStr.shareLinkCode = shareLinkCode;
+    //OrderDetail.shareLinkCode = JsonStr.shareLinkCode;
+  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
 }

@@ -13,7 +13,6 @@ $(document).ready(function() {
       var $sum = $($history_order.get(j)).find('.sum');
       var $freight = $($history_order.get(j)).find('.freight');
       var freight = $freight.text();
-      alert(freight);
       var freightN = parseFloat(freight.substr(freight.indexOf('￥') + 1).trim());
       var sum = 0;
       for (var k = 0; k < orderedN; k++) {
@@ -24,15 +23,11 @@ $(document).ready(function() {
         for (var i = 0; i < p_num; i++) {
           var priceN = $price.get(i).innerHTML.trim().substr(0).trim();
           var numN = $num.get(i).innerHTML.trim().substr(1).trim();
-          alert(numN);
           var times = parseFloat(priceN) * parseFloat(numN);
           sum = sum + times;
         }
       }
-
       sum = sum + freightN; //某订单内的总价
-      alert(typeof sum);
-      alert(sum);
       $sum.text("合计：￥" + sum + "元");
     }
   }

@@ -124,13 +124,9 @@ $(document).ready(function() {
         if (productList[i].buyMark == true) {
           var id = productList[i].id;
           var num = parseInt(productList[i].num);
-          var price = productList[i].price;
-          price = price.substr(2, price.length);
-          price = parseFloat(price);
-          var subtotal = (Number(num * price)).toFixed(2);
           products.push({
             "product_id": id,
-            "product_count": subtotal
+            "product_count": num
           });
         }
       }
