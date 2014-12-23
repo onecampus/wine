@@ -38,28 +38,33 @@
     <div class="box">
       <div class="title-brown"><span>奖项设置：</span></div>
       <div class="Detail">
-        <% if current_user %>
+        <% if current_user && @prize_act %>
         <p>每人最多允许抽奖次数:
           <%= @prize_act.person_limit %>
           次 - 剩余
-          <span class="red" id="usenums"><%= @prize_user_number.number %></span>
+          <span class="red" id="usenums"><% if @prize_user_number %><%= @prize_user_number.number %><% else %><%= @prize_act.person_limit %><% end %></span>
           次</p>
           <% end %>
-          <% @prizes.each do |p| %>
-          <p><%= p.prize_name %>:
-          <%= p.prize_content %></p>
+          <% if @prizes %>
+            <% @prizes.each do |p| %>
+            <p><%= p.prize_name %>:
+            <%= p.prize_content %></p>
+            <% end %>
           <% end %>
       </div>
     </div>
   </div>
   <div class="boxcontent boxyellow" id="boxcontent">
      <div class="box">
-        <div class="title-brown">活动说明：</div>
-           <div class="Detail">
-             <p>亲，请点击进入刮刮乐活动页面，祝您好运哦！^_^</p>
-             <p>活动时间: <%= @prize_act.start_time.strftime("%Y-%m-%d") %> 至 <%= @prize_act.end_time.strftime("%Y-%m-%d") %> </p>
-             <p><strong>兑奖请联系众联酒业服务热线：400-009-2119</strong></p>
-           </div>
+       <div class="title-brown">活动说明：</div>
+
+       <% if @prizes %>
+       <div class="Detail">
+         <p>亲，请点击进入刮刮乐活动页面，祝您好运哦！^_^</p>
+         <p>活动时间: <%= @prize_act.start_time.strftime("%Y-%m-%d") %> 至 <%= @prize_act.end_time.strftime("%Y-%m-%d") %> </p>
+         <p><strong>兑奖请联系众联酒业服务热线：400-009-2119</strong></p>
+       </div>
+       <% end %>
      </div>
   </div>
 </div>

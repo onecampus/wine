@@ -81,7 +81,7 @@
             <tr>
               <td><%= prize_act.name %></td>
               <td><%= prize_act.desc %></td>
-              <td><% if prize_act.prize_type == 'bigwheel' %>大转盘<% elsif prize_act.prize_type == 'bigwheel' %>刮刮乐<% else %>数据错误<% end %></td>
+              <td><% if prize_act.prize_type == 'bigwheel' %>大转盘<% elsif prize_act.prize_type == 'scratchoff' %>刮刮乐<% else %>数据错误<% end %></td>
               <td><%= prize_act.start_time.strftime("%Y-%m-%d") %></td>
               <td><%= prize_act.end_time.strftime("%Y-%m-%d") %></td>
               <td><% if prize_act.is_open == 1 %>开启<% elsif prize_act.is_open == 0 %>关闭<% else %>数据错误<% end %></td>

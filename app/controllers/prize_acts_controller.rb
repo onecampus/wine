@@ -106,7 +106,7 @@ class PrizeActsController < ApplicationController
   end
 
   def update
-    flash[:notice] = 'PrizeAct was successfully updated.' if @prize_act.update(prize_act_params)
+    flash[:notice] = '抽奖活动更新成功' if @prize_act.update(prize_act_params)
     respond_with(@prize_act)
   end
 
@@ -116,11 +116,12 @@ class PrizeActsController < ApplicationController
   end
 
   private
-    def set_prize_act
-      @prize_act = PrizeAct.find(params[:id])
-    end
 
-    def prize_act_params
-      params.require(:prize_act).permit(:name, :desc, :prize_type, :start_time, :end_time, :is_open, :person_limit)
-    end
+  def set_prize_act
+    @prize_act = PrizeAct.find(params[:id])
+  end
+
+  def prize_act_params
+    params.require(:prize_act).permit(:name, :desc, :prize_type, :start_time, :end_time, :is_open, :person_limit)
+  end
 end
