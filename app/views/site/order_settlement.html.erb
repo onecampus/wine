@@ -230,6 +230,25 @@
 
   }
 
+  .invoice-history {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .cancel-history-invoice {
+    font-size: 16px;
+    margin-left: 5%;
+  }
+
+  .confirm-history-invoice {
+    font-size: 16px;
+    margin-right: 5%;
+  }
+
   .invoice-inf {
     position: absolute;
     left: 0;
@@ -318,6 +337,7 @@
   }
 </style>
 <input type="hidden" name="address-id" class="address-id">
+<input type="hidden" name="invoice-id" class="invoice-id" value="0">
 <a href="#" class="order-address">
   <div class="select-address">
     <span class="pull-left">请选择收货地址</span><br>
@@ -397,27 +417,33 @@
   </div>
   <div class="address-add-btn"><button class="btn-add-address btn btn-red btn-block">添加</button></div>
 </div>
+<div class="invoice-history">
+  <div class="invoice-inf-top">
+    <a href="#" class="cancel-history-invoice pull-left">X</a>
+    <span>开具发票</span>
+    <a href="#" class="confirm-history-invoice pull-right">确定</a>
+  </div>
+  <% @invoices.each do |i| %>
+  <div class="pull-left invoice-item-input">
+    <input type="radio" name="invoice" class="invoice-item-select" value="<%= i.id %>">
+  </div>
+  <div class="pull-left invoice-item-inf">
+    <span>发票抬头：</span><span><%= i.rise %></span><br>
+    <span>发票抬头：</span><span><%= i.content %></span>
+  </div>
+  <hr class="invoice-hr pull-left">
+  <% end %>
+  <button class="add-new-invoice btn btn-red btn-block pull-left">添加新发票</button>
+  <div class="space">
+  </div>
+</div>
 <div class="invoice-inf">
-  <input type="hidden" name="invoice-id" class="invoice-id">
   <div class="invoice-inf-top">
     <a href="#" class="cancel-invoice pull-left">X</a>
     <span>开具发票</span>
     <a href="#" class="confirm-invoice pull-right">确定</a>
   </div>
   <div class="invoice-mesg"><p></P></div>
-  <div class="invoice-history">
-    <% @invoices.each do |i| %>
-      <div class="pull-left invoice-item-input">
-        <input type="radio" name="invoice" class="invoice-item-select" value="<%= i.id %>>
-        <input type="hidden" value="<%= i.id%>">
-      </div>
-      <div class="pull-left invoice-item-inf">
-        <span>发票抬头：</span><span><%= i.rise %></span><br>
-        <span>发票抬头：</span><span><%= i.content %></span>
-      </div>
-    <hr class="invoice-hr pull-left">
-    <% end %>
-  </div>
   <div>
     <input class="rise" placeholder="请输入发票抬头">
     <input class="content" placeholder="请输入发票内容">

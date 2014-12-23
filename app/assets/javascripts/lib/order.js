@@ -91,7 +91,7 @@ $(document).ready(function() {
       success: function(data) {
         $(".invoice-id").val(data.data);
         $(".invoice-not").text("开发票");
-        $(".invoice-not").css("color", "#aa0c40")
+        $(".invoice-not").css("color", "#aa0c40");
         $(".invoice-inf").fadeOut(100);
         $("hr").show();
         $(".invoice-hr").hide();
@@ -134,6 +134,38 @@ $(document).ready(function() {
           });
         }
       }
+      if(invoiceId == 0){
+        $.ajax({
+          type: "POST",
+          url: "/customer/orders/create",
+          data: {
+            ship_address_id: addressId,
+            ship_method: 'express',
+            payment_method: 'weixinpayment',
+            products: products
+          },
+          dataType: "json",
+          success: function(data) {
+            // code
+
+            for (var i in productList) {
+              if (productList[i].buyMark == true) {
+                var productId = productList[i].id;
+                deleteProduct(productId);
+              }
+            }
+            alert("购买成功");
+            showShoppingCartItem();
+          },
+          complete: function(XMLHttpRequest, textStatus) {
+            // orderErrorHan(XMLHttpRequest, textStatus);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            orderErrorHan(XMLHttpRequest, textStatus);
+          }
+        });
+      }
+      else {
       $.ajax({
         type: "POST",
         url: "/customer/orders/create",
@@ -164,6 +196,7 @@ $(document).ready(function() {
           orderErrorHan(XMLHttpRequest, textStatus);
         }
       });
+    }
     }
   });
 });
