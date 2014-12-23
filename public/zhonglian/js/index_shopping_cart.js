@@ -88,7 +88,8 @@ $(document).ready(function() {
       return;
     }
     else{
-      $(this).attr("href", "/customer/orders/settlement");
+      var path = window.location.search;
+      $(this).attr("href", "/customer/orders/settlement"+path);
     }
   });
   /*

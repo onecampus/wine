@@ -119,6 +119,7 @@ $(document).ready(function() {
       var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
       var productList = JsonStr.productList;
       var invoiceId = $(".invoice-id").val();
+      var shareLinkCode = JsonStr.shareLinkCode;
       var products = [];
       for (var i in productList) {
         if (productList[i].buyMark == true) {
@@ -130,12 +131,76 @@ $(document).ready(function() {
           });
         }
       }
-      if(invoiceId == 0){
+      if(invoiceId == 0 && shareLinkCode == null){
         $.ajax({
           type: "POST",
           url: "/customer/orders/create",
           data: {
             ship_address_id: addressId,
+            ship_method: 'express',
+            payment_method: 'weixinpayment',
+            products: products
+          },
+          dataType: "json",
+          success: function(data) {
+            // code
+
+            for (var i in productList) {
+              if (productList[i].buyMark == true) {
+                var productId = productList[i].id;
+                deleteProduct(productId);
+              }
+            }
+            alert("购买成功");
+            showShoppingCartItem();
+          },
+          complete: function(XMLHttpRequest, textStatus) {
+            // orderErrorHan(XMLHttpRequest, textStatus);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            orderErrorHan(XMLHttpRequest, textStatus);
+          }
+        });
+      }
+      else if(invoiceId == 0 && shareLinkCode != null){
+        $.ajax({
+          type: "POST",
+          url: "/customer/orders/create",
+          data: {
+            ship_address_id: addressId,
+            ship_method: 'express',
+            payment_method: 'weixinpayment',
+            products: products,
+            share_link_code: shareLinkCode
+          },
+          dataType: "json",
+          success: function(data) {
+            // code
+
+            for (var i in productList) {
+              if (productList[i].buyMark == true) {
+                var productId = productList[i].id;
+                deleteProduct(productId);
+              }
+            }
+            alert("购买成功");
+            showShoppingCartItem();
+          },
+          complete: function(XMLHttpRequest, textStatus) {
+            // orderErrorHan(XMLHttpRequest, textStatus);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            orderErrorHan(XMLHttpRequest, textStatus);
+          }
+        });
+      }
+      else if(invoiceId != 0 && shareLinkCode == null){
+        $.ajax({
+          type: "POST",
+          url: "/customer/orders/create",
+          data: {
+            ship_address_id: addressId,
+            invoice_id: invoiceId,
             ship_method: 'express',
             payment_method: 'weixinpayment',
             products: products
@@ -170,7 +235,8 @@ $(document).ready(function() {
           invoice_id: invoiceId,
           ship_method: 'express',
           payment_method: 'weixinpayment',
-          products: products
+          products: products,
+          share_link_code: shareLinkCode
         },
         dataType: "json",
         success: function(data) {
