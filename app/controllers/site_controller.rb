@@ -196,7 +196,7 @@ class SiteController < CustomerController
       buy_date: Time.now,
       order_status: 1,
       pay_status: 2,
-      logistics_status: 1,
+      logistics_status: 0,
       weixin_open_id: '',
       receive_name: shipaddress.receive_name,
       mobile: shipaddress.mobile,
