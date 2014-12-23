@@ -42,12 +42,45 @@ $(document).ready(function() {
     $(".order").hide();
     $(".order-address").hide();
     $(".invoice-need").hide();
-    $(".invoice-inf").fadeIn(1000);
+    $(".invoice-history").fadeIn(1000);
   });
 
   $(".cancel-invoice").click(function() {
-    $(".invoice-status").val(0);
-    $(".invoice-inf").fadeOut(100);
+    $(".invoice-id").val(0);
+    $(".invoice-not").text("不开发票");
+    $(".invoice-not").css("color", "#000000")
+    $(".invoice-history").hide();
+    $(".invoice-inf").hide();
+    $("hr").show();
+    $(".invoice-hr").hide();
+    $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
+  });
+
+  $(".add-new-invoice").click(function(){
+    $(".invoice-history").fadeOut(100);
+    $(".invoice-inf").show();
+  });
+
+  $(".cancel-history-invoice").click(function() {
+    $(".invoice-id").val(0);
+    $(".invoice-not").text("不开发票");
+    $(".invoice-not").css("color", "#000000")
+    $(".invoice-history").fadeOut(100);
+    $("hr").show();
+    $(".invoice-hr").hide();
+    $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
+  });
+
+  $(".confirm-history-invoice").click(function(){
+    var id = $('input[name="invoice"]:checked').val();
+    $(".invoice-id").val(id);
+    $(".invoice-not").text("开发票");
+    $(".invoice-not").css("color", "#aa0c40");
+    $(".invoice-history").fadeOut(100);
     $("hr").show();
     $(".invoice-hr").hide();
     $(".order").show();
