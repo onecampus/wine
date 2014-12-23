@@ -58,7 +58,7 @@
         <p>订单编号：<span><%= o.order_number %></span></p>
         <% o.product_orders.each do |po| %>
         <div class="ordered_product">
-          <img src="/zhonglian/img/user_center/icon_wait_to_receive.png" class="left" />
+          <img src="<%= po.product.img if po.product %>" class="left" />
           <p class="right">
             <span class="order_price"><%= po.product.price %></span>
             <span class="order_num">×<%= po.product_count %></span>
