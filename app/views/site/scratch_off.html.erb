@@ -83,11 +83,15 @@
   <p>恭喜您刮出了<span class="prize"></span>，但是你已经没有刮奖机会了，敬请期待下次活动！</p>
   <div><a href="javascript:void(0)" class="cancel">知道了</a></div>
 </div>
+<script src="/zhonglian/js/jquery-1.4.2.js"></script>
 <script type="text/javascript" src="/zhonglian/js/scratch.js"></script>
 <script type="text/javascript">
   function confirmLogin() {
-    if(confirm("请先登陆, 才能进行抽奖")) {
-      window.location.href = "/users/sign_in";
+    movenum++;
+    if(movenum == 1) {
+      if(confirm("请先登陆, 才能进行抽奖")) {
+        window.location.href = "/users/sign_in";
+      }
     }
   }
 
@@ -172,14 +176,14 @@
             $('.mask:last').slideDown(800);
           }
 
-          $('.confirm').on('click', function() {
+          $('.confirm').bind('click', function() {
             movenum = 0;
             $('#scratchpad').wScratchPad('reset');
             $('#scratchpad').wScratchPad('enabled',true);
             $back.hide();
             $mask.slideUp(800);
           });
-          $('.cancel').on('click', function(){
+          $('.cancel').bind('click', function(){
             $back.hide();
             $mask.slideUp(800);
           });

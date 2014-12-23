@@ -11,13 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require lib/jquery-migrate-1.2.1
 //= require bootstrap-sprockets
 
 //= require jquery-ui
 //= require lib/jquery.blockUI
 
 //= require jquery_ujs
-//= require turbolinks
 
 //= require jquery.ui.nestedSortable
 //= require sortable_tree/initializer

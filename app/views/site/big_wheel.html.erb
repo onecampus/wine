@@ -243,6 +243,7 @@
   <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
 </div>
+<script src="/zhonglian/js/jquery-1.4.2.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
 <script type="text/javascript">
@@ -328,13 +329,13 @@
       setTimeout("enableFlag()", 3000);
     }
     <% if current_user %>
-    $startbtn.on('click', _ajax);
+    $startbtn.bind('click', _ajax);
     <% else %>
-    $startbtn.on('click', confirmLogin);
+    $startbtn.bind('click', confirmLogin);
     <% end %>
   }
+
   $(document).ready(function() {
-    alert("bue");
     lottery();
   });
 

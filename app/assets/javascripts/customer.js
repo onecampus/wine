@@ -11,9 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require lib/jquery-migrate-1.2.1
 //= require lib/jquery.blockUI
 //= require jquery_ujs
-//= require turbolinks
 //= require lib/jquery.cookie
 //= require lib/jquery.storageapi
 //= require lib/jqcart
