@@ -119,7 +119,6 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
-    <input type="hidden" name="invite_code" value=""  class="invite_code" />
     <input type="hidden" name="province" value="" class="province" />
     <input type="hidden" name="city" value="" class="city" />
     <input type="hidden" name="region" value="" class="region" />
@@ -297,10 +296,5 @@
     $('.province').val(province);
     $('.city').val(city);
     $('.region').val(region);
-    var url = $.url();
-    var invite_code = url.param("invite_code");
-    if(invite_code) {
-      $(".invite_code").val(invite_code[0]);
-    }
   });
 </script>
