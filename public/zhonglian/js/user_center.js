@@ -21,7 +21,7 @@ $(document).ready(function() {
         var p_num = $price.size();
         var $num = $o_p.find('.order_num');
         for (var i = 0; i < p_num; i++) {
-          var priceN = $price.get(i).innerHTML.trim().substr(1).trim();
+          var priceN = $price.get(i).innerHTML.trim().substr(0).trim();
           var numN = $num.get(i).innerHTML.trim().substr(1).trim();
           var times = parseFloat(priceN) * parseFloat(numN);
           sum = sum + times;

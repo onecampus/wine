@@ -22,8 +22,8 @@ u = User.new(
   password: '12345678',
   password_confirmation: '12345678'
 )
-u.save
-u.confirm!
+u.skip_confirmation!
+u.save!
 u.add_role :admin
 Profile.create(
   user_id: u.id,
@@ -37,6 +37,54 @@ Profile.create(
 )
 Integral.create(user_id: u.id, amount: 0)
 Vritualcard.create(user_id: u.id, money: '0.00')
+
+
+provider = User.new(
+  username: 'provider',
+  email: 'provider@gmail.com',
+  password: '12345678',
+  password_confirmation: '12345678'
+)
+provider.skip_confirmation!
+provider.save!
+provider.add_role :provider
+Profile.create(
+  user_id: provider.id,
+  mobile: "135604744#{provider.id}",
+  tel: "5555#{provider.id}",
+  province: '广东省',
+  city: '广州市',
+  region: '番禺区',
+  address: '小谷围',
+  fax: '55555'
+)
+Integral.create(user_id: provider.id, amount: 0)
+Vritualcard.create(user_id: provider.id, money: '0.00')
+
+
+customer = User.new(
+  username: 'customer',
+  email: 'customer@gmail.com',
+  password: '12345678',
+  password_confirmation: '12345678'
+)
+customer.skip_confirmation!
+customer.save!
+customer.add_role :customer
+Profile.create(
+  user_id: customer.id,
+  mobile: "135604744#{customer.id}",
+  tel: "5555#{customer.id}",
+  invite_code: User.generate_invite_code,
+  province: '广东省',
+  city: '广州市',
+  region: '番禺区',
+  address: '小谷围',
+  fax: '55555',
+  supplier_id: provider.id
+)
+Integral.create(user_id: customer.id, amount: 0)
+Vritualcard.create(user_id: customer.id, money: '0.00')
 
 =begin
 1.upto(50).each do |i|

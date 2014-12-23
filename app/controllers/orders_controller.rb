@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   authorize_resource
   respond_to :html, :json
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :sure_order, :ship_order, :receive_order, :ok_order]
 
   def index
     @orders = Order.all.paginate(page: params[:page], per_page: 10).order('id DESC')
@@ -22,12 +22,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    flash[:notice] = 'Order was successfully created.' if @order.save
+    flash[:notice] = '订单创建成功.' if @order.save
     respond_with(@order)
   end
 
   def update
-    flash[:notice] = 'Order was successfully updated.' if @order.update(order_params)
+    flash[:notice] = '订单更新成功.' if @order.update(order_params)
     respond_with(@order)
   end
 
@@ -36,21 +36,37 @@ class OrdersController < ApplicationController
     respond_with(@order)
   end
 
-  # order_status: {1: 未处理, 2: 已确定, 3: 已取消}
+  # order_status: {1: 未处理, 2: 已确定, 3: 已完成, 4: 已取消}
   # pay_status: {1: 未付款, 2: 已付款}
-  # logistics_status: {1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
+  # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_orders_unsure
-    @orders = Order.where(order_status: 1, pay_status: 2).paginate(
+    @orders = Order.where(order_status: 1, pay_status: 2, logistics_status: 0).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
   end
 
+  # 确定订单
+  def sure_order
+    @order.order_status = 2
+    @order.logistics_status = 1
+    @order.save
+    flash[:notice] = '确定成功, 该订单已进入备货阶段'
+    redirect_to action: :index_orders_unsure
+  end
+
   def index_orders_wait_ship
-    @orders = Order.where(order_status: 2, pay_status: 2).paginate(
+    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 1).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
+  end
+
+  def ship_order
+    @order.logistics_status = 2
+    @order.save
+    flash[:notice] = '发货标记成功, 该订单已进入待收货阶段'
+    redirect_to action: :index_orders_wait_ship
   end
 
   def index_orders_already_ship
@@ -60,6 +76,13 @@ class OrdersController < ApplicationController
     ).order('id DESC')
   end
 
+  def receive_order
+    @order.logistics_status = 3
+    @order.save
+    flash[:notice] = '收货标记成功, 该订单已进入待完成阶段'
+    redirect_to action: :index_orders_already_ship
+  end
+
   def index_orders_already_receive
     @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 3).paginate(
       page: params[:page],
@@ -67,7 +90,18 @@ class OrdersController < ApplicationController
     ).order('id DESC')
   end
 
+  def ok_order
+    @order.order_status = 3
+    @order.save
+    flash[:notice] = '该订单已经完成'
+    redirect_to action: :index_orders_already_ok
+  end
+
   def index_orders_already_ok
+    @orders = Order.where(order_status: 3, pay_status: 2, logistics_status: 3).paginate(
+      page: params[:page],
+      per_page: 10
+    ).order('id DESC')
   end
 
   def index_orders_back

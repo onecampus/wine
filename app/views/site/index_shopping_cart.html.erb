@@ -83,11 +83,15 @@
   }
 
   .products-inf {
-    margin: 10px 20px 80px 0;
+    margin: 10px 20px 0 0;
   }
 
   .products-inf  span {
     margin-right: 10px;
+  }
+
+  .products-inf-account {
+    margin-top: 10px;
   }
 
   .account {
@@ -102,20 +106,27 @@
     white-space: nowrap;
     letter-spacing: 4px;
     padding: 0 3px 0 5px;
+    margin-top: 10px;
   }
 
   .text1 {
-    color: #7e7e7e;
+    color: #000;
   }
 
   .text2 {
-    color:  #7e7e7e;
+    color:  #000;
     font-weight: bold;
   }
 
   .mesg {
     margin-left: 20px;
     display:none;
+  }
+
+  .space {
+    width: 100%;
+    height: 90px;
+    float: left;
   }
 </style>
 <div class="shop-cart">
@@ -126,9 +137,12 @@
     <button class="cleancart">清空购物车</button>
   </div>
   <div class="products-inf  pull-right" data-no-turbolink>
-    <span class="text1">运费:</span><span class="freight text2">0</span>
-    <span class="text1">合计:</span><span class="text2 total">0</span>
-    <a class="account">结算</a>
+      <div class="products-inf-account"><span class="text1">运费:</span><span class="total-freight text2">0</span></div>
+      <div class="products-inf-account"><span class="text1">商品总金额:</span><span class="text2 product-total">0</span></div>
+      <div class="products-inf-account"><span class="text1">合计:</span><span class="text2 total">0</span></div>
+      <div class="products-inf-account"><a class="account">结算</a></div>
   </div>
+</div>
+<div class="space">
 </div>
 <%= render "site/shared/bottombar" %>

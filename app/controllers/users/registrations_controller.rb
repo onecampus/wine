@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     profile_params = {
       user_id: resource.id,
-      invite_code: User.generate_invite_code,
+      share_link_code: User.generate_share_link_code,
       province: params[:province],
       city: params[:city],
       region: params[:region]
@@ -32,19 +32,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     puts profile.supplier_id
     puts User.with_role(:admin)
     profile.save
-
-    puts '==' * 20
-    parent_invite_code = params[:invite_code]
-    puts "parent_invite_code is #{parent_invite_code}"
-    if parent_invite_code && parent_invite_code != ''
-      puts "parent_invite_code is not nil and is #{parent_invite_code}"
-      parent_user = Profile.where(invite_code: parent_invite_code).first
-      unless parent_user.nil?
-        profile.move_to_child_of(parent_user)
-        parent_user.reload
-      end
-    end
-    puts '==' * 20
 
     Integral.create(user_id: resource.id, amount: 0)
     Vritualcard.create(user_id: resource.id, money: '0.00')

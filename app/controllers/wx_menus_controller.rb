@@ -138,6 +138,8 @@ class WxMenusController < ApplicationController
 
     json = menus.to_json.gsub!(/\\u([0-9a-z]{4})/) { |s| [$1.to_i(16)].pack('U') }
 
+    json = menus.to_json if json.blank?
+
     url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}"
     res = RestClient.post url, json
     JSON.parse res

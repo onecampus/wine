@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :products, through: :inventories
 
   has_many :shipaddresses
+  has_many :invoices
 
   has_many :orders
 

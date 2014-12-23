@@ -14,7 +14,7 @@ class PrizeConfigsController < ApplicationController
 
   def new
     @prize_config = PrizeConfig.new
-    @prize_acts = PrizeAct.where(prize_type: 'bigwheel', is_open: 1)
+    @prize_acts = PrizeAct.where(is_open: 1)
     @act_arr = []
     @prize_acts.each do |pa|
       @act_arr.push [pa.name, pa.id]
@@ -23,7 +23,7 @@ class PrizeConfigsController < ApplicationController
   end
 
   def edit
-    @prize_acts = PrizeAct.where(prize_type: 'bigwheel', is_open: 1)
+    @prize_acts = PrizeAct.where(is_open: 1)
     @act_arr = []
     @prize_acts.each do |pa|
       @act_arr.push [pa.name, pa.id]

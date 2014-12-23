@@ -18,7 +18,8 @@ $(document).ready(function() {
     address: "",
     zipcode: "",
     totalNumber: 0,
-    totalAmount: 0.00
+    totalAmount: 0.00,
+    shareLinkCode: null
   };
   var Cart = {
     //向购物车中添加商品
@@ -35,10 +36,12 @@ $(document).ready(function() {
             "num": product.num,
             "price": product.price,
             "img": product.img,
-            "buyMark": product.buyMark
+            "buyMark": product.buyMark,
+            "freight": product.freight
           }],
           "totalNumber": product.num,
-          "totalAmount": (product.price * product.num)
+          "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -61,7 +64,8 @@ $(document).ready(function() {
             "num": product.num,
             "price": product.price,
             "img": product.img,
-            "buyMark": product.buyMark
+            "buyMark": product.buyMark,
+            "freight": product.freight
           });
         }
         //重新计算总价
@@ -86,10 +90,12 @@ $(document).ready(function() {
             "num": product.num,
             "price": product.price,
             "img": product.img,
-            "buyMark": product.buyMark
+            "buyMark": product.buyMark,
+            "freight": product.freight
           }],
           "totalNumber": product.num,
-          "totalAmount": (product.price * product.num)
+          "totalAmount": (product.price * product.num),
+          "shareLinkCode": null,
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -116,7 +122,8 @@ $(document).ready(function() {
             "num": product.num,
             "price": product.price,
             "img": product.img,
-            "buyMark": product.buyMark
+            "buyMark": product.buyMark,
+            "freight": product.freight
           });
         }
         //重新计算总价
@@ -127,6 +134,29 @@ $(document).ready(function() {
         //保存购物车
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
+      var shoppingCart = $.localStorage.get("shoppingCart");
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      productList = JsonStr.productList;
+      var total = 0.00;
+      for (var i in productList) {
+        if (productList[i].id == product.id) {
+          var num = productList[i].num;
+          num = parseInt(num);
+          var price = productList[i].price;
+          price = price.substr(1,price.length);
+          price = parseFloat(price);
+          var freight = productList[i].freight;
+          freight = parseFloat(freight);
+          var product = (Number(price*num)).toFixed(2);
+          product = parseFloat(product);
+
+          total = (Number(product + freight)).toFixed(2);
+          total = parseFloat(total);
+        }
+      }
+      JsonStr.totalAmount = total;
+      OrderDetail.totalAmount = JsonStr.totalAmount;
+      $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
     }
   };
   /*
@@ -139,6 +169,7 @@ $(document).ready(function() {
         num = $(".p-num").val(),
         id = $(".product-id").val(),
         img = $(".top-img").children().attr("src"),
+        freight = $(".freight-price").text();
         buyMark = false;
     var product = {
       'id': id,
@@ -147,7 +178,8 @@ $(document).ready(function() {
       'num': num,
       'price': price,
       'img': img,
-      'buyMark': buyMark
+      'buyMark': buyMark,
+      'freight': freight
     };
     Cart.addProduct(product);
     showShoppingCartItem();
@@ -163,7 +195,8 @@ $(document).ready(function() {
     num = $(".p-num").val(),
     id = $(".product-id").val(),
     img = $(".top-img").children().attr("src"),
-    buyMark = true;
+    buyMark = true,
+    freight = $(".freight-price").text();
     var product = {
       'id': id,
       'name': name,
@@ -171,12 +204,15 @@ $(document).ready(function() {
       'num': num,
       'price': price,
       'img': img,
-      'buyMark': buyMark
+      'buyMark': buyMark,
+      'freight': freight
     };
     Cart.buyProduct(product);
     showShoppingCartItem();
     window.location = '/customer/orders/settlement';
   });
+
+  updateShareLinkCode();
 });
 
 function showShoppingCartItem() {
@@ -193,4 +229,21 @@ function showShoppingCartItem() {
       $(".shopping-cart-mark").hide();
     }
   }
+}
+function getShareLinkCode(name) {
+  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if (r!=null) {
+    return unescape(r[2]);
+  }
+  return null;
+}
+
+function updateShareLinkCode() {
+  var name = "share_link_code";
+  var shareLinkCode = getShareLinkCode(name);
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+  JsonStr.shareLinkCode = shareLinkCode;
+  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
 }

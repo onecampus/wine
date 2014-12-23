@@ -167,11 +167,13 @@
     font-weight: normal;
   }
 
-  .p-intro p{
+  .p-intro p {
     font-size: 16px;
     font-weight: normal;
   }
-
+  .p-intro div {
+    word-wrap: break-word;
+  }
   .p-intro .name{
     color: #aa0c3f;
     margin:  0;
@@ -203,7 +205,7 @@
     </div>
     <div>
       <span class="price">¥ <%= @product.price %>元</span>
-      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: ¥ <%= @product.fright %>元</span>
+      <span class="freight">&nbsp;&nbsp;&nbsp;&nbsp;运费: ¥ <span class="freight-price"><% if @product.fright %><%= @product.fright %><% else %>0<% end %></span>元</span>
     </div>
   </div>
   <hr/>
@@ -235,24 +237,27 @@
     <div><%= raw @product.description %></div>
   </div>
 </div>
+<script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
+<script>
+var jQuery_1_7_2 = $.noConflict(true);
+</script>
 <script type="text/javascript">
-  $(document).ready(function($) {
-    var minus  =   $(".action-de");
-    var plus  =  $(".action-plus");
-    var num_input  =  $(".p-num");
-    var num  =  "";
-    plus.click(function() {
-      num  =  num_input.val();
+  jQuery_1_7_2(document).ready(function($) {
+    var minus = $(".action-de");
+    var plus = $(".action-plus");
+    var numInput = $(".p-num");
+    var num = 0;
+    plus.on('click', function() {
+      num = parseInt(numInput.val());
       num++;
-      num_input.val(num);
+      numInput.val(num);
     });
-    minus.click(function() {
-      if (num  >  0) {
+    minus.on('click', function() {
+      if (num > 0) {
         num--;
-        num_input.val(num);
-      }
-      else{
-        num_input.val(0);
+        numInput.val(num);
+      } else {
+        numInput.val(0);
       }
     });
     });

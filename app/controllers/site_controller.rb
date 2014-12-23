@@ -14,11 +14,10 @@ class SiteController < CustomerController
                                                  :index_wait_receive,
                                                  :index_order_history,
                                                  :create_order,
-                                                 :big_wheel_ajax,
+                                                 :scratch_off,
                                                  :big_wheel]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
-                                                        :big_wheel,
                                                         :scratch_off_ajax,
                                                         :create_ship_address_via_ajax,
                                                         :create_invoice_via_ajax]
@@ -134,10 +133,15 @@ class SiteController < CustomerController
 
   def order_settlement
     @shipaddresses = current_user.shipaddresses
+    @invoices = current_user.invoices
   end
 
   def create_invoice_via_ajax
-    @invoice = Invoice.new(rise: params[:rise], content: params[:content])
+    @invoice = Invoice.new(
+      rise: params[:rise],
+      content: params[:content],
+      user_id: current_user.id
+    )
     if @invoice.save
       render json: { status: 'success', msg: 'create invoice success.',
                      data: @invoice.id }
@@ -147,6 +151,25 @@ class SiteController < CustomerController
   end
 
   def create_order
+    # share_link_code
+    share_link_code = params[:share_link_code]
+    current_user_profile = current_user.profile
+    unless share_link_code.blank?
+      parent_user = Profile.where(share_link_code: share_link_code).first
+      unless parent_user.nil?
+        current_user_profile.move_to_child_of(parent_user)
+        parent_user.reload
+      end
+    end
+
+    # invite_code
+    old_orders = current_user.orders
+    if old_orders.blank?
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+    end
+
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
     # invoice
@@ -159,6 +182,8 @@ class SiteController < CustomerController
 
     products = params[:products]
     total_price = 0.00
+    freight = 0.00
+    package_charge = 0.00
 
     order = Order.new(
       user_id: current_user.id,
@@ -168,9 +193,9 @@ class SiteController < CustomerController
       invoice_id: invoice_id,
       total_price: total_price,
       buy_date: Time.now,
-      order_status: '未处理',
-      pay_status: '未付款',
-      logistics_status: '未备货',
+      order_status: 1,
+      pay_status: 2,
+      logistics_status: 0,
       weixin_open_id: '',
       receive_name: shipaddress.receive_name,
       mobile: shipaddress.mobile,
@@ -189,23 +214,35 @@ class SiteController < CustomerController
           product_id = p[:product_id].to_i
           product = Product.find(product_id)
           unit_price = product.price
-          product_count = p[:product_count].to_i
+          product_count = p[:product_count]
 
           product_order = ProductOrder.new(
             order_id: order.id,
             product_id: product_id,
             product_count: product_count,
-            unit_price: product.price
+            unit_price: unit_price
           )
           p_o_list.push product_order
 
-          total_price += unit_price.to_f * product_count
+          total_price += unit_price.to_f * product_count.to_i
+          freight += product.fright.to_f
         end
+
+        puts '-' * 20
+        puts products
+
+        puts '-' * 20
+        puts total_price
+
+        puts '-' * 20
+        puts freight
 
         total_price = total_price.round(2)
 
         p_o_list.each(&:save!)
         order.total_price = total_price
+        order.freight = freight
+        order.package_charge = package_charge
         order.save!
         render json: { status: 'success', msg: 'create order success' }
         return
@@ -213,11 +250,11 @@ class SiteController < CustomerController
     end
   end
 
-  # order_status: {1: 未处理, 2: 已确定, 3: 已取消}
+  # order_status: {1: 未处理, 2: 已确定, 3: 已完成, 4: 已取消}
   # pay_status: {1: 未付款, 2: 已付款}
-  # logistics_status: {1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
+  # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
-    @orders = current_user.orders.where(order_status: 1, pay_status: 2)
+    @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
   end
 
   def index_wait_pay
@@ -229,17 +266,17 @@ class SiteController < CustomerController
   end
 
   def index_order_history
-    @orders = current_user.orders
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3)
   end
 
   def big_wheel
     # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
     # 该抽奖活动的奖品
-    @prizes = @prize_act.prize_configs
+    @prizes = @prize_act.prize_configs if @prize_act
     if current_user
       # 当前用户抽奖剩余次数
-      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first if @prize_act
       # 当前用户未领奖项
       @prize_users = PrizeUser.where(
         user_id: current_user.id,
@@ -260,19 +297,37 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
-
-    prize_act.join_num += 1
-    prize_act.save!
+    prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                      prize_act_id: prize_act.id).first
+    if prize_num.blank?
+      prize_act.join_num += 1
+      prize_act.save!
+    end
 
     result = get_result(prize_hash)
     render json: result
   end
 
   def scratch_off
+    # 抽奖活动
+    @prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
+    # 该抽奖活动的奖品
+    @prizes = @prize_act.prize_configs if @prize_act
+    if current_user
+      # 当前用户抽奖剩余次数
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first if @prize_act
+      # 当前用户未领奖项
+      @prize_users = PrizeUser.where(
+        user_id: current_user.id,
+        geted: 0
+      )
+    end
   end
 
   def scratch_off_ajax
-    prizes = PrizeConfig.where(prize_act_id: 1)
+    prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
+
+    prizes = prize_act.prize_configs
     prize_hash = {}
     prizes.each_with_index do |p, index|
       min = p.min.split(',')
@@ -281,6 +336,13 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
+    prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                      prize_act_id: prize_act.id).first
+    if prize_num.blank?
+      prize_act.join_num += 1
+      prize_act.save!
+    end
+
     result = get_result(prize_hash)
     render json: result
   end
@@ -385,15 +447,20 @@ class SiteController < CustomerController
     pro_sum = 0
     # 概率数组的总概率精度  获取库存不为0的
     pro_count.each do |key, val|
-      if val <= 0
+      if val == 0
         next
       else
         pro_sum += pro_arr[key]
       end
     end
+    puts '-' * 20
+    puts pro_sum
     # 概率数组循环
     pro_arr.each do |key, val|
-      if pro_count[key] <= 0
+      puts '-' * 20
+      puts pro_count[key]
+      puts val
+      if pro_count[key] == 0
         next
       else
         rand_num = rand(1..pro_sum) # 关键
