@@ -260,10 +260,10 @@ class SiteController < CustomerController
     # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
     # 该抽奖活动的奖品
-    @prizes = @prize_act.prize_configs
+    @prizes = @prize_act.prize_configs if @prize_act
     if current_user
       # 当前用户抽奖剩余次数
-      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first if @prize_act
       # 当前用户未领奖项
       @prize_users = PrizeUser.where(
         user_id: current_user.id,
@@ -284,9 +284,12 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
-
-    prize_act.join_num += 1
-    prize_act.save!
+    prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                      prize_act_id: prize_act.id).first
+    if prize_num.blank?
+      prize_act.join_num += 1
+      prize_act.save!
+    end
 
     result = get_result(prize_hash)
     render json: result
@@ -296,10 +299,10 @@ class SiteController < CustomerController
     # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
     # 该抽奖活动的奖品
-    @prizes = @prize_act.prize_configs
+    @prizes = @prize_act.prize_configs if @prize_act
     if current_user
       # 当前用户抽奖剩余次数
-      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first
+      @prize_user_number = PrizeUserNumber.where(user_id: current_user.id, prize_act_id: @prize_act.id).first if @prize_act
       # 当前用户未领奖项
       @prize_users = PrizeUser.where(
         user_id: current_user.id,
@@ -320,9 +323,12 @@ class SiteController < CustomerController
       p.max = max if max.size > 1
       prize_hash[index] = p
     end
-
-    prize_act.join_num += 1
-    prize_act.save!
+    prize_num = PrizeUserNumber.where(user_id: current_user.id,
+                                      prize_act_id: prize_act.id).first
+    if prize_num.blank?
+      prize_act.join_num += 1
+      prize_act.save!
+    end
 
     result = get_result(prize_hash)
     render json: result
