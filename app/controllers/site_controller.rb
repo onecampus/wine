@@ -14,11 +14,10 @@ class SiteController < CustomerController
                                                  :index_wait_receive,
                                                  :index_order_history,
                                                  :create_order,
-                                                 :big_wheel_ajax,
+                                                 :scratch_off,
                                                  :big_wheel]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
-                                                        :big_wheel,
                                                         :scratch_off_ajax,
                                                         :create_ship_address_via_ajax,
                                                         :create_invoice_via_ajax]

@@ -226,7 +226,7 @@
     <div class="title-green">活动说明：</div>
     <% if @prizes %>
       <div class="Detail">
-        <p>亲，请点击进入大转盘抽奖活动页面，开始体验微易销。祝您好运哦！</p>
+        <p>亲，欢迎参加大转盘抽奖活动。祝您好运哦！^_^</p>
         <p>活动时间:
           <%= @prize_act.start_time.strftime("%Y-%m-%d") %>
           至
@@ -246,10 +246,6 @@
 <script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-    lottery();
-  });
-
   function enableFlag() {
     var $startbtn = $('#startbtn');
     $startbtn.data("flag", 'enable');
@@ -331,6 +327,15 @@
       }
       setTimeout("enableFlag()", 3000);
     }
+    <% if current_user %>
     $startbtn.on('click', _ajax);
+    <% else %>
+    $startbtn.on('click', confirmLogin);
+    <% end %>
   }
+  $(document).ready(function() {
+    alert("bue");
+    lottery();
+  });
+
 </script>
