@@ -183,6 +183,8 @@ class SiteController < CustomerController
 
     products = params[:products]
     total_price = 0.00
+    freight = 0.00
+    package_charge = 0.00
 
     order = Order.new(
       user_id: current_user.id,
@@ -213,23 +215,35 @@ class SiteController < CustomerController
           product_id = p[:product_id].to_i
           product = Product.find(product_id)
           unit_price = product.price
-          product_count = p[:product_count].to_i
+          product_count = p[:product_count]
 
           product_order = ProductOrder.new(
             order_id: order.id,
             product_id: product_id,
             product_count: product_count,
-            unit_price: product.price
+            unit_price: unit_price
           )
           p_o_list.push product_order
 
-          total_price += unit_price.to_f * product_count
+          total_price += unit_price.to_f * product_count.to_i
+          freight += product.fright.to_f
         end
+
+        puts '-' * 20
+        puts products
+
+        puts '-' * 20
+        puts total_price
+
+        puts '-' * 20
+        puts freight
 
         total_price = total_price.round(2)
 
         p_o_list.each(&:save!)
         order.total_price = total_price
+        order.freight = freight
+        order.package_charge = package_charge
         order.save!
         render json: { status: 'success', msg: 'create order success' }
         return
