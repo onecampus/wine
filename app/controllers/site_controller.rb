@@ -3,6 +3,8 @@
 class SiteController < CustomerController
   layout 'customer'
 
+  layout 'prize', only: [:scratch_off, :big_wheel]
+
   skip_before_filter :authenticate_user!, only: [:index,
                                                  :index_cats,
                                                  :show_product,

@@ -11,3 +11,5 @@ Rails.application.config.assets.precompile += %w( ckeditor/* )
 
 Rails.application.config.assets.precompile += %w( customer.js )
 Rails.application.config.assets.precompile += %w( customer.css )
+
+Rails.application.config.assets.precompile += %w( prize.js )
