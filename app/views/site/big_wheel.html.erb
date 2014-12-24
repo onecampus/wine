@@ -243,6 +243,7 @@
   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
 </div>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
+<script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript">
 function enableFlag() {
   var $startbtn = $('#startbtn');
@@ -256,7 +257,6 @@ function confirmLogin() {
 }
 
 function lottery() {
-  var $startbtn = $('#startbtn');
   var _ajax = function() {
     if($startbtn.data("flag") == 'enable') {
       $startbtn.data("flag", 'disable');
@@ -274,10 +274,11 @@ function lottery() {
           var p = json.prize_name;  // 奖项
           var n = json.num;  // 剩余抽奖次数
           if(p != "" && a != 0) {
-            $("#disk-btn").rotate({
-              duration: 3000,  // 转动时间
+            $startbtn.rotate({
+              duration: 6000,  // 转动时间
               angle: 0,  // 默认角度
-              animateTo: 1800 - a,  // 转动角度
+              animateTo: 2880 + a,  // 转动角度
+              easing: $.easing.easeInOutBack,
               callback: function(){
                 var $back = $('.back');
                 var $mask = $('.mask');
@@ -310,10 +311,9 @@ function lottery() {
                   $back.hide();
                   $mask.slideUp(800);
                 });
-
                 $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
-                $("#startbtn").rotate({angle: 0});
-                $("#startbtn").css("cursor", "pointer");
+                $startbtn.rotate({angle: 0});
+                $startbtn.css("cursor", "pointer");
               }
             });
           } else {
@@ -322,7 +322,7 @@ function lottery() {
         }
       });
     }
-    setTimeout("enableFlag()", 3000);
+    setTimeout("enableFlag()", 6000);
   }
   <% if current_user %>
   $startbtn.on('click', _ajax);
@@ -331,6 +331,7 @@ function lottery() {
   <% end %>
 }
   $(document).ready(function($) {
+    $startbtn = $('#startbtn');
     lottery();
   });
 
