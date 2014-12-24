@@ -18,9 +18,9 @@
     border-radius: 8px;
   }
   #disk {
-    height: 200px;
-    margin: auto;
-    width: 200px;
+    height: 270px;
+    margin: 10px auto;
+    width: 270px;
   }
   img {
     margin: 0 auto;
@@ -33,23 +33,20 @@
     border-radius: 8px;
   }
 
-
-
   #start {
     height: 0;
     left: 50%;
-    margin-left: -34px;
-    margin-top: -70px;
+    margin-left: -59px;
+    margin-top: -121px;
     position: absolute;
     top: 50%;
     width: 0;
   }
-
   #start img {
     display: block;
-    height: 140px;
+    height: 240px;
     vertical-align: middle;
-    width: 70px;
+    width: 122px;
   }
   #records p {
     margin: 10px 5px;
@@ -245,12 +242,8 @@
   <p>恭喜您获得了<span class="prize"></span>,您还有<span class="prizecount"></span>次抽奖机会，还要再来一次吗？</p>
   <div><a href="javascript:void(0)" class="notice">知道了</a></div>
 </div>
-<script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
-<script>
-var jQuery_1_7_2 = $.noConflict(true);
-</script>
-<script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/zhonglian/js/jQueryRotate.2.2.js"></script>
+<script type="text/javascript" src="/zhonglian/js/jquery.easing.min.js"></script>
 <script type="text/javascript">
 function enableFlag() {
   var $startbtn = $('#startbtn');
@@ -264,7 +257,6 @@ function confirmLogin() {
 }
 
 function lottery() {
-  var $startbtn = $('#startbtn');
   var _ajax = function() {
     if($startbtn.data("flag") == 'enable') {
       $startbtn.data("flag", 'disable');
@@ -282,11 +274,11 @@ function lottery() {
           var p = json.prize_name;  // 奖项
           var n = json.num;  // 剩余抽奖次数
           if(p != "" && a != 0) {
-            $("#disk-btn").rotate({
-              duration: 3000,  // 转动时间
+            $startbtn.rotate({
+              duration: 6000,  // 转动时间
               angle: 0,  // 默认角度
-              animateTo: 3600 - a,  // 转动角度
-              easing: $.easing.easeOutSine,
+              animateTo: 2880 + a,  // 转动角度
+              easing: $.easing.easeInOutBack,
               callback: function(){
                 var $back = $('.back');
                 var $mask = $('.mask');
@@ -319,10 +311,9 @@ function lottery() {
                   $back.hide();
                   $mask.slideUp(800);
                 });
-
                 $('#records span').after('<p>您在' + nowTime + '抽中了<strong>' + p + '</strong></p>');
-                $("#startbtn").rotate({angle: 0});
-                $("#startbtn").css("cursor", "pointer");
+                $startbtn.rotate({angle: 0});
+                $startbtn.css("cursor", "pointer");
               }
             });
           } else {
@@ -331,7 +322,7 @@ function lottery() {
         }
       });
     }
-    setTimeout("enableFlag()", 3000);
+    setTimeout("enableFlag()", 6000);
   }
   <% if current_user %>
   $startbtn.on('click', _ajax);
@@ -339,7 +330,8 @@ function lottery() {
   $startbtn.on('click', confirmLogin);
   <% end %>
 }
-  jQuery_1_7_2(document).ready(function($) {
+  $(document).ready(function($) {
+    $startbtn = $('#startbtn');
     lottery();
   });
 

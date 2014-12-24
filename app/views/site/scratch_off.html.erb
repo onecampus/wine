@@ -83,10 +83,6 @@
   <p>你已经没有刮奖机会了，敬请期待下次活动！</p>
   <div><a href="javascript:void(0)" class="cancel">知道了</a></div>
 </div>
-<script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
-<script>
-var jQuery_1_7_2 = $.noConflict(true);
-</script>
 <script type="text/javascript" src="/zhonglian/js/scratch.js"></script>
 <script type="text/javascript">
 function confirmLogin() {
@@ -211,7 +207,7 @@ function loading(canvas, options) {
   }
 }
 
-  jQuery_1_7_2(document).ready(function($) {
+  $(document).ready(function($) {
 
     $('body').addClass('activity-scratch-card-winning');
     loading.prototype = {
