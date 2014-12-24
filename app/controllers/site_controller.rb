@@ -301,20 +301,21 @@ class SiteController < CustomerController
     end
     prize_num = PrizeUserNumber.where(user_id: current_user.id,
                                       prize_act_id: prize_act.id).first
+    @result = {}
     if prize_num.blank?
       prize_act.join_num += 1
       prize_act.save!
-    elsif prize_num.number == 0
+    end
+    if !prize_num.nil? && prize_num.number == 0
       @result = {
         num: -1,
         prize_name: nil,
         angle: 0
       }
-      puts '============' * 27
-    else
-      @result = get_result(prize_hash)
+      render json: @result
+      return
     end
-
+    @result = get_result(prize_hash)
     render json: @result
   end
 
@@ -349,20 +350,21 @@ class SiteController < CustomerController
     prize_num = PrizeUserNumber.where(user_id: current_user.id,
                                       prize_act_id: prize_act.id).first
 
+    @result = {}
     if prize_num.blank?
       prize_act.join_num += 1
       prize_act.save!
-    elsif prize_num.number == 0
+    end
+    if !prize_num.nil? && prize_num.number == 0
       @result = {
         num: -1,
         prize_name: nil,
         angle: 0
       }
-      puts '============' * 27
-    else
-      @result = get_result(prize_hash)
+      render json: @result
+      return
     end
-
+    @result = get_result(prize_hash)
     render json: @result
   end
 
