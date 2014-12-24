@@ -112,10 +112,10 @@ function scratchMove() {
       success: function(json) {
         var p = json.prize_name;  // 奖项
         var n = json.num;  // 剩余抽奖次数
+        $('#prize').data('prizeNumber', n);
         if(p) {
           $('#prize').text(p);
-          $('#prize').data('prizeContent',p);
-          $('#prize').data('prizeNumber',n);
+          $('#prize').data('prizeContent', p);
           if ($("#scratchpad").css("color").indexOf("51") > 0) {
             $("#scratchpad").css("color", "rgb(50,50,50)");
           } else if ($("#scratchpad").css("color").indexOf("50") > 0) {
@@ -143,6 +143,7 @@ function scratchOff() {
         var date = new Date();
         var p = $('#prize').data('prizeContent');
         var n = $('#prize').data('prizeNumber');
+
         var year = date.getFullYear();
         var month = date.getMonth()+1;
         var days = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
@@ -163,11 +164,17 @@ function scratchOff() {
           $back.height($(document).height());
           $('.mask:first').slideDown(800);
           $('#records span').after('<p>您在' + nowTime + '刮出了<strong>' + p + '</strong></p>');
-        } else {
-          if($('#prize').text() == '谢谢参与') {
-            $('.mask:last > p').text('您已经没有刮奖机会了，敬请期待下次活动！');
-          }
+        } else if(n === 0) {
+          $('.mask:last > p').text('您获得了' + p + ', 但您已经没有刮奖机会了，敬请期待下次活动！');
           $('.prize').text(p);
+          $('#scratchpad').wScratchPad('clear');
+          $('#scratchpad').wScratchPad('enabled',false);
+          $back.show();
+          $back.height($(document).height());
+          $('.mask:last').slideDown(800);
+        } else if(n === -1) {
+          $('.mask:last > p').text('您已经没有刮奖机会了，敬请期待下次活动！');
+          $('.prize').text('');
           $('#scratchpad').wScratchPad('clear');
           $('#scratchpad').wScratchPad('enabled',false);
           $back.show();
