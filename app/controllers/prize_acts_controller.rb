@@ -112,6 +112,15 @@ class PrizeActsController < ApplicationController
 
   def destroy
     @prize_act.destroy
+    @prize_act.prize_configs.each do |pc|
+      PrizeUser.where(prize_config_id: pc.id).each do |pu|
+        pu.destroy
+      end
+      pc.destroy
+    end
+    PrizeUserNumber.where(prize_act_id: @prize_act.id).each do |pun|
+      pun.destroy
+    end
     respond_with(@prize_act)
   end
 

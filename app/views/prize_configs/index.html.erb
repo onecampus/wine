@@ -78,10 +78,6 @@
               <td><%= prize_config.prize_inventory %></td>
               <td><%= prize_config.chance %></td>
               <td class="center">
-                <%= link_to(prize_config, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-                  <i class="fa fa-trash-o"></i>
-                  删除
-                <% end %>
                 <%= link_to(prize_config, class: "btn btn-xs btn-primary") do %>
                   <i class="fa fa-share"></i>
                   查看
