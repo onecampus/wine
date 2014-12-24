@@ -112,7 +112,20 @@ $(document).ready(function() {
   $(".order-btn").click(function() {
     var address = $(".confirm-address").text();
     if (address == "") {
-      alert("地址不能为空");
+      $("#order-message p").text("地址不能为空!");
+      $.blockUI({
+        message: $('#order-message'),
+        css: {
+        border: 'none',
+        padding: '15px',
+        backgroundColor: '#000',
+        '-webkit-border-radius': '10px',
+        '-moz-border-radius': '10px',
+        opacity: .5,
+        color: '#fff'
+        }
+      });
+      setTimeout($.unblockUI, 1500);
     } else {
       var addressId = $(".address-id").val();
       var shoppingCart = $.localStorage.get("shoppingCart");
@@ -151,9 +164,8 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
-            orderSuccessHan();
             showShoppingCartItem();
-            location.href="/customer/users/wait/ship";
+            orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
             // orderErrorHan(XMLHttpRequest, textStatus);
@@ -184,9 +196,8 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
-            orderSuccessHan();
             showShoppingCartItem();
-            location.href="/customer/users/wait/ship";
+            orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
             // orderErrorHan(XMLHttpRequest, textStatus);
@@ -217,9 +228,8 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
-            orderSuccessHan();
             showShoppingCartItem();
-            location.href="/customer/users/wait/ship";
+            orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
             // orderErrorHan(XMLHttpRequest, textStatus);
@@ -251,9 +261,8 @@ $(document).ready(function() {
               deleteProduct(productId);
               }
             }
-          orderSuccessHan();
           showShoppingCartItem();
-          location.href="/customer/users/wait/ship";
+          orderSuccessHan();
         },
         complete: function(XMLHttpRequest, textStatus) {
           // orderErrorHan(XMLHttpRequest, textStatus);
@@ -285,7 +294,8 @@ function deleteProduct(id) {
 }
 
 function orderSuccessHan() {
-    alert("商品购买成功");
+  alert("您的商品购买成功！");
+  location.href="/customer/users/wait/ship";
 }
 
 function orderErrorHan(XMLHttpRequest, textStatus) {
@@ -293,9 +303,17 @@ function orderErrorHan(XMLHttpRequest, textStatus) {
     $("#order-message p").text("订单创建失败, 您是供应商, 不能自己创建订单");
     $.blockUI({
       message: $('#order-message'),
-      css:{top: '40%'}
+      css: {
+        border: 'none',
+        padding: '15px',
+        backgroundColor: '#000',
+        '-webkit-border-radius': '10px',
+        '-moz-border-radius': '10px',
+        opacity: .5,
+        color: '#fff'
+      }
     });
-    setTimeout($.unblockUI,3000);
+    setTimeout($.unblockUI, 2500);
   }
 }
 
