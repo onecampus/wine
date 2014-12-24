@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><%= yield :customer_title %></title>
+  <meta content="zh-CN" http-equiv="content-language">
+  <meta content="众联酒业" name="description">
+  <meta content="众联酒业" name="Keywords">
+  <meta content="flowerwrong" name="author">
+  <!-- Sets initial viewport load and disables zooming  -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <!-- 是否允许全屏 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Sets the style of the status bar for a web application -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta content="telephone=no" name="format-detection">
+  <meta name="apple-touch-fullscreen" content="yes">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="/zhonglian/css/normalize.css">
+  <link rel="stylesheet" href="/zhonglian/css/main.css">
+  <link rel="stylesheet" href="/zhonglian/css/format.css">
+  <%= javascript_include_tag 'prize' %>
+
+  <script src="/zhonglian/js/vendor/modernizr.all.2.8.3.min.js"></script>
+  <%= csrf_meta_tags %>
+
+  <link rel="shortcut icon" href="/favicon.ico"/>
+</head>
+<body>
+  <!--[if lt IE 7]>
+  <p class="browsehappy">你的浏览器太老了，请更换</p>
+  <![endif]-->
+  <script>
+  $(document).ready(function() {
+    if($('p .notice').text() !== '' || $('.alert').text() !== '') {
+      $.blockUI({ css: {
+          border: 'none',
+          padding: '15px',
+          backgroundColor: '#000',
+          '-webkit-border-radius': '10px',
+          '-moz-border-radius': '10px',
+          opacity: 0.5,
+          color: '#fff'
+        },
+        message: $('p .notice').text() + $('.alert').text()
+      });
+      setTimeout($.unblockUI, 2000);
+    }
+  });
+  </script>
+  <p style="display: none" class="notice"><%= notice %></p>
+  <p style="display: none" class="alert"><%= alert %></p>
+
+  <%= yield %>
+
+  <script src="/zhonglian/js/plugins.js"></script>
+  <script src="/zhonglian/js/main.js"></script>
+</body>
+</html>
