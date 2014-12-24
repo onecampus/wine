@@ -304,10 +304,18 @@ class SiteController < CustomerController
     if prize_num.blank?
       prize_act.join_num += 1
       prize_act.save!
+    elsif prize_num.number == 0
+      @result = {
+        num: -1,
+        prize_name: nil,
+        angle: 0
+      }
+      puts '============' * 27
+    else
+      @result = get_result(prize_hash)
     end
 
-    result = get_result(prize_hash)
-    render json: result
+    render json: @result
   end
 
   def scratch_off
@@ -340,13 +348,22 @@ class SiteController < CustomerController
     end
     prize_num = PrizeUserNumber.where(user_id: current_user.id,
                                       prize_act_id: prize_act.id).first
+
     if prize_num.blank?
       prize_act.join_num += 1
       prize_act.save!
+    elsif prize_num.number == 0
+      @result = {
+        num: -1,
+        prize_name: nil,
+        angle: 0
+      }
+      puts '============' * 27
+    else
+      @result = get_result(prize_hash)
     end
 
-    result = get_result(prize_hash)
-    render json: result
+    render json: @result
   end
 
   def commission

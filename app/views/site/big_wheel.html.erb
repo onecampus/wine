@@ -8,7 +8,6 @@
     background-color: #2a8a00;
   }
 
-
   .container {
     position: relative;
     width: 85%;
@@ -297,7 +296,9 @@ function lottery() {
                 $back.show();
                 $back.height($(document).height());
                 $('.prize').text(p);
-                if(n ===  0) {
+                if(n === -1) {
+                  $('.mask p').html('您的抽奖次数已用完, 祝您下次好运。');
+                } else if(n ===  0) {
                   $('.mask p').html('恭喜您获得了<span class="prize">' + p + '</span>, 您的抽奖次数已用完, 祝您下次好运。');
                 } else {
                   $('.prizecount').text(n);
