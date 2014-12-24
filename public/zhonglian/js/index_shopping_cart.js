@@ -108,8 +108,9 @@ $(document).ready(function() {
     }
     JsonStr.productList = list;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
-    $(".freight").text(0);
+    $(".total-freight").text(0);
     $(".total").text(0);
+    $(".product-total").text(0);
     showProduct();
   });
 
@@ -174,9 +175,10 @@ function updateBuyMark(id, num, mark) {
 function showProduct() {
   var productList = getlocalStorager();
   var length = productList.length;
+  var subtotal = 0.00;
   $(".totalproduct").text(length);
   if (length == 0) {
-    $(".freight").text(0);
+    $(".total-freight").text(0);
     $(".mesg").show();
     $(".product").remove();
     $(".shopping-cart-mark").hide();
@@ -190,10 +192,11 @@ function showProduct() {
       var englishname = productList[i].englishname;
       var num = productList[i].num;
       var price = productList[i].price;
+      num = parseInt(num);
       price = price.substring(2, price.length);
       price = parseFloat(price);
       var img = productList[i].img;
-      var subtotal = num * price;
+      subtotal = (Number(num * price)).toFixed(2);
       var id = "product" + i;
       var product = $("<div></div>").addClass("product").attr("id", id);
       $(".select").before(product);
