@@ -83,11 +83,6 @@
 
   .cancel {
     font-size: 16px;
-    margin-left: 5%;
-  }
-
-  .confirm {
-    font-size: 16px;
     margin-right: 5%;
   }
 
@@ -242,11 +237,6 @@
 
   .cancel-history-invoice {
     font-size: 16px;
-    margin-left: 5%;
-  }
-
-  .confirm-history-invoice {
-    font-size: 16px;
     margin-right: 5%;
   }
 
@@ -365,14 +355,13 @@
 </a>
 <div class="address">
   <div class="address-top">
-    <a href="#" class="cancel pull-left">X</a>
     <span>收货地址</span>
-    <a href="#" class="confirm pull-right">确定</a>
+    <a href="#" class="cancel pull-right">X</a>
   </div>
   <div class="ship-address">
     <% @shipaddresses.each do |ad| %>
       <div>
-        <p class="p-l"><input type="radio" name="shipaddress" value="<%= ad.id %>"/></p>
+        <p class="p-l"><input type="radio" class ="shipaddress" name="shipaddress" value="<%= ad.id %>"/></p>
         <p class="p-m">
           <span><%= ad.receive_name %></span>
           <span style="float: right"><%= ad.mobile %></span>
@@ -432,9 +421,8 @@
 </div>
 <div class="invoice-history">
   <div class="invoice-inf-top">
-    <a href="#" class="cancel-history-invoice pull-left">X</a>
     <span>开具发票</span>
-    <a href="#" class="confirm-history-invoice pull-right">确定</a>
+    <a href="#" class="cancel-history-invoice pull-right">X</a>
   </div>
   <% @invoices.each do |i| %>
   <div class="pull-left invoice-item-input">

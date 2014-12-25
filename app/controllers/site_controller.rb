@@ -227,17 +227,9 @@ class SiteController < CustomerController
           p_o_list.push product_order
 
           total_price += unit_price.to_f * product_count.to_i
+          total_price += product.fright.to_f
           freight += product.fright.to_f
         end
-
-        puts '-' * 20
-        puts products
-
-        puts '-' * 20
-        puts total_price
-
-        puts '-' * 20
-        puts freight
 
         total_price = total_price.round(2)
 
@@ -260,15 +252,15 @@ class SiteController < CustomerController
   end
 
   def index_wait_pay
-    @orders = current_user.orders.where(pay_status: 1)
+    @orders = current_user.orders.where(pay_status: 1).order('id DESC')
   end
 
   def index_wait_receive
-    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2)
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2).order('id DESC')
   end
 
   def index_order_history
-    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3)
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3).order('id DESC')
   end
 
   def big_wheel
