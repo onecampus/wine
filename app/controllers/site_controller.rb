@@ -409,6 +409,11 @@ class SiteController < CustomerController
             _min = min[i].to_i
             _max = max[i].to_i
             result[:angle] = rand(_min.._max)
+            puts '--' * 20
+            puts 'i= ' + i.to_s
+            puts _min
+            puts _max
+            puts result[:angle]
           else
             min = res.min.to_i
             max = res.max.to_i
@@ -466,13 +471,8 @@ class SiteController < CustomerController
         pro_sum += pro_arr[key]
       end
     end
-    puts '-' * 20
-    puts pro_sum
     # 概率数组循环
     pro_arr.each do |key, val|
-      puts '-' * 20
-      puts pro_count[key]
-      puts val
       if pro_count[key] == 0
         next
       else
