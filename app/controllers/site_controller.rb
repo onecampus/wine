@@ -248,7 +248,7 @@ class SiteController < CustomerController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
-    @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
+    @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")('id DESC')
   end
 
   def index_wait_pay
