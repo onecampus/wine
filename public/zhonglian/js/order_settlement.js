@@ -1,26 +1,37 @@
 $(document).ready(function() {
   showProduct();
+  $(".invoice-id").val(0);
   $(".order-address").click(function() {
+    $(".shipaddress").each(function(){
+      this.checked = false;
+    });
     $("hr").hide();
     $(".order").hide();
-    $(".address").fadeIn(1000);
+    $(".address").fadeIn(100);
   });
+
   $(".cancel").click(function() {
     $("body").css("background","#f2f2f2");
     $("hr").show();
     $(".address").fadeOut(100);
     $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
   });
-  $(".confirm").click(function() {
+
+  $(".shipaddress").click(function(){
     $("body").css("background","#f2f2f2");
-    var id = $('input[name="shipaddress"]:checked').val();
-    var address = $('input[name="shipaddress"]:checked').parent().siblings(".p-m").children(".selected-address").text();
+    var id = $(this).val();
+    var address = $(this).parent().siblings(".p-m").children(".selected-address").text();
     $(".confirm-address").text(address);
     $(".address-id").val(id);
     $("hr").show();
     $(".address").fadeOut(100);
     $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
   });
+
   $(".address-add").click(function() {
     $("body").css("background","#fff");
     $("hr").hide();
@@ -28,21 +39,24 @@ $(document).ready(function() {
     $(".order-address").hide();
     $(".invoice-need").hide();
     $(".address").fadeOut(100);
-    $(".form-box").fadeIn(1000);
+    $(".form-box").fadeIn(100);
   });
+
   $(".cancel-add-addre").click(function() {
     $(".form-box").hide();
-    $(".order-address").show();
-    $(".invoice-need").show();
-    $(".address").fadeIn(1000);
+    $(".address").fadeIn(100);
   });
+
   $(".invoice-need").click(function() {
+    $(".invoice-item-select").each(function(){
+      this.checked = false;
+    });
     $("hr").hide();
     $(".invoice-hr").show();
     $(".order").hide();
     $(".order-address").hide();
     $(".invoice-need").hide();
-    $(".invoice-history").fadeIn(1000);
+    $(".invoice-history").fadeIn(100);
   });
 
   $(".cancel-invoice").click(function() {
@@ -66,7 +80,7 @@ $(document).ready(function() {
   $(".cancel-history-invoice").click(function() {
     $(".invoice-id").val(0);
     $(".invoice-not").text("不开发票");
-    $(".invoice-not").css("color", "#000000")
+    $(".invoice-not").css("color", "#000000");
     $(".invoice-history").hide();
     $("hr").show();
     $(".invoice-hr").hide();
@@ -75,9 +89,9 @@ $(document).ready(function() {
     $(".invoice-need").show();
   });
 
-  $(".confirm-history-invoice").click(function(){
-    var id = $('input[name="invoice"]:checked').val();
-    $(".invoice-id").val(id);
+  $(".invoice-item-select").click(function() {
+    var invoiceId = $(this).val();
+    $(".invoice-id").val(invoiceId);
     $(".invoice-not").text("开发票");
     $(".invoice-not").css("color", "#aa0c40");
     $(".invoice-history").hide();
