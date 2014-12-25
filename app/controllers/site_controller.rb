@@ -227,17 +227,9 @@ class SiteController < CustomerController
           p_o_list.push product_order
 
           total_price += unit_price.to_f * product_count.to_i
+          total_price += product.fright.to_f
           freight += product.fright.to_f
         end
-
-        puts '-' * 20
-        puts products
-
-        puts '-' * 20
-        puts total_price
-
-        puts '-' * 20
-        puts freight
 
         total_price = total_price.round(2)
 
