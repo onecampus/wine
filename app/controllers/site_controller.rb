@@ -252,15 +252,15 @@ class SiteController < CustomerController
   end
 
   def index_wait_pay
-    @orders = current_user.orders.where(pay_status: 1)
+    @orders = current_user.orders.where(pay_status: 1).order('id DESC')
   end
 
   def index_wait_receive
-    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2)
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2).order('id DESC')
   end
 
   def index_order_history
-    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3)
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3).order('id DESC')
   end
 
   def big_wheel
