@@ -32,6 +32,21 @@ $(document).ready(function() {
     $(".invoice-need").show();
   });
 
+  $(".history-ship-address").click(function() {
+    $("body").css("background","#f2f2f2");
+    $(this).children(".p-l").children(".shipaddress").attr("checked",true);
+    var id = $(this).children(".p-l").children(".shipaddress").val();
+    var address = $(this).children(".p-m").children(".selected-address").text();
+    $(".confirm-address").text(address);
+    $(".address-id").val(id);
+    $(".address-id").val(id);
+    $("hr").show();
+    $(".address").fadeOut(100);
+    $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
+  });
+
   $(".address-add").click(function() {
     $("body").css("background","#fff");
     $("hr").hide();
@@ -91,6 +106,20 @@ $(document).ready(function() {
 
   $(".invoice-item-select").click(function() {
     var invoiceId = $(this).val();
+    $(".invoice-id").val(invoiceId);
+    $(".invoice-not").text("开发票");
+    $(".invoice-not").css("color", "#aa0c40");
+    $(".invoice-history").hide();
+    $("hr").show();
+    $(".invoice-hr").hide();
+    $(".order").show();
+    $(".order-address").show();
+    $(".invoice-need").show();
+  });
+
+  $(".invoice-history-select").click(function() {
+    $(this).children(".invoice-item-input").children(".invoice-item-select").attr("checked",true);
+    var invoiceId = $(this).children(".invoice-item-input").children(".invoice-item-select").val();
     $(".invoice-id").val(invoiceId);
     $(".invoice-not").text("开发票");
     $(".invoice-not").css("color", "#aa0c40");
