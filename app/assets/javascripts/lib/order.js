@@ -57,9 +57,11 @@ $(document).ready(function() {
       success: function(data) {
         $(".address-id").val(data.data);
         $(".confirm-address").text(province + city + region + address);
-        $(".form-box").fadeOut(1000);
+        $(".form-box").fadeOut(100);
         $("hr").show();
         $(".order").show();
+        $(".order-address").show();
+        $(".invoice-need").show();
       },
       error: function() {
         // code
