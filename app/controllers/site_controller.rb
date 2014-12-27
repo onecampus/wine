@@ -248,7 +248,8 @@ class SiteController < CustomerController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
-    @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
+    @orders = Order.find_by_sql(["SELECT * FROM orders WHERE user_id = ? AND (order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1) ORDER BY id DESC", current_user.id])
+    # @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
   end
 
   def index_wait_pay
@@ -409,6 +410,11 @@ class SiteController < CustomerController
             _min = min[i].to_i
             _max = max[i].to_i
             result[:angle] = rand(_min.._max)
+            puts '--' * 20
+            puts 'i= ' + i.to_s
+            puts _min
+            puts _max
+            puts result[:angle]
           else
             min = res.min.to_i
             max = res.max.to_i
@@ -466,13 +472,8 @@ class SiteController < CustomerController
         pro_sum += pro_arr[key]
       end
     end
-    puts '-' * 20
-    puts pro_sum
     # 概率数组循环
     pro_arr.each do |key, val|
-      puts '-' * 20
-      puts pro_count[key]
-      puts val
       if pro_count[key] == 0
         next
       else
