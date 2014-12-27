@@ -194,6 +194,44 @@
     width: 25%;
     height: 60%;
   }
+  .back {
+    z-index: 11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    display: none;
+  }
+  .share_notice {
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 80%;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-bottom: 35px;
+    color: #666;
+    z-index: 100;
+    box-shadow: 0 0 3px #666;
+  }
+  .share_notice > img {
+    width: 90%;
+    height: 180px;
+  }
+  .share_notice > p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+  }
 </style>
 <div class="main">
   <input class="product-id" type="hidden" value="<%= @product.id %>">
@@ -237,6 +275,11 @@
     <p class="name"><%= @product.name %></p>
     <div><%= raw @product.description %></div>
   </div>
+  <div class="share_notice">
+    <img src="/zhonglian/img/share.png" />
+    <p>分享可获提成</p>
+  </div>
+  <div class="back"></div>
 </div>
 <script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
 <script>
@@ -244,6 +287,12 @@ var jQuery_1_7_2 = $.noConflict(true);
 </script>
 <script type="text/javascript">
   jQuery_1_7_2(document).ready(function($) {
+    $( '.back' ).show();
+    $( '.share_notice' ).slideDown(800);
+    setTimeout( function() {
+      $( '.back' ).hide();
+      $( '.share_notice' ).slideUp(800);
+    },3000);
     var minus = $(".action-de");
     var plus = $(".action-plus");
     var numInput = $(".p-num");
