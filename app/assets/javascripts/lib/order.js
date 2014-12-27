@@ -37,6 +37,7 @@ $(document).ready(function() {
       $(".address-mesg").show();
       return;
     }
+    $(this).attr("disabled","disabled");
     $(".order-address").show();
     $(".invoice-need").show();
     var params = {
@@ -62,6 +63,7 @@ $(document).ready(function() {
         $(".order").show();
         $(".order-address").show();
         $(".invoice-need").show();
+        $(".btn-add-address").attr("disabled",false);
       },
       error: function() {
         // code
@@ -82,6 +84,7 @@ $(document).ready(function() {
       $(".invoice-mesg").show();
       return;
     }
+    $(this).attr("disabled","disabled");
     $.ajax({
       type: "POST",
       url: "/customer/invoice/create/json",
@@ -100,6 +103,7 @@ $(document).ready(function() {
         $(".order").show();
         $(".order-address").show();
         $(".invoice-need").show();
+        $(".confirm-invoice").attr("disabled",false);
       },
       error: function() {
         alert("errors")
@@ -146,6 +150,7 @@ $(document).ready(function() {
           });
         }
       }
+      $(this).attr("disabled","disabled");
       if((invoiceId == 0) && (shareLinkCode == null)){
         $.ajax({
           type: "POST",
@@ -166,6 +171,7 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
+            $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
             orderSuccessHan();
           },
@@ -198,6 +204,7 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
+            $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
             orderSuccessHan();
           },
@@ -230,6 +237,7 @@ $(document).ready(function() {
                 deleteProduct(productId);
               }
             }
+            $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
             orderSuccessHan();
           },
@@ -263,6 +271,7 @@ $(document).ready(function() {
               deleteProduct(productId);
               }
             }
+          $(".order-btn").attr("disabled",false);
           showShoppingCartItem();
           orderSuccessHan();
         },
