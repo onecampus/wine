@@ -273,7 +273,7 @@
   <div class="p-intro">
     <h4>商品详情</h4>
     <p class="name"><%= @product.name %></p>
-    <div><%= raw @product.description %></div>
+    <div class="desc"><%= raw @product.description %></div>
   </div>
   <div class="share_notice">
     <img src="/zhonglian/img/share.png" />
@@ -297,6 +297,12 @@ var jQuery_1_7_2 = $.noConflict(true);
     var plus = $(".action-plus");
     var numInput = $(".p-num");
     var num = 0;
+    var hostname = location.hostname;
+    var port = location.port;
+    var domain = "http://" + hostname + ':' + port;
+    var desc = $( '.desc' ).text();
+    var img_url = domain + "<%= @product.img_url %>";
+    var link = domain + "/customer/products/<%= @product.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
     plus.on('click', function() {
       num = parseInt(numInput.val());
       num++;
@@ -310,6 +316,43 @@ var jQuery_1_7_2 = $.noConflict(true);
         numInput.val(0);
       }
     });
-    });
+    function isWechat(){
+      var ua = navigator.userAgent.toLowerCase();
+      if(ua.match( /MicroMessenger/i )=="micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if ( isWechat() ) {
+      document.addEventListener( 'WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.on( 'menu:share:appmessage', function( argv ) {
+          WeixinJSBridge.invoke( 'sendAppMessage', {
+            "img_url": img_url,
+            "img_height": "160",
+            "img_width": "160",
+            "link": link,
+            "desc": desc,
+            "title": "众联酒业微信商城主打商品"
+          }, function( res ) {
+            _report( 'send_msg', res.err_msg );
+          });
+        });
+
+        WeixinJSBridge.on( 'menu:share:timeline', function( argv ) {
+          WeixinJSBridge.invoke( 'shareTimeline', {
+            "img_url": img_url,
+            "img_height": "160",
+            "img_width": "160",
+            "link": link,
+            "desc": desc,
+            "title": "众联酒业微信商城主打商品"
+          }, function( res ) {
+            _report( 'timeline', res.err_msg );
+          },false);
+        });
+      });
+    }
+  });
 </script>
 <%= render "site/shared/bottombar" %>
