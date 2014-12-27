@@ -84,6 +84,7 @@
   .cancel {
     font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
   }
 
   .promo-code {
@@ -200,6 +201,22 @@
     width: 80%;
   }
 
+  .cancel-add-addre {
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
+    background-color: #aa0c40;
+    border: 1px solid #aa0c40;
+    color: #fff;
+    margin-top: 1px;
+  }
+
   .address-mesg {
     display: none;
     text-align: center;
@@ -226,6 +243,11 @@
 
   }
 
+  .form-box-top span {
+    margin-left: 20%;
+    font-size: 20px;
+  }
+
   .invoice-history {
     float:left;
     width: 100%;
@@ -235,6 +257,7 @@
   .cancel-history-invoice {
     font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
   }
 
   .invoice-inf {
@@ -263,11 +286,13 @@
   .cancel-invoice {
     font-size: 16px;
     margin-left: 5%;
+    margin-top: 1px;
   }
 
   .confirm-invoice {
     font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
   }
 
   .invoice-history-select {
@@ -360,7 +385,7 @@
 <div class="address">
   <div class="address-top">
     <span>收货地址</span>
-    <a href="#" class="cancel pull-right">X</a>
+    <button class="cancel btn btn-red pull-right">X</button>
   </div>
   <div class="ship-address">
     <% @shipaddresses.each do |ad| %>
@@ -385,8 +410,9 @@
 <div class="form-box">
   <div class="form-box-top">
     <span>添加新地址</span>
-    <a href="#" class="cancel-add-addre pull-right">X</a>
+    <button class="cancel-add-addre btn-red pull-right">X</button>
   </div>
+  <div>
   <div class="address-mesg"><p></P></div>
   <input type=hidden name=uid value="<%= current_user.id %>">
   <div class="input-row">
@@ -423,10 +449,11 @@
   </div>
   <div class="address-add-btn"><button class="btn-add-address btn btn-red btn-block">添加</button></div>
 </div>
+</div>
 <div class="invoice-history">
   <div class="invoice-inf-top">
     <span>开具发票</span>
-    <a href="#" class="cancel-history-invoice pull-right">X</a>
+    <button class="cancel-history-invoice btn btn-red pull-right">X</button>
   </div>
   <% @invoices.each do |i| %>
   <div class="invoice-history-select">
@@ -446,9 +473,9 @@
 </div>
 <div class="invoice-inf">
   <div class="invoice-inf-top">
-    <a href="#" class="cancel-invoice pull-left">X</a>
+    <button href="#" class="cancel-invoice btn btn-red pull-left">X</button>
     <span>开具发票</span>
-    <a href="#" class="confirm-invoice pull-right">确定</a>
+    <button  class="confirm-invoice btn btn-red pull-right">确定</button>
   </div>
   <div class="invoice-mesg"><p></P></div>
   <div>
