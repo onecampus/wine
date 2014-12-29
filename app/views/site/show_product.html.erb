@@ -129,6 +129,16 @@
     color: white;
   }
 
+  #share > button {
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    width: 78%;
+    margin: 0 auto;
+    text-align: cetner;
+    display: block;
+  }
   .p-comments {
     padding: 0 20px;
     height: 40px;
@@ -196,7 +206,8 @@
   }
   .back {
     z-index: 11;
-    position: absolute;
+    position: fixed;
+    *position: absolute;
     left: 0;
     top: 0;
     width: 100%;
@@ -209,7 +220,8 @@
   }
   .share_notice {
     display: none;
-    position: absolute;
+    position: fixed;
+    *position: absolute;
     top: 30%;
     left: 50%;
     width: 80%;
@@ -262,6 +274,9 @@
     <div class="shoppingcart-animate"><img src="/zhonglian/img/navbar/car-red.png"></div>
     <button class="buy-now btn btn-red" type="button">立即购买</button>
   </div>
+  <div id="share">
+    <button type="button" class='share btn btn-red'>分享获取提成</button>
+  </div>
   <hr/>
   <div class="p-comments">
     <a href="/customer/products/<%= @product.id %>/comments">
@@ -287,12 +302,14 @@ var jQuery_1_7_2 = $.noConflict(true);
 </script>
 <script type="text/javascript">
   jQuery_1_7_2(document).ready(function($) {
-    $( '.back' ).show();
-    $( '.share_notice' ).slideDown(800);
-    setTimeout( function() {
-      $( '.back' ).hide();
-      $( '.share_notice' ).slideUp(800);
-    },3000);
+    $( '.share' ).on( 'click', function() {
+      $( '.back' ).show();
+      $( '.share_notice' ).slideDown(800);
+      setTimeout( function() {
+        $( '.back' ).hide();
+        $( '.share_notice' ).slideUp(800);
+      },3000);
+    });
     var minus = $(".action-de");
     var plus = $(".action-plus");
     var numInput = $(".p-num");
