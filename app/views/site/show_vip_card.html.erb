@@ -22,20 +22,20 @@
     maring-left: 5%;
     display: block;
     float: left;
-    line-height: 45px;
     color: #999;
     font-size: 20px;
+    padding-bottom: 10px;
   }
 
   .span-r {
-    width: 65%;
+    width: 63%;
     display: block;
     margin-left: 40%;
-    line-height: 45px;
     color: #666;
     font-size: 20px;
+    word-wrap: break-word;
+    padding-bottom: 10px;
   }
-
   .recharge {
     width: 80%;
     margin: 20px auto 70px auto;
@@ -57,7 +57,7 @@
     <span class="span-r"><%= @user.profile.invite_code %></span>
   </p>
   <p class="link_code">
-    <span class="span-l">优惠码</span>
+    <span class="span-l">分享链接</span>
     <span class="span-r"><%= @user.profile.share_link_code %></span>
   </p>
   <p>
@@ -66,8 +66,12 @@
   </p>
 </div>
 <a href="#" class="recharge btn btn-red">充值</a>
+<script type="text/javascript" src="/zhonglian/js/jquery1.8.3.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+    var jQuery_1_8_3 = $.noConflict(true);
+</script>
+<script type="text/javascript">
+jQuery_1_8_3(document).ready(function($) {
   var $invite_code = $(".invite_code").find(".span-r");
   var $link_code = $(".link_code").find(".span-r");
   if (!$invite_code.text()) {
@@ -75,6 +79,43 @@ $(document).ready(function() {
   }
   if (!$link_code.text()) {
     $link_code.css("clear","both");
+  }
+  function isWechat(){
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.match( /MicroMessenger/i )=="micromessenger") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  if ( isWechat() ) {
+    document.addEventListener( 'WeixinJSBridgeReady', function onBridgeReady() {
+      WeixinJSBridge.on( 'menu:share:appmessage', function( argv ) {
+        WeixinJSBridge.invoke( 'sendAppMessage', {
+          "img_url": "http://192.168.0.111:3000/zhonglian/img/index/index_bg.jpg",
+          "img_height": "160",
+          "img_width": "160",
+          "link": "http://192.168.0.111:3000/users/sign_in?invite_code=<%= current_user.profile.invite_code if current_user %>",
+          "desc": "诚邀您加入众联酒业微信商城，从此妈妈再也不用担心您卖肾买酒喝了！",
+          "title": "诚邀加入众联酒业商城"
+        }, function( res ) {
+          _report( 'send_msg', res.err_msg );
+        });
+      });
+
+     WeixinJSBridge.on( 'menu:share:timeline', function( argv ) {
+       WeixinJSBridge.invoke( 'shareTimeline', {
+         "img_url": "http://192.168.0.111:3000/zhonglian/img/index/index_bg.jpg",
+         "img_height": "160",
+         "img_width": "160",
+         "link": "http://192.168.0.111:3000/users/sign_in?invite_code=<%= current_user.profile.invite_code if current_user %>",
+         "desc": "诚邀您加入众联酒业微信商城，从此妈妈再也不用担心您卖肾买酒喝了！",
+         "title": "诚邀加入众联酒业商城"
+       }, function( res ) {
+         _report( 'timeline', res.err_msg );
+       },false);
+     });
+    });
   }
 });
 
