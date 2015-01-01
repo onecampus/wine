@@ -7,4 +7,7 @@ class Order < ActiveRecord::Base
 
   belongs_to :invoice
   belongs_to :user
+
+  has_many :group_orders
+  has_many :groups, through: :group_orders
 end

@@ -22,8 +22,29 @@ zh-CN:
       prize_user_number: '用户抽奖次数'
       prize_user: '获奖名单'
       wx_menu: '微信菜单'
+      group: '团购'
+      group_order: '团购订单'
 
     attributes:
+      group:
+        product_id: '商品'
+        start_time: '开始时间'
+        end_time: '截止时间'
+        limit_people_count: '限制人数'
+        limit_product_count: '限制可购商品数量'
+        description: '描述'
+        price: '现价'
+        saveup: '节省'
+        discount: '打折'
+        people: '参加人数'
+
+      group_order:
+        order_id: '订单'
+        group_id: '商品'
+        group_count: '商品数量'
+        unit_price: '单价'
+
+
       wx_menu:
         name: '菜单名称'
         msg: '回复消息'

@@ -1,0 +1,159 @@
+<% content_for :page_title do %>
+  查看<%=t 'activerecord.models.group' %>
+<% end %>
+
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+    <ol class="breadcrumb">
+      <li>
+        <i class="clip-pencil"></i>
+        <a href="#">
+          控制面板
+        </a>
+      </li>
+      <li class="active">
+        查看<%=t 'activerecord.models.group' %>
+      </li>
+      <li class="search-box">
+        <form class="sidebar-search">
+          <div class="form-group">
+            <input type="text" placeholder="Start Searching...">
+            <button class="submit">
+              <i class="clip-search-3"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+    </ol>
+    <div class="page-header">
+      <h1>
+        <small></small>
+      </h1>
+    </div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+
+<!-- start: PAGE CONTENT -->
+<div class="row">
+  <div class="col-sm-12">
+    <!-- start: TEXT FIELDS PANEL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        查看<%=t 'activerecord.models.group' %>
+        <div class="panel-tools">
+          <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
+          </a>
+          <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
+            <i class="fa fa-wrench"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-refresh" href="#">
+            <i class="fa fa-refresh"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-expand" href="#">
+            <i class="fa fa-resize-full"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-close" href="#">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.product_id' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.product_id %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.start_time' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.start_time %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.end_time' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.end_time %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.limit_people_count' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.limit_people_count %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.limit_product_count' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.limit_product_count %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.description' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.description %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.price' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.price %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.saveup' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.saveup %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.discount' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.discount %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.people' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @group.people %>
+              </div>
+            </div>
+          </div>
+                  </div>
+      </div>
+    </div>
+    <!-- end: TEXT FIELDS PANEL -->
+  </div>
+</div>
+<!-- end: PAGE CONTENT-->

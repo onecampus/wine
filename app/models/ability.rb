@@ -20,6 +20,8 @@ class Ability
       can :manage, PrizeUserNumber
       can :manage, PrizeUser
       can :manage, WxMenu
+      can :manage, Group
+      can :manage, GroupOrder
     elsif user.has_role? :customer
       can :manage, Site
     else

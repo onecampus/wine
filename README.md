@@ -186,11 +186,14 @@ rails g migration AddVerificationMethodToUsers verification_method :string
 rails g migration AddPhoneCodeToUsers phone_code:string
 rails g migration AddPhoneCodeSentAtToUsers phone_code_sent_at:datetime
 
+rails g scaffold Group product_id:integer start_time:datetime end_time:datetime limit_people_count:integer limit_product_count:integer description:text price saveup discount people:integer
+rails g scaffold Seckill product_id:integer start_time:datetime end_time:datetime limit_people_count:integer limit_product_count:integer description:text price saveup discount people:integer
 
+# rails g migration UserGroup user_id:integer group_id:integer count:integer
+# rails g migration UserSeckill user_id:integer seckill_id:integer count:integer
 
-rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
-
-rails g scaffold ProductGroup group_id:integer product_id:integer
+rails g scaffold GroupOrder order_id:integer group_id:integer group_count:integer unit_price:string
+rails g scaffold SeckillOrder order_id:integer seckill_id:integer seckill_count:integer unit_price:string
 ```
 
 ### 功能分析 ###
