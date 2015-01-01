@@ -22,6 +22,11 @@ Rails.application.routes.draw do
   get 'customer/products/:id/comments' => 'site#index_comments'
   get 'customer/products/search' => 'site#index_search_result'
 
+  # group
+  get 'customer/groups/:id/show' => 'site#show_group'
+  get 'customer/groups' => 'site#index_groups'
+
+
   # order
   match 'customer/invoice/create/json', to: 'site#create_invoice_via_ajax', via: :post
   get 'customer/orders/settlement' => 'site#order_settlement'

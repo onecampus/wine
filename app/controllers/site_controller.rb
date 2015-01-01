@@ -41,6 +41,14 @@ class SiteController < CustomerController
     @product = Product.find params[:id]
   end
 
+  def index_groups
+    @groups = Group.all
+  end
+
+  def show_group
+    @group = Group.find params[:id]
+  end
+
   def new_comment
     @product = Product.find params[:id]
   end
