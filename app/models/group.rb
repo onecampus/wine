@@ -4,5 +4,5 @@ class Group < ActiveRecord::Base
   has_many :group_orders
   has_many :orders, through: :group_orders
 
-  has_one :product
+  belongs_to :product
 end

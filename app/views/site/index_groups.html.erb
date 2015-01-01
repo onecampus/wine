@@ -1,4 +1,6 @@
 <% content_for :customer_title do %>
   团购
 <% end %>
-<%= @groups %>
+<% @groups.each do |g| %>
+  已经参加的人数<%= g.people %><br />
+<% end %>
