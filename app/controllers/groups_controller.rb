@@ -13,15 +13,18 @@ class GroupsController < ApplicationController
   end
 
   def new
+    @products = Product.all
     @group = Group.new
     respond_with(@group)
   end
 
   def edit
+    @products = Product.all
   end
 
   def create
     @group = Group.new(group_params)
+    @group.people = 0
     flash[:notice] = 'Group was successfully created.' if @group.save
     respond_with(@group)
   end
@@ -42,6 +45,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :people)
+      params.require(:group).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount)
     end
 end
