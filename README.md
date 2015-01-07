@@ -4,7 +4,7 @@
 
 ### 开发介绍 ###
 
-* rails version 4.1.8
+* rails version 4.1.9
 * ruby version 2.1.5
 * apache + passenger
 * mysql5
