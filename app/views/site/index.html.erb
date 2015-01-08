@@ -4,13 +4,12 @@
 
 <style type="text/css">
   body {
+    background-image: url('/zhonglian/img/index/index-ba.jpg');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
+    background-size: 100% 50%;
     background-clip: content-box;
     background-origin: content-box;
     width: 100%;
-    height: 1000px;
   }
 
   .top {
@@ -92,13 +91,13 @@
 
   .company-pic {
     float: left;
-    margin: 0 auto;
     width: 100%;
-    height: 821px;
-    background-image: url("/zhonglian/img/index/logo2.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    margin: 0 auto;
     margin-top: 40px;
+  }
+
+  .company-pic img {
+    width: 100%;
   }
 
   .product {
@@ -237,10 +236,10 @@
   </div>
 </div>
 <div class="company-pic">
+  <a href=""><%= image_tag(@site_config1.img_url) if @site_config1.img? %></a>
+  <a href=""><%= image_tag(@site_config2.img_url) if @site_config2.img? %></a>
+  <a href=""><%= image_tag(@site_config3.img_url) if @site_config3.img? %></a>
 </div>
-<div class="index-btn-block"><%= image_tag(@site_config1.img_url) if @site_config1.img? %></div>
-<div class="index-btn-block"><%= image_tag(@site_config2.img_url) if @site_config2.img? %></div>
-<div class="index-btn-block"><%= image_tag(@site_config3.img_url) if @site_config3.img? %></div>
 <div class="share-inf">
   <div>
     <ul>
