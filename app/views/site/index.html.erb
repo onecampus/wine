@@ -237,11 +237,10 @@
   </div>
 </div>
 <div class="company-pic">
-  <img src="/zhonglian/img/index/logo2.png"></img>
+  <a href=""><%= image_tag(@site_config1.img_url) if @site_config1.img? %></a>
+  <a href=""><%= image_tag(@site_config2.img_url) if @site_config2.img? %></a>
+  <a href=""><%= image_tag(@site_config3.img_url) if @site_config3.img? %></a>
 </div>
-<div class="index-btn-block"><%= image_tag(@site_config1.img_url) if @site_config1.img? %></div>
-<div class="index-btn-block"><%= image_tag(@site_config2.img_url) if @site_config2.img? %></div>
-<div class="index-btn-block"><%= image_tag(@site_config3.img_url) if @site_config3.img? %></div>
 <div class="share-inf">
   <div>
     <ul>
