@@ -28,8 +28,15 @@ zh-CN:
       seckill_order: '秒杀订单'
       site_config: '系统设置'
       withdraw: '提现'
+      commission: '提成'
 
     attributes:
+      commission:
+        user_id: '客户'
+        order_id: '订单'
+        commission_money: '提成金额'
+        percent: '提成比例'
+
       withdraw:
         user_id: '提现用户'
         bank_card: '银行卡号'

@@ -44,6 +44,11 @@ Rails.application.routes.draw do
   get 'customer/users/orders/history' => 'site#index_order_history'
   get 'customer/users/vipcard' => 'site#show_vip_card'
 
+  # withdraw
+  get 'customer/withdraws/new' => 'site#new_withdraw'
+  get 'customer/withdraws' => 'site#index_withdraws'
+  match 'customer/withdraws/create', to: 'site#create_withdraw', via: :post
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -56,6 +61,8 @@ Rails.application.routes.draw do
   match 'customer/scratch/off', to: 'site#scratch_off_ajax', via: :post
 
   scope '/admin' do
+
+    resources :commissions
 
     resources :withdraws
     get 'withdraws/:id/ok' => 'withdraws#ok_withdraw'

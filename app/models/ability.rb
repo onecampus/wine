@@ -26,6 +26,7 @@ class Ability
       can :manage, SeckillOrder
       can :manage, SiteConfig
       can :manage, Withdraw
+      can :manage, Commission
     elsif user.has_role? :customer
       can :manage, Site
     else

@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-  提成
+  提成记录
 <% end %>
 <style type="text/css">
   .ship-address {
@@ -46,19 +46,14 @@
     </p>
     <p class="p-r">收益</p>
   </div>
-  <div>
-    <p class="p-l">ID</p>
-    <p class="p-m">
-      客户
-    </p>
-    <p class="p-r">收益</p>
-  </div>
-  <div>
-    <p class="p-l">ID</p>
-    <p class="p-m">
-      客户
-    </p>
-    <p class="p-r">收益</p>
-  </div>
+  <% @commissions.each do |p| %>
+      <div>
+        <p class="p-l"><%= p.id %></p>
+        <p class="p-m">
+          <%= p.user.username %>
+        </p>
+        <p class="p-r"><%= p.user.username %></p>
+      </div>
+  <% end %>
 </div>
 <%= render "site/shared/bottombar" %>

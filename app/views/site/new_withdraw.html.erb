@@ -1,0 +1,75 @@
+<% content_for :customer_title do %>
+    提现
+<% end %>
+
+
+<%= form_for(@withdraw, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if @withdraw.errors.any? %>
+        <div id="error_explanation" class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-9">
+            <h2>保存时发生了<%= pluralize(@withdraw.errors.count, "error") %></h2>
+            <ul>
+              <% @withdraw.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :user_id, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.user_id' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.number_field :user_id, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :bank_card, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.bank_card' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :bank_card, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :alipay, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.alipay' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :alipay, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :we_chat_payment, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.we_chat_payment' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :we_chat_payment, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :draw_type, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.draw_type' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.select(:draw_type, options_for_select([['银行卡', '银行卡'], ['支付宝', '支付宝'], ['微信支付', '微信支付']], @withdraw.draw_type)) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :draw_money, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.draw_money' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :draw_money, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

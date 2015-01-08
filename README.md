@@ -205,6 +205,8 @@ rails g scaffold Withdraw user_id:integer bank_card alipay we_chat_payment draw_
 
 rails g migration AddDrawMoneyToWithdraws draw_money:string
 rails g migration AddDrawStatusToWithdraws draw_status:integer
+
+rails g scaffold Commission user_id:integer order_id:integer commission_money percent
 ```
 
 ### 功能分析 ###

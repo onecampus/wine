@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108080426) do
+ActiveRecord::Schema.define(version: 20150108084824) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -85,6 +85,15 @@ ActiveRecord::Schema.define(version: 20150108080426) do
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "commissions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "order_id"
+    t.string   "commission_money"
+    t.string   "percent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "group_orders", force: true do |t|
     t.integer  "order_id"

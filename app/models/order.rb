@@ -13,4 +13,6 @@ class Order < ActiveRecord::Base
 
   has_many :seclill_orders
   has_many :seclills, through: :seclill_orders
+
+  has_many :commissions
 end

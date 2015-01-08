@@ -24,12 +24,39 @@ class SiteController < CustomerController
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
                                                         :create_ship_address_via_ajax,
-                                                        :create_invoice_via_ajax]
+                                                        :create_invoice_via_ajax,
+                                                        :create_withdraw]
 
   def index
     @site_config1 = SiteConfig.where(key: 'CustomerIndexImgConfigKey1', config_type: 'CustomerIndexImgConfig').first
     @site_config2 = SiteConfig.where(key: 'CustomerIndexImgConfigKey2', config_type: 'CustomerIndexImgConfig').first
     @site_config3 = SiteConfig.where(key: 'CustomerIndexImgConfigKey3', config_type: 'CustomerIndexImgConfig').first
+  end
+
+  def new_withdraw
+    @withdraw = Withdraw.new
+  end
+
+  def index_withdraws
+    @withdraws = current_user.withdraws
+  end
+
+  def create_withdraw
+    withdraw_params = {
+      user_id: current_user.id,
+      bank_card: params[:bank_card],
+      alipay: params[:alipay],
+      we_chat_payment: params[:we_chat_payment],
+      draw_type: params[:draw_type],
+      draw_money: params[:draw_money],
+      draw_status: 0
+    }
+    @withdraw = Withdraw.new(withdraw_params)
+    if @withdraw.save
+      render json: { status: 'success', msg: 'action draw success' }
+    else
+      render json: { status: 'failed', msg: 'action draw failed' }
+    end
   end
 
   def index_cats
@@ -449,6 +476,7 @@ class SiteController < CustomerController
   end
 
   def commission
+    @commissions = current_user.profile.descendants
   end
 
   private
