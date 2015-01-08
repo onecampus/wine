@@ -26,8 +26,15 @@ zh-CN:
       group_order: '团购订单'
       seckill: '秒杀'
       seckill_order: '秒杀订单'
+      site_config: '系统设置'
 
     attributes:
+      site_config:
+        key: '键'
+        val : '值'
+        img: '图片'
+        config_type: '类型'
+
       group:
         product_id: '商品'
         start_time: '开始时间'

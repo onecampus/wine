@@ -194,6 +194,9 @@ rails g scaffold Seckill product_id:integer start_time:datetime end_time:datetim
 
 rails g scaffold GroupOrder order_id:integer group_id:integer group_count:integer unit_price:string
 rails g scaffold SeckillOrder order_id:integer seckill_id:integer seckill_count:integer unit_price:string
+
+rails g scaffold SiteConfig key val img config_type
+rails g uploader site_config_img
 ```
 
 ### 功能分析 ###

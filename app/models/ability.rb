@@ -24,6 +24,7 @@ class Ability
       can :manage, GroupOrder
       can :manage, Seckill
       can :manage, SeckillOrder
+      can :manage, SiteConfig
     elsif user.has_role? :customer
       can :manage, Site
     else

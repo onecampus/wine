@@ -435,6 +435,15 @@ names3.each do |sn|
   wm_tmp.save!
 end
 
+1.upto(3).each do |i|
+  SiteConfig.create(
+    key: "CustomerIndexImgConfigKey#{i}",
+    val: "http://203.195.172.200",
+    img: "CustomerIndexImgConfigImg#{i}",
+    config_type: 'CustomerIndexImgConfig'
+  )
+end
+
 time_end = Time.now
 time = time_end - time_start
 puts time.to_s
