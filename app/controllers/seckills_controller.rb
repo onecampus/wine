@@ -13,21 +13,24 @@ class SeckillsController < ApplicationController
   end
 
   def new
+    @products = Product.all
     @seckill = Seckill.new
     respond_with(@seckill)
   end
 
   def edit
+    @products = Product.all
   end
 
   def create
     @seckill = Seckill.new(seckill_params)
-    flash[:notice] = 'Seckill was successfully created.' if @seckill.save
+    @seckill.people = 0
+    flash[:notice] = '秒杀活动创建成功' if @seckill.save
     respond_with(@seckill)
   end
 
   def update
-    flash[:notice] = 'Seckill was successfully updated.' if @seckill.update(seckill_params)
+    flash[:notice] = '秒杀活动更新成功' if @seckill.update(seckill_params)
     respond_with(@seckill)
   end
 
@@ -42,6 +45,6 @@ class SeckillsController < ApplicationController
     end
 
     def seckill_params
-      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :people)
+      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount)
     end
 end
