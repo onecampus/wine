@@ -4,3 +4,404 @@
 <% @groups.each do |g| %>
   已经参加的人数<%= g.people %><br />
 <% end %>
+<script src="/assets/lib/jquery1.8.3.js"></script>
+<style>
+  .group-btn {
+    font-size: 20px;
+    padding: 4px 4px;
+    margin: 20px 0 20px 16px;
+  }
+
+  .group-products .product {
+    width: 44%;
+    height: 270px;
+    margin-left: 16px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    box-shadow: 6px 6px 3px #d5d5d5;
+    float: left;
+  }
+
+  .group-products .product-inf {
+    width: 100%;
+    height: 70px;
+    background-color: #ffffff;
+    color: #787878;
+    float: left;
+  }
+
+  .product img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .price-inf {
+    width: 95%;
+    height: 20px;
+    margin-left: 4%;
+    font-size: 0.8em;
+  }
+
+  .group-price {
+    float: left;
+    color: #aa0c40;
+  }
+
+  .group-price span{
+    font-weight: bold;
+  }
+  .product-price {
+    float: right;
+    margin-right: 1%;
+  }
+
+  .product-price span{
+    font-weight: bold;
+    text-decoration: line-through;
+  }
+
+  .product-number {
+    position: relative;
+    width: 95%;
+    height: 20px;
+    margin-left: 4%;
+    font-size: 0.8em;
+  }
+
+  .sell-number {
+    float: left;
+  }
+
+  .over-number {
+    float: right;
+    color: #aa0c40;
+  }
+
+  .seckill-btn {
+    float: left;
+    width: 100%;
+    height: 60px;
+  }
+
+  .seckill-products .product {
+    width: 44%;
+    height: 270px;
+    margin-left: 16px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    box-shadow: 6px 6px 3px #d5d5d5;
+    float: left;
+  }
+
+  .seckill-products .product-inf {
+    width: 100%;
+    height: 90px;
+    background-color: #ffffff;
+    color: #787878;
+    float: left;
+  }
+
+  .seckill-btn button {
+    float: left;
+    font-size: 20px;
+    padding: 4px 4px;
+    margin: 0 0 20px 16px;
+  }
+
+  .seckill-time {
+    margin-left: 4%;
+    color: #aa0c40;
+    font-size: 0.7em;
+  }
+
+  .seckill-time img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .seckill-time div {
+    text-align: center;
+    margin-right: 1%;
+  }
+
+  .seckill-time-msg {
+    text-align: center;
+    color: #aa0c40;
+    font-size: 0.6em;
+    display: none;
+  }
+
+  .text3 {
+    width: 90%;
+    margin: 0 0 0 4%;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0.8em;
+  }
+
+  .product hr {
+    margin: 0;
+    padding: 0;
+    width: 95%;
+    margin-left: 4%;
+  }
+
+</style>
+<div class="group-seckill">
+  <div class="group">
+    <button class="btn btn-red group-btn" type="button">精选团购</button>
+    <div class="group-products">
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              团购价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              团购价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              团购价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              团购价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="seckill-products">
+      <div class="seckill-btn"><button class="btn btn-red" type="button">限时秒杀</button></div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              秒杀价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+          <hr>
+          <div class="seckill-time-msg">
+            <span>本次活动已截止!</span>
+          </div>
+          <div class="seckill-time">
+            <div><img src="/zhonglian/img/seckill-icon.png">剩余<span class="remainD"></span>天<span class="remainH"></span>时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
+          </div>
+        </div>
+      </div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              秒杀价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+          <hr>
+          <div class="seckill-time-msg">
+            <span>本次活动已截止！</span>
+          </div>
+          <div class="seckill-time">
+            <div><img src="/zhonglian/img/seckill-icon.png">剩余<span class="remainD"></span>天<span class="remainH"></span>时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
+          </div>
+        </div>
+      </div>
+      <div class="product">
+        <img src="/zhonglian/img/index/shangpin.jpg">
+        <div class="product-inf">
+          <p class="text3">长城1981</p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              秒杀价:<span>¥600</span>
+            </div>
+            <div class="product-price">
+              <span>¥600</span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span>25</span>件
+            </div>
+            <div class="over-number">
+              剩余:<span>25</span>件
+            </div>
+          </div>
+          <hr>
+          <div class="seckill-time-msg">
+            <span>本次活动已截止！</span>
+          </div>
+          <div class="seckill-time">
+            <div><img src="/zhonglian/img/seckill-icon.png">剩余<span class="remainD"></span>天<span class="remainH"></span>时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var startTime = new Date();
+//定义参数可返回当天的日期和时间
+startTime.setFullYear(2015, 0, 8);
+//调用设置年份
+startTime.setHours(15);
+//调用设置指定的时间的小时字段
+startTime.setMinutes(53);
+//调用设置指定时间的分钟字段
+startTime.setSeconds(59);
+//调用设置指定时间的秒钟字段
+startTime.setMilliseconds(999);
+//调用置指定时间的毫秒字段
+var EndTime=startTime.getTime();
+//定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+function GetRTime(){
+  //定义方法
+  var NowTime = new Date();
+  //定义参数可返回当天的日期和时间
+  var nMS = EndTime - NowTime.getTime();
+  //定义参数 EndTime减去NowTime参数获得返回距 1970 年 1 月 1 日之间的毫秒数
+  var nD = Math.floor(nMS/(1000 * 60 * 60 * 24));
+  //定义参数 获得天数
+  var nH = Math.floor(nMS/(1000*60*60)) % 24;
+  //定义参数 获得小时
+  var nM = Math.floor(nMS/(1000*60)) % 60;
+  //定义参数 获得分钟
+  var nS = Math.floor(nMS/1000) % 60;
+  //定义参数 获得秒钟
+  if (nMS < 0){
+    //如果秒钟大于0
+    $(".seckill-time").hide();
+    //获得天数隐藏
+    //获得活动截止时间展开
+    $(".seckill-time-msg").show();
+  }else{
+    //否则
+    $(".seckill-time").show();
+    //天数展开
+    $("#daoend").hide();
+    //活动截止时间隐藏
+    $(".remainD").text(nD);
+    //显示天数
+    $(".remainH").text(nH);
+    //显示小时
+    $(".remainM").text(nM);
+    //显示分钟
+    $(".remainS").text(nS);
+    //显示秒钟
+  }
+}
+
+$(document).ready(function () {
+  //定义方法
+  var timer_rt = window.setInterval("GetRTime()", 1000);
+  //定义参数 显示出GetRTime()方法 1000毫秒以后启动
+});
+</script>
