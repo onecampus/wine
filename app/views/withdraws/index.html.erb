@@ -83,7 +83,7 @@
                 <i class="fa fa-trash-o"></i> 删除
               <% end %>
               <%= link_to('', class: "btn btn-xs btn-primary complete-withdraw", "data-id" => withdraw.id) do %>
-                <i class="fa fa-share"></i> 提成完成
+                <i class="fa fa-share"></i> 提现完成
               <% end %>
               <%= link_to(edit_withdraw_path(withdraw), class: "btn btn-xs btn-green") do %>
                 <i class="fa fa-edit"></i> 编辑
@@ -101,7 +101,7 @@
 <script>
     $(document).ready(function() {
         $(".complete-withdraw").on('click', function() {
-            if(confirm("确定已经完成该用户的提成了吗")) {
+            if(confirm("确定已经完成该用户的提现了吗")) {
                 var _id = $(this).data('id');
                 $.ajax({
                     type: "GET",
