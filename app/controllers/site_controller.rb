@@ -18,7 +18,7 @@ class SiteController < CustomerController
                                                  :create_order,
                                                  :scratch_off,
                                                  :big_wheel,
-                                                 :index_groups,
+                                                 :index_groups_seckills,
                                                  :show_group]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
@@ -43,12 +43,16 @@ class SiteController < CustomerController
     @product = Product.find params[:id]
   end
 
-  def index_groups
+  def index_groups_seckills
     @groups = Group.all
   end
 
   def show_group
     @group = Group.find params[:id]
+  end
+
+  def show_seckill
+    @seckill = nil
   end
 
   def new_comment
