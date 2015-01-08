@@ -169,24 +169,41 @@ class SiteController < CustomerController
   end
 
   def create_order
-    # share_link_code
     share_link_code = params[:share_link_code]
+    invite_code = params[:invite_code]
     current_user_profile = current_user.profile
-    unless share_link_code.blank?
-      parent_user = Profile.where(share_link_code: share_link_code).first
-      unless parent_user.nil?
-        current_user_profile.move_to_child_of(parent_user)
-        parent_user.reload
+
+    if !share_link_code.blank? && !invite_code.blank?
+      # invite_code is more import
+      unless invite_code.blank?
+        parent_user = Profile.where(invite_code: invite_code).first
+        unless parent_user.nil?
+          current_user_profile.move_to_child_of(parent_user)
+          parent_user.reload
+        end
+      end
+    elsif !share_link_code.blank? || !invite_code.blank?
+      # share_link_code
+      unless share_link_code.blank?
+        parent_user = Profile.where(share_link_code: share_link_code).first
+        unless parent_user.nil?
+          current_user_profile.move_to_child_of(parent_user)
+          parent_user.reload
+        end
+      end
+
+      # invite_code
+      unless invite_code.blank?
+        parent_user = Profile.where(invite_code: invite_code).first
+        unless parent_user.nil?
+          current_user_profile.move_to_child_of(parent_user)
+          parent_user.reload
+        end
       end
     end
 
-    # invite_code
+    # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
     old_orders = current_user.orders
-    if old_orders.blank?
-      invite_code = User.generate_invite_code
-      current_user_profile.invite_code = invite_code
-      current_user_profile.save!
-    end
 
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
@@ -226,6 +243,11 @@ class SiteController < CustomerController
       order.order_type = '普通订单'
       ProductOrder.transaction do
         Order.transaction do
+          if old_orders.blank?
+            invite_code = User.generate_invite_code
+            current_user_profile.invite_code = invite_code
+            current_user_profile.save!
+          end
           order.save!
           # product_order
           p_o_list = []
@@ -263,6 +285,11 @@ class SiteController < CustomerController
       order.order_type = '团购订单'
       GroupOrder.transaction do
         Order.transaction do
+          if old_orders.blank?
+            invite_code = User.generate_invite_code
+            current_user_profile.invite_code = invite_code
+            current_user_profile.save!
+          end
           order.save!
           # group_order
           p_o_list = []
@@ -302,6 +329,11 @@ class SiteController < CustomerController
       order.order_type = '秒杀订单'
       SeckillOrder.transaction do
         Order.transaction do
+          if old_orders.blank?
+            invite_code = User.generate_invite_code
+            current_user_profile.invite_code = invite_code
+            current_user_profile.save!
+          end
           order.save!
           # seckill_order
           p_o_list = []
