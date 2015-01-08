@@ -477,6 +477,12 @@ class SiteController < CustomerController
 
   def commission
     @commissions = current_user.profile.descendants
+    @results = []
+    @commissions.each do |pro|
+      Commission.where(user_id: current_user.id, from_user_id: pro.id).each do |c|
+        @results.push(from_user: pro.user.username, money: c.commission_money)
+      end
+    end
   end
 
   private

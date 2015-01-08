@@ -65,7 +65,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.commission.user_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @commission.user_id %>
+                <%= @commission.user.username %>
               </div>
             </div>
           </div>
@@ -93,6 +93,15 @@
             <div class="col-sm-9">
               <div class="show-control">
                 <%= @commission.percent %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.commission.percent' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= User.find(@commission.from_user_id).username %>
               </div>
             </div>
           </div>

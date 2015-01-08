@@ -55,13 +55,6 @@
     </div>
   </div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-md-12 space20">
-        <a class="btn btn-green add-row" href="/admin/commissions/new">
-          添加 <i class="fa fa-plus"></i>
-        </a>
-      </div>
-    </div>
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>
@@ -70,6 +63,7 @@
                   <th><%=t 'activerecord.attributes.commission.order_id' %></th>
                   <th><%=t 'activerecord.attributes.commission.commission_money' %></th>
                   <th><%=t 'activerecord.attributes.commission.percent' %></th>
+            <th><%=t 'activerecord.attributes.commission.from_user_id' %></th>
                   <th>操作</th>
           </tr>
         </thead>
@@ -77,10 +71,11 @@
 
         <% @commissions.each do |commission| %>
           <tr>
-                        <td><%= commission.user_id %></td>
-                        <td><%= commission.order_id %></td>
+                        <td><%= commission.user.username %></td>
+                        <td><%= commission.order.order_number %></td>
                         <td><%= commission.commission_money %></td>
                         <td><%= commission.percent %></td>
+            <td><%= commission.from_user_id %></td>
                         <td class="center">
               <%= link_to(commission, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
                 <i class="fa fa-trash-o"></i> 删除

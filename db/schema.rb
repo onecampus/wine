@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108084824) do
+ActiveRecord::Schema.define(version: 20150108094029) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -391,6 +391,7 @@ ActiveRecord::Schema.define(version: 20150108084824) do
     t.datetime "updated_at"
     t.string   "draw_money"
     t.integer  "draw_status"
+    t.integer  "from_user_id"
   end
 
   create_table "wx_menus", force: true do |t|

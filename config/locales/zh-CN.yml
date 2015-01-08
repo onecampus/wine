@@ -32,10 +32,11 @@ zh-CN:
 
     attributes:
       commission:
-        user_id: '客户'
+        user_id: '提成者'
         order_id: '订单'
         commission_money: '提成金额'
         percent: '提成比例'
+        from_user_id: '购买者'
 
       withdraw:
         user_id: '提现用户'
