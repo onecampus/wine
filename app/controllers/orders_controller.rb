@@ -93,6 +93,20 @@ class OrdersController < ApplicationController
   def ok_order
     @order.order_status = 3
     @order.save
+    buyer = @order.user
+    commissioner = nil
+    if !@order.invite_code.blank?
+      commissioner_profile = Profile.where(invite_code: @order.invite_code).first
+      commissioner = commissioner_profile.user
+    elsif !@order.share_link_code.blank?
+      commissioner_profile = Profile.where(share_link_code: @order.share_link_code).first
+      commissioner = commissioner_profile.user
+    end
+    vritualcard = commissioner.vritualcard
+    commissioner_money = vritualcard.money.to_f
+    commissioner_money += @order.total_price.to_f * 10%
+    vritualcard.money = commissioner_money.round(2)
+    vritualcard.save!
     flash[:notice] = '该订单已经完成'
     redirect_to action: :index_orders_already_ok
   end
