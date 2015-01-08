@@ -173,6 +173,7 @@ $(document).ready(function() {
             }
             $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
+            cleanShareLinkCode();
             orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
@@ -206,6 +207,7 @@ $(document).ready(function() {
             }
             $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
+            cleanShareLinkCode();
             orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
@@ -239,6 +241,7 @@ $(document).ready(function() {
             }
             $(".order-btn").attr("disabled",false);
             showShoppingCartItem();
+            cleanShareLinkCode();
             orderSuccessHan();
           },
           complete: function(XMLHttpRequest, textStatus) {
@@ -273,6 +276,7 @@ $(document).ready(function() {
             }
           $(".order-btn").attr("disabled",false);
           showShoppingCartItem();
+          cleanShareLinkCode();
           orderSuccessHan();
         },
         complete: function(XMLHttpRequest, textStatus) {
@@ -341,4 +345,11 @@ function showShoppingCartItem() {
       $(".shopping-cart-mark").hide();
     }
   }
+}
+
+function cleanShareLinkCode(){
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+  JsonStr.shareLinkCode = null;
+  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
 }

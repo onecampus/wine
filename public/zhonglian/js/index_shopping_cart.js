@@ -90,8 +90,7 @@ $(document).ready(function() {
       return;
     }
     else{
-      var path = window.location.search;
-      $(this).attr("href", "/customer/orders/settlement"+path);
+      $(this).attr("href", "/customer/orders/settlement");
     }
   });
   /*
