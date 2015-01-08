@@ -197,6 +197,14 @@ rails g scaffold SeckillOrder order_id:integer seckill_id:integer seckill_count:
 
 rails g scaffold SiteConfig key val img config_type
 rails g uploader site_config_img
+
+rails g migration AddInviteCodeToOrders invite_code:string
+rails g migration AddShareLinkCodeToOrders share_link_code:string
+
+rails g scaffold Withdraw user_id:integer bank_card alipay we_chat_payment draw_type
+
+rails g migration AddDrawMoneyToWithdraws draw_money:string
+rails g migration AddDrawStatusToWithdraws draw_status:integer
 ```
 
 ### 功能分析 ###
