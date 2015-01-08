@@ -29,7 +29,7 @@ class SiteConfigsController < ApplicationController
     @site_config3.img = params[:CustomerIndexImgConfigImg3]
     @site_config3.save
     flash.notice = '首页活动图片更新成功'
-    redirect_to :show_index_imgs
+    redirect_to action: :show_index_imgs
   end
 
   def index
