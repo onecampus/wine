@@ -27,7 +27,9 @@ class SiteController < CustomerController
                                                         :create_invoice_via_ajax]
 
   def index
-    @recommend_products = Product.last 8
+    @site_config1 = SiteConfig.where(key: 'CustomerIndexImgConfigKey1', config_type: 'CustomerIndexImgConfig').first
+    @site_config2 = SiteConfig.where(key: 'CustomerIndexImgConfigKey2', config_type: 'CustomerIndexImgConfig').first
+    @site_config3 = SiteConfig.where(key: 'CustomerIndexImgConfigKey3', config_type: 'CustomerIndexImgConfig').first
   end
 
   def index_cats

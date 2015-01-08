@@ -238,22 +238,9 @@
 </div>
 <div class="company-pic">
 </div>
-<div class="index-btn-block"><img src="/zhonglian/img/index/jingxuan.png"></img></div>
-<div class="recommend"  data-no-turbolink>
-  <% @recommend_products.each do |p| %>
-      <a href="customer/products/<%= p.id %>/show">
-        <div class="recommend-item">
-          <div class="product">
-            <img class="product-img" src="<%= p.img_url %>"/>
-            <div class="product-inf">
-              <p class="text1"><%= p.name %></p>
-              <p class="text2">¥ <%= p.price %></p>
-            </div>
-          </div>
-        </div>
-      </a>
-  <% end %>
-</div>
+<div class="index-btn-block"><%= image_tag(@site_config1.img_url) if @site_config1.img? %></div>
+<div class="index-btn-block"><%= image_tag(@site_config2.img_url) if @site_config2.img? %></div>
+<div class="index-btn-block"><%= image_tag(@site_config3.img_url) if @site_config3.img? %></div>
 <div class="share-inf">
   <div>
     <ul>
