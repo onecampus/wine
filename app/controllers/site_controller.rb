@@ -196,7 +196,6 @@ class SiteController < CustomerController
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
     invoice_id = invoice.nil? ? nil : invoice.id
 
-    products = params[:products]
     total_price = 0.00
     freight = 0.00
     package_charge = 0.00
@@ -219,41 +218,122 @@ class SiteController < CustomerController
       supplier_id: current_user.profile.supplier_id,
       order_type: '普通订单'
     )
+    products = params[:products]
 
-    ProductOrder.transaction do
-      Order.transaction do
-        order.save!
+    if !params[:is_product].blank?
+      order.order_type = '普通订单'
+      ProductOrder.transaction do
+        Order.transaction do
+          order.save!
+          # product_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
+            product = Product.find(product_id)
+            unit_price = product.price
 
-        # product_order
-        p_o_list = []
-        products.each do |_, p|
-          product_id = p[:product_id].to_i
-          product = Product.find(product_id)
-          unit_price = product.price
-          product_count = p[:product_count]
+            product_order = ProductOrder.new(
+              order_id: order.id,
+              product_id: product_id,
+              product_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push product_order
 
-          product_order = ProductOrder.new(
-            order_id: order.id,
-            product_id: product_id,
-            product_count: product_count,
-            unit_price: unit_price
-          )
-          p_o_list.push product_order
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
 
-          total_price += unit_price.to_f * product_count.to_i
-          total_price += product.fright.to_f
-          freight += product.fright.to_f
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
         end
+      end
+    elsif !params[:is_group].blank?
+      order.order_type = '团购订单'
+      GroupOrder.transaction do
+        Order.transaction do
+          order.save!
+          # group_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
 
-        total_price = total_price.round(2)
+            product = Product.find(product_id)
+            group = product.group
+            unit_price = group.price
 
-        p_o_list.each(&:save!)
-        order.total_price = total_price
-        order.freight = freight
-        order.package_charge = package_charge
-        order.save!
-        render json: { status: 'success', msg: 'create order success' }
-        return
+            group_order = GroupOrder.new(
+              order_id: order.id,
+              group_id: group.id,
+              group_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push group_order
+
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
+        end
+      end
+    elsif !params[:is_seckill].blank?
+      order.order_type = '秒杀订单'
+      SeckillOrder.transaction do
+        Order.transaction do
+          order.save!
+          # seckill_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
+
+            product = Product.find(product_id)
+            seckill = product.seckill
+            unit_price = seckill.price
+
+            seckill_order = SeckillOrder.new(
+              order_id: order.id,
+              seckill_id: seckill.id,
+              seckill_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push seckill_order
+
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
+        end
       end
     end
   end
