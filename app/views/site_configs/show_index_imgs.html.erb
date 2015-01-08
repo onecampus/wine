@@ -1,0 +1,122 @@
+<% content_for :page_title do %>
+    <%=t 'activerecord.models.site_config' %>
+<% end %>
+
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+    <ol class="breadcrumb">
+      <li>
+        <i class="clip-pencil"></i>
+        <a href="#">
+          控制面板
+        </a>
+      </li>
+      <li class="active">
+        编辑<%=t 'activerecord.models.site_config' %>
+      </li>
+      <li class="search-box">
+        <form class="sidebar-search">
+          <div class="form-group">
+            <input type="text" placeholder="Start Searching...">
+            <button class="submit">
+              <i class="clip-search-3"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+    </ol>
+    <div class="page-header">
+      <h1>
+        <small></small>
+      </h1>
+    </div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+
+<!-- start: PAGE CONTENT -->
+<div class="row">
+  <div class="col-sm-12">
+    <!-- start: TEXT FIELDS PANEL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        编辑<%=t 'activerecord.models.site_config' %>
+        <div class="panel-tools">
+          <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
+          </a>
+          <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
+            <i class="fa fa-wrench"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-refresh" href="#">
+            <i class="fa fa-refresh"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-expand" href="#">
+            <i class="fa fa-resize-full"></i>
+          </a>
+          <a class="btn btn-xs btn-link panel-close" href="#">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="panel-body">
+
+        <form class="form-horizontal">
+
+            <div class="form-group">
+              <%= label_tag :val, :class => "col-sm-2 control-label" do %>
+                  链接地址1 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= text_field_tag :val, @site_config1.val, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= label_tag :img, :class => "col-sm-2 control-label" do %>
+                  <%=t 'activerecord.attributes.site_config.img' %>1 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= image_tag(@site_config1.img_url) if @site_config1.img? %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag :val, :class => "col-sm-2 control-label" do %>
+                  链接地址2 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= text_field_tag :val, @site_config2.val, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= label_tag :img, :class => "col-sm-2 control-label" do %>
+                  <%=t 'activerecord.attributes.site_config.img' %>2 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= image_tag(@site_config2.img_url) if @site_config2.img? %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag :val, :class => "col-sm-2 control-label" do %>
+                  链接地址3 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= text_field_tag :val, @site_config3.val, class: "form-control" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= label_tag :img, :class => "col-sm-2 control-label" do %>
+                  <%=t 'activerecord.attributes.site_config.img' %>3 <span class="symbol required"></span>
+              <% end %>
+              <div class="col-sm-9">
+                <%= image_tag(@site_config3.img_url) if @site_config3.img? %>
+              </div>
+            </div>
+        </form>
+
+      </div>
+    </div>
+    <!-- end: TEXT FIELDS PANEL -->
+  </div>
+</div>
+<!-- end: PAGE CONTENT-->

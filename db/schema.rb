@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150101092945) do
+ActiveRecord::Schema.define(version: 20150108050705) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -265,6 +265,30 @@ ActiveRecord::Schema.define(version: 20150101092945) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "seckill_orders", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "seckill_id"
+    t.integer  "seckill_count"
+    t.string   "unit_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "seckills", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "limit_people_count"
+    t.integer  "limit_product_count"
+    t.text     "description"
+    t.string   "price"
+    t.string   "saveup"
+    t.string   "discount"
+    t.integer  "people"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "shipaddresses", force: true do |t|
     t.integer  "user_id"
     t.string   "receive_name"
@@ -275,6 +299,15 @@ ActiveRecord::Schema.define(version: 20150101092945) do
     t.string   "postcode"
     t.string   "tel"
     t.string   "mobile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "site_configs", force: true do |t|
+    t.string   "key"
+    t.string   "val"
+    t.string   "img"
+    t.string   "config_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

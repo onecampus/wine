@@ -57,6 +57,14 @@ Rails.application.routes.draw do
 
   scope '/admin' do
 
+    resources :site_configs
+    get 'site_configs/customer/index/imgs/edit' => 'site_configs#edit_index_imgs'
+    get 'site_configs/customer/index/imgs' => 'site_configs#show_index_imgs'
+    match 'site_configs/customer/index/imgs/update', to: 'site_configs#update_index_imgs', via: :post
+
+    resources :seckill_orders
+    resources :seckills
+
     resources :group_orders
     resources :groups
 

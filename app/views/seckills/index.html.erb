@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%=t 'activerecord.models.group' %>管理
+  <%=t 'activerecord.models.seckill' %>管理
 <% end %>
 
 <!-- start: PAGE TITLE & BREADCRUMB -->
@@ -12,7 +12,7 @@
         </a>
       </li>
       <li class="active">
-        <%=t 'activerecord.models.group' %>管理
+        <%=t 'activerecord.models.seckill' %>管理
       </li>
       <li class="search-box">
         <form class="sidebar-search">
@@ -36,7 +36,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
-    <%=t 'activerecord.models.group' %>管理
+    <%=t 'activerecord.models.seckill' %>管理
     <div class="panel-tools">
       <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
       </a>
@@ -57,7 +57,7 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12 space20">
-        <a class="btn btn-green add-row" href="/admin/groups/new">
+        <a class="btn btn-green add-row" href="/admin/seckills/new">
           添加 <i class="fa fa-plus"></i>
         </a>
       </div>
@@ -66,41 +66,41 @@
       <table id="" class="table table-bordered table-hover">
         <thead>
           <tr>
-                  <th><%=t 'activerecord.attributes.group.product_id' %></th>
-                  <th><%=t 'activerecord.attributes.group.start_time' %></th>
-                  <th><%=t 'activerecord.attributes.group.end_time' %></th>
-                  <th><%=t 'activerecord.attributes.group.limit_people_count' %></th>
-                  <th><%=t 'activerecord.attributes.group.limit_product_count' %></th>
-                  <th><%=t 'activerecord.attributes.group.description' %></th>
-                  <th><%=t 'activerecord.attributes.group.price' %></th>
-                  <th><%=t 'activerecord.attributes.group.saveup' %></th>
-                  <th><%=t 'activerecord.attributes.group.discount' %></th>
-                  <th><%=t 'activerecord.attributes.group.people' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.product_id' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.start_time' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.end_time' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.limit_people_count' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.limit_product_count' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.description' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.price' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.saveup' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.discount' %></th>
+                  <th><%=t 'activerecord.attributes.seckill.people' %></th>
                   <th>操作</th>
           </tr>
         </thead>
         <tbody>
 
-        <% @groups.each do |group| %>
+        <% @seckills.each do |seckill| %>
           <tr>
-                        <td><%= group.product.name %></td>
-                        <td><%= group.start_time %></td>
-                        <td><%= group.end_time %></td>
-                        <td><%= group.limit_people_count %></td>
-                        <td><%= group.limit_product_count %></td>
-                        <td><%= group.description %></td>
-                        <td><%= group.price %></td>
-                        <td><%= group.saveup %></td>
-                        <td><%= group.discount %></td>
-                        <td><%= group.people %></td>
+                        <td><%= seckill.product.name %></td>
+                        <td><%= seckill.start_time %></td>
+                        <td><%= seckill.end_time %></td>
+                        <td><%= seckill.limit_people_count %></td>
+                        <td><%= seckill.limit_product_count %></td>
+                        <td><%= seckill.description %></td>
+                        <td><%= seckill.price %></td>
+                        <td><%= seckill.saveup %></td>
+                        <td><%= seckill.discount %></td>
+                        <td><%= seckill.people %></td>
                         <td class="center">
-              <%= link_to(group, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+              <%= link_to(seckill, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
                 <i class="fa fa-trash-o"></i> 删除
               <% end %>
-              <%= link_to(group, class: "btn btn-xs btn-primary") do %>
+              <%= link_to(seckill, class: "btn btn-xs btn-primary") do %>
                 <i class="fa fa-share"></i> 查看
               <% end %>
-              <%= link_to(edit_group_path(group), class: "btn btn-xs btn-green") do %>
+              <%= link_to(edit_seckill_path(seckill), class: "btn btn-xs btn-green") do %>
                 <i class="fa fa-edit"></i> 编辑
               <% end %>
             </td>
@@ -110,5 +110,5 @@
       </table>
     </div>
   </div>
-  <%= will_paginate @groups, renderer: BootstrapPagination::Rails %>
+  <%= will_paginate @seckills, renderer: BootstrapPagination::Rails %>
 </div>
