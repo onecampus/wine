@@ -10,4 +10,7 @@ class Order < ActiveRecord::Base
 
   has_many :group_orders
   has_many :groups, through: :group_orders
+
+  has_many :seclill_orders
+  has_many :seclills, through: :seclill_orders
 end

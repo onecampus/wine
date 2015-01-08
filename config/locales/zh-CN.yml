@@ -24,6 +24,8 @@ zh-CN:
       wx_menu: '微信菜单'
       group: '团购'
       group_order: '团购订单'
+      seckill: '秒杀'
+      seckill_order: '秒杀订单'
 
     attributes:
       group:
@@ -42,6 +44,24 @@ zh-CN:
         order_id: '订单'
         group_id: '商品'
         group_count: '商品数量'
+        unit_price: '单价'
+
+      seckill:
+        product_id: '商品'
+        start_time: '开始时间'
+        end_time: '截止时间'
+        limit_people_count: '限制人数'
+        limit_product_count: '限制可购商品数量'
+        description: '描述'
+        price: '现价'
+        saveup: '节省'
+        discount: '打折'
+        people: '参加人数'
+
+      seckill_order:
+        order_id: '订单'
+        seckill_id: '商品'
+        seckill_count: '商品数量'
         unit_price: '单价'
 
 

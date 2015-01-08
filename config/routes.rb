@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :seckill_orders
-
-  resources :seckills
-
   mount Ckeditor::Engine => '/ckeditor'
   root 'site#index'
 
@@ -60,6 +56,9 @@ Rails.application.routes.draw do
   match 'customer/scratch/off', to: 'site#scratch_off_ajax', via: :post
 
   scope '/admin' do
+
+    resources :seckill_orders
+    resources :seckills
 
     resources :group_orders
     resources :groups

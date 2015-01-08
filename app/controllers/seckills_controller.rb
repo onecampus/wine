@@ -1,8 +1,10 @@
 class SeckillsController < ApplicationController
+  authorize_resource
+  respond_to :html, :json
   before_action :set_seckill, only: [:show, :edit, :update, :destroy]
 
   def index
-    @seckills = Seckill.all
+    @seckills = Seckill.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@seckills)
   end
 

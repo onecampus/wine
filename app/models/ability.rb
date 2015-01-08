@@ -22,6 +22,8 @@ class Ability
       can :manage, WxMenu
       can :manage, Group
       can :manage, GroupOrder
+      can :manage, Seckill
+      can :manage, SeckillOrder
     elsif user.has_role? :customer
       can :manage, Site
     else

@@ -15,4 +15,5 @@ class Product < ActiveRecord::Base
   acts_as_commentable
 
   has_one :group
+  has_one :seckill
 end
