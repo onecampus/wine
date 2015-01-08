@@ -1,0 +1,103 @@
+
+<%= form_for(@seckill, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @seckill.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@seckill.errors.count, "error") %></h2>
+        <ul>
+        <% @seckill.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :product_id, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.product_id' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :product_id, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :start_time, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.start_time' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.datetime_select :start_time, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :end_time, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.end_time' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.datetime_select :end_time, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :limit_people_count, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.limit_people_count' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :limit_people_count, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :limit_product_count, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.limit_product_count' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :limit_product_count, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :description, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.description' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_area :description, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :price, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.price' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :price, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :saveup, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.saveup' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :saveup, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :discount, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.discount' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :discount, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :people, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.seckill.people' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.number_field :people, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

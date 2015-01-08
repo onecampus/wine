@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :seckill_orders
+
+  resources :seckills
+
   mount Ckeditor::Engine => '/ckeditor'
   root 'site#index'
 
