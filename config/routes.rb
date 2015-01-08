@@ -24,7 +24,8 @@ Rails.application.routes.draw do
 
   # group
   get 'customer/groups/:id/show' => 'site#show_group'
-  get 'customer/groups' => 'site#index_groups'
+  get 'customer/groups_and_seckills' => 'site#index_groups_seckills'
+  get 'customer/seckills' => 'site#show_seckill'
 
 
   # order
