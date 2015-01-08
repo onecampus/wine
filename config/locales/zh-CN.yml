@@ -27,8 +27,18 @@ zh-CN:
       seckill: '秒杀'
       seckill_order: '秒杀订单'
       site_config: '系统设置'
+      withdraw: '提现'
 
     attributes:
+      withdraw:
+        user_id: '提现用户'
+        bank_card: '银行卡号'
+        alipay: '支付宝'
+        we_chat_payment: '微信支付'
+        draw_type: '提现方式'
+        draw_money: '提成金额'
+        draw_status: '操作状态'
+
       site_config:
         key: '键'
         val : '值'
