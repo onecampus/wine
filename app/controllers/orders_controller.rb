@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_orders_unsure
-    @orders = Order.where(order_status: 1, pay_status: 2, logistics_status: 0).paginate(
+    @orders = current_user.orders.where(order_status: 1, pay_status: 2, logistics_status: 0).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_wait_ship
-    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 1).paginate(
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 1).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -70,7 +70,7 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_already_ship
-    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 2).paginate(
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -84,7 +84,7 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_already_receive
-    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 3).paginate(
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 3).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -157,21 +157,21 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_already_ok
-    @orders = Order.where(order_status: 3, pay_status: 2, logistics_status: 3).paginate(
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
   end
 
   def index_orders_back
-    @orders = Order.where(order_status: 2, pay_status: 2, logistics_status: 4).paginate(
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 4).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
   end
 
   def index_orders_canceled
-    @orders = Order.where(order_status: 3, pay_status: 2).paginate(
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')

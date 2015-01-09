@@ -55,6 +55,7 @@
     </div>
   </div>
   <div class="panel-body">
+    <% if current_user.has_role? :admin %>
     <div class="row">
       <div class="col-md-12 space20">
         <a class="btn btn-green add-row" href="/admin/products/new">
@@ -62,6 +63,7 @@
         </a>
       </div>
     </div>
+    <% end %>
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>
@@ -117,14 +119,16 @@
                 <% end %></td>
               <td><%= product.unit %></td>
               <td class="center">
-                <%= link_to(product, method: :delete, data: {confirm: '确定吗?'}, class: "btn btn-xs btn-bricky") do %>
+                <% if current_user.has_role? :admin %>
+                  <%= link_to(product, method: :delete, data: {confirm: '确定吗?'}, class: "btn btn-xs btn-bricky") do %>
                     <i class="fa fa-trash-o"></i> 删除
+                  <% end %>
+                  <%= link_to(edit_product_path(product), class: "btn btn-xs btn-green") do %>
+                    <i class="fa fa-edit"></i> 编辑
+                  <% end %>
                 <% end %>
                 <%= link_to(product, class: "btn btn-xs btn-primary") do %>
                     <i class="fa fa-share"></i> 查看
-                <% end %>
-                <%= link_to(edit_product_path(product), class: "btn btn-xs btn-green") do %>
-                    <i class="fa fa-edit"></i> 编辑
                 <% end %>
               </td>
             </tr>

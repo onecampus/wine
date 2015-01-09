@@ -55,6 +55,7 @@
     </div>
   </div>
   <div class="panel-body" data-no-turbolink>
+    <% if current_user.has_role? :admin %>
     <div class="row">
       <div class="col-md-12 space20">
         <a class="btn btn-green add-row" href="/admin/profiles/new?action=new&role=provider">
@@ -62,6 +63,7 @@
         </a>
       </div>
     </div>
+    <% end %>
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>

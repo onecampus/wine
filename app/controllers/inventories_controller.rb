@@ -4,8 +4,8 @@ class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
 
   def index
-    @inventories = Inventory.all.paginate(page: params[:page],
-                                          per_page: 10).order('id DESC')
+    @inventories = current_user.inventories.paginate(page: params[:page],
+                                                     per_page: 10).order('id DESC')
   end
 
   def show

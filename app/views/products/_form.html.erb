@@ -114,7 +114,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.select(:status, options_for_select([['上架', 1], ['下架', 0]]), :class => "form-control") %>
+      <%= f.select(:status, options_for_select([['上架', 1], ['下架', 0]], @product.status)) %>
     </div>
   </div>
   <div class="form-group">
@@ -139,7 +139,7 @@
       <%= t 'activerecord.attributes.product.is_new' %>
     <% end %>
     <div class="col-sm-9">
-      <%= f.select(:is_new, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
+      <%= f.select(:is_new, options_for_select([['否', 0], ['是', 1]], @product.is_new)) %>
     </div>
   </div>
   <div class="form-group">
@@ -147,7 +147,7 @@
       <%= t 'activerecord.attributes.product.is_boutique' %>
     <% end %>
     <div class="col-sm-9">
-      <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), :class => "form-control") %>
+      <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), @product.is_boutique) %>
     </div>
   </div>
   <div class="form-group">

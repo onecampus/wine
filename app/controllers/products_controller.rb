@@ -24,10 +24,11 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     flash[:notice] = '商品创建成功.' if @product.save
-
-    @inventory = Inventory.create(user_id: current_user.id,
-                                  product_id: @product.id,
-                                  amount: 0)
+    User.with_any_role(:provider, :admin).each do |u|
+      @inventory = Inventory.create(user_id: u.id,
+                                    product_id: @product.id,
+                                    amount: 0)
+    end
     respond_with(@product)
   end
 
