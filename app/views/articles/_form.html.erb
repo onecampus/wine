@@ -34,7 +34,7 @@
           <%= t 'activerecord.attributes.article.content' %> <span class="symbol required"></span>
       <% end %>
       <div class="col-sm-9">
-        <%= f.cktext_area :content, :class => 'ckeditor form-control' %>
+        <%= f.text_area :content, class: 'ue-container', id: 'ue-container' %>
       </div>
     </div>
     <div class="form-group">
@@ -192,3 +192,12 @@
       </div>
     </div>
 <% end %>
+<script src="/backend/plugins/ueditor143/ueditor.config.js"></script>
+<script src="/backend/plugins/ueditor143/ueditor.all.js"></script>
+<script src="/backend/plugins/ueditor143/lang/zh-cn/zh-cn.js"></script>
+<script>
+    var ue = UE.getEditor('ue-container', {
+        initialFrameWidth : '100%',
+        initialFrameHeight: 600
+    });
+</script>

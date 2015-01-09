@@ -32,9 +32,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'jquery-ui-rails'
 
-# ckeditor 编辑器
-gem 'ckeditor'
-
 # 图片上传和裁剪
 gem 'carrierwave'
 gem 'mini_magick'

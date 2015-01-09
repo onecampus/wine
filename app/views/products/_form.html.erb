@@ -65,7 +65,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.cktext_area :description, :class => 'ckeditor form-control' %>
+      <%= f.text_area :description, class: 'ue-container', id: 'ue-container' %>
     </div>
   </div>
   <div class="form-group">
@@ -147,7 +147,7 @@
       <%= t 'activerecord.attributes.product.is_boutique' %>
     <% end %>
     <div class="col-sm-9">
-      <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]]), @product.is_boutique) %>
+      <%= f.select(:is_boutique, options_for_select([['否', 0], ['是', 1]], @product.is_boutique)) %>
     </div>
   </div>
   <div class="form-group">
@@ -166,3 +166,12 @@
     </div>
   </div>
 <% end %>
+<script src="/backend/plugins/ueditor143/ueditor.config.js"></script>
+<script src="/backend/plugins/ueditor143/ueditor.all.js"></script>
+<script src="/backend/plugins/ueditor143/lang/zh-cn/zh-cn.js"></script>
+<script>
+  var ue = UE.getEditor('ue-container', {
+    initialFrameWidth : '100%',
+    initialFrameHeight: 600
+  });
+</script>

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-
-  mount Ckeditor::Engine => '/ckeditor'
   root 'site#index'
 
   # product cat
@@ -112,6 +110,9 @@ Rails.application.routes.draw do
     resources :inventories
     resources :comments
     resources :tags
+
+    get 'ueditor_uploader/index'
+    match 'ueditor_uploader/index', to: 'ueditor_uploader#index', via: :post
 
     resources :roles
     resources :users
