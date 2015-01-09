@@ -132,180 +132,197 @@ $(document).ready(function() {
         }
       });
       setTimeout($.unblockUI, 1500);
-    } else {
+    }
+    else {
       var addressId = $(".address-id").val();
       var shoppingCart = $.localStorage.get("shoppingCart");
-      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-      var productList = JsonStr.productList;
-      var invoiceId = $(".invoice-id").val();
-      var shareLinkCode = JsonStr.shareLinkCode;
-      var products = [];
-      for (var i in productList) {
-        if (productList[i].buyMark == true) {
-          var id = productList[i].id;
-          var num = parseInt(productList[i].num);
-          products.push({
-            "product_id": id,
-            "product_count": num
+      if (shoppingCart === null || shoppingCart === "") {
+        return;
+      }
+      else {
+        var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        var orderType = JsonStr.order_type;
+        var productList = JsonStr.productList;
+        var invoiceId = $(".invoice-id").val();
+        var shareLinkCode = JsonStr.shareLinkCode;
+        var products = [];
+        for (var i in productList) {
+          if (productList[i].buyMark == true) {
+            var id = productList[i].id;
+            var num = parseInt(productList[i].num);
+            var produckMark = productList[i].productMark;
+            products.push({
+              "product_id": id,
+              "product_count": num,
+            });
+          }
+        }
+        $(this).attr("disabled","disabled");
+        if((invoiceId == 0) && (shareLinkCode == null)){
+          $.ajax({
+            type: "POST",
+            url: "/customer/orders/create",
+            data: {
+              ship_address_id: addressId,
+              ship_method: 'express',
+              payment_method: 'weixinpayment',
+              products: products,
+              order_type: orderType
+            },
+            dataType: "json",
+            success: function(data) {
+              // code
+
+              for (var i in productList) {
+                if (productList[i].buyMark == true) {
+                  var productId = productList[i].id;
+                  deleteProduct(productId);
+                }
+              }
+              $(".order-btn").attr("disabled",false);
+              showShoppingCartItem();
+              cleanShareLinkCode();
+              orderSuccessHan();
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+              // orderErrorHan(XMLHttpRequest, textStatus);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              orderErrorHan(XMLHttpRequest, textStatus);
+            }
+          });
+        }
+        else if((invoiceId == 0) && (shareLinkCode != null)){
+          $.ajax({
+            type: "POST",
+            url: "/customer/orders/create",
+            data: {
+              ship_address_id: addressId,
+              ship_method: 'express',
+              payment_method: 'weixinpayment',
+              products: products,
+              share_link_code: shareLinkCode,
+              order_type: orderType
+            },
+            dataType: "json",
+            success: function(data) {
+              // code
+
+              for (var i in productList) {
+                if (productList[i].buyMark == true) {
+                  var productId = productList[i].id;
+                  deleteProduct(productId);
+                }
+              }
+              $(".order-btn").attr("disabled",false);
+              showShoppingCartItem();
+              cleanShareLinkCode();
+              orderSuccessHan();
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+              // orderErrorHan(XMLHttpRequest, textStatus);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              orderErrorHan(XMLHttpRequest, textStatus);
+            }
+          });
+        }
+        else if((invoiceId != 0) && (shareLinkCode == null)){
+          $.ajax({
+            type: "POST",
+            url: "/customer/orders/create",
+            data: {
+              ship_address_id: addressId,
+              invoice_id: invoiceId,
+              ship_method: 'express',
+              payment_method: 'weixinpayment',
+              products: products,
+              order_type: orderType
+            },
+            dataType: "json",
+            success: function(data) {
+              // code
+
+              for (var i in productList) {
+                if (productList[i].buyMark == true) {
+                  var productId = productList[i].id;
+                  deleteProduct(productId);
+                }
+              }
+              $(".order-btn").attr("disabled",false);
+              showShoppingCartItem();
+              cleanShareLinkCode();
+              orderSuccessHan();
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+              // orderErrorHan(XMLHttpRequest, textStatus);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              orderErrorHan(XMLHttpRequest, textStatus);
+            }
+          });
+        }
+        else {
+          $.ajax({
+            type: "POST",
+            url: "/customer/orders/create",
+            data: {
+              ship_address_id: addressId,
+              invoice_id: invoiceId,
+              ship_method: 'express',
+              payment_method: 'weixinpayment',
+              products: products,
+              share_link_code: shareLinkCode,
+              order_type: orderType
+            },
+            dataType: "json",
+            success: function(data) {
+              // code
+
+              for (var i in productList) {
+                if (productList[i].buyMark == true) {
+                  var productId = productList[i].id;
+                  deleteProduct(productId);
+                }
+              }
+              $(".order-btn").attr("disabled",false);
+              showShoppingCartItem();
+              cleanShareLinkCode();
+              orderSuccessHan();
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+              // orderErrorHan(XMLHttpRequest, textStatus);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              orderErrorHan(XMLHttpRequest, textStatus);
+            }
           });
         }
       }
-      $(this).attr("disabled","disabled");
-      if((invoiceId == 0) && (shareLinkCode == null)){
-        $.ajax({
-          type: "POST",
-          url: "/customer/orders/create",
-          data: {
-            ship_address_id: addressId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products
-          },
-          dataType: "json",
-          success: function(data) {
-            // code
-
-            for (var i in productList) {
-              if (productList[i].buyMark == true) {
-                var productId = productList[i].id;
-                deleteProduct(productId);
-              }
-            }
-            $(".order-btn").attr("disabled",false);
-            showShoppingCartItem();
-            cleanShareLinkCode();
-            orderSuccessHan();
-          },
-          complete: function(XMLHttpRequest, textStatus) {
-            // orderErrorHan(XMLHttpRequest, textStatus);
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-            orderErrorHan(XMLHttpRequest, textStatus);
-          }
-        });
-      }
-      else if((invoiceId == 0) && (shareLinkCode != null)){
-        $.ajax({
-          type: "POST",
-          url: "/customer/orders/create",
-          data: {
-            ship_address_id: addressId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products,
-            share_link_code: shareLinkCode
-          },
-          dataType: "json",
-          success: function(data) {
-            // code
-
-            for (var i in productList) {
-              if (productList[i].buyMark == true) {
-                var productId = productList[i].id;
-                deleteProduct(productId);
-              }
-            }
-            $(".order-btn").attr("disabled",false);
-            showShoppingCartItem();
-            cleanShareLinkCode();
-            orderSuccessHan();
-          },
-          complete: function(XMLHttpRequest, textStatus) {
-            // orderErrorHan(XMLHttpRequest, textStatus);
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-            orderErrorHan(XMLHttpRequest, textStatus);
-          }
-        });
-      }
-      else if((invoiceId != 0) && (shareLinkCode == null)){
-        $.ajax({
-          type: "POST",
-          url: "/customer/orders/create",
-          data: {
-            ship_address_id: addressId,
-            invoice_id: invoiceId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products
-          },
-          dataType: "json",
-          success: function(data) {
-            // code
-
-            for (var i in productList) {
-              if (productList[i].buyMark == true) {
-                var productId = productList[i].id;
-                deleteProduct(productId);
-              }
-            }
-            $(".order-btn").attr("disabled",false);
-            showShoppingCartItem();
-            cleanShareLinkCode();
-            orderSuccessHan();
-          },
-          complete: function(XMLHttpRequest, textStatus) {
-            // orderErrorHan(XMLHttpRequest, textStatus);
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-            orderErrorHan(XMLHttpRequest, textStatus);
-          }
-        });
-      }
-      else {
-      $.ajax({
-        type: "POST",
-        url: "/customer/orders/create",
-        data: {
-          ship_address_id: addressId,
-          invoice_id: invoiceId,
-          ship_method: 'express',
-          payment_method: 'weixinpayment',
-          products: products,
-          share_link_code: shareLinkCode
-        },
-        dataType: "json",
-        success: function(data) {
-          // code
-
-          for (var i in productList) {
-            if (productList[i].buyMark == true) {
-              var productId = productList[i].id;
-              deleteProduct(productId);
-              }
-            }
-          $(".order-btn").attr("disabled",false);
-          showShoppingCartItem();
-          cleanShareLinkCode();
-          orderSuccessHan();
-        },
-        complete: function(XMLHttpRequest, textStatus) {
-          // orderErrorHan(XMLHttpRequest, textStatus);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-          orderErrorHan(XMLHttpRequest, textStatus);
-        }
-      });
-    }
     }
   });
 });
 
 function deleteProduct(id) {
   var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-  var productList = JsonStr.productList;
-  var list = [];
-  for (var i in productList) {
-    if (productList[i].id == id) {
-      JsonStr.totalNumber = parseInt(JsonStr.totalNumber) - parseInt(productList[i].num);
-      JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) - parseInt(productList[i].num) * parseFloat(productList[i].price);
-    } else {
-      list.push(productList[i]);
-    }
+  if (shoppingCart === null || shoppingCart === "") {
+    return;
   }
-  JsonStr.productList = list;
-  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    var list = [];
+    for (var i in productList) {
+      if (productList[i].id == id) {
+        JsonStr.totalNumber = parseInt(JsonStr.totalNumber) - parseInt(productList[i].num);
+        JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) - parseInt(productList[i].num) * parseFloat(productList[i].price);
+      } else {
+        list.push(productList[i]);
+      }
+    }
+    JsonStr.productList = list;
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  }
 }
 
 function orderSuccessHan() {
@@ -332,16 +349,27 @@ function orderErrorHan(XMLHttpRequest, textStatus) {
   }
 }
 
+
 function showShoppingCartItem() {
   var shoppingCart = $.localStorage.get("shoppingCart");
-  if(shoppingCart !== null) {
+  if (shoppingCart === null || shoppingCart === "") {
+    $(".shopping-cart-mark").hide();
+  }
+  else {
+    console.log("shoppingCart is " + shoppingCart);
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-    var productList = JsonStr.productList;
-    var length = productList.length;
-    if (length > 0) {
-      $(".shopping-cart-mark").show();
-      $(".shopping-cart-mark").text(length);
-    } else {
+    var order_type = JsonStr.order_type;
+    if(order_type == "is_product") {
+      var productList = JsonStr.productList;
+      var length = productList.length;
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      } else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
+    else {
       $(".shopping-cart-mark").hide();
     }
   }
@@ -349,7 +377,12 @@ function showShoppingCartItem() {
 
 function cleanShareLinkCode(){
   var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
-  JsonStr.shareLinkCode = null;
-  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  if (shoppingCart === null || shoppingCart === "") {
+    return;
+  }
+  else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+    JsonStr.shareLinkCode = null;
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  }
 }

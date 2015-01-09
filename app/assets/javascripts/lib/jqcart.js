@@ -19,7 +19,8 @@ $(document).ready(function() {
     zipcode: "",
     totalNumber: 0,
     totalAmount: 0.00,
-    shareLinkCode: null
+    shareLinkCode: null,
+    order_type: "is_product"
   };
   var Cart = {
     //向购物车中添加商品
@@ -42,6 +43,7 @@ $(document).ready(function() {
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
           "shareLinkCode": null,
+          "order_type": "is_product",
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -52,6 +54,8 @@ $(document).ready(function() {
         for (var i in productList) {
           if (productList[i].id == product.id) {
             productList[i].num = parseInt(productList[i].num) + parseInt(product.num);
+            productList[i].num = product.num;
+            productList[i].price = product.price;
             result = true;
           }
         }
@@ -71,8 +75,10 @@ $(document).ready(function() {
         //重新计算总价
         JsonStr.totalNumber = parseInt(JsonStr.totalNumber) + parseInt(product.num);
         JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) + (parseInt(product.num) * parseFloat(product.price));
+        JsonStr.order_type = "is_product";
         OrderDetail.totalNumber = JsonStr.totalNumber;
         OrderDetail.totalAmount = JsonStr.totalAmount;
+        OrderDetail.order_type = JsonStr.order_type;
         //保存购物车
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
@@ -96,6 +102,7 @@ $(document).ready(function() {
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
           "shareLinkCode": null,
+          "order_type": "is_product",
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
@@ -107,6 +114,8 @@ $(document).ready(function() {
           if (productList[i].id == product.id) {
             productList[i].num = parseInt(productList[i].num) + parseInt(product.num);
             productList[i].buyMark = true;
+            productList[i].num = product.num;
+            productList[i].price = product.price;
             result = true;
           }
           else {
@@ -129,34 +138,41 @@ $(document).ready(function() {
         //重新计算总价
         JsonStr.totalNumber = parseInt(JsonStr.totalNumber) + parseInt(product.num);
         JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) + (parseInt(product.num) * parseFloat(product.price));
+        JsonStr.order_type = "is_product";
         OrderDetail.totalNumber = JsonStr.totalNumber;
         OrderDetail.totalAmount = JsonStr.totalAmount;
+        OrderDetail.order_type = JsonStr.order_type;
         //保存购物车
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       }
       var shoppingCart = $.localStorage.get("shoppingCart");
-      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-      productList = JsonStr.productList;
-      var total = 0.00;
-      for (var i in productList) {
-        if (productList[i].id == product.id) {
-          var num = productList[i].num;
-          num = parseInt(num);
-          var price = productList[i].price;
-          price = price.substr(1,price.length);
-          price = parseFloat(price);
-          var freight = productList[i].freight;
-          freight = parseFloat(freight);
-          var product = (Number(price*num)).toFixed(2);
-          product = parseFloat(product);
-
-          total = (Number(product + freight)).toFixed(2);
-          total = parseFloat(total);
-        }
+      if (shoppingCart === null || shoppingCart === "") {
+        return;
       }
-      JsonStr.totalAmount = total;
-      OrderDetail.totalAmount = JsonStr.totalAmount;
-      $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+      else {
+        var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        productList = JsonStr.productList;
+        var total = 0.00;
+        for (var i in productList) {
+          if (productList[i].id == product.id) {
+            var num = productList[i].num;
+            num = parseInt(num);
+            var price = productList[i].price;
+            price = price.substr(1,price.length);
+            price = parseFloat(price);
+            var freight = productList[i].freight;
+            freight = parseFloat(freight);
+            var product = (Number(price*num)).toFixed(2);
+            product = parseFloat(product);
+
+            total = (Number(product + freight)).toFixed(2);
+            total = parseFloat(total);
+          }
+        }
+        JsonStr.totalAmount = total;
+        OrderDetail.totalAmount = JsonStr.totalAmount;
+        $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+      }
     }
   };
   /*
@@ -197,6 +213,7 @@ $(document).ready(function() {
     img = $(".top-img").children().attr("src"),
     buyMark = true,
     freight = $(".freight-price").text();
+    var productMark = "is_product";
     var product = {
       'id': id,
       'name': name,
@@ -205,7 +222,36 @@ $(document).ready(function() {
       'price': price,
       'img': img,
       'buyMark': buyMark,
-      'freight': freight
+      'freight': freight,
+      'productMark': productMark
+    };
+    Cart.buyProduct(product);
+    showShoppingCartItem();
+    window.location = '/customer/orders/settlement';
+  });
+  /*
+  团购购买
+  */
+  $(".buy-now").click(function(){
+    var name = $(".product-name").text(),
+    englishname = $(".product-englishname").text(),
+    price = $(".price").text(),
+    num = $(".p-num").val(),
+    id = $(".product-id").val(),
+    img = $(".top-img").children().attr("src"),
+    buyMark = true,
+    freight = $(".freight-price").text();
+    var productMark = "is_product";
+    var product = {
+      'id': id,
+      'name': name,
+      'englishname': englishname,
+      'num': num,
+      'price': price,
+      'img': img,
+      'buyMark': buyMark,
+      'freight': freight,
+      'productMark': productMark
     };
     Cart.buyProduct(product);
     showShoppingCartItem();
@@ -215,15 +261,24 @@ $(document).ready(function() {
 
 function showShoppingCartItem() {
   var shoppingCart = $.localStorage.get("shoppingCart");
-  console.log("shoppingCart is " + shoppingCart);
-  if(shoppingCart !== null) {
+  if (shoppingCart === null || shoppingCart === "") {
+    $(".shopping-cart-mark").hide();
+  }
+  else {
+    console.log("shoppingCart is " + shoppingCart);
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-    var productList = JsonStr.productList;
-    var length = productList.length;
-    if (length > 0) {
-      $(".shopping-cart-mark").show();
-      $(".shopping-cart-mark").text(length);
-    } else {
+    var order_type = JsonStr.order_type;
+    if(order_type == "is_product") {
+      var productList = JsonStr.productList;
+      var length = productList.length;
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      } else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
+    else {
       $(".shopping-cart-mark").hide();
     }
   }

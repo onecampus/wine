@@ -15,7 +15,12 @@ function updateShareLinkCode() {
   var name = "share_link_code";
   var shareLinkCode = getShareLinkCode(name);
   var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
-  JsonStr.shareLinkCode = shareLinkCode;
-  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  if (shoppingCart === null || shoppingCart === "") {
+    return;
+  }
+  else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+    JsonStr.shareLinkCode = shareLinkCode;
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  }
 }

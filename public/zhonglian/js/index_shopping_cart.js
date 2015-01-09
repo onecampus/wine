@@ -81,16 +81,21 @@ $(document).ready(function() {
     });
     var total = $(".total").text();
     var shoppingCart = $.localStorage.get("shoppingCart");
-    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-    JsonStr.totalAmount = total;
-    OrderDetail.totalAmount = JsonStr.totalAmount;
-    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
-    var length = JsonStr.productList.length;
-    if(length == 0 || select == 0) {
+    if (shoppingCart === null || shoppingCart === "") {
       return;
     }
-    else{
-      $(this).attr("href", "/customer/orders/settlement");
+    else {
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      JsonStr.totalAmount = total;
+      OrderDetail.totalAmount = JsonStr.totalAmount;
+      $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+      var length = JsonStr.productList.length;
+      if(length == 0 || select == 0) {
+        return;
+      }
+      else{
+        $(this).attr("href", "/customer/orders/settlement");
+      }
     }
   });
   /*
@@ -98,19 +103,17 @@ $(document).ready(function() {
   */
   $(".cleancart").click(function(){
     var shoppingCart = $.localStorage.get("shoppingCart");
-    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-    var productList = JsonStr.productList;
-    var list = [];
-    for (var i in productList) {
-      JsonStr.totalNumber = parseInt(JsonStr.totalNumber) - parseInt(productList[i].num);
-      JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) - parseInt(productList[i].num) * parseFloat(productList[i].price);
+    if (shoppingCart === null || shoppingCart === "") {
+      return;
     }
-    JsonStr.productList = list;
-    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
-    $(".total-freight").text(0);
-    $(".total").text(0);
-    $(".product-total").text(0);
-    showProduct();
+    else {
+      $.localStorage.set("shoppingCart","");
+      $(".total-freight").text(0);
+      $(".total").text(0);
+      $(".product-total").text(0);
+      showProduct();
+      showShoppingCartItem();
+    }
   });
 
 });
@@ -121,119 +124,172 @@ function total() {
   var total = 0.00,
       productTotal = 0.00,
       totalFreight = 0.00,
-      shoppingCart = $.localStorage.get("shoppingCart"),
-      JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length)),
-      productList = JsonStr.productList;
-  $(".checkbox").each(function() {
-    if (($(this).is(':checked')) == true) {
-      productTotal = parseFloat(productTotal);
-      totalFreight = parseFloat(totalFreight);
-      var subtotal = $(this).parent().siblings(".p-amount").children(".price").text();
-      subtotal = parseFloat(subtotal.substring(1, subtotal.length));
-      productTotal = (Number(productTotal + subtotal)).toFixed(2);
+      shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
+      return;
+  }
+  else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var  productList = JsonStr.productList;
+    $(".checkbox").each(function() {
+      if (($(this).is(':checked')) == true) {
+        productTotal = parseFloat(productTotal);
+        totalFreight = parseFloat(totalFreight);
+        var subtotal = $(this).parent().siblings(".p-amount").children(".price").text();
+        subtotal = parseFloat(subtotal.substring(1, subtotal.length));
+        productTotal = (Number(productTotal + subtotal)).toFixed(2);
 
-      var productId = $(this).parent().siblings("input").val();
-      for (var i in productList) {
-        if (productList[i].id == productId) {
-          var freight = productList[i].freight;
-              freight = parseFloat(freight);
-              totalFreight = (Number(totalFreight + freight)).toFixed(2);
+        var productId = $(this).parent().siblings("input").val();
+        for (var i in productList) {
+          if (productList[i].id == productId) {
+            var freight = productList[i].freight;
+            freight = parseFloat(freight);
+            totalFreight = (Number(totalFreight + freight)).toFixed(2);
+          }
         }
       }
-    }
-    productTotal = parseFloat(productTotal);
-    totalFreight = parseFloat(totalFreight);
-    total = (Number(totalFreight + productTotal)).toFixed(2);
-    $(".total-freight").text(totalFreight)
-    $(".product-total").text(productTotal);
-    $(".total").text(total);
-  });
+      productTotal = parseFloat(productTotal);
+      totalFreight = parseFloat(totalFreight);
+      total = (Number(totalFreight + productTotal)).toFixed(2);
+      $(".total-freight").text(totalFreight)
+      $(".product-total").text(productTotal);
+      $(".total").text(total);
+    });
+  }
 }
 
-function getlocalStorager() {
-  var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-  return JsonStr.productList;
-}
 
 function updateBuyMark(id, num, mark) {
   var shoppingCart = $.localStorage.get("shoppingCart");
-  var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-  var productList = JsonStr.productList;
-  //查找购物车中是否有该商品
-  for (var i in productList) {
-    if (productList[i].id == id) {
-      productList[i].buyMark = mark;
-      productList[i].num = num;
-    }
+  if (shoppingCart === null || shoppingCart === "") {
+    return;
   }
-  //保存购物车
-  $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  else{
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    //查找购物车中是否有该商品
+    for (var i in productList) {
+      if (productList[i].id == id) {
+        productList[i].buyMark = mark;
+        productList[i].num = num;
+      }
+    }
+    //保存购物车
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  }
 }
 
 function showProduct() {
-  var productList = getlocalStorager();
-  var length = productList.length;
-  var subtotal = 0.00;
-  $(".totalproduct").text(length);
-  if (length == 0) {
-    $(".total-freight").text(0);
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
     $(".mesg").show();
     $(".product").remove();
+    $("hr").remove();
+    return;
+  }
+  else{
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    var order_type = JsonStr.order_type;
+    if(productList == null){
+      $(".mesg").show();
+      $(".product").remove();
+      $("hr").remove();
+      return;
+    }
+    else {
+      var subtotal = 0.00;
+      var length = productList.length;
+      if (length == 0) {
+        $(".total-freight").text(0);
+        $(".mesg").show();
+        $(".product").remove();
+        $(".shopping-cart-mark").hide();
+        $("hr").hide();
+      }
+      else {
+        if(order_type == "is_product"){
+          $(".mesg").hide();
+          for (i = 0; i < productList.length; i++) {
+            var id = productList[i].id;
+            var name = productList[i].name;
+            var englishname = productList[i].englishname;
+            var num = productList[i].num;
+            var price = productList[i].price;
+            num = parseInt(num);
+            price = price.substring(2, price.length);
+            price = parseFloat(price);
+            var img = productList[i].img;
+            subtotal = (Number(num * price)).toFixed(2);
+            var id = "product" + i;
+            var product = $("<div></div>").addClass("product").attr("id", id);
+            $(".select").before(product);
+            var productId = $("<input>").attr("type", "hidden").attr("value", productList[i].id);
+            $("#product" + i).append(productId);
+            var pselect = $("<div></div>").addClass("p-select").addClass("pull-left");
+            $("#product" + i).append(pselect);
+
+            var checkbox = $("<input>").addClass("checkbox").attr("type", "checkbox");
+            $("#product" + i).children(".p-select").append(checkbox);
+
+            var pimg = $("<div></div>").addClass("p-img").addClass("pull-left");
+            $("#product" + i).append(pimg);
+            var img = $("<img></img>").attr("src", img);
+            $("#product" + i).children(".p-img").append(img);
+
+            var pintro = $("<div></div>").addClass("p-intro").addClass("pull-left");
+            $("#product" + i).append(pintro);
+            $("#product" + i).children(".p-intro").append("<p></P>");
+            var spanname = $("<span></span>").addClass("text1").text(name);
+            var spanenname = $("<span></span>").addClass("text1").text(englishname);
+            $("#product" + i).children(".p-intro").children().append(spanname);
+            $("#product" + i).children(".p-intro").children().append("<br/>");
+            $("#product" + i).children(".p-intro").children().append(spanenname);
+
+            var pamount = $("<div></div>").addClass("p-amount").addClass("pull-right");
+            $("#product" + i).append(pamount);
+            var pprice = $("<div></div>").addClass("price").addClass("text2").text("¥" + subtotal).attr("value", price);
+            $("#product" + i).children(".p-amount").append(pprice);
+            var ampuntaction = $("<div></div>").addClass("ampunt-action").addClass("pull-left");
+            $("#product" + i).children(".p-amount").append(ampuntaction);
+            var buttondec = $("<button></button>").addClass("action-de").attr("type", "button").text("-");
+            $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttondec);
+            var number = $("<p></P>").addClass("number").text(num).attr("value", num);
+            $("#product" + i).children(".p-amount").children(".ampunt-action").append(number);
+            var buttonplus = $("<button></button>").addClass("action-plus").attr("type", "button").text("+");
+            $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttonplus);
+            $("#product" + i).after("<hr>");
+          }
+
+        }
+        else {
+          $(".mesg").show();
+        }
+      }
+    }
+  }
+}
+function showShoppingCartItem() {
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
     $(".shopping-cart-mark").hide();
-    $("hr").hide();
-  } else {
-    $(".mesg").hide();
-    for (i = 0; i < length; i++) {
-
-      var id = productList[i].id;
-      var name = productList[i].name;
-      var englishname = productList[i].englishname;
-      var num = productList[i].num;
-      var price = productList[i].price;
-      num = parseInt(num);
-      price = price.substring(2, price.length);
-      price = parseFloat(price);
-      var img = productList[i].img;
-      subtotal = (Number(num * price)).toFixed(2);
-      var id = "product" + i;
-      var product = $("<div></div>").addClass("product").attr("id", id);
-      $(".select").before(product);
-      var productId = $("<input>").attr("type", "hidden").attr("value", productList[i].id);
-      $("#product" + i).append(productId);
-      var pselect = $("<div></div>").addClass("p-select").addClass("pull-left");
-      $("#product" + i).append(pselect);
-
-      var checkbox = $("<input>").addClass("checkbox").attr("type", "checkbox");
-      $("#product" + i).children(".p-select").append(checkbox);
-
-      var pimg = $("<div></div>").addClass("p-img").addClass("pull-left");
-      $("#product" + i).append(pimg);
-      var img = $("<img></img>").attr("src", img);
-      $("#product" + i).children(".p-img").append(img);
-
-      var pintro = $("<div></div>").addClass("p-intro").addClass("pull-left");
-      $("#product" + i).append(pintro);
-      $("#product" + i).children(".p-intro").append("<p></P>");
-      var spanname = $("<span></span>").addClass("text1").text(name);
-      var spanenname = $("<span></span>").addClass("text1").text(englishname);
-      $("#product" + i).children(".p-intro").children().append(spanname);
-      $("#product" + i).children(".p-intro").children().append("<br/>");
-      $("#product" + i).children(".p-intro").children().append(spanenname);
-
-      var pamount = $("<div></div>").addClass("p-amount").addClass("pull-right");
-      $("#product" + i).append(pamount);
-      var pprice = $("<div></div>").addClass("price").addClass("text2").text("¥" + subtotal).attr("value", price);
-      $("#product" + i).children(".p-amount").append(pprice);
-      var ampuntaction = $("<div></div>").addClass("ampunt-action").addClass("pull-left");
-      $("#product" + i).children(".p-amount").append(ampuntaction);
-      var buttondec = $("<button></button>").addClass("action-de").attr("type", "button").text("-");
-      $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttondec);
-      var number = $("<p></P>").addClass("number").text(num).attr("value", num);
-      $("#product" + i).children(".p-amount").children(".ampunt-action").append(number);
-      var buttonplus = $("<button></button>").addClass("action-plus").attr("type", "button").text("+");
-      $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttonplus);
-      $("#product" + i).after("<hr>");
+  }
+  else {
+    console.log("shoppingCart is " + shoppingCart);
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var order_type = JsonStr.order_type;
+    if(order_type == "is_product") {
+      var productList = JsonStr.productList;
+      var length = productList.length;
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      } else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
+    else {
+      $(".shopping-cart-mark").hide();
     }
   }
 }
