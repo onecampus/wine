@@ -78,10 +78,18 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
+    @already_sell = 0
+    @group.group_orders.each do |go|
+      @already_sell += go.group_count
+    end
   end
 
   def show_seckill
-    @seckill = nil
+    @seckill = Seckill.find params[:id]
+    @already_sell = 0
+    @seckill.seckill_orders.each do |go|
+      @already_sell += go.seckill_count
+    end
   end
 
   def new_comment
