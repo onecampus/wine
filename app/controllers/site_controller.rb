@@ -246,7 +246,7 @@ class SiteController < CustomerController
     )
     products = params[:products]
 
-    if !params[:is_product].blank?
+    if !params[:is_product].blank? && params[:is_product] == 1
       order.order_type = '普通订单'
       ProductOrder.transaction do
         Order.transaction do
@@ -284,7 +284,7 @@ class SiteController < CustomerController
           return
         end
       end
-    elsif !params[:is_group].blank?
+    elsif !params[:is_group].blank? && params[:is_group] == 1
       order.order_type = '团购订单'
       GroupOrder.transaction do
         Order.transaction do
@@ -324,7 +324,7 @@ class SiteController < CustomerController
           return
         end
       end
-    elsif !params[:is_seckill].blank?
+    elsif !params[:is_seckill].blank? && params[:is_seckill] == 1
       order.order_type = '秒杀订单'
       SeckillOrder.transaction do
         Order.transaction do
