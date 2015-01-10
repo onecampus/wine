@@ -159,7 +159,7 @@
       <% g.group_orders.each do |go| %>
       <% already_sell += go.group_count %>
       <% end %>
-    <a href="/customer/groups/<%=g.product.id%>/show">
+    <a href="/customer/groups/<%=g.id%>/show">
       <div class="product">
         <img src="/zhonglian/img/index/shangpin.jpg">
         <div class="product-inf">
@@ -195,6 +195,7 @@
       <% s.seckill_orders.each do |go| %>
         <% already_sell += go.seckill_count %>
       <% end %>
+    <a href="/customer/seckills/<%=s.id%>/show">
       <div class="product">
         <img src="/zhonglian/img/index/shangpin.jpg">
         <div class="product-inf">
@@ -225,6 +226,7 @@
           </div>
         </div>
       </div>
+    </a>
       <% end %>
     </div>
   </div>
