@@ -1,9 +1,6 @@
 <% content_for :customer_title do %>
   团购
 <% end %>
-<% @groups.each do |g| %>
-  已经参加的人数<%= g.people %><br />
-<% end %>
 <script src="/assets/lib/jquery1.8.3.js"></script>
 <style>
   body {
@@ -158,109 +155,42 @@
   <div class="group">
     <button class="btn btn-red group-btn" type="button">精选团购</button>
     <div class="group-products">
+      <% @groups.each do |g| %>
+    <a href="/customer/groups/<%=g.product.id%>/show">
       <div class="product">
         <img src="/zhonglian/img/index/shangpin.jpg">
         <div class="product-inf">
-          <p class="text3">长城1981</p>
+          <p class="text3"><%= g.product.name%></p>
           <hr>
           <div class="price-inf">
             <div class="group-price">
-              团购价:<span>¥600</span>
+              团购价:<span>¥<%= g.price%></span>
             </div>
             <div class="product-price">
-              <span>¥600</span>
+              <span>¥<%= g.product.price%></span>
             </div>
           </div>
           <hr>
           <div class="product-number">
             <div class="sell-number">
-              已售:<span>25</span>件
+              已售:<span><%= @already_sell%></span>件
             </div>
+            <input class="all-num" type="hidden" value="<%= g.limit_product_count%>">
             <div class="over-number">
               剩余:<span>25</span>件
             </div>
           </div>
         </div>
       </div>
-      <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
-        <div class="product-inf">
-          <p class="text3">长城1981</p>
-          <hr>
-          <div class="price-inf">
-            <div class="group-price">
-              团购价:<span>¥600</span>
-            </div>
-            <div class="product-price">
-              <span>¥600</span>
-            </div>
-          </div>
-          <hr>
-          <div class="product-number">
-            <div class="sell-number">
-              已售:<span>25</span>件
-            </div>
-            <div class="over-number">
-              剩余:<span>25</span>件
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
-        <div class="product-inf">
-          <p class="text3">长城1981</p>
-          <hr>
-          <div class="price-inf">
-            <div class="group-price">
-              团购价:<span>¥600</span>
-            </div>
-            <div class="product-price">
-              <span>¥600</span>
-            </div>
-          </div>
-          <hr>
-          <div class="product-number">
-            <div class="sell-number">
-              已售:<span>25</span>件
-            </div>
-            <div class="over-number">
-              剩余:<span>25</span>件
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
-        <div class="product-inf">
-          <p class="text3">长城1981</p>
-          <hr>
-          <div class="price-inf">
-            <div class="group-price">
-              团购价:<span>¥600</span>
-            </div>
-            <div class="product-price">
-              <span>¥600</span>
-            </div>
-          </div>
-          <hr>
-          <div class="product-number">
-            <div class="sell-number">
-              已售:<span>25</span>件
-            </div>
-            <div class="over-number">
-              剩余:<span>25</span>件
-            </div>
-          </div>
-        </div>
-      </div>
+    </a>
+      <% end %>
     </div>
     <div class="seckill-products">
       <div class="seckill-btn"><button class="btn btn-red" type="button">限时秒杀</button></div>
       <div class="product">
         <img src="/zhonglian/img/index/shangpin.jpg">
         <div class="product-inf">
-          <p class="text3">长城1981</p>
+          <p class="text3"></p>
           <hr>
           <div class="price-inf">
             <div class="group-price">
@@ -291,7 +221,7 @@
       <div class="product">
         <img src="/zhonglian/img/index/shangpin.jpg">
         <div class="product-inf">
-          <p class="text3">长城1981</p>
+          <p class="text3"></p>
           <hr>
           <div class="price-inf">
             <div class="group-price">
@@ -312,38 +242,7 @@
           </div>
           <hr>
           <div class="seckill-time-msg">
-            <span>本次活动已截止！</span>
-          </div>
-          <div class="seckill-time">
-            <div><img src="/zhonglian/img/seckill-icon.png">剩余<span class="remainD"></span>天<span class="remainH"></span>时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
-          </div>
-        </div>
-      </div>
-      <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
-        <div class="product-inf">
-          <p class="text3">长城1981</p>
-          <hr>
-          <div class="price-inf">
-            <div class="group-price">
-              秒杀价:<span>¥600</span>
-            </div>
-            <div class="product-price">
-              <span>¥600</span>
-            </div>
-          </div>
-          <hr>
-          <div class="product-number">
-            <div class="sell-number">
-              已售:<span>25</span>件
-            </div>
-            <div class="over-number">
-              剩余:<span>25</span>件
-            </div>
-          </div>
-          <hr>
-          <div class="seckill-time-msg">
-            <span>本次活动已截止！</span>
+            <span>本次活动已截止!</span>
           </div>
           <div class="seckill-time">
             <div><img src="/zhonglian/img/seckill-icon.png">剩余<span class="remainD"></span>天<span class="remainH"></span>时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
@@ -354,22 +253,28 @@
   </div>
 </div>
 <script>
-var startTime = new Date();
-//定义参数可返回当天的日期和时间
-startTime.setFullYear(2015, 0, 8);
-//调用设置年份
-startTime.setHours(23);
-//调用设置指定的时间的小时字段
-startTime.setMinutes(53);
-//调用设置指定时间的分钟字段
-startTime.setSeconds(59);
-//调用设置指定时间的秒钟字段
-startTime.setMilliseconds(999);
-//调用置指定时间的毫秒字段
-var EndTime=startTime.getTime();
-//定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+var data = null;
+function setTime(){
+  var startTime = new Date();
+  //定义参数可返回当天的日期和时间
+  startTime.setFullYear(2015, 0, 11);
+  //调用设置年份
+  startTime.setHours(23);
+  //调用设置指定的时间的小时字段
+  startTime.setMinutes(53);
+  //调用设置指定时间的分钟字段
+  startTime.setSeconds(59);
+  //调用设置指定时间的秒钟字段
+  startTime.setMilliseconds(999);
+  //调用置指定时间的毫秒字段
+  var EndTime=startTime.getTime();
+  //定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+  return EndTime;
+}
+
 function GetRTime(){
   //定义方法
+  var EndTime = setTime();
   var NowTime = new Date();
   //定义参数可返回当天的日期和时间
   var nMS = EndTime - NowTime.getTime();
