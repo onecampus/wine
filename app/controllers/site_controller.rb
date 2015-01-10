@@ -74,6 +74,7 @@ class SiteController < CustomerController
 
   def index_groups_seckills
     @groups = Group.all
+    @seckills = Seckill.all
   end
 
   def show_group

@@ -158,115 +158,38 @@ $(document).ready(function() {
           }
         }
         $(this).attr("disabled","disabled");
+        var data =null;
         if((invoiceId == 0) && (shareLinkCode == null)){
-          $.ajax({
-            type: "POST",
-            url: "/customer/orders/create",
-            data: {
+            data = {
               ship_address_id: addressId,
               ship_method: 'express',
               payment_method: 'weixinpayment',
               products: products,
               order_type: orderType
-            },
-            dataType: "json",
-            success: function(data) {
-              // code
-
-              for (var i in productList) {
-                if (productList[i].buyMark == true) {
-                  var productId = productList[i].id;
-                  deleteProduct(productId);
-                }
-              }
-              $(".order-btn").attr("disabled",false);
-              showShoppingCartItem();
-              cleanShareLinkCode();
-              orderSuccessHan();
-            },
-            complete: function(XMLHttpRequest, textStatus) {
-              // orderErrorHan(XMLHttpRequest, textStatus);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              orderErrorHan(XMLHttpRequest, textStatus);
-            }
-          });
+            };
         }
         else if((invoiceId == 0) && (shareLinkCode != null)){
-          $.ajax({
-            type: "POST",
-            url: "/customer/orders/create",
-            data: {
+            data = {
               ship_address_id: addressId,
               ship_method: 'express',
               payment_method: 'weixinpayment',
               products: products,
               share_link_code: shareLinkCode,
               order_type: orderType
-            },
-            dataType: "json",
-            success: function(data) {
-              // code
-
-              for (var i in productList) {
-                if (productList[i].buyMark == true) {
-                  var productId = productList[i].id;
-                  deleteProduct(productId);
-                }
-              }
-              $(".order-btn").attr("disabled",false);
-              showShoppingCartItem();
-              cleanShareLinkCode();
-              orderSuccessHan();
-            },
-            complete: function(XMLHttpRequest, textStatus) {
-              // orderErrorHan(XMLHttpRequest, textStatus);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              orderErrorHan(XMLHttpRequest, textStatus);
-            }
-          });
+            };
         }
         else if((invoiceId != 0) && (shareLinkCode == null)){
-          $.ajax({
-            type: "POST",
-            url: "/customer/orders/create",
-            data: {
+            data = {
               ship_address_id: addressId,
               invoice_id: invoiceId,
               ship_method: 'express',
               payment_method: 'weixinpayment',
               products: products,
               order_type: orderType
-            },
-            dataType: "json",
-            success: function(data) {
-              // code
-
-              for (var i in productList) {
-                if (productList[i].buyMark == true) {
-                  var productId = productList[i].id;
-                  deleteProduct(productId);
-                }
-              }
-              $(".order-btn").attr("disabled",false);
-              showShoppingCartItem();
-              cleanShareLinkCode();
-              orderSuccessHan();
-            },
-            complete: function(XMLHttpRequest, textStatus) {
-              // orderErrorHan(XMLHttpRequest, textStatus);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              orderErrorHan(XMLHttpRequest, textStatus);
-            }
-          });
+            };
         }
         else {
-          $.ajax({
-            type: "POST",
-            url: "/customer/orders/create",
-            data: {
+            data = {
               ship_address_id: addressId,
               invoice_id: invoiceId,
               ship_method: 'express',
@@ -274,30 +197,34 @@ $(document).ready(function() {
               products: products,
               share_link_code: shareLinkCode,
               order_type: orderType
-            },
-            dataType: "json",
-            success: function(data) {
-              // code
-
-              for (var i in productList) {
-                if (productList[i].buyMark == true) {
-                  var productId = productList[i].id;
-                  deleteProduct(productId);
-                }
-              }
-              $(".order-btn").attr("disabled",false);
-              showShoppingCartItem();
-              cleanShareLinkCode();
-              orderSuccessHan();
-            },
-            complete: function(XMLHttpRequest, textStatus) {
-              // orderErrorHan(XMLHttpRequest, textStatus);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-              orderErrorHan(XMLHttpRequest, textStatus);
-            }
-          });
+            };
         }
+        $.ajax({
+          type: "POST",
+          url: "/customer/orders/create",
+          data: data,
+          dataType: "json",
+          success: function(data) {
+            // code
+
+            for (var i in productList) {
+              if (productList[i].buyMark == true) {
+                var productId = productList[i].id;
+                deleteProduct(productId);
+              }
+            }
+            $(".order-btn").attr("disabled",false);
+            showShoppingCartItem();
+            cleanShareLinkCode();
+            orderSuccessHan();
+          },
+          complete: function(XMLHttpRequest, textStatus) {
+            // orderErrorHan(XMLHttpRequest, textStatus);
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            orderErrorHan(XMLHttpRequest, textStatus);
+          }
+        });
       }
     }
   });
