@@ -1,17 +1,6 @@
 <% content_for :customer_title do %>
     搜索结果
 <% end %>
-<script src="/assets/lib/jquery1.8.3.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  $(".q").focus(function(){
-    $(".search-box-word").hide();
-  });
-  $(".q").blur(function(){
-    $(".search-box-word").show();
-  });
-});
-</script>
 <style type="text/css">
 .search-box {
   width: 100%;
@@ -155,3 +144,38 @@ hr {
 <div class="space">
 </div>
 <%= render "site/shared/bottombar" %>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".q").focus(function(){
+    $(".search-box-word").hide();
+  });
+  $(".q").blur(function(){
+    $(".search-box-word").show();
+  });
+  showShoppingCartItem();
+});
+function showShoppingCartItem() {
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
+    $(".shopping-cart-mark").hide();
+  }
+  else {
+    console.log("shoppingCart is " + shoppingCart);
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var order_type = JsonStr.order_type;
+    if(order_type == "is_product") {
+      var productList = JsonStr.productList;
+      var length = productList.length;
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      } else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
+    else {
+      $(".shopping-cart-mark").hide();
+    }
+  }
+}
+</script>
