@@ -142,6 +142,24 @@ $(document).ready(function() {
       else {
         var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
         var orderType = JsonStr.order_type;
+        var isProduct = null;
+        var isGroup = null;
+        var isSeckill = null;
+        if (orderType == "is_product") {
+          isProduct = 1;
+          isGroup = 0;
+          isSeckill = 0;
+        }
+        if (orderType == "is_group") {
+          isProduct = 0;
+          isGroup = 1;
+          isSeckill = 0;
+        }
+        if (orderType == "is_seckill") {
+          isProduct = 0;
+          isGroup = 0;
+          isSeckill = 1;
+        }
         var productList = JsonStr.productList;
         var invoiceId = $(".invoice-id").val();
         var shareLinkCode = JsonStr.shareLinkCode;
@@ -166,7 +184,9 @@ $(document).ready(function() {
               ship_method: 'express',
               payment_method: 'weixinpayment',
               products: products,
-              order_type: orderType
+              is_product: isProduct,
+              is_group: isGroup,
+              is_seckill: isSeckill
             };
         }
         else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == null)){
@@ -176,7 +196,9 @@ $(document).ready(function() {
               payment_method: 'weixinpayment',
               products: products,
               share_link_code: shareLinkCode,
-              order_type: orderType
+              is_product: isProduct,
+              is_group: isGroup,
+              is_seckill: isSeckill
             };
         }
         else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != null)){
@@ -186,7 +208,9 @@ $(document).ready(function() {
             payment_method: 'weixinpayment',
             products: products,
             invite_code: inviteCode,
-            order_type: orderType
+            is_product: isProduct,
+            is_group: isGroup,
+            is_seckill: isSeckill
           };
         }
         else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == null)){
@@ -196,7 +220,9 @@ $(document).ready(function() {
               ship_method: 'express',
               payment_method: 'weixinpayment',
               products: products,
-              order_type: orderType
+              is_product: isProduct,
+              is_group: isGroup,
+              is_seckill: isSeckill
             };
         }
         else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == null)){
@@ -207,7 +233,9 @@ $(document).ready(function() {
             payment_method: 'weixinpayment',
             products: products,
             share_link_code: shareLinkCode,
-            order_type: orderType
+            is_product: isProduct,
+            is_group: isGroup,
+            is_seckill: isSeckill
           };
         }
         else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != null)){
@@ -218,7 +246,9 @@ $(document).ready(function() {
             payment_method: 'weixinpayment',
             products: products,
             invite_code: inviteCode,
-            order_type: orderType
+            is_product: isProduct,
+            is_group: isGroup,
+            is_seckill: isSeckill
           };
         }
         else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != null)){
@@ -229,7 +259,9 @@ $(document).ready(function() {
             products: products,
             share_link_code: shareLinkCode,
             invite_code: inviteCode,
-            order_type: orderType
+            is_product: isProduct,
+            is_group: isGroup,
+            is_seckill: isSeckill
           };
         }
         else {
@@ -241,7 +273,9 @@ $(document).ready(function() {
               products: products,
               share_link_code: shareLinkCode,
               invite_code: inviteCode,
-              order_type: orderType
+              is_product: isProduct,
+              is_group: isGroup,
+              is_seckill: isSeckill
             };
         }
         $.ajax({
