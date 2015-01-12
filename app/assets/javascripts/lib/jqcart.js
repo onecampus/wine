@@ -50,6 +50,11 @@ $(document).ready(function() {
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
         JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        if(JsonStr.order_type !="is_product") {
+          var productList = [];
+          JsonStr.productList = productList;
+          Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
+        }
         var productList = JsonStr.productList;
         var result = false;
         //查找购物车中是否有该商品
@@ -110,6 +115,11 @@ $(document).ready(function() {
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
       } else {
         JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        if(JsonStr.order_type !="is_product") {
+          var productList = [];
+          JsonStr.productList = productList;
+          Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
+        }
         var productList = JsonStr.productList;
         var result = false;
         //查找购物车中是否有该商品
