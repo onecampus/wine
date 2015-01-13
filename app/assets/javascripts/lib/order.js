@@ -299,7 +299,7 @@ $(document).ready(function() {
               $(".order-btn").attr("disabled",false);
               showShoppingCartItem();
               cleanShareLinkCode();
-              orderSuccessHan();        
+              orderSuccessHan();
             }
           },
           complete: function(XMLHttpRequest, textStatus) {
@@ -322,9 +322,19 @@ function deleteProduct(id) {
   else {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
+    var orderType = JsonStr.order_type;
+    if(orderType == "is_product") {
+      orderType = "product";
+    }
+    else if (orderType == "is_group") {
+      orderType = "group";
+    }
+    else {
+      orderType = "seckill";
+    }
     var list = [];
     for (var i in productList) {
-      if (productList[i].id == id) {
+      if (productList[i].id == id && productList[i].productType == orderType) {
         JsonStr.totalNumber = parseInt(JsonStr.totalNumber) - parseInt(productList[i].num);
         JsonStr.totalAmount = parseFloat(JsonStr.totalAmount) - parseInt(productList[i].num) * parseFloat(productList[i].price);
       } else {
@@ -386,16 +396,16 @@ function showShoppingCartItem() {
   else {
     console.log("shoppingCart is " + shoppingCart);
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-    var order_type = JsonStr.order_type;
-    if(order_type == "is_product") {
-      var productList = JsonStr.productList;
-      var length = productList.length;
-      if (length > 0) {
-        $(".shopping-cart-mark").show();
-        $(".shopping-cart-mark").text(length);
-      } else {
-        $(".shopping-cart-mark").hide();
+    var length = 0;
+    var productList = JsonStr.productList;
+    for (i in productList) {
+      if(productList[i].productType == "product") {
+        length = length +1;
       }
+    }
+    if (length > 0) {
+      $(".shopping-cart-mark").show();
+      $(".shopping-cart-mark").text(length);
     }
     else {
       $(".shopping-cart-mark").hide();
