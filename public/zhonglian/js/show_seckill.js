@@ -66,7 +66,7 @@ $(document).ready(function(){
             productList[i].buyMark = true;
             productList[i].num = product.num;
             productList[i].price = product.price;
-            result = false;
+            result = true;
           }
           else {
             productList[i].buyMark = false;
@@ -163,6 +163,11 @@ $(document).ready(function(){
 });
 
   function GetRTime(){
+    var allNum = $(".all-num").val();
+    var sellNum = $(".sell-num").children().text();
+    allNum = parseInt(allNum);
+    sellNum = parseInt(sellNum);
+    var overNum = allNum - sellNum;
     var time = $(".seckill-endtime").val();
     time = time.toString();
     var year = time.substr(0,4);
@@ -214,7 +219,12 @@ $(document).ready(function(){
       $(".seckill-buy-now").attr("disabled","disabled");
     }else{
       //否则
-      $(".seckill-buy-now").attr("disabled",false);
+      if(overNum < 0 || overNum == 0) {
+        $(".seckill-buy-now").attr("disabled","disabled");
+      }
+      else {
+        $(".seckill-buy-now").attr("disabled",false);
+      }
       $(".time-inf").show();
       //天数展开
       $("#daoend").hide();

@@ -304,6 +304,10 @@ class SiteController < CustomerController
             group = product.group
             unit_price = group.price
 
+            group.people += 1
+            group.save!
+
+
             group_order = GroupOrder.new(
               order_id: order.id,
               group_id: group.id,
@@ -344,6 +348,10 @@ class SiteController < CustomerController
             product = Product.find(product_id)
             seckill = product.seckill
             unit_price = seckill.price
+
+            seckill.people += 1
+            # seckill.limit_product_count -= 1 if seckill.limit_product_count > 0
+            seckill.save!
 
             seckill_order = SeckillOrder.new(
               order_id: order.id,

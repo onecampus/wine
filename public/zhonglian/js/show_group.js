@@ -67,7 +67,7 @@ $(document).ready(function(){
             productList[i].buyMark = true;
             productList[i].num = product.num;
             productList[i].price = product.price;
-            result = false;
+            result = true;
           }
           else {
             productList[i].buyMark = false;

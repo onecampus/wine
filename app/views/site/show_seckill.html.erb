@@ -290,7 +290,7 @@ body {
 }
 </style>
 <div class="main">
-  <input class="product-id" type="hidden" value="<%= @seckill.id %>">
+  <input class="product-id" type="hidden" value="<%= @seckill.product.id %>">
   <div class="top-img"><img src="<%= @seckill.product.img_url %>"/></div>
   <hr/>
   <div class="p-charge">
@@ -344,35 +344,52 @@ body {
 </div>
 <%= render "site/shared/bottombar" %>
 <script>
-  $(document).ready(function(){
-    showOverNum();
-    var minus = $(".action-de");
-    var plus = $(".action-plus");
-    var numInput = $(".p-num");
-    var num = 0;
-    plus.on('click', function() {
+$(document).ready(function(){
+  showOverNum();
+  var minus = $(".action-de");
+  var plus = $(".action-plus");
+  var numInput = $(".p-num");
+  var num = 0;
+  plus.on('click', function() {
+    var overnum = $(".over-num").children().text();
+    if(overnum == 0) {
+      alert("商品已售完！")
+    }
+    else {
       num = parseInt(numInput.val());
-      num++;
-      numInput.val(num);
-    });
-    minus.on('click', function() {
-      if (num > 0) {
-        num--;
-        numInput.val(num);
-      } else {
-        numInput.val(0);
+      if(num == overnum) {
+        alert("商品库存不足！")
       }
-    });
+      else {
+        num++;
+        numInput.val(num);
+      }
+    }
   });
+  minus.on('click', function() {
+    if (num > 0) {
+      num--;
+      numInput.val(num);
+    } else {
+      numInput.val(0);
+    }
+  });
+});
 
-  function showOverNum(){
-    var allNum = $(".all-num").val();
-    var sellNum = $(".sell-num").children().text();
-    allNum = parseInt(allNum);
-    sellNum = parseInt(sellNum);
-    var overNum = allNum - sellNum;
-    $(".over-num").children().text(overNum +"件");
+function showOverNum(){
+  var allNum = $(".all-num").val();
+  var sellNum = $(".sell-num").children().text();
+  allNum = parseInt(allNum);
+  sellNum = parseInt(sellNum);
+  var overNum = allNum - sellNum;
+  if(overNum < 0 || overNum == 0) {
+    $(".seckill-buy-now").attr("disabled","disabled");
+    $(".over-num").children().text("0");
+    $(".p-num").val(0);
   }
-
-
+  else {
+    $(".seckill-buy-now").attr("disabled",false);
+    $(".over-num").children().text(overNum);
+  }
+}
 </script>

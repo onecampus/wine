@@ -264,7 +264,7 @@ body {
 }
 </style>
 <div class="main">
-  <input class="product-id" type="hidden" value="<%= @group.id %>">
+  <input class="product-id" type="hidden" value="<%= @group.product.id %>">
   <div class="top-img"><img src="<%= @group.product.img_url %>"/></div>
   <hr/>
   <div class="p-charge">
@@ -288,7 +288,7 @@ body {
     </div>&nbsp;&nbsp;&nbsp;
     <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
     <input class="all-num" type="hidden" value="<%= @group.limit_product_count%>">
-    <span class="over-num">剩余:<span></span></span>
+    <span class="over-num">剩余:<span></span>件</span>
   </div>
   <hr/>
   <div class="p-purchase" data-no-turbolink>
@@ -318,9 +318,20 @@ body {
     var numInput = $(".p-num");
     var num = 0;
     plus.on('click', function() {
-      num = parseInt(numInput.val());
-      num++;
-      numInput.val(num);
+      var overnum = $(".over-num").children().text();
+      if(overnum == 0) {
+        alert("商品已售完！")
+      }
+      else {
+        num = parseInt(numInput.val());
+        if(num == overnum) {
+          alert("商品库存不足！")
+        }
+        else {
+          num++;
+          numInput.val(num);
+        }
+      }
     });
     minus.on('click', function() {
       if (num > 0) {
@@ -338,7 +349,15 @@ body {
     allNum = parseInt(allNum);
     sellNum = parseInt(sellNum);
     var overNum = allNum - sellNum;
-    $(".over-num").children().text(overNum +"件");
+    if(overNum < 0 || overNum == 0) {
+      $(".group-buy-now").attr("disabled","disabled");
+      $(".over-num").children().text("0");
+      $(".p-num").val(0);
+    }
+    else {
+      $(".group-buy-now").attr("disabled",false);
+      $(".over-num").children().text(overNum);
+    }
   }
 
 
