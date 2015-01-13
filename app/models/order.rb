@@ -15,4 +15,10 @@ class Order < ActiveRecord::Base
   has_many :seclills, through: :seclill_orders
 
   has_many :commissions
+
+  private
+
+  def self.generate_order_number
+    'ZLJYDD' + Time.now.strftime("%Y%m%d%H%M%S%3N")
+  end
 end

@@ -242,6 +242,7 @@ class SiteController < CustomerController
       mobile: shipaddress.mobile,
       tel: shipaddress.tel,
       supplier_id: current_user.profile.supplier_id,
+      order_number: Order.generate_order_number,
       order_type: '普通订单'
     )
     products = params[:products]
