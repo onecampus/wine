@@ -2,6 +2,14 @@
   用户中心
 <% end %>
 <link rel="stylesheet" href="/zhonglian/css/user_center.css">
+<style type="text/css">
+  .btn-check {
+    border-radius: 5px;
+    padding: 4px 2px;
+    border: 1px solid #aa0c4f;
+    color: #aa0c4f;
+  }
+</style>
 <div class="main">
   <div class="top">
     <p><%= current_user.username %></p>
@@ -76,7 +84,7 @@
     <div>
       <span class="freight">运费：￥<%= o.freight %>元</span>
       <span class="sum"><%= o.total_price %></span>
-      <a href="http://m.kuaidi100.com/index_all.html?type=<%= o.express_company_number %>&postid=<%= o.express_number %>&callbackurl=/customer/users/wait/receive" class="btn">查看物流</a>
+      <a href="http://m.kuaidi100.com/index_all.html?type=<%= o.express_company_number %>&postid=<%= o.express_number %>&callbackurl=/customer/users/wait/receive" class="btn-check">查看物流</a>
     </div>
   </div>
   <% end %>
