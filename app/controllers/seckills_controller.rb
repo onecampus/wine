@@ -25,6 +25,7 @@ class SeckillsController < ApplicationController
   def create
     @seckill = Seckill.new(seckill_params)
     @seckill.people = 0
+    @seckill.remain = @seckill.limit_product_count
     flash[:notice] = '秒杀活动创建成功' if @seckill.save
     respond_with(@seckill)
   end
@@ -45,6 +46,6 @@ class SeckillsController < ApplicationController
     end
 
     def seckill_params
-      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount)
+      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :limit_per_person)
     end
 end

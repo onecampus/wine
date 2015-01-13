@@ -64,6 +64,8 @@ zh-CN:
         saveup: '节省'
         discount: '打折'
         people: '参加人数'
+        limit_per_person: '每人限购'
+        remain: '剩余数量'
 
       group_order:
         order_id: '订单'
@@ -82,6 +84,8 @@ zh-CN:
         saveup: '节省'
         discount: '打折'
         people: '参加人数'
+        limit_per_person: '每人限购'
+        remain: '剩余数量'
 
       seckill_order:
         order_id: '订单'

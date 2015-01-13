@@ -53,6 +53,14 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :limit_per_person, :class => "col-sm-2 control-label" do %>
+    <%=t 'activerecord.attributes.group.limit_per_person' %> <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= f.number_field :limit_per_person, :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :description, :class => "col-sm-2 control-label" do %>
       <%=t 'activerecord.attributes.group.description' %> <span class="symbol required"></span>
     <% end %>
