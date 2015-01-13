@@ -156,7 +156,7 @@
       <% end %>
     <a href="/customer/groups/<%=g.id%>/show">
       <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
+        <img src="<%= g.product.img %>">
         <div class="product-inf">
           <p class="text3"><%= g.product.name%></p>
           <hr>
@@ -192,7 +192,7 @@
       <% end %>
     <a href="/customer/seckills/<%=s.id%>/show">
       <div class="product">
-        <img src="/zhonglian/img/index/shangpin.jpg">
+        <img src="<%= s.product.img %>">
         <div class="product-inf">
           <p class="text3"><%= s.product.name%></p>
           <hr>
