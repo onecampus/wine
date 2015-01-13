@@ -1,7 +1,7 @@
 class SeckillOrder < ActiveRecord::Base
 
-  validates :order_id, :seclill_id, :seclill_count, :unit_price, presence: true
+  validates :order_id, :seckill_id, :seckill_count, :unit_price, presence: true
 
-  belongs_to :seclill
+  belongs_to :seckill
   belongs_to :order
 end

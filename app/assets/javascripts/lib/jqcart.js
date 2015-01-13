@@ -39,7 +39,8 @@ $(document).ready(function() {
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
@@ -76,7 +77,8 @@ $(document).ready(function() {
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           });
         }
         //重新计算总价
@@ -104,7 +106,8 @@ $(document).ready(function() {
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
@@ -145,7 +148,8 @@ $(document).ready(function() {
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           });
         }
         //重新计算总价
@@ -200,6 +204,7 @@ $(document).ready(function() {
         img = $(".top-img").children().attr("src"),
         freight = $(".freight-price").text();
         buyMark = false;
+    var productType = "product";
     var product = {
       'id': id,
       'name': name,
@@ -208,7 +213,8 @@ $(document).ready(function() {
       'price': price,
       'img': img,
       'buyMark': buyMark,
-      'freight': freight
+      'freight': freight,
+      'productType': productType
     };
     Cart.addProduct(product);
     showShoppingCartItem();
@@ -226,7 +232,7 @@ $(document).ready(function() {
     img = $(".top-img").children().attr("src"),
     buyMark = true,
     freight = $(".freight-price").text();
-    var productMark = "is_product";
+    var productType = "product";
     var product = {
       'id': id,
       'name': name,
@@ -236,35 +242,7 @@ $(document).ready(function() {
       'img': img,
       'buyMark': buyMark,
       'freight': freight,
-      'productMark': productMark
-    };
-    Cart.buyProduct(product);
-    showShoppingCartItem();
-    window.location = '/customer/orders/settlement';
-  });
-  /*
-  团购购买
-  */
-  $(".buy-now").click(function(){
-    var name = $(".product-name").text(),
-    englishname = $(".product-englishname").text(),
-    price = $(".price").text(),
-    num = $(".p-num").val(),
-    id = $(".product-id").val(),
-    img = $(".top-img").children().attr("src"),
-    buyMark = true,
-    freight = $(".freight-price").text();
-    var productMark = "is_product";
-    var product = {
-      'id': id,
-      'name': name,
-      'englishname': englishname,
-      'num': num,
-      'price': price,
-      'img': img,
-      'buyMark': buyMark,
-      'freight': freight,
-      'productMark': productMark
+      'productType': productType
     };
     Cart.buyProduct(product);
     showShoppingCartItem();
