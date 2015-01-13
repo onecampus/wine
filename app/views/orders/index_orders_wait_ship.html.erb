@@ -152,14 +152,19 @@
         <h4 class="modal-title" id="myModalLabel">添加快递号</h4>
       </div>
       <div class="modal-body">
-        <form method="post" id="express-number" class="form-horizontal" action="" accept-charset="UTF-8">
+        <form method="post" id="express" class="form-horizontal" action="" accept-charset="UTF-8">
           <div class="form-group">
-            <label for="express_number" class="col-sm-2 control-label">
+            <label for="express_company" class="col-sm-2 control-label">
               快递公司
               <span class="symbol required"></span>
             </label>
             <div class="col-sm-9">
-              <input type="text" name="express_number" id="express_number" class="form-control">
+              <select name="express_company" class="express-company">
+                <option value ="code">company</option>
+                <option value ="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -200,7 +205,9 @@ $( document ).ready(function() {
         url: _post_url,
         dataType: 'json',
         data: {
-          express_number: $('#express_number').val()
+          express_number: $('#express_number').val(),
+          express_company: $('.express-company').find("option:selected").text(),
+          express_company_number: $('.express-company').val()
         },
         cache: false,
         error: function() {

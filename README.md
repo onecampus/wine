@@ -212,6 +212,12 @@ rails g migration AddFromUserIdToWithdraws from_user_id:integer
 rails g migration AddExpressNumberToOrders express_number:string
 rails g migration AddExpressCompanyToOrders express_company:string
 rails g migration AddExpressCompanyNumberToOrders express_company_number:string
+
+rails g migration AddLimitPerPersonToGroups limit_per_person:integer
+rails g migration AddRemainToGroups remain:integer
+
+rails g migration AddLimitPerPersonToSeckills limit_per_person:integer
+rails g migration AddRemainToSeckills remain:integer
 ```
 
 ### 功能分析 ###

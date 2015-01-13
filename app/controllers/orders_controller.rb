@@ -59,6 +59,8 @@ class OrdersController < ApplicationController
   # 添加快递号
   def add_order_express
     @order.express_number = params[:express_number]
+    @order.express_company = params[:express_company]
+    @order.express_company_number = params[:express_company_number]
     if @order.save
       render json: { status: 'success', msg: 'add order express_number success' }
     else
