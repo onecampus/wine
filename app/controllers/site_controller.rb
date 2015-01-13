@@ -290,6 +290,7 @@ class SiteController < CustomerController
       order.order_type = '团购订单'
       GroupOrder.transaction do
         Order.transaction do
+          order.save!
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
           generate_invite_code_or_not(old_orders, current_user_profile)
           # group_order
@@ -330,6 +331,7 @@ class SiteController < CustomerController
       order.order_type = '秒杀订单'
       SeckillOrder.transaction do
         Order.transaction do
+          order.save!
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
           generate_invite_code_or_not(old_orders, current_user_profile)
           # seckill_order

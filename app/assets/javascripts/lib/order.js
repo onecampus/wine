@@ -285,17 +285,22 @@ $(document).ready(function() {
           dataType: "json",
           success: function(data) {
             // code
-
-            for (var i in productList) {
-              if (productList[i].buyMark == true) {
-                var productId = productList[i].id;
-                deleteProduct(productId);
-              }
+            if(data.status == "error") {
+              orderError();
+              return false;
             }
-            $(".order-btn").attr("disabled",false);
-            showShoppingCartItem();
-            cleanShareLinkCode();
-            orderSuccessHan();
+            else{
+              for (var i in productList) {
+                if (productList[i].buyMark == true) {
+                  var productId = productList[i].id;
+                  deleteProduct(productId);
+                }
+              }
+              $(".order-btn").attr("disabled",false);
+              showShoppingCartItem();
+              cleanShareLinkCode();
+              orderSuccessHan();        
+            }
           },
           complete: function(XMLHttpRequest, textStatus) {
             // orderErrorHan(XMLHttpRequest, textStatus);
@@ -353,6 +358,23 @@ function orderErrorHan(XMLHttpRequest, textStatus) {
     });
     setTimeout($.unblockUI, 2500);
   }
+}
+
+function orderError(){
+  $("#order-message p").text("订单创建失败!");
+  $.blockUI({
+    message: $('#order-message'),
+    css: {
+      border: 'none',
+      padding: '15px',
+      backgroundColor: '#000',
+      '-webkit-border-radius': '10px',
+      '-moz-border-radius': '10px',
+      opacity: .5,
+      color: '#fff'
+    }
+  });
+  setTimeout($.unblockUI, 2500);
 }
 
 

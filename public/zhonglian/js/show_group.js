@@ -41,7 +41,8 @@ $(document).ready(function(){
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           }],
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
@@ -77,7 +78,8 @@ $(document).ready(function(){
             "price": product.price,
             "img": product.img,
             "buyMark": product.buyMark,
-            "freight": product.freight
+            "freight": product.freight,
+            "productType": product.productType
           });
         }
         //重新计算总价
@@ -133,6 +135,7 @@ $(document).ready(function(){
     img = $(".top-img").children().attr("src"),
     buyMark = true,
     freight = $(".freight-price").text();
+    var productType = "group";
     var product = {
       'id': id,
       'name': name,
@@ -141,7 +144,8 @@ $(document).ready(function(){
       'price': price,
       'img': img,
       'buyMark': buyMark,
-      'freight': freight
+      'freight': freight,
+      'productType': productType
     };
     Cart.buyProduct(product);
     window.location = '/customer/orders/settlement';
