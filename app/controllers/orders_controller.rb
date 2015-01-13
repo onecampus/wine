@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
   authorize_resource
   respond_to :html, :json
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :sure_order, :ship_order, :receive_order, :ok_order]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :sure_order, :ship_order, :receive_order, :ok_order, :add_order_express]
+  skip_before_filter :verify_authenticity_token, only: [:add_order_express]
 
   def index
     @orders = Order.all.paginate(page: params[:page], per_page: 10).order('id DESC')
@@ -53,6 +54,16 @@ class OrdersController < ApplicationController
     @order.save
     flash[:notice] = '确定成功, 该订单已进入备货阶段'
     redirect_to action: :index_orders_unsure
+  end
+
+  # 添加快递号
+  def add_order_express
+    @order.express_number = params[:express_number]
+    if @order.save
+      render json: { status: 'success', msg: 'add order express_number success' }
+    else
+      render json: { status: 'failed', msg: 'add order express_number failed' }
+    end
   end
 
   def index_orders_wait_ship
