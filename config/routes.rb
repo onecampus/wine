@@ -96,6 +96,7 @@ Rails.application.routes.draw do
     get 'orders/wait/sure' => 'orders#index_orders_unsure'
     get 'orders/:id/sure' => 'orders#sure_order', as: :sure_order
     get 'orders/wait/ship' => 'orders#index_orders_wait_ship'
+    match 'orders/:id/express/add', to: 'orders#add_order_express', via: :post
     get 'orders/:id/shiped' => 'orders#ship_order', as: :ship_order
     get 'orders/already/ship' => 'orders#index_orders_already_ship'
     get 'orders/:id/received' => 'orders#receive_order'

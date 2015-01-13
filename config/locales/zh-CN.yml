@@ -287,6 +287,7 @@ zh-CN:
         tel: '电话'
         supplier_id: '供应商'
         order_type: '订单类型'
+        express_number: '快递号'
 
       product_order:
         order_id: '订单id'

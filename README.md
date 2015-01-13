@@ -208,6 +208,8 @@ rails g migration AddDrawStatusToWithdraws draw_status:integer
 
 rails g scaffold Commission user_id:integer order_id:integer commission_money percent
 rails g migration AddFromUserIdToWithdraws from_user_id:integer
+
+rails g migration AddExpressNumberToOrders express_number:string
 ```
 
 ### 功能分析 ###
