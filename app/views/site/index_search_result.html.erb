@@ -112,19 +112,26 @@ hr {
   height: 90px;
   float: left;
 }
+.qresult {
+  color: red;
+  font-size: 18px;
+}
+.search-result > div {
+  margin-left: 2%;
+}
 </style>
 <div class="search-box">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
     <div  class="search-box-item">
       <input class="q" type="text" name="q" >
-       <img src="/zhonglian/img/search/search-white.png">
+       <img src="/zhonglian/img/search/search-white.png" class="imgsubmit">
        <p class="search-box-word">搜索</p>
     </div>
   <% end %>
 </div>
 <hr/>
 
-<div class="search-result">
+<div class="search-result" data-result="false" >
   <p class="title">搜索结果</p>
 
   <% @products.each do |p| %>
@@ -146,18 +153,45 @@ hr {
 <%= render "site/shared/bottombar" %>
 <script type="text/javascript">
 $(document).ready(function() {
-  $(".q").focus(function(){
-    $(".search-box-word").hide();
+  var $q = $( '.q' );
+  var $word = $( '.search-box-word' );
+  $q.focus(function(){
+    $word.hide();
   });
-  $(".q").blur(function(){
-    $(".search-box-word").show();
+  $q.blur(function(){
+    if( !$q.val() && !$word.val() ) {
+      $word.show();
+    }
   });
+  var $form = $( '.search-form' );
+  $( '.imgsubmit' ).on( 'click', function() {
+    if( $q.val() ) {
+      $form.submit();
+    } else {
+      alert( "请输入搜索内容！" );
+    }
+  });
+  $form.submit(function() {
+    if( !$q.val() ) {
+      alert( "请输入搜索内容！" );
+    }
+  });
+  var q = $.url().param( 'q' );
+  if ( !q ) {
+    $word.show();
+  } else {
+    $word.text(q);
+    if( !$( '.search-result > p' ).next().size() ) {
+      $( '.search-result' ).append( "<div>很抱歉，没有找到与<span class='qresult'>"+q+"</span>相关的内容</div>" );
+    }
+  }
   showShoppingCartItem();
 });
 function showShoppingCartItem() {
+  var $shoppingCart = $( '.shopping-cart-mark' );
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
-    $(".shopping-cart-mark").hide();
+    $shoppingCart.hide();
   }
   else {
     console.log("shoppingCart is " + shoppingCart);
@@ -167,14 +201,14 @@ function showShoppingCartItem() {
       var productList = JsonStr.productList;
       var length = productList.length;
       if (length > 0) {
-        $(".shopping-cart-mark").show();
-        $(".shopping-cart-mark").text(length);
+        $shoppingCart.show();
+        $shoppingCart.text(length);
       } else {
-        $(".shopping-cart-mark").hide();
+        $shoppingCart.hide();
       }
     }
     else {
-      $(".shopping-cart-mark").hide();
+      $shoppingCart.hide();
     }
   }
 }
