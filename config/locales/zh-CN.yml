@@ -288,6 +288,8 @@ zh-CN:
         supplier_id: '供应商'
         order_type: '订单类型'
         express_number: '快递号'
+        express_company: '快递公司'
+        express_company_number: '快递公司代码'
 
       product_order:
         order_id: '订单id'

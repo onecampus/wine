@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113054101) do
+ActiveRecord::Schema.define(version: 20150113081910) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(version: 20150113054101) do
     t.string   "invite_code"
     t.string   "share_link_code"
     t.string   "express_number"
+    t.string   "express_company"
+    t.string   "express_company_number"
   end
 
   create_table "prize_acts", force: true do |t|
