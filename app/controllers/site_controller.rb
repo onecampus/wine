@@ -246,10 +246,12 @@ class SiteController < CustomerController
     )
     products = params[:products]
 
-    if !params[:is_product].blank? && params[:is_product] == 1
+
+    if !params[:is_product].blank? && params[:is_product].to_i == 1
       order.order_type = '普通订单'
       ProductOrder.transaction do
         Order.transaction do
+          order.save!
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
           generate_invite_code_or_not(old_orders, current_user_profile)
           # product_order
@@ -284,7 +286,7 @@ class SiteController < CustomerController
           return
         end
       end
-    elsif !params[:is_group].blank? && params[:is_group] == 1
+    elsif !params[:is_group].blank? && params[:is_group].to_i == 1
       order.order_type = '团购订单'
       GroupOrder.transaction do
         Order.transaction do
@@ -324,7 +326,7 @@ class SiteController < CustomerController
           return
         end
       end
-    elsif !params[:is_seckill].blank? && params[:is_seckill] == 1
+    elsif !params[:is_seckill].blank? && params[:is_seckill].to_i == 1
       order.order_type = '秒杀订单'
       SeckillOrder.transaction do
         Order.transaction do
@@ -364,6 +366,8 @@ class SiteController < CustomerController
           return
         end
       end
+    else
+      render json: { status: 'failed', msg: 'order params error' }
     end
   end
 
