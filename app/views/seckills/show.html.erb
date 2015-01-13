@@ -60,7 +60,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.product_id' %></div>
             <div class="col-sm-9">
@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.start_time' %></div>
             <div class="col-sm-9">
@@ -78,7 +78,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.end_time' %></div>
             <div class="col-sm-9">
@@ -87,7 +87,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.limit_people_count' %></div>
             <div class="col-sm-9">
@@ -96,7 +96,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.limit_product_count' %></div>
             <div class="col-sm-9">
@@ -105,7 +105,25 @@
               </div>
             </div>
           </div>
-          
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.limit_per_person' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @seckill.limit_per_person %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.remain' %></div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @seckill.remain %>
+              </div>
+            </div>
+          </div>
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.description' %></div>
             <div class="col-sm-9">
@@ -114,7 +132,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.price' %></div>
             <div class="col-sm-9">
@@ -123,7 +141,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.saveup' %></div>
             <div class="col-sm-9">
@@ -132,7 +150,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.discount' %></div>
             <div class="col-sm-9">
@@ -141,7 +159,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.people' %></div>
             <div class="col-sm-9">

@@ -1,42 +1,41 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.group' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
         </a>
+    </li>
+    <li class="active">
+      <%=t 'activerecord.models.group' %>管理
       </li>
-      <li class="active">
-        <%=t 'activerecord.models.group' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
     <%=t 'activerecord.models.group' %>管理
+
     <div class="panel-tools">
       <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
       </a>
@@ -66,46 +65,49 @@
       <table id="" class="table table-bordered table-hover">
         <thead>
           <tr>
-                  <th><%=t 'activerecord.attributes.group.product_id' %></th>
-                  <th><%=t 'activerecord.attributes.group.start_time' %></th>
-                  <th><%=t 'activerecord.attributes.group.end_time' %></th>
-                  <th><%=t 'activerecord.attributes.group.limit_people_count' %></th>
-                  <th><%=t 'activerecord.attributes.group.limit_product_count' %></th>
-                  <th><%=t 'activerecord.attributes.group.description' %></th>
-                  <th><%=t 'activerecord.attributes.group.price' %></th>
-                  <th><%=t 'activerecord.attributes.group.saveup' %></th>
-                  <th><%=t 'activerecord.attributes.group.discount' %></th>
-                  <th><%=t 'activerecord.attributes.group.people' %></th>
-                  <th>操作</th>
+            <th><%=t 'activerecord.attributes.group.product_id' %></th>
+            <th><%=t 'activerecord.attributes.group.start_time' %></th>
+            <th><%=t 'activerecord.attributes.group.end_time' %></th>
+            <th><%=t 'activerecord.attributes.group.limit_people_count' %></th>
+            <th><%=t 'activerecord.attributes.group.limit_product_count' %></th>
+            <th><%=t 'activerecord.attributes.group.limit_per_person' %></th>
+            <th><%=t 'activerecord.attributes.group.remain' %></th>
+            <th><%=t 'activerecord.attributes.group.description' %></th>
+            <th><%=t 'activerecord.attributes.group.price' %></th>
+            <th><%=t 'activerecord.attributes.group.saveup' %></th>
+            <th><%=t 'activerecord.attributes.group.discount' %></th>
+            <th><%=t 'activerecord.attributes.group.people' %></th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
-
-        <% @groups.each do |group| %>
-          <tr>
-                        <td><%= group.product.name %></td>
-                        <td><%= group.start_time %></td>
-                        <td><%= group.end_time %></td>
-                        <td><%= group.limit_people_count %></td>
-                        <td><%= group.limit_product_count %></td>
-                        <td><%= group.description %></td>
-                        <td><%= group.price %></td>
-                        <td><%= group.saveup %></td>
-                        <td><%= group.discount %></td>
-                        <td><%= group.people %></td>
-                        <td class="center">
-              <%= link_to(group, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-                <i class="fa fa-trash-o"></i> 删除
+          <% @groups.each do |group| %>
+            <tr>
+              <td><%= group.product.name %></td>
+              <td><%= group.start_time %></td>
+              <td><%= group.end_time %></td>
+              <td><%= group.limit_people_count %></td>
+              <td><%= group.limit_product_count %></td>
+              <td><%= group.limit_per_person %></td>
+              <td><%= group.remain %></td>
+              <td><%= group.description %></td>
+              <td><%= group.price %></td>
+              <td><%= group.saveup %></td>
+              <td><%= group.discount %></td>
+              <td><%= group.people %></td>
+              <td class="center">
+                <%= link_to(group, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                  <i class="fa fa-trash-o"></i> 删除
               <% end %>
-              <%= link_to(group, class: "btn btn-xs btn-primary") do %>
-                <i class="fa fa-share"></i> 查看
+                <%= link_to(group, class: "btn btn-xs btn-primary") do %>
+                  <i class="fa fa-share"></i> 查看
               <% end %>
-              <%= link_to(edit_group_path(group), class: "btn btn-xs btn-green") do %>
-                <i class="fa fa-edit"></i> 编辑
+                <%= link_to(edit_group_path(group), class: "btn btn-xs btn-green") do %>
+                  <i class="fa fa-edit"></i> 编辑
               <% end %>
-            </td>
-          </tr>
-        <% end %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

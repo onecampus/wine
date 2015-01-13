@@ -160,10 +160,9 @@
             </label>
             <div class="col-sm-9">
               <select name="express_company" class="express-company">
-                <option value ="code">company</option>
-                <option value ="saab">Saab</option>
-                <option value="opel">Opel</option>
-                <option value="audi">Audi</option>
+                <% express_companies.each do |ec| %>
+                <option value ="<%= ec[:code] %>"><%= ec[:company] %></option>
+                <% end %>
               </select>
             </div>
           </div>

@@ -1,42 +1,41 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.seckill' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
         </a>
+    </li>
+    <li class="active">
+      <%=t 'activerecord.models.seckill' %>管理
       </li>
-      <li class="active">
-        <%=t 'activerecord.models.seckill' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
     <%=t 'activerecord.models.seckill' %>管理
+
     <div class="panel-tools">
       <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
       </a>
@@ -66,46 +65,49 @@
       <table id="" class="table table-bordered table-hover">
         <thead>
           <tr>
-                  <th><%=t 'activerecord.attributes.seckill.product_id' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.start_time' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.end_time' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.limit_people_count' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.limit_product_count' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.description' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.price' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.saveup' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.discount' %></th>
-                  <th><%=t 'activerecord.attributes.seckill.people' %></th>
-                  <th>操作</th>
+            <th><%=t 'activerecord.attributes.seckill.product_id' %></th>
+            <th><%=t 'activerecord.attributes.seckill.start_time' %></th>
+            <th><%=t 'activerecord.attributes.seckill.end_time' %></th>
+            <th><%=t 'activerecord.attributes.seckill.limit_people_count' %></th>
+            <th><%=t 'activerecord.attributes.seckill.limit_product_count' %></th>
+            <th><%=t 'activerecord.attributes.seckill.limit_per_person' %></th>
+            <th><%=t 'activerecord.attributes.seckill.remain' %></th>
+            <th><%=t 'activerecord.attributes.seckill.description' %></th>
+            <th><%=t 'activerecord.attributes.seckill.price' %></th>
+            <th><%=t 'activerecord.attributes.seckill.saveup' %></th>
+            <th><%=t 'activerecord.attributes.seckill.discount' %></th>
+            <th><%=t 'activerecord.attributes.seckill.people' %></th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
-
-        <% @seckills.each do |seckill| %>
-          <tr>
-                        <td><%= seckill.product.name %></td>
-                        <td><%= seckill.start_time %></td>
-                        <td><%= seckill.end_time %></td>
-                        <td><%= seckill.limit_people_count %></td>
-                        <td><%= seckill.limit_product_count %></td>
-                        <td><%= seckill.description %></td>
-                        <td><%= seckill.price %></td>
-                        <td><%= seckill.saveup %></td>
-                        <td><%= seckill.discount %></td>
-                        <td><%= seckill.people %></td>
-                        <td class="center">
-              <%= link_to(seckill, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
-                <i class="fa fa-trash-o"></i> 删除
+          <% @seckills.each do |seckill| %>
+            <tr>
+              <td><%= seckill.product.name %></td>
+              <td><%= seckill.start_time %></td>
+              <td><%= seckill.end_time %></td>
+              <td><%= seckill.limit_people_count %></td>
+              <td><%= seckill.limit_product_count %></td>
+              <td><%= seckill.limit_per_person %></td>
+              <td><%= seckill.remain %></td>
+              <td><%= seckill.description %></td>
+              <td><%= seckill.price %></td>
+              <td><%= seckill.saveup %></td>
+              <td><%= seckill.discount %></td>
+              <td><%= seckill.people %></td>
+              <td class="center">
+                <%= link_to(seckill, method: :delete, data: { confirm: '确定吗?' }, class: "btn btn-xs btn-bricky") do %>
+                  <i class="fa fa-trash-o"></i> 删除
               <% end %>
-              <%= link_to(seckill, class: "btn btn-xs btn-primary") do %>
-                <i class="fa fa-share"></i> 查看
+                <%= link_to(seckill, class: "btn btn-xs btn-primary") do %>
+                  <i class="fa fa-share"></i> 查看
               <% end %>
-              <%= link_to(edit_seckill_path(seckill), class: "btn btn-xs btn-green") do %>
-                <i class="fa fa-edit"></i> 编辑
+                <%= link_to(edit_seckill_path(seckill), class: "btn btn-xs btn-green") do %>
+                  <i class="fa fa-edit"></i> 编辑
               <% end %>
-            </td>
-          </tr>
-        <% end %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

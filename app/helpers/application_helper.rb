@@ -58,6 +58,14 @@ module ApplicationHelper
         company: '申通'
       },
       {
+        code: 'yinjiesudi',
+        company: '银捷速递'
+      },
+      {
+        code: 'zhongtong',
+        company: '中通速递'
+      },
+      {
         code: 'yuantong',
         company: '圆通速递'
       },
@@ -124,10 +132,6 @@ module ApplicationHelper
       {
         code: 'datianwuliu',
         company: '大田物流'
-      },
-      {
-        code: 'baifudongfang',
-        company: '百福东方国际物流'
       },
       {
         code: 'debangwuliu',
@@ -384,14 +388,6 @@ module ApplicationHelper
       {
         code: 'yad',
         company: '源安达'
-      },
-      {
-        code: 'yinjiesudi',
-        company: '银捷速递'
-      },
-      {
-        code: 'zhongtong',
-        company: '中通速递'
       },
       {
         code: 'zhongyouwuliu',
