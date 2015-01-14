@@ -60,6 +60,8 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'spring'
+
+  gem 'brakeman', require: false
 end
 
 gem 'sdoc', '~> 0.4.0', group: :doc
