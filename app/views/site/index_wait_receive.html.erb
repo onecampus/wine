@@ -56,7 +56,7 @@
       <img src="<%= po.group.product.img if po.group %>" class="left" />
       <p class="right">
         <span class="order_price"><%= po.group.product.price %></span>
-        <span class="order_num">×<%= po.product_count %></span>
+        <span class="order_num">×<%= po.group_count %></span>
         <span><a href="/customer/products/<%= po.group.product.id %>/comments/new">评论</a></span>
       </p>
       <p class="middle">
@@ -71,7 +71,7 @@
       <img src="<%= po.seckill.product.img if po.seckill %>" class="left" />
       <p class="right">
         <span class="order_price"><%= po.seckill.product.price %></span>
-        <span class="order_num">×<%= po.product_count %></span>
+        <span class="order_num">×<%= po.seckill_count %></span>
         <span><a href="/customer/products/<%= po.seckill.product.id %>/comments/new">评论</a></span>
       </p>
       <p class="middle">
