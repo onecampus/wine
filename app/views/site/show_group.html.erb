@@ -132,7 +132,7 @@ body {
 .num-inf p {
   margin: 0;
   padding: 0;
-  line-height: 14px;
+  line-height: 16px;
 }
 
 .sell-num {
@@ -300,7 +300,7 @@ body {
     </div>&nbsp;&nbsp;&nbsp;
     <div class="num-inf">
       <p>
-      每人限购<span>12</span>件
+      每人限购<span class="limit-num"><%= @group.limit_per_person %></span>件
       </P>
       <p>
         <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
@@ -338,6 +338,7 @@ body {
     var num = 0;
     plus.on('click', function() {
       var overnum = $(".over-num").children().text();
+      var limitNum = $(".limit-num").text();
       if(overnum == 0) {
         alert("商品已售完！")
       }
@@ -345,6 +346,9 @@ body {
         num = parseInt(numInput.val());
         if(num == overnum) {
           alert("商品库存不足！")
+        }
+        else if (num == limitNum) {
+          alert("每人限购"+limitNum+"件");
         }
         else {
           num++;
