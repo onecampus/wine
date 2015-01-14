@@ -129,9 +129,9 @@
           <% if current_user.has_role? :admin %>
           <li>
             <a href="javascript:void(0)"><i class="clip-cog-2"></i>
-            <span class="title"> 分类管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
+              <span class="title"> 分类管理 </span><i class="icon-arrow"></i>
+              <span class="selected"></span>
+            </a>
             <ul class="sub-menu">
               <li>
                 <a href="/admin/cats/new">
@@ -150,45 +150,9 @@
               </li>
             </ul>
           </li>
-          <li>
-            <a href="javascript:void(0)"><i class="clip-fullscreen-exit"></i>
-              <span class="title"> 团购管理 </span><i class="icon-arrow"></i>
-              <span class="selected"></span>
-            </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/groups/new">
-                  <span class="title">添加</span>
-                </a>
-              </li>
-              <li>
-                <a href="/admin/groups">
-                  <span class="title">管理</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="javascript:void(0)"><i class="clip-stackoverflow"></i>
-              <span class="title"> 秒杀管理 </span><i class="icon-arrow"></i>
-              <span class="selected"></span>
-            </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/seckills/new">
-                  <span class="title">添加</span>
-                </a>
-              </li>
-              <li>
-                <a href="/admin/seckills">
-                  <span class="title">管理</span>
-                </a>
-              </li>
-            </ul>
-          </li>
           <% end %>
           <li>
-            <a href="javascript:void(0)"><i class="clip-brightness-high"></i>
+            <a href="javascript:void(0)"><i class="clip-fullscreen-exit"></i>
               <span class="title"> 商品管理 </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
@@ -196,26 +160,45 @@
               <% if current_user.has_role? :admin %>
               <li>
                 <a href="/admin/products/new">
-                  <span class="title">添加</span>
+                  <span class="title">添加商品</span>
                 </a>
               </li>
               <% end %>
               <li>
                 <a href="/admin/products">
-                  <span class="title">管理</span>
+                  <span class="title">管理商品</span>
                 </a>
               </li>
-            </ul>
-          </li>
-          <li>
-            <a href="javascript:void(0)"><i class="clip-grid-2"></i>
-            <span class="title"> 库存管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
-            <ul class="sub-menu">
+              <% if current_user.has_role? :admin %>
+              <li>
+                <a href="/admin/groups/new">
+                  <span class="title">添加团购</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/groups">
+                  <span class="title">管理团购</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/seckills/new">
+                  <span class="title">添加秒杀</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/seckills">
+                  <span class="title">管理秒杀</span>
+                </a>
+              </li>
+              <% end %>
               <li>
                 <a href="/admin/inventories">
-                  <span class="title">管理</span>
+                  <span class="title">库存管理</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/comments">
+                  <span class="title">评论管理</span>
                 </a>
               </li>
             </ul>
@@ -223,9 +206,9 @@
           <% if current_user.has_role? :admin %>
           <li>
             <a href="javascript:void(0)"><i class="clip-windy"></i>
-            <span class="title"> 抽奖管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
+              <span class="title"> 抽奖管理 </span><i class="icon-arrow"></i>
+              <span class="selected"></span>
+            </a>
             <ul class="sub-menu">
               <li>
                 <a href="/admin/prize_acts">
@@ -247,9 +230,9 @@
           <% end %>
           <li>
             <a href="javascript:void(0)"><i class="clip-cart"></i>
-            <span class="title"> 订单管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
+              <span class="title"> 订单管理 </span><i class="icon-arrow"></i>
+              <span class="selected"></span>
+            </a>
             <ul class="sub-menu">
               <li>
                 <a href="/admin/orders/new">
@@ -300,52 +283,11 @@
               </li>
             </ul>
           </li>
-          <!--<li>
-            <a href="javascript:void(0)"><i class="clip-tree-2"></i>
-            <span class="title"> 标签管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/tags">
-                  <span class="title">管理</span>
-                </a>
-              </li>
-            </ul>
-          </li>-->
-          <li>
-            <a href="javascript:void(0)"><i class="clip-bubble-dots"></i>
-            <span class="title"> 评论管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/comments">
-                  <span class="title">管理</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <% if current_user.has_role? :admin %>
-          <!--<li>
-            <a href="javascript:void(0)"><i class="clip-users-3"></i>
-            <span class="title"> 角色管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/roles">
-                  <span class="title">管理</span>
-                </a>
-              </li>
-            </ul>
-          </li>-->
-          <% end %>
           <li>
             <a href="javascript:void(0)"><i class="clip-user-6"></i>
-            <span class="title"> 用户管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
+              <span class="title"> 用户管理 </span><i class="icon-arrow"></i>
+              <span class="selected"></span>
+            </a>
             <ul class="sub-menu">
               <% if current_user.has_role? :admin %>
               <li>
@@ -358,11 +300,16 @@
                   <span class="title">区域商管理</span>
                 </a>
               </li>
-                  <li>
-                    <a href="/admin/profiles?action=index&role=customer&type=all">
-                      <span class="title">所有客户管理</span>
-                    </a>
-                  </li>
+              <li>
+                <a href="/admin/profiles?action=index&role=customer&type=all">
+                  <span class="title">所有客户管理</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/withdraws">
+                  <span class="title">用户提现</span>
+                </a>
+              </li>
               <% end %>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=own">
@@ -374,26 +321,13 @@
           <% if current_user.has_role? :admin %>
           <li>
             <a href="javascript:void(0)"><i class="clip-globe"></i>
-            <span class="title"> 微信管理 </span><i class="icon-arrow"></i>
-            <span class="selected"></span>
-          </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="/admin/wx_menus">
-                  <span class="title">自定义菜单</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="javascript:void(0)"><i class="clip-leaf"></i>
-              <span class="title"> 用户提现 </span><i class="icon-arrow"></i>
+              <span class="title"> 微信管理 </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
               <li>
-                <a href="/admin/withdraws">
-                  <span class="title">提现</span>
+                <a href="/admin/wx_menus">
+                  <span class="title">自定义菜单</span>
                 </a>
               </li>
             </ul>
