@@ -90,7 +90,7 @@
               <td><%= order.order_number %></td>
               <td><%= order.ship_address %></td>
               <td><%= order.total_price %></td>
-              <td><%= order.buy_date %></td>
+              <td><%= order.buy_date.strftime("%Y-%m-%d") %></td>
               <td><%= order_status order.order_status %></td>
               <td><%= pay_status order.pay_status %></td>
               <td><%= logistics_status order.logistics_status %></td>

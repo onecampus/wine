@@ -84,8 +84,8 @@
           <% @seckills.each do |seckill| %>
             <tr>
               <td><%= seckill.product.name %></td>
-              <td><%= seckill.start_time %></td>
-              <td><%= seckill.end_time %></td>
+              <td><%= seckill.start_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td><%= seckill.end_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
               <td><%= seckill.limit_people_count %></td>
               <td><%= seckill.limit_product_count %></td>
               <td><%= seckill.limit_per_person %></td>

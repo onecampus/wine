@@ -57,8 +57,8 @@ zh-CN:
         product_id: '商品'
         start_time: '开始时间'
         end_time: '截止时间'
-        limit_people_count: '限制人数'
-        limit_product_count: '限制可购商品数量'
+        limit_people_count: '限购人数'
+        limit_product_count: '限购数量'
         description: '描述'
         price: '现价'
         saveup: '节省'
@@ -77,8 +77,8 @@ zh-CN:
         product_id: '商品'
         start_time: '开始时间'
         end_time: '截止时间'
-        limit_people_count: '限制人数'
-        limit_product_count: '限制可购商品数量'
+        limit_people_count: '限购人数'
+        limit_product_count: '限购数量'
         description: '描述'
         price: '现价'
         saveup: '节省'
@@ -120,9 +120,9 @@ zh-CN:
         prize_type: '抽奖类型'
         start_time: '开始时间'
         end_time: '截止时间'
-        is_open: '是否开启状态'
+        is_open: '状态'
         join_num: '参加人数'
-        person_limit: '个人抽奖次数限制'
+        person_limit: '单人抽奖次数限制'
 
       prize_config:
         prize_act_id: '抽奖活动'
@@ -168,8 +168,8 @@ zh-CN:
         source: '来源'
 
       comment:
-        commentable_id: '可评论id'
-        commentable_type: '可评论类型'
+        commentable_id: '评论'
+        commentable_type: '评论类型'
         title: '评论标题'
         body: '评论内容'
         subject: '评论主题'
@@ -231,12 +231,12 @@ zh-CN:
         weixin_open_id: '微信号'
 
       product:
-        name: '商品名称'
-        price: '商品价格'
-        cat_id: '商品所属分类'
-        description: '商品描述'
+        name: '名称'
+        price: '价格'
+        cat_id: '分类'
+        description: '描述'
         profit: '成本'
-        img: '商品图片'
+        img: '图片'
         brand: '品牌'
         expiration_date: '过期时间'
         country: '国家'
@@ -252,7 +252,7 @@ zh-CN:
       inventory:
         user_id: '供应商'
         product_id: '商品'
-        amount: '数量'
+        amount: '库存'
 
       shipaddress:
         user_id: '客户'

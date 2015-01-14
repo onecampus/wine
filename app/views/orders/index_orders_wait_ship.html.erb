@@ -96,11 +96,11 @@
               <td><%= order.freight %></td>
               <td><%= order.package_charge %></td>
               <td><%= order.total_price %></td>
-              <td><%= order.buy_date %></td>
+              <td><%= order.buy_date.strftime("%Y-%m-%d") %></td>
               <td><%= order.express_number %></td>
-              <td><%= order.order_status %></td>
-              <td><%= order.pay_status %></td>
-              <td><%= order.logistics_status %></td>
+              <td><%= order_status order.order_status %></td>
+              <td><%= pay_status order.pay_status %></td>
+              <td><%= logistics_status order.logistics_status %></td>
               <td><%= order.receive_name %></td>
               <td><%= order.mobile %></td>
               <td><%= order.tel %></td>

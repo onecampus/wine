@@ -1,42 +1,41 @@
 <% content_for :page_title do %>
-    <%= t 'activerecord.models.product' %>管理
+  <%= t 'activerecord.models.product' %>管理
 <% end %>
-
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
         </a>
+    </li>
+    <li class="active">
+      <%= t 'activerecord.models.product' %>管理
       </li>
-      <li class="active">
-        <%= t 'activerecord.models.product' %>管理
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-external-link-square"></i>
     <%= t 'activerecord.models.product' %>管理
+
     <div class="panel-tools">
       <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
       </a>
@@ -56,55 +55,52 @@
   </div>
   <div class="panel-body">
     <% if current_user.has_role? :admin %>
-    <div class="row">
-      <div class="col-md-12 space20">
-        <a class="btn btn-green add-row" href="/admin/products/new">
-          添加 <i class="fa fa-plus"></i>
-        </a>
+      <div class="row">
+        <div class="col-md-12 space20">
+          <a class="btn btn-green add-row" href="/admin/products/new">
+            添加 <i class="fa fa-plus"></i>
+          </a>
+        </div>
       </div>
-    </div>
     <% end %>
     <div class="table-responsive">
       <table id="" class="table table-bordered table-hover">
         <thead>
-        <tr>
-          <th><%= t 'activerecord.attributes.product.name' %></th>
-          <th><%= t 'activerecord.attributes.product.price' %></th>
-          <th><%= t 'activerecord.attributes.product.fright' %></th>
-          <th><%= t 'activerecord.attributes.product.img' %></th>
-          <th><%= t 'activerecord.attributes.product.cat_id' %></th>
-          <th>库存</th>
-          <th><%= t 'activerecord.attributes.product.brand' %></th>
-          <th><%= t 'activerecord.attributes.product.expiration_date' %></th>
-          <th><%= t 'activerecord.attributes.product.country' %></th>
-          <th><%= t 'activerecord.attributes.product.package_type' %></th>
-          <th><%= t 'activerecord.attributes.product.product_model' %></th>
-          <th><%= t 'activerecord.attributes.product.status' %></th>
-          <th><%= t 'activerecord.attributes.product.profit' %></th>
-          <th><%= t 'activerecord.attributes.product.vip_price' %></th>
-          <th><%= t 'activerecord.attributes.product.is_new' %></th>
-          <th><%= t 'activerecord.attributes.product.is_boutique' %></th>
-          <th><%= t 'activerecord.attributes.product.unit' %></th>
-          <th>操作</th>
-        </tr>
+          <tr>
+            <th><%= t 'activerecord.attributes.product.name' %></th>
+            <th><%= t 'activerecord.attributes.product.price' %></th>
+            <th><%= t 'activerecord.attributes.product.fright' %></th>
+            <th><%= t 'activerecord.attributes.product.cat_id' %></th>
+            <th>库存</th>
+            <th><%= t 'activerecord.attributes.product.brand' %></th>
+            <th><%= t 'activerecord.attributes.product.expiration_date' %></th>
+            <th><%= t 'activerecord.attributes.product.country' %></th>
+            <th><%= t 'activerecord.attributes.product.package_type' %></th>
+            <th><%= t 'activerecord.attributes.product.product_model' %></th>
+            <th><%= t 'activerecord.attributes.product.status' %></th>
+            <th><%= t 'activerecord.attributes.product.profit' %></th>
+            <th><%= t 'activerecord.attributes.product.vip_price' %></th>
+            <th><%= t 'activerecord.attributes.product.is_new' %></th>
+            <th><%= t 'activerecord.attributes.product.is_boutique' %></th>
+            <th><%= t 'activerecord.attributes.product.unit' %></th>
+            <th>操作</th>
+          </tr>
         </thead>
         <tbody>
-
-        <% @products.each do |product| %>
+          <% @products.each do |product| %>
             <tr>
               <td><%= product.name %></td>
               <td><%= product.price %></td>
               <td><%= product.fright %></td>
-              <td><%= image_tag(product.img_url(:thumb)) if product.img? %></td>
               <td><%= product.cat.name %></td>
               <td><%= product.inventories.where({user_id: current_user.id}).first.amount %></td>
               <td><%= product.brand %></td>
-              <td><%= product.expiration_date %></td>
+              <td><%= product.expiration_date.strftime("%Y-%m-%d") %></td>
               <td><%= product.country %></td>
               <td><%= product.package_type %></td>
               <td><%= product.product_model %></td>
               <td>
-                <% if product.status == 1 %>已上架
+                <% if product.status == 1 %>上架
                 <% elsif product.status == 0 %>已下架
                 <% end %></td>
               <td><%= product.profit %></td>
@@ -128,11 +124,11 @@
                   <% end %>
                 <% end %>
                 <%= link_to(product, class: "btn btn-xs btn-primary") do %>
-                    <i class="fa fa-share"></i> 查看
+                  <i class="fa fa-share"></i> 查看
                 <% end %>
               </td>
             </tr>
-        <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>
