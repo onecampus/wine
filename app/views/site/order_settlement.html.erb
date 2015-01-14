@@ -309,13 +309,23 @@
     margin-left: 20px;
   }
 
-  .rise,.content {
+  .rise {
     width: 90%;
     height: 25px;
     margin-left: 5%;
     margin-top: 10px;
     font-size: 18px;
   }
+  .content {
+    width: 90%;
+    height: 150px;
+    margin-left: 5%;
+    margin-top: 10px;
+    font-size: 18px;
+    resize: none;
+    overflow-y: visible;
+  }
+
 
   .pull-left {
     float: left;
@@ -460,7 +470,7 @@
     </div>
     <div class="pull-left invoice-item-inf">
       <span>发票抬头：</span><span><%= i.rise %></span><br>
-      <span>发票抬头：</span><span><%= i.content %></span>
+      <span>发票内容：</span><span><%= i.content %></span>
     </div>
   </div>
   <hr class="invoice-hr pull-left">
@@ -476,10 +486,10 @@
     <button  class="confirm-invoice btn btn-red pull-right">确定</button>
   </div>
   <div class="invoice-mesg"><p></P></div>
-  <div>
+  <div class="invoice-rise-content">
     <input class="rise" placeholder="请输入发票抬头">
-    <input class="content" placeholder="请输入发票内容">
   </div>
+  <textarea class="content" placeholder="请输入发票内容"></textarea>
   <div class="space">
   </div>
 </div>
