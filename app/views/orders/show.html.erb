@@ -70,14 +70,33 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
+          <% if @order.invoice.nil? %>
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.invoice_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @order.invoice_id %>
+                不需要
               </div>
             </div>
           </div>
+          <% else %>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">发票抬头</div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @order.invoice.rise %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">发票内容</div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @order.invoice.content %>
+              </div>
+            </div>
+          </div>
+          <% end %>
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.user_id' %></div>
             <div class="col-sm-9">
