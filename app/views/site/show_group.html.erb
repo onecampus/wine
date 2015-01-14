@@ -123,6 +123,18 @@ body {
   text-align: center;
 }
 
+.num-inf {
+  float: left;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.num-inf p {
+  margin: 0;
+  padding: 0;
+  line-height: 14px;
+}
+
 .sell-num {
   font-size: 14px;
 }
@@ -286,9 +298,16 @@ body {
       <input type="text" name="p-num" class="p-num" value="1">
       <button class="action-plus" type="button">+</button>
     </div>&nbsp;&nbsp;&nbsp;
-    <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
-    <input class="all-num" type="hidden" value="<%= @group.limit_product_count%>">
-    <span class="over-num">剩余:<span></span>件</span>
+    <div class="num-inf">
+      <p>
+      每人限购<span>12</span>件
+      </P>
+      <p>
+        <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
+        <input class="all-num" type="hidden" value="<%= @group.limit_product_count%>">
+        <span class="over-num">剩余:<span></span>件</span>
+      </p>
+    </div>
   </div>
   <hr/>
   <div class="p-purchase" data-no-turbolink>
