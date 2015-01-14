@@ -123,6 +123,18 @@ body {
   text-align: center;
 }
 
+.num-inf {
+  float: left;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.num-inf p {
+  margin: 0;
+  padding: 0;
+  line-height: 16px;
+}
+
 .sell-num {
   font-size: 14px;
 }
@@ -319,9 +331,16 @@ body {
       <input type="text" name="p-num" class="p-num" value="1">
       <button class="action-plus" type="button">+</button>
     </div>&nbsp;&nbsp;&nbsp;
-    <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
-    <input class="all-num" type="hidden" value="<%= @seckill.limit_product_count%>">
-    <span class="over-num">剩余:<span></span></span>
+    <div class="num-inf">
+      <p>
+        每人限购<span class="limit-num"><%= @seckill.limit_per_person %></span>件
+      </P>
+      <p>
+        <span class="sell-num">已售:<span><%= @already_sell%></span>件</span>
+        <input class="all-num" type="hidden" value="<%= @seckill.limit_product_count%>">
+        <span class="over-num">剩余:<span></span>件</span>
+      </p>
+    </div>
   </div>
   <hr/>
   <div class="p-purchase" data-no-turbolink>
@@ -352,6 +371,7 @@ $(document).ready(function(){
   var num = 0;
   plus.on('click', function() {
     var overnum = $(".over-num").children().text();
+    var limitNum = $(".limit-num").text();
     if(overnum == 0) {
       alert("商品已售完！")
     }
@@ -359,6 +379,9 @@ $(document).ready(function(){
       num = parseInt(numInput.val());
       if(num == overnum) {
         alert("商品库存不足！")
+      }
+      else if (num == limitNum) {
+        alert("每人限购"+limitNum+"件");
       }
       else {
         num++;

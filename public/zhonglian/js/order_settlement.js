@@ -165,5 +165,8 @@ function showProduct() {
       $("#product" + i).after("<hr>");
     }
   }
+  if(total == null) {
+    total = 0;
+  }
   $(".submit-order").children(".text2").text("￥" + total);
 }
