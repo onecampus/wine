@@ -246,6 +246,8 @@
     font-size: 24px;
   }
 </style>
+<%= @share_hash %>
+<%= @share_hash[:signature] %>
 <div class="main">
   <input class="product-id" type="hidden" value="<%= @product.id %>">
   <div class="top-img"><img src="<%= @product.img_url %>"/></div>

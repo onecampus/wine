@@ -1,3 +1,8 @@
+# encoding: UTF-8
+require 'json'
+require 'rest_client'
+require 'digest/sha1'
+
 ##
 # This class is a controller for customer from weixin brower.
 class SiteController < CustomerController
@@ -70,6 +75,24 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
+    @share_hash = {}
+    access_token_hash = get_access_token
+    access_token = access_token_hash['access_token']
+    jsapi_ticket_hash = get_jsapi_ticket(access_token)
+    timestamp = set_timestamp
+    noncestr = set_noncestr
+    url = set_url
+    if jsapi_ticket_hash['errcode'] == 0
+      jsapi_ticket = jsapi_ticket_hash['ticket']
+      str = "jsapi_ticket=#{jsapi_ticket}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
+      signature = Digest::SHA1.hexdigest(str)
+      @share_hash = {
+        app_id: 'wxa2bbd3b7a22039df',
+        timestamp: timestamp,
+        noncestr: noncestr,
+        signature: signature
+      }
+    end
   end
 
   def index_groups_seckills
@@ -677,5 +700,29 @@ class SiteController < CustomerController
         end
       end
     end
+  end
+
+  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
+    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
+  def get_jsapi_ticket(access_token)
+    url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{access_token}&type=jsapi"
+    res = RestClient.get url, {accept: :json}
+    JSON.parse res
+  end
+
+  def set_noncestr
+    [*'a'..'z',*'0'..'9',*'A'..'Z'].sample(16).join
+  end
+
+  def set_timestamp
+    Time.now.to_i.to_s
+  end
+
+  def set_url
+    'http://203.195.222.118'
   end
 end
