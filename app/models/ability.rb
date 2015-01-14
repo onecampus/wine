@@ -48,10 +48,10 @@ class Ability
       # can :manage, PrizeUserNumber
       # can :manage, PrizeUser
       # can :manage, WxMenu
-      # can :manage, Group
-      # can :manage, GroupOrder
-      # can :manage, Seckill
-      # can :manage, SeckillOrder
+      can :manage, Group
+      can :manage, GroupOrder
+      can :manage, Seckill
+      can :manage, SeckillOrder
       # can :manage, SiteConfig
       # can :manage, Withdraw
       # can :manage, Commission
