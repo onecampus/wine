@@ -305,7 +305,7 @@ class SiteController < CustomerController
             unit_price = group.price
 
             group.people += 1
-            group.remain -= product_count
+            group.remain -= product_count.to_i
             group.save!
 
 
@@ -351,7 +351,7 @@ class SiteController < CustomerController
             unit_price = seckill.price
 
             seckill.people += 1
-            seckill.remain -= product_count
+            seckill.remain -= product_count.to_i
             seckill.save!
 
             seckill_order = SeckillOrder.new(
