@@ -65,7 +65,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.product_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @group.product_id %>
+                <%= @group.product.name %>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.start_time' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @group.start_time %>
+                <%= @group.start_time.strftime("%Y-%m-%d") %>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.end_time' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @group.end_time %>
+                <%= @group.end_time.strftime("%Y-%m-%d") %>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.group.description' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @group.description %>
+                <%= raw @group.description %>
               </div>
             </div>
           </div>

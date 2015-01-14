@@ -65,7 +65,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.product_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @seckill.product_id %>
+                <%= @seckill.product.name %>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.start_time' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @seckill.start_time %>
+                <%= @seckill.start_time.strftime("%Y-%m-%d") %>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.end_time' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @seckill.end_time %>
+                <%= @seckill.end_time.strftime("%Y-%m-%d") %>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.seckill.description' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @seckill.description %>
+                <%=raw @seckill.description %>
               </div>
             </div>
           </div>
