@@ -644,35 +644,37 @@ class SiteController < CustomerController
   end
 
   def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
-    if !share_link_code.blank? && !invite_code.blank?
-      # invite_code is more import
-      unless invite_code.blank?
-        parent_user = Profile.where(invite_code: invite_code).first
-        unless parent_user.nil?
-          current_user_profile.move_to_child_of(parent_user)
-          parent_user.reload
+    if current_user_profile.parent.nil?
+      if !share_link_code.blank? && !invite_code.blank?
+        # invite_code is more import
+        unless invite_code.blank?
+          parent_user = Profile.where(invite_code: invite_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.invite_code = invite_code
         end
-        order.invite_code = invite_code
-      end
-    elsif !share_link_code.blank? || !invite_code.blank?
-      # share_link_code
-      unless share_link_code.blank?
-        parent_user = Profile.where(share_link_code: share_link_code).first
-        unless parent_user.nil?
-          current_user_profile.move_to_child_of(parent_user)
-          parent_user.reload
+      elsif !share_link_code.blank? || !invite_code.blank?
+        # share_link_code
+        unless share_link_code.blank?
+          parent_user = Profile.where(share_link_code: share_link_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.share_link_code = share_link_code
         end
-        order.share_link_code = share_link_code
-      end
 
-      # invite_code
-      unless invite_code.blank?
-        parent_user = Profile.where(invite_code: invite_code).first
-        unless parent_user.nil?
-          current_user_profile.move_to_child_of(parent_user)
-          parent_user.reload
+        # invite_code
+        unless invite_code.blank?
+          parent_user = Profile.where(invite_code: invite_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.invite_code = invite_code
         end
-        order.invite_code = invite_code
       end
     end
   end
