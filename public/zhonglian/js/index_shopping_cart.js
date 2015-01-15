@@ -40,8 +40,9 @@ $(document).ready(function() {
   */
   $(".action-de").click(function() {
     var num = parseInt($(this).siblings("p").text());
-    if (num == 0) {
-      return;
+    if (num < 1 || num == 1) {
+      $(this).siblings("p").text(1);
+      alert("购买数量不能为0");
     } else {
       num = num - 1;
       var subtotal = 0;

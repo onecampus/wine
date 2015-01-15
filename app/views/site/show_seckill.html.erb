@@ -390,11 +390,18 @@ $(document).ready(function(){
     }
   });
   minus.on('click', function() {
-    if (num > 0) {
+    var overnum = $(".over-num").children().text();
+    if (num > 1) {
       num--;
       numInput.val(num);
     } else {
-      numInput.val(0);
+      if (overnum == 0) {
+        numInput.val(0);
+      }
+      else{
+        alert("购买数量不能为0")
+        numInput.val(1);
+      }
     }
   });
 });
