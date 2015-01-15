@@ -723,6 +723,7 @@ class SiteController < CustomerController
   end
 
   def set_url
-    'http://203.195.222.118'
+    # 'http://203.195.222.118'
+    'http://localhost:3000/customer/products/1/show'
   end
 end
