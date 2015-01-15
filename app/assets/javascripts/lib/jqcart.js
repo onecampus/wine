@@ -60,7 +60,7 @@ $(document).ready(function() {
         var result = false;
         //查找购物车中是否有该商品
         for (var i in productList) {
-          if (productList[i].id == product.id) {
+          if (productList[i].id == product.id && productList[i].productType == "product") {
             productList[i].num = parseInt(productList[i].num) + parseInt(product.num);
             productList[i].num = product.num;
             productList[i].price = product.price;
@@ -127,7 +127,7 @@ $(document).ready(function() {
         var result = false;
         //查找购物车中是否有该商品
         for (var i in productList) {
-          if (productList[i].id == product.id) {
+          if (productList[i].id == product.id && productList[i].productType == "product") {
             productList[i].num = parseInt(productList[i].num) + parseInt(product.num);
             productList[i].buyMark = true;
             productList[i].num = product.num;
