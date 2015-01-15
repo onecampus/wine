@@ -71,6 +71,7 @@ $(document).ready(function() {
         updateBuyMark(id, num, false);
       }
     });
+    updateProductMark();
     var total = $(".total").text();
     var shoppingCart = $.localStorage.get("shoppingCart");
     if (shoppingCart === null || shoppingCart === "") {
@@ -167,9 +168,28 @@ function updateBuyMark(id, num, mark) {
     var productList = JsonStr.productList;
     //查找购物车中是否有该商品
     for (var i in productList) {
-      if (productList[i].id == id) {
+      if (productList[i].id == id && productList[i].productType == "product") {
         productList[i].buyMark = mark;
         productList[i].num = num;
+      }
+    }
+    //保存购物车
+    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
+  }
+}
+
+function updateProductMark() {
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
+    return;
+  }
+  else{
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    //查找购物车中是否有该商品
+    for (var i in productList) {
+      if (productList[i].productType != "product") {
+        productList[i].buyMark = false;
       }
     }
     //保存购物车
