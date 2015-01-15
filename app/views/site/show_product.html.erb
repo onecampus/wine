@@ -329,11 +329,12 @@ var jQuery_1_7_2 = $.noConflict(true);
       numInput.val(num);
     });
     minus.on('click', function() {
-      if (num > 0) {
+      if (num > 1) {
         num--;
         numInput.val(num);
       } else {
-        numInput.val(0);
+        numInput.val(1);
+        alert("购物数量不能为0")
       }
     });
     function isWechat(){
