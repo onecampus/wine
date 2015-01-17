@@ -355,6 +355,20 @@ rails g migration AddRemainToSeckills remain:integer
 * 点击事件框架quojs http://quojs.tapquo.com
 * dom操作框架 jquery2
 
+#### 2015-01-17
+
+* 总仓可以看到其他供应商的库存
+* /admin/profiles?action=index&role=customer&type=all 添加供应商归属
+* 用户资料查看的时候显示基本资料(注册日期), 交易流水(订单记录), 转发次数(待定), 提成记录(提成总额), 导出excel
+* 微信模板告知客户订单状态
+* /admin/orders 添加订单状态, 供应商是否处理等
+* 菜单那里加数字提醒
+* 提成公式分整个商城(和单个商品的, 待定), 商品是否参加提成(按钮)(后台设置)
+* 商品, 团购, 秒杀都参与提成
+* 积分问题(待定)
+* 邀请码用户自己复制输入, 邀请码打折设置, 统一折扣
+* 微信菜单
+
 
 
 
