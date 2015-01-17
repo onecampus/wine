@@ -246,8 +246,6 @@
     font-size: 24px;
   }
 </style>
-<%= @share_hash %>
-<%= @share_hash[:signature] %>
 <div class="main">
   <input class="product-id" type="hidden" value="<%= @product.id %>">
   <div class="top-img"><img src="<%= @product.img_url %>"/></div>
@@ -300,6 +298,7 @@
   <div class="back"></div>
 </div>
 <script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 var jQuery_1_7_2 = $.noConflict(true);
 </script>
@@ -345,33 +344,86 @@ var jQuery_1_7_2 = $.noConflict(true);
         return false;
       }
     }
+
+    // 若为微信内置浏览器，才进行各种操作
     if ( isWechat() ) {
-      document.addEventListener( 'WeixinJSBridgeReady', function onBridgeReady() {
-        WeixinJSBridge.on( 'menu:share:appmessage', function( argv ) {
-          WeixinJSBridge.invoke( 'sendAppMessage', {
-            "img_url": img_url,
-            "img_height": "160",
-            "img_width": "160",
-            "link": link,
-            "desc": desc,
-            "title": "众联酒业微信商城主打商品"
-          }, function( res ) {
-            _report( 'send_msg', res.err_msg );
-          });
+      var appid = '<%= @share_hash[:app_id] %>';
+      var timestamp= '<%= @share_hash[:timestamp] %>';
+      var noncestr = '<%= @share_hash[:noncestr] %>';
+      var signature = '<%= @share_hash[:signature] %>';
+      // 接口权限配置
+      wx.config({
+        debug: true,
+        appId: appid,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeLine','onMenuShareWeibo','onMenuShareQQ']
         });
 
-        WeixinJSBridge.on( 'menu:share:timeline', function( argv ) {
-          WeixinJSBridge.invoke( 'shareTimeline', {
-            "img_url": img_url,
-            "img_height": "160",
-            "img_width": "160",
-            "link": link,
-            "desc": desc,
-            "title": "众联酒业微信商城主打商品"
-          }, function( res ) {
-            _report( 'timeline', res.err_msg );
-          },false);
+      // 信息验证成功
+      wx.ready(function(){
+
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          type: 'link',
+          success: function () {
+            alert('succeed in sharing!');
+          },
+          cancel: function () {
+              alert('cancel');
+          }
         });
+
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+          title: '诚邀您加入众联酒业微信商城',
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+              alert('cancel')
+          }
+        });
+
+        // 分享到腾讯微博
+        wx.onMenuShareWeibo({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+        // 分享到QQ
+        wx.onMenuShareQQ({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+      }
+
+      // 信息验证失败
+      wx.error(function( res ){
+        alert(res.errMsg);
       });
     }
   });
