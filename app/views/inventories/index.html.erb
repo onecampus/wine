@@ -74,9 +74,11 @@
                   <i class="fa fa-share"></i>
                   查看
                 <% end %>
-                <%= link_to(edit_inventory_path(inventory), class: "btn btn-xs btn-green") do %>
-                  <i class="fa fa-edit"></i>
-                  修改库存
+                <% if inventory.user.username == current_user.username %>
+                  <%= link_to(edit_inventory_path(inventory), class: "btn btn-xs btn-green") do %>
+                    <i class="fa fa-edit"></i>
+                    修改库存
+                  <% end %>
                 <% end %>
               </td>
             </tr>
