@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113092420) do
+ActiveRecord::Schema.define(version: 20150119022350) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150113092420) do
     t.datetime "updated_at"
     t.integer  "limit_per_person"
     t.integer  "remain"
+    t.integer  "is_commission"
   end
 
   create_table "integrals", force: true do |t|
@@ -229,6 +230,7 @@ ActiveRecord::Schema.define(version: 20150113092420) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "fright"
+    t.integer  "is_commission"
   end
 
   create_table "profiles", force: true do |t|
@@ -289,6 +291,7 @@ ActiveRecord::Schema.define(version: 20150113092420) do
     t.datetime "updated_at"
     t.integer  "limit_per_person"
     t.integer  "remain"
+    t.integer  "is_commission"
   end
 
   create_table "shipaddresses", force: true do |t|

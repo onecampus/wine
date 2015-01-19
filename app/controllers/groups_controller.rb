@@ -9,6 +9,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @products = Product.all
     respond_with(@group)
   end
 
@@ -41,11 +42,12 @@ class GroupsController < ApplicationController
   end
 
   private
-    def set_group
-      @group = Group.find(params[:id])
-    end
 
-    def group_params
-      params.require(:group).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :limit_per_person)
-    end
+  def set_group
+    @group = Group.find(params[:id])
+  end
+
+  def group_params
+    params.require(:group).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :limit_per_person, :is_commission)
+  end
 end
