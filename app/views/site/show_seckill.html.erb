@@ -424,7 +424,7 @@ $(document).ready(function(){
     var hostname = location.hostname;
     var port = location.port;
     var domain = "http://" + hostname + ':' + port;
-    var link = domain + "/customer/products/<%= @seckill.product.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
+    var link = domain + "/customer/seckills/<%= @seckill.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
     var img_url = domain + "<%= @seckill.product.img_url %>";
 
     // 接口权限配置

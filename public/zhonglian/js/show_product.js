@@ -1,6 +1,5 @@
 $(document).ready(function(){
   updateShareLinkCode();
-  updateInviteCode();
 });
 
 function getCode(name) {
@@ -22,20 +21,6 @@ function updateShareLinkCode() {
   else {
     var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
     JsonStr.shareLinkCode = shareLinkCode;
-    $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
-  }
-}
-
-function updateInviteCode() {
-  var name = "invite_code";
-  var invitecode = getCode(name);
-  var shoppingCart = $.localStorage.get("shoppingCart");
-  if (shoppingCart === null || shoppingCart === "") {
-    return;
-  }
-  else {
-    var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
-    JsonStr.inviteCode = invitecode;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
   }
 }

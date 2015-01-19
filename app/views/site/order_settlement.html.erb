@@ -88,25 +88,25 @@
   }
 
   .promo-code {
-    width: 90%;
+    width: 100%;
     height: 40px;
     align: center;
+    margin-left: 5%;
   }
 
   .promo-code input {
     width: 60%;
-    height: 20px;
+    height: 25px;
     margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
   }
 
-  .promo-code-btn {
-    width: 85px;
-    height: 28px;
-    font-size: 12px;
-    background-color: #aa0c40;
-    border: 1px solid #aa0c40;
-    border-radius: 5px;
+  .promo-code span {
     color: #fff;
+    background: #aa0c40;
+    border-radius: 5px;
+    padding: 5px;
   }
 
   .product {
@@ -498,11 +498,11 @@
   <div class="space">
   </div>
 </div>
+<div class="promo-code">
+  <span>使用优惠码</span>
+  <input class="invite-code" type="text" placeholder="请输入优惠码">
+</div>
 <div class="order">
-  <div class="promo-code">
-    <input type="text" placeholder="请输入优惠码">
-    <button class="promo-code-btn">使用优惠码</button>
-  </div>
   <hr>
   <div class="submit-order pull-right">
     <span class="text3">总金额：</span>
