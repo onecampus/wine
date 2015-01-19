@@ -46,6 +46,6 @@ class SeckillsController < ApplicationController
     end
 
     def seckill_params
-      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :limit_per_person)
+      params.require(:seckill).permit(:product_id, :start_time, :end_time, :limit_people_count, :limit_product_count, :description, :price, :saveup, :discount, :limit_per_person, :is_commission)
     end
 end

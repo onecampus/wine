@@ -66,6 +66,7 @@ zh-CN:
         people: '参加人数'
         limit_per_person: '每人限购'
         remain: '剩余数量'
+        is_commission: '是否参与提成'
 
       group_order:
         order_id: '订单'
@@ -86,6 +87,7 @@ zh-CN:
         people: '参加人数'
         limit_per_person: '每人限购'
         remain: '剩余数量'
+        is_commission: '是否参与提成'
 
       seckill_order:
         order_id: '订单'
@@ -248,6 +250,7 @@ zh-CN:
         is_boutique: '精品'
         unit: '单位'
         fright: '运费'
+        is_commission: '是否参与提成'
 
       inventory:
         user_id: '供应商'

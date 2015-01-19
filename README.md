@@ -218,6 +218,10 @@ rails g migration AddRemainToGroups remain:integer
 
 rails g migration AddLimitPerPersonToSeckills limit_per_person:integer
 rails g migration AddRemainToSeckills remain:integer
+
+rails g migration AddIsCommissionToProducts is_commission:integer
+rails g migration AddIsCommissionToSeckills is_commission:integer
+rails g migration AddIsCommissionToGroups is_commission:integer
 ```
 
 ### 功能分析 ###

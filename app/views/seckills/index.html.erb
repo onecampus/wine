@@ -66,6 +66,7 @@
         <thead>
           <tr>
             <th><%=t 'activerecord.attributes.seckill.product_id' %></th>
+            <th><%=t 'activerecord.attributes.seckill.is_commission' %></th>
             <th><%=t 'activerecord.attributes.seckill.start_time' %></th>
             <th><%=t 'activerecord.attributes.seckill.end_time' %></th>
             <th><%=t 'activerecord.attributes.seckill.limit_people_count' %></th>
@@ -84,6 +85,7 @@
           <% @seckills.each do |seckill| %>
             <tr>
               <td><%= seckill.product.name %></td>
+              <td><% if seckill.is_commission == 1 %>参与提成<% elsif seckill.is_commission == 0 %>不参与提成<% end %></td>
               <td><%= seckill.start_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
               <td><%= seckill.end_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
               <td><%= seckill.limit_people_count %></td>
