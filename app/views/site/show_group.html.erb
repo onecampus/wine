@@ -389,9 +389,9 @@ body {
       var hostname = location.hostname;
       var port = location.port;
       var domain = "http://" + hostname + ':' + port;
-      var link = domain + "/customer/products/<%= @product.product.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
-      var img_url = domain + "<%= @product.product.img_url %>";
-      
+      var link = domain + "/customer/groups/<%= @group.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
+      var img_url = domain + "<%= @group.product.img_url %>";
+
       // 接口权限配置
       wx.config({
         debug: true,
