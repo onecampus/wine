@@ -67,6 +67,7 @@
 </div>
 <a href="#" class="recharge btn btn-red">充值</a>
 <script type="text/javascript" src="/zhonglian/js/jquery1.8.3.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
     var jQuery_1_8_3 = $.noConflict(true);
 </script>
@@ -80,6 +81,7 @@ jQuery_1_8_3(document).ready(function($) {
   if (!$link_code.text()) {
     $link_code.css("clear","both");
   }
+
   function isWechat(){
     var ua = navigator.userAgent.toLowerCase();
     if(ua.match( /MicroMessenger/i )=="micromessenger") {
@@ -88,35 +90,95 @@ jQuery_1_8_3(document).ready(function($) {
       return false;
     }
   }
-  if ( isWechat() ) {
-    document.addEventListener( 'WeixinJSBridgeReady', function onBridgeReady() {
-      WeixinJSBridge.on( 'menu:share:appmessage', function( argv ) {
-        WeixinJSBridge.invoke( 'sendAppMessage', {
-          "img_url": "http://192.168.0.111:3000/zhonglian/img/index/index_bg.jpg",
-          "img_height": "160",
-          "img_width": "160",
-          "link": "http://192.168.0.111:3000/users/sign_in?invite_code=<%= current_user.profile.invite_code if current_user %>",
-          "desc": "诚邀您加入众联酒业微信商城，从此妈妈再也不用担心您卖肾买酒喝了！",
-          "title": "诚邀加入众联酒业商城"
-        }, function( res ) {
-          _report( 'send_msg', res.err_msg );
-        });
+
+
+    // 若为微信内置浏览器，才进行各种操作
+    if ( isWechat() ) {
+      var appid = '<%= @share_hash[:app_id] %>';
+      var timestamp= '<%= @share_hash[:timestamp] %>';
+      var noncestr = '<%= @share_hash[:noncestr] %>';
+      var signature = '<%= @share_hash[:signature] %>';
+      var hostname = location.hostname;
+      var port = location.port;
+      var domain = "http://" + hostname + ':' + port;
+      var link = domain + "/users/sign_in?invite_code=<%= current_user.profile.invite_code if current_user %>";
+      var img_url = domain + "/zhonglian/img/index/index-ba.jpg";
+      // 接口权限配置
+      wx.config({
+        debug: true,
+        appId: appid,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeLine','onMenuShareWeibo','onMenuShareQQ']
       });
 
-     WeixinJSBridge.on( 'menu:share:timeline', function( argv ) {
-       WeixinJSBridge.invoke( 'shareTimeline', {
-         "img_url": "http://192.168.0.111:3000/zhonglian/img/index/index_bg.jpg",
-         "img_height": "160",
-         "img_width": "160",
-         "link": "http://192.168.0.111:3000/users/sign_in?invite_code=<%= current_user.profile.invite_code if current_user %>",
-         "desc": "诚邀您加入众联酒业微信商城，从此妈妈再也不用担心您卖肾买酒喝了！",
-         "title": "诚邀加入众联酒业商城"
-       }, function( res ) {
-         _report( 'timeline', res.err_msg );
-       },false);
-     });
-    });
-  }
+      // 信息验证成功
+      wx.ready(function(){
+
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          type: 'link',
+          success: function () {
+            alert('succeed in sharing!');
+          },
+          cancel: function () {
+            alert('cancel');
+          }
+        });
+
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+          title: '诚邀您加入众联酒业微信商城',
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+        // 分享到腾讯微博
+        wx.onMenuShareWeibo({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+        // 分享到QQ
+        wx.onMenuShareQQ({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+      });
+
+      // 信息验证失败
+      wx.error(function( res ){
+        alert(res.errMsg);
+      });
+    }
 });
 
 </script>

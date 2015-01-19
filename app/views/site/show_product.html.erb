@@ -1,7 +1,6 @@
 <% content_for :customer_title do %>
   商城
 <% end %>
-<script src="/zhonglian/js/show_product.js"></script>
 <style type="text/css">
   body {
     overflow-x: hidden;
@@ -298,6 +297,7 @@
   <div class="back"></div>
 </div>
 <script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
+<script src="/zhonglian/js/show_product.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 var jQuery_1_7_2 = $.noConflict(true);
@@ -419,7 +419,8 @@ var jQuery_1_7_2 = $.noConflict(true);
             alert('cancel')
           }
         });
-      }
+
+      });
 
       // 信息验证失败
       wx.error(function( res ){
