@@ -4,30 +4,37 @@
 
 <style type="text/css">
   body {
-    background-image: url('/zhonglian/img/index/index-ba.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 50%;
-    background-clip: content-box;
-    background-origin: content-box;
-    width: 100%;
+    background-color: #fff;
+  }
+  /* 首页搜索 */
+  .search-box {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  .search-box > img {
+    width: 40px;
+    height: 40px;
+    float: left;
+    padding: 10px;
+  }
+  .search-box .query {
+    margin-left: 80px;
+  }
+  .search-box .q {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 20px;
+    margin-top: 13px;
+    width: 85%;
+    padding: 6px 12px;
   }
 
-  .top {
-    height: 300px;
-    width: 100%;
-    margin: 30px 0 0 0;
-    background-image: url("/zhonglian/img/index/indexlogo.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    background-clip: content-box;
-    background-origin: content-box;
-  }
-
+  /* 首页导航 */
   .top-bar {
     width: 100%;
     height: 100px;
     margin: 20px 0 0 0;
+    clear: both;
   }
 
   .top-bar .top-bar-item {
@@ -42,161 +49,72 @@
   }
 
   .top-bar .top-bar-item p {
-    color: #ffffff;
     text-align: center;
     line-height: 16px;
     font-size: 12px;
   }
 
-  .index-btn-block {
-    float: left;
-    width: 100%;
-    text-align: center;
-    margin: 50px 0 20px 0;
-  }
-
-  .index-btn-block img {
-    width: 60%;
-    height: 5%;
-  }
-
-  .recommend {
-    margin-left: 10px;
-  }
-
-  .recommend-item {
-    width: 50%;
-    float: left;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  .company-idea {
-    margin: 0 auto;
-    width: 85%;
-    background-color: #efedec;
-    padding: 10px 10px
-  }
-
-  .company-idea div {
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 1px 0 1px 10px;
-  }
-
-  .company-idea p {
-    color: #888;
-    text-indent: 2em;
-  }
-
-  .company-pic {
-    width: 90%;
-    margin: 40px auto 0 auto;
-  }
-
-  .company-pic img {
-    width: 100%;
-    margin-bottom: 40px;
-  }
-
-  .product {
-    width: 90%;
-    height: auto;
-    float: left;
-    text-align: left;
-    margin-left: 4%;
-    box-shadow: 6px 6px 3px #dcdcdc;
-  }
-
-  .product-inf {
-    width: 100%;
-    height: 50px;
-    background-color: #ffffff;
-    color: #787878;
-  }
-
-
-  .product-img {
-    width: 100%;
-    height: 150px;
-  }
-
-  .share-inf {
-    margin: 0 auto;
-    width: 85%;
-    background-color: #e9e9e9;
-    padding: 10px 10px
-  }
-
-  .share-inf div {
+  /* 首页商品和活动列表 */
+  .mproductshow {
+    display: block;
     margin: 0 auto;
     width: 100%;
-    background-color: #f2f2f2;
-    padding: 1px 0;
-    text-align: left;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
   }
-
-   body ul {
-    margin: 0;
-    padding: 10px;
-  }
-
-   body li {
-    color: #7b7b7b;
-    list-style: none;
-  }
-
-  .company-inf {
+  .left {
     float: left;
-    width: 85%;
-    text-align: center;
-    margin: 50px 0 50px 7%;
+    width: 55%;
+    border-right: 1px solid #ccc;
+    height: 130px;
   }
-
-  .share-logo {
-    width: 36px;
-    height: 31px;
+  .left img {
+    width: 91%;
+    margin: auto 3px;
+    height: 130px;
+    padding: 0 5px 5px 5px;
   }
-
-  .sent-logo {
-    width: 28px;
-    height: 28px;
+  .right {
+    margin-left: 55%;
   }
-
-  .logo3 {
-    width: 20px;
-    height: 20px;
+  .right img {
+    width: 91%;
+    margin-bottom: 3px;
+    height: 62px;
+    padding-left: 8px;
+    padding-right: 3px;
   }
-
-  .logo4 {
-    width: 22px;
-    height: 22px;
+  .right .up {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
   }
-
-  .text1 {
-    margin: 0 0 0 4%;
-    width: 90%;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
+  .right .down {
+    padding-top: 3px;
   }
-
-  .text2 {
-    margin: 0 0 0 5%;
-    width: 90%;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    font-weight: bold;
+  .oproductshow {
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    text-align: center
   }
+  .oproductshow img {
+    width: 98%;
+    height: 130px;
+    margin: 5px;
 
-  .text3 {
-    font-size: 24px;
   }
 </style>
 
-
-<div class="top"></div>
+<div class="search-box">
+  <img src="/zhonglian/img/logo.png">
+  <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
+  <div class="query">
+    <input class="q" type="text" name="q" placeholder="请输入需要查找的宝贝" >
+  </div>
+  <% end %>
+</div>
 
 <div class="top-bar">
   <div class="top-bar-item">
@@ -225,34 +143,74 @@
     <p>团购秒杀</p>
   </div>
 </div>
-<div class="company-idea">
-  <div>
-    <p>"众联"------商联大众，服务顾客之意。</p>
-    <p>佛山众联酒业有限公司是一家以品牌加盟连锁和专业的渠道供应为主体的新兴企业，同时致力于多种渠道进行葡萄酒文化知识的传播。</p>
-    <p>公司始终坚持对美酒真品的严格甄选和对卓越品质的不懈追求。公司现已成为法国特优大香槟干邑白兰地地产区中国市场唯一战略合作伙伴。同时公司还成功取得了澳大利亚南部
-    名庄southerncross,XO等系列的中国独家代理权，其酒庄高质量葡萄酒因屡获全球各地葡萄酒展大奖而更富声誉（累计获得近５００奖牌和奖项），同时也受到世界上专业葡萄酒评机构的好评！</p>
+
+<div class="mproductshow">
+  <div class="left">
+    <a href="#"><img src="/zhonglian/img/logo.png"></a>
+  </div>
+  <div class="right">
+    <div>
+      <a href="#"><img src="/zhonglian/img/logo.png" class="up"></a>
+    </div>
+    <div>
+      <a href="#"><img src="/zhonglian/img/logo.png" class="down"></a>
+    </div>
   </div>
 </div>
-<div class="company-pic">
-  <a href=""><%= image_tag(@site_config1.img_url) if @site_config1.img? %></a>
-  <a href=""><%= image_tag(@site_config2.img_url) if @site_config2.img? %></a>
-  <a href=""><%= image_tag(@site_config3.img_url) if @site_config3.img? %></a>
-</div>
-<div class="share-inf">
-  <div>
-    <ul>
-      <li class="text3">分享朋友:</li>
-      <li>请点击右上角按钮在弹出的菜单中选<img class="share-logo" src="/zhonglian/img/index/share_logo.png"></img>或&nbsp;<img class="sent-logo" src="/zhonglian/img/index/sent_logo.png"></img></li>
-      <li class="text3">订阅账号:</li>
-      <li>请点击右上角按钮在弹出的菜单中选&nbsp;<img class="logo3" src="/zhonglian/img/index/logo3.png">&nbsp;或在通信录中点击&nbsp;<img class="logo4" src="/zhonglian/img/index/logo4.png">&nbsp;搜索"众联酒业"，即可关注众联官方微信</li>
-    </ul>
+<div class="mproductshow">
+  <div class="left">
+    <a href="#"><img src="/zhonglian/img/logo.png"></a>
+  </div>
+  <div class="right">
+    <div>
+      <a href="#"><img src="/zhonglian/img/logo.png" class="up"></a>
+    </div>
+    <div>
+      <a href="#"><img src="/zhonglian/img/logo.png" class="down"></a>
+    </div>
   </div>
 </div>
-<div class="company-inf">
-  <ul>
-    <li>佛山市众联酒业有限公司</li>
-    <li>全国客服:400-009-2119</li>
-    <li>地址: 佛山市南海区海五路东（一环出口）银富中心410室</li>
-    <li>Email:paodefeiduai@163.com</li>
-  </ul>
+<div class="oproductshow">
+  <a href="#"><img src="/zhonglian/img/logo.png"></a>
 </div>
+<div class="oproductshow">
+  <a href="#"><img src="/zhonglian/img/logo.png"></a>
+</div>
+
+<div class="top-bar">
+  <div class="top-bar-item">
+    <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
+
+    <p>全部分类</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/users/center"><img src="/zhonglian/img/index/icon_userconter.png"/></a></p>
+
+    <p>用户中心</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png"/></a></p>
+
+    <p>购物车</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png"/></a></p>
+
+    <p>搜索</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/groups_and_seckills"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
+
+    <p>团购秒杀</p>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $( ".q" ).focus(function(){
+      $(this).css( "border", "1px solid #3385ff" );
+    });
+    $( ".q" ).blur(function(){
+      $(this).css( "border", "1px solid #ccc");
+    });
+  });
+</script>
