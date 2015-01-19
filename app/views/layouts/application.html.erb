@@ -47,6 +47,18 @@
   <%= csrf_meta_tags %>
 
   <link rel="shortcut icon" href="/favicon.ico" />
+  <style type="text/css">
+    ul.main-navigation-menu li a .badge {
+      float: none;
+      margin-right: 17px;
+    }
+    span.title > span.badge {
+      margin-left: 20px;
+    }
+    .badge {
+      background-color: #007aff;
+    }
+  </style>
 </head>
 <!-- end: HEAD -->
 <!-- start: BODY -->
@@ -206,7 +218,7 @@
           <% if current_user.has_role? :admin %>
           <li>
             <a href="javascript:void(0)"><i class="clip-windy"></i>
-              <span class="title"> 抽奖管理 </span><i class="icon-arrow"></i>
+              <span class="title">抽奖管理 <span class="badge">2</span> </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -222,7 +234,7 @@
               </li>
               <li>
                 <a href="/admin/prize_users">
-                  <span class="title">获奖名单</span>
+                  <span class="title"><span class="badge pull-right">2</span>获奖名单</span>
                 </a>
               </li>
             </ul>
@@ -230,7 +242,7 @@
           <% end %>
           <li>
             <a href="javascript:void(0)"><i class="clip-cart"></i>
-              <span class="title"> 订单管理 </span><i class="icon-arrow"></i>
+              <span class="title"> 订单管理 <span class="badge">2</span> </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -242,50 +254,50 @@
               <% if current_user.has_role? :admin %>
               <li>
                 <a href="/admin/orders">
-                  <span class="title">所有订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>所有订单列表</span>
                 </a>
               </li>
               <% end %>
               <li>
                 <a href="/admin/orders/wait/sure">
-                  <span class="title">未确定订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>未确定订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/wait/ship">
-                  <span class="title">待发货订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>待发货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/ship">
-                  <span class="title">已发货未收货订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>已发货未收货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/receive">
-                  <span class="title">已收货订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>已收货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/ok">
-                  <span class="title">已完成订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>已完成订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/wait/back">
-                  <span class="title">待退货订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>待退货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/cancel">
-                  <span class="title">已取消订单列表</span>
+                  <span class="title"><span class="badge pull-right">2</span>已取消订单列表</span>
                 </a>
               </li>
             </ul>
           </li>
           <li>
             <a href="javascript:void(0)"><i class="clip-user-6"></i>
-              <span class="title"> 用户管理 </span><i class="icon-arrow"></i>
+              <span class="title"> 用户管理 <span class="badge">2</span></span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -302,18 +314,18 @@
               </li>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=all">
-                  <span class="title">所有客户管理</span>
+                  <span class="title"><span class="badge pull-right">2</span>所有客户管理</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/withdraws">
-                  <span class="title">用户提现</span>
+                  <span class="title"><span class="badge pull-right">2</span>用户提现</span>
                 </a>
               </li>
               <% end %>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=own">
-                  <span class="title">客户管理</span>
+                  <span class="title"><span class="badge pull-right">2</span>客户管理</span>
                 </a>
               </li>
             </ul>
