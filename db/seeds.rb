@@ -388,7 +388,7 @@ wm2 = WxMenu.new(
 wm2.save!
 
 names2 = [
-  '有奖转盘 '
+  '有奖转盘'
 ]
 names2.each do |sn|
   wm_tmp = WxMenu.new(

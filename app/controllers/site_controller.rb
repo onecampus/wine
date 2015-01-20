@@ -75,7 +75,7 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
-    @share_hash = share_hash_init
+    @share_hash = init_share_hash
   end
 
   def index_groups_seckills
@@ -85,7 +85,7 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
-    @share_hash = share_hash_init
+    @share_hash = init_share_hash
     @already_sell = 0
     @group.group_orders.each do |go|
       @already_sell += go.group_count
@@ -94,7 +94,7 @@ class SiteController < CustomerController
 
   def show_seckill
     @seckill = Seckill.find params[:id]
-    @share_hash = share_hash_init
+    @share_hash = init_share_hash
     @already_sell = 0
     @seckill.seckill_orders.each do |go|
       @already_sell += go.seckill_count
@@ -520,6 +520,14 @@ class SiteController < CustomerController
 
   private
 
+  def init_share_hash
+    app_id = ENV['APP_ID']
+    app_secret = ENV['APP_SECRET']
+    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+    url = ENV['APP_JS_URL']
+    WxExt::Api::Js.get_jsapi_config(access_token_hash['access_token'], url, app_id)
+  end
+
   def get_result(prize_hash)
     result = {}
     hash = {}
@@ -685,52 +693,5 @@ class SiteController < CustomerController
         end
       end
     end
-  end
-
-  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
-    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
-    res = RestClient.get url, {accept: :json}
-    JSON.parse res
-  end
-
-  def get_jsapi_ticket(access_token)
-    url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{access_token}&type=jsapi"
-    res = RestClient.get url, {accept: :json}
-    JSON.parse res
-  end
-
-  def set_noncestr
-    [*'a'..'z',*'0'..'9',*'A'..'Z'].sample(16).join
-  end
-
-  def set_timestamp
-    Time.now.to_i.to_s
-  end
-
-  def set_url
-    # 'http://203.195.222.118'
-    'http://localhost:3000/customer/products/1/show'
-  end
-
-  def share_hash_init
-    share_hash = {}
-    access_token_hash = get_access_token
-    access_token = access_token_hash['access_token']
-    jsapi_ticket_hash = get_jsapi_ticket(access_token)
-    timestamp = set_timestamp
-    noncestr = set_noncestr
-    url = set_url
-    if jsapi_ticket_hash['errcode'] == 0
-      jsapi_ticket = jsapi_ticket_hash['ticket']
-      str = "jsapi_ticket=#{jsapi_ticket}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
-      signature = Digest::SHA1.hexdigest(str)
-      share_hash = {
-        app_id: 'wxa2bbd3b7a22039df',
-        timestamp: timestamp,
-        noncestr: noncestr,
-        signature: signature
-      }
-    end
-    share_hash
   end
 end
