@@ -46,7 +46,9 @@ gem 'acts_as_commentable_with_threading'
 # 微信xml解析
 gem 'actionpack-xml_parser'
 # gem 'weixin_authorize'
-gem 'rest_client'
+gem 'rest-client'
+
+gem 'wx_ext'
 
 # bootstrap editable
 # gem 'bootstrap-editable-rails'
