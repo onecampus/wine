@@ -1,14 +1,15 @@
 <% content_for :customer_title do %>
   众联酒业微信商城
 <% end %>
-
+<link rel="stylesheet" type="text/css" href="/zhonglian/css/slide.css">
 <style type="text/css">
   body {
     background-color: #fff;
+    width: 100%;
   }
   /* 首页搜索 */
   .search-box {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e5e5e5;
     padding-bottom: 10px;
   }
   .search-box > img {
@@ -21,22 +22,37 @@
     margin-left: 80px;
   }
   .search-box .q {
-    border: 1px solid #ccc;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     border-radius: 5px;
     height: 20px;
     margin-top: 13px;
     width: 85%;
     padding: 6px 12px;
   }
+  /* 幻灯片 */
+  .stitle {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 14px;
+    margin-top: -30px;
+    position: absolute;
+    padding: 5px 0;
+    width: 100%;
+    z-index: 99999;
+  }
 
   /* 首页导航 */
   .top-bar {
     width: 100%;
     height: 100px;
-    margin: 20px 0 0 0;
+    margin: 5px 0 0 0;
     clear: both;
   }
-
+  .secondt {
+    margin-bottom: 60px;
+    clear: both;
+  }
   .top-bar .top-bar-item {
     width: 20%;
     height: 60px;
@@ -57,57 +73,76 @@
   /* 首页商品和活动列表 */
   .mproductshow {
     display: block;
-    margin: 0 auto;
+    margin: 5px auto;
     width: 100%;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e5e5e5;
     padding-bottom: 10px;
-    margin-bottom: 5px;
+    padding-top: 10px;
   }
   .left {
     float: left;
     width: 55%;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #e5e5e5;
     height: 130px;
+    margin: 0 auto;
+    text-align: center;
   }
   .left img {
-    width: 91%;
-    margin: auto 3px;
+    width: 92%;
+    display: inline-block;
     height: 130px;
-    padding: 0 5px 5px 5px;
+    vertical-align: middle;
   }
   .right {
     margin-left: 55%;
   }
   .right img {
-    width: 91%;
-    margin-bottom: 3px;
+    width: 89%;
+    margin: 0 auto;
     height: 62px;
-    padding-left: 8px;
-    padding-right: 3px;
+    vertical-align: middle;
+    padding-left: 4%;
+    padding-right: 4%;
   }
   .right .up {
     padding-bottom: 5px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e5e5e5;
   }
   .right .down {
-    padding-top: 3px;
+    padding-top: 5px;
   }
   .oproductshow {
     width: 100%;
     margin-top: 10px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
     text-align: center
   }
   .oproductshow img {
-    width: 98%;
+    width: 100%;
     height: 130px;
-    margin: 5px;
+    margin: 5px 0;
+  }
 
+  /* 底部login链接 */
+  .loginfooter {
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .loginfooter > a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px;
+  }
+  .goToTop {
+    float: right;
+    margin-top: -5px;
   }
 </style>
 
-<div class="search-box">
+<div class="search-box" id="top">
   <img src="/zhonglian/img/logo.png">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
   <div class="query">
@@ -116,6 +151,22 @@
   <% end %>
 </div>
 
+<div class="swiper-container " style="text-align: center;">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <a href="#">
+        <img src="/zhonglian/img/seckill-icon.png">
+      </a>
+    </div>
+    <div class="swiper-slide">
+      <a href="#">
+        <img src="/zhonglian/img/logo.png">
+      </a>
+    </div>
+  </div>
+</div>
+<div class="stitle">&nbsp;&nbsp;&nbsp;众联酒业</div>
+
 <div class="top-bar">
   <div class="top-bar-item">
     <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
@@ -177,7 +228,12 @@
   <a href="#"><img src="/zhonglian/img/logo.png"></a>
 </div>
 
-<div class="top-bar">
+<div class="loginfooter">
+  <a href="#">登录</a> |
+  <a href="#">注册</a>
+  <a href="#top" class="goToTop">| 回到顶部</a>
+</div>
+<div class="top-bar secondt">
   <div class="top-bar-item">
     <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
 
@@ -204,13 +260,30 @@
     <p>团购秒杀</p>
   </div>
 </div>
+<%= render "site/shared/bottombar" %>
+<script type="text/javascript" src="/zhonglian/js/slide.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
+
     $( ".q" ).focus(function(){
-      $(this).css( "border", "1px solid #3385ff" );
+      $(this).css({
+         "border" : "1px solid #3385ff"
+      });
     });
     $( ".q" ).blur(function(){
-      $(this).css( "border", "1px solid #ccc");
+      $(this).css( "border", "1px solid #e5e5e5");
     });
+
+    var mySwiper = $( '.swiper-container' ).swiper({
+      mode: 'horizontal',
+      loop: true,
+      autoplay: 1500,
+      speed: 750,
+      calculateHeight: true,
+      paginationClickable: true,
+      autoplayDisableOnInteraction: true,
+      autoplayStopOnLast: true,
+    });
+
   });
 </script>
