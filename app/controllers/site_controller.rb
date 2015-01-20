@@ -75,24 +75,7 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
-    @share_hash = {}
-    access_token_hash = get_access_token
-    access_token = access_token_hash['access_token']
-    jsapi_ticket_hash = get_jsapi_ticket(access_token)
-    timestamp = set_timestamp
-    noncestr = set_noncestr
-    url = set_url
-    if jsapi_ticket_hash['errcode'] == 0
-      jsapi_ticket = jsapi_ticket_hash['ticket']
-      str = "jsapi_ticket=#{jsapi_ticket}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
-      signature = Digest::SHA1.hexdigest(str)
-      @share_hash = {
-        app_id: 'wxa2bbd3b7a22039df',
-        timestamp: timestamp,
-        noncestr: noncestr,
-        signature: signature
-      }
-    end
+    @share_hash = share_hash_init
   end
 
   def index_groups_seckills
@@ -102,6 +85,7 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
+    @share_hash = share_hash_init
     @already_sell = 0
     @group.group_orders.each do |go|
       @already_sell += go.group_count
@@ -110,6 +94,7 @@ class SiteController < CustomerController
 
   def show_seckill
     @seckill = Seckill.find params[:id]
+    @share_hash = share_hash_init
     @already_sell = 0
     @seckill.seckill_orders.each do |go|
       @already_sell += go.seckill_count
@@ -725,5 +710,27 @@ class SiteController < CustomerController
   def set_url
     # 'http://203.195.222.118'
     'http://localhost:3000/customer/products/1/show'
+  end
+
+  def share_hash_init
+    share_hash = {}
+    access_token_hash = get_access_token
+    access_token = access_token_hash['access_token']
+    jsapi_ticket_hash = get_jsapi_ticket(access_token)
+    timestamp = set_timestamp
+    noncestr = set_noncestr
+    url = set_url
+    if jsapi_ticket_hash['errcode'] == 0
+      jsapi_ticket = jsapi_ticket_hash['ticket']
+      str = "jsapi_ticket=#{jsapi_ticket}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
+      signature = Digest::SHA1.hexdigest(str)
+      share_hash = {
+        app_id: 'wxa2bbd3b7a22039df',
+        timestamp: timestamp,
+        noncestr: noncestr,
+        signature: signature
+      }
+    end
+    share_hash
   end
 end

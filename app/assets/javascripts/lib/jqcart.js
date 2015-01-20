@@ -20,7 +20,6 @@ $(document).ready(function() {
     totalNumber: 0,
     totalAmount: 0.00,
     shareLinkCode: null,
-    inviteCode: null,
     order_type: "is_product"
   };
   var Cart = {
@@ -45,7 +44,6 @@ $(document).ready(function() {
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
           "shareLinkCode": null,
-          "inviteCode": null,
           "order_type": "is_product",
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));
@@ -112,7 +110,6 @@ $(document).ready(function() {
           "totalNumber": product.num,
           "totalAmount": (product.price * product.num),
           "shareLinkCode": null,
-          "inviteCode": null,
           "order_type": "is_product",
         };
         Utils.setParam("shoppingCart", "'" + JSON.stringify(JsonStr));

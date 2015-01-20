@@ -1,7 +1,52 @@
 <% content_for :page_title do %>
     查看<%= t 'activerecord.models.profile' %>
 <% end %>
+<style>
+  .tab-content .row {
+    margin-left: -50px;
+    margin-right: 0;
+  }
+  .col-sm-6 {
+    width: 100%;
+  }
 
+  table {
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    width: 100%;
+  }
+
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+
+  #panel_tab4_example2 td {
+    padding: 10px 5px 10px 10px;
+    border-right: 1px solid #ddd;
+  }
+  #panel_tab4_example2 th {
+    border-right: 1px solid #ddd;
+    padding: 10px 5px 10px 10px;
+  }
+
+  #panel_tab4_example3 td {
+    padding: 10px;
+    border-right: 1px solid #ddd;
+  }
+  #panel_tab4_example3 th {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  #panel_tab4_example4 td {
+    padding: 10px 5px 10px 10px;
+    border-right: 1px solid #ddd;
+  }
+  #panel_tab4_example4 th {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+  }
+</style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
     <ol class="breadcrumb">
@@ -35,152 +80,233 @@
 
 <!-- start: PAGE CONTENT -->
 <div class="row">
-  <div class="col-sm-12">
-    <!-- start: TEXT FIELDS PANEL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-external-link-square"></i>
-        查看<%= t 'activerecord.models.profile' %>
-        <div class="panel-tools">
-          <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
+  <div class="col-sm-6">
+    <div class="tabbable tabs-left">
+      <ul id="myTab3" class="nav nav-tabs tab-green">
+        <li class="active">
+          <a href="#panel_tab4_example1" data-toggle="tab">
+            <i class="pink fa fa-user"></i> 用户基本资料
           </a>
-          <a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
-            <i class="fa fa-wrench"></i>
+        </li>
+        <li class="">
+          <a href="#panel_tab4_example2" data-toggle="tab">
+            <i class="blue fa fa-file"></i> 订单记录
           </a>
-          <a class="btn btn-xs btn-link panel-refresh" href="#">
-            <i class="fa fa-refresh"></i>
+        </li>
+        <li class="">
+          <a href="#panel_tab4_example3" data-toggle="tab">
+            <i class="fa fa-euro"></i> 提成记录
           </a>
-          <a class="btn btn-xs btn-link panel-expand" href="#">
-            <i class="fa fa-resize-full"></i>
+        </li>
+        <li class="">
+          <a href="#panel_tab4_example4" data-toggle="tab">
+            <i class="fa fa-usd"></i> 提现记录
           </a>
-          <a class="btn btn-xs btn-link panel-close" href="#">
-            <i class="fa fa-times"></i>
+        </li>
+        <li class="">
+          <a href="#panel_tab4_example5" data-toggle="tab">
+            <i class="fa fa-star"></i> 转发次数
           </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="panel_tab4_example1">
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- start: TEXT FIELDS PANEL -->
+                  <div class="form-horizontal">
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.username' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.user.username %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.email' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.user.email %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.mobile' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.mobile %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.tel' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.tel %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.province' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.province %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.city' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.city %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.region' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.region %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.address' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.address %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.fax' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.fax %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.invite_code' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.invite_code %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.share_link_code' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.share_link_code %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.default_address_id' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.default_address_id %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.weixin_open_id' %></div>
+                      <div class="col-sm-9">
+                        <div class="show-control">
+                          <%= @profile.weixin_open_id %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <!-- end: TEXT FIELDS PANEL -->
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="panel-body">
-        <div class="form-horizontal">
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.username' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.user.username %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.email' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.user.email %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.mobile' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.mobile %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.tel' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.tel %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.province' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.province %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.city' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.city %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.region' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.region %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.address' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.address %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.fax' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.fax %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.invite_code' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.invite_code %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.share_link_code' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.share_link_code %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.default_address_id' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.default_address_id %>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.weixin_open_id' %></div>
-            <div class="col-sm-9">
-              <div class="show-control">
-                <%= @profile.weixin_open_id %>
-              </div>
-            </div>
-          </div>
+        <div class="tab-pane" id="panel_tab4_example2">
+          <table>
+            <tr>
+              <th>客户</th>
+              <th>供应商</th>
+              <th>送货地址</th>
+              <th>总价</th>
+              <th>订单状态</th>
+              <th>支付状态</th>
+              <th>货物状态</th>
+            </tr>
+            <% @profile.user.orders.each do |order| %>
+            <tr>
+              <td><%= order.user.username %></td>
+              <td><%= Profile.find(order.user.id).user.username if order.user %></td>
+              <td><%= order.ship_address %></td>
+              <td><%= order.total_price %></td>
+              <td><%= order_status order.order_status %></td>
+              <td><%= pay_status order.pay_status %></td>
+              <td><%= logistics_status order.logistics_status %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="tab-pane" id="panel_tab4_example3">
+          <table>
+            <tr>
+              <th>订单号</th>
+              <th>提成金额</th>
+              <th>提成百分比</th>
+            </tr>
+            <% @profile.user.commissions.each do |com| %>
+            <tr>
+              <td><%= com.order_id %></td>
+              <td><%= com.commission_money %></td>
+              <td><%= com.percent %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="tab-pane" id="panel_tab4_example4">
+          <table>
+            <tr>
+              <th>类型</th>
+              <th>提现金额</th>
+              <th>提现状态</th>
+              <th>下家</th>
+            </tr>
+            <% @profile.user.withdraws.each do |draw| %>
+            <tr>
+              <td><%= draw.draw_type %></td>
+              <td><%= draw.draw_money %></td>
+              <td><%= draw.draw_status %></td>
+              <td><%= User.find(draw.from_user_id).username %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="tab-pane" id="panel_tab4_example5">
+          <p>
+            Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.
+          </p>
+          <p>
+            <a href="#panel_tab4_example1" class="btn btn-purple show-tab">
+              Return to tab 1
+            </a>
+          </p>
         </div>
       </div>
     </div>
-    <!-- end: TEXT FIELDS PANEL -->
   </div>
 </div>
 <!-- end: PAGE CONTENT-->

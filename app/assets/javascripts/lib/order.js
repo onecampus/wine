@@ -163,7 +163,7 @@ $(document).ready(function() {
         var productList = JsonStr.productList;
         var invoiceId = $(".invoice-id").val();
         var shareLinkCode = JsonStr.shareLinkCode;
-        var inviteCode = JsonStr.inviteCode;
+        var inviteCode = $(".invite-code").val();
         var products = [];
         for (var i in productList) {
           if (productList[i].buyMark == true) {
@@ -178,7 +178,7 @@ $(document).ready(function() {
         }
         $(this).attr("disabled","disabled");
         var data =null;
-        if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode == null)){
+        if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode == "")){
             data = {
               ship_address_id: addressId,
               ship_method: 'express',
@@ -189,7 +189,7 @@ $(document).ready(function() {
               is_seckill: isSeckill
             };
         }
-        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == null)){
+        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == "")){
             data = {
               ship_address_id: addressId,
               ship_method: 'express',
@@ -201,7 +201,7 @@ $(document).ready(function() {
               is_seckill: isSeckill
             };
         }
-        else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != null)){
+        else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != "")){
           data = {
             ship_address_id: addressId,
             ship_method: 'express',
@@ -213,7 +213,7 @@ $(document).ready(function() {
             is_seckill: isSeckill
           };
         }
-        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == null)){
+        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == "")){
             data = {
               ship_address_id: addressId,
               invoice_id: invoiceId,
@@ -225,7 +225,7 @@ $(document).ready(function() {
               is_seckill: isSeckill
             };
         }
-        else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == null)){
+        else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == "")){
           data = {
             ship_address_id: addressId,
             invoice_id: invoiceId,
@@ -238,7 +238,7 @@ $(document).ready(function() {
             is_seckill: isSeckill
           };
         }
-        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != null)){
+        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != "")){
           data = {
             ship_address_id: addressId,
             invoice_id: invoiceId,
@@ -251,7 +251,7 @@ $(document).ready(function() {
             is_seckill: isSeckill
           };
         }
-        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != null)){
+        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != "")){
           data = {
             invoice_id: invoiceId,
             ship_method: 'express',
