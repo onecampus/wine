@@ -8,6 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Wine
   class Application < Rails::Application
+    config.before_initialize do
+      ENV['APP_ID'] = 'wxa2bbd3b7a22039df'
+      ENV['APP_SECRET'] = '724bbaea1bce4c09865c2c47acbf450d'
+      ENV['APP_JS_URL'] = 'http://203.195.222.118'
+    end
+
     config.generators do |g|
       g.orm             :active_record
       g.template_engine :erb

@@ -75,10 +75,7 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
-    app_id = 'wxa2bbd3b7a22039df'
-    access_token = WxExt::Api::Base.get_access_token(app_id, '724bbaea1bce4c09865c2c47acbf450d', 'client_credential')
-    url = 'http://203.195.222.118'
-    @share_hash = WxExt::Api::Js.get_jsapi_config(access_token, url, app_id)
+    @share_hash = init_share_hash
   end
 
   def index_groups_seckills
@@ -88,10 +85,7 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
-    app_id = 'wxa2bbd3b7a22039df'
-    access_token = WxExt::Api::Base.get_access_token(app_id, '724bbaea1bce4c09865c2c47acbf450d', 'client_credential')
-    url = 'http://203.195.222.118'
-    @share_hash = WxExt::Api::Js.get_jsapi_config(access_token, url, app_id)
+    @share_hash = init_share_hash
     @already_sell = 0
     @group.group_orders.each do |go|
       @already_sell += go.group_count
@@ -100,10 +94,7 @@ class SiteController < CustomerController
 
   def show_seckill
     @seckill = Seckill.find params[:id]
-    app_id = 'wxa2bbd3b7a22039df'
-    access_token = WxExt::Api::Base.get_access_token(app_id, '724bbaea1bce4c09865c2c47acbf450d', 'client_credential')
-    url = 'http://203.195.222.118'
-    @share_hash = WxExt::Api::Js.get_jsapi_config(access_token, url, app_id)
+    @share_hash = init_share_hash
     @already_sell = 0
     @seckill.seckill_orders.each do |go|
       @already_sell += go.seckill_count
@@ -528,6 +519,14 @@ class SiteController < CustomerController
   end
 
   private
+
+  def init_share_hash
+    app_id = ENV['APP_ID']
+    app_secret = ENV['APP_SECRET']
+    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+    url = ENV['APP_JS_URL']
+    WxExt::Api::Js.get_jsapi_config(access_token_hash['access_token'], url, app_id)
+  end
 
   def get_result(prize_hash)
     result = {}
