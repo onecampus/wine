@@ -218,7 +218,7 @@
           <% if current_user.has_role? :admin %>
           <li>
             <a href="javascript:void(0)"><i class="clip-windy"></i>
-              <span class="title">抽奖管理 <span class="badge">2</span> </span><i class="icon-arrow"></i>
+              <span class="title">抽奖管理 <span class="badge"><%= PrizeUser.where(geted: 0).count %></span> </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -234,7 +234,7 @@
               </li>
               <li>
                 <a href="/admin/prize_users">
-                  <span class="title"><span class="badge pull-right">2</span>获奖名单</span>
+                  <span class="title"><span class="badge pull-right"><%= PrizeUser.where(geted: 0).count %></span>获奖名单</span>
                 </a>
               </li>
             </ul>
@@ -242,7 +242,7 @@
           <% end %>
           <li>
             <a href="javascript:void(0)"><i class="clip-cart"></i>
-              <span class="title"> 订单管理 <span class="badge">2</span> </span><i class="icon-arrow"></i>
+              <span class="title"> 订单管理 <span class="badge"><%= Order.all.count %></span> </span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -254,50 +254,50 @@
               <% if current_user.has_role? :admin %>
               <li>
                 <a href="/admin/orders">
-                  <span class="title"><span class="badge pull-right">2</span>所有订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.all.count %></span>所有订单列表</span>
                 </a>
               </li>
               <% end %>
               <li>
                 <a href="/admin/orders/wait/sure">
-                  <span class="title"><span class="badge pull-right">2</span>未确定订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 1, pay_status: 2, logistics_status: 0, user_id: user_id_of_current_provider).count %></span>未确定订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/wait/ship">
-                  <span class="title"><span class="badge pull-right">2</span>待发货订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 2, pay_status: 2, logistics_status: 1, user_id: user_id_of_current_provider).count %></span>待发货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/ship">
-                  <span class="title"><span class="badge pull-right">2</span>已发货未收货订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 2, pay_status: 2, logistics_status: 2, user_id: user_id_of_current_provider).count %></span>已发货未收货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/receive">
-                  <span class="title"><span class="badge pull-right">2</span>已收货订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 2, pay_status: 2, logistics_status: 3, user_id: user_id_of_current_provider).count %></span>已收货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/ok">
-                  <span class="title"><span class="badge pull-right">2</span>已完成订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 3, pay_status: 2, logistics_status: 3, user_id: user_id_of_current_provider).count %></span>已完成订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/wait/back">
-                  <span class="title"><span class="badge pull-right">2</span>待退货订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 2, pay_status: 2, logistics_status: 4, user_id: user_id_of_current_provider).count %></span>待退货订单列表</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/orders/already/cancel">
-                  <span class="title"><span class="badge pull-right">2</span>已取消订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 3, pay_status: 2, user_id: user_id_of_current_provider).count %></span>已取消订单列表</span>
                 </a>
               </li>
             </ul>
           </li>
           <li>
             <a href="javascript:void(0)"><i class="clip-user-6"></i>
-              <span class="title"> 用户管理 <span class="badge">2</span></span><i class="icon-arrow"></i>
+              <span class="title"> 用户管理 <span class="badge"><%= User.all.count %></span></span><i class="icon-arrow"></i>
               <span class="selected"></span>
             </a>
             <ul class="sub-menu">
@@ -309,23 +309,23 @@
               </li>
               <li>
                 <a href="/admin/profiles?action=index&role=provider&type=all">
-                  <span class="title">区域商管理</span>
+                  <span class="title"><span class="badge pull-right"><%= Role.find_by_name('provider').users.count %></span>区域商管理</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=all">
-                  <span class="title"><span class="badge pull-right">2</span>所有客户管理</span>
+                  <span class="title"><span class="badge pull-right"><%= User.all.count %></span>所有客户管理</span>
                 </a>
               </li>
               <li>
                 <a href="/admin/withdraws">
-                  <span class="title"><span class="badge pull-right">2</span>用户提现</span>
+                  <span class="title"><span class="badge pull-right"><%= Withdraw.where(draw_status: 0).count %></span>用户提现</span>
                 </a>
               </li>
               <% end %>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=own">
-                  <span class="title"><span class="badge pull-right">2</span>客户管理</span>
+                  <span class="title"><span class="badge pull-right"><%= Role.find_by_name('customer').users.count %></span>客户管理</span>
                 </a>
               </li>
             </ul>
