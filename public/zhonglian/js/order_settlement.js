@@ -6,6 +6,7 @@ $(document).ready(function() {
 			this.checked = false;
 		});
 		$("hr").hide();
+		$(".promo-code").hide();
 		$(".order").hide();
 		$(".address").fadeIn(100);
 	});
@@ -15,6 +16,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".address").fadeOut(100);
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -29,6 +31,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".address").fadeOut(100);
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -44,6 +47,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".address").fadeOut(100);
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -52,6 +56,7 @@ $(document).ready(function() {
 		$("body").css("background", "#fff");
 		$("hr").hide();
 		$(".order").hide();
+		$(".promo-code").hide();
 		$(".order-address").hide();
 		$(".invoice-need").hide();
 		$(".address").fadeOut(100);
@@ -70,6 +75,7 @@ $(document).ready(function() {
 		$("hr").hide();
 		$(".invoice-hr").show();
 		$(".order").hide();
+		$(".promo-code").hide();
 		$(".order-address").hide();
 		$(".invoice-need").hide();
 		$(".invoice-history").fadeIn(100);
@@ -84,6 +90,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".invoice-hr").hide();
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -101,6 +108,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".invoice-hr").hide();
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -114,6 +122,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".invoice-hr").hide();
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
@@ -130,6 +139,7 @@ $(document).ready(function() {
 		$("hr").show();
 		$(".invoice-hr").hide();
 		$(".order").show();
+		$(".promo-code").show();
 		$(".order-address").show();
 		$(".invoice-need").show();
 	});
