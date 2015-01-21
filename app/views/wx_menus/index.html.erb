@@ -1433,6 +1433,13 @@
     /*
     添加一级菜单
     */
+    $(".add-menu").click(function(){
+      var length = $(".menu").length;
+      if(length > 3) {
+        alert("一级菜单个数不能超过3个！");
+        return false;
+      }
+    });
     $(".menu-add").click(function(){
       var menuName = $("#menu-name").val();
       if(menuName == "") {
@@ -1615,12 +1622,12 @@
     */
     $(".add-mesg").click(function(){
       $(".select-action").hide();
-      $(".edit-url").show();
+      $(".edit-mesg").show();
     });
 
     $(".add-url").click(function(){
       $(".select-action").hide();
-      $(".edit-mesg").show();
+      $(".edit-url").show();
     });
     /*
     文字
@@ -1696,8 +1703,13 @@
     });
 
     $(".menu-edit-add").click(function(){
-
+      var length = $(this).parents(".menu").find(".menu-drop-list").length;
+      if(length > 5) {
+        alert("二级菜单不能超过5个");
+        return false;
+      }
     });
+
 
     /*
     设置动作导航
