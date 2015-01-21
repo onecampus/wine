@@ -61,6 +61,7 @@ $(document).ready(function() {
         $(".form-box").fadeOut(100);
         $("hr").show();
         $(".order").show();
+        $(".promo-code").show();
         $(".order-address").show();
         $(".invoice-need").show();
         $(".btn-add-address").attr("disabled",false);
@@ -101,6 +102,7 @@ $(document).ready(function() {
         $("hr").show();
         $(".invoice-hr").hide();
         $(".order").show();
+        $(".promo-code").show();
         $(".order-address").show();
         $(".invoice-need").show();
         $(".confirm-invoice").attr("disabled",false);

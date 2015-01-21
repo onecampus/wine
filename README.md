@@ -71,6 +71,22 @@ respond_to :html, :json
 5. routes.rb
 6. 修改前端页面和controller业务逻辑
 
+
+### 金钱缩写
+
+1. CNY(Chinese Yuan)人民币
+2. FRF(French Franc)法国法郎
+3. HKD(HongKong Dollar)港元
+4. CHF(德文schweizer Franken)瑞士法郎
+5. USD(United States Dollar)美元
+6. CAD(Canadian Dollar)加拿大元
+7. GBP(GreatBritain Pound)英镑
+8. NLG(NetherLandish Guilder)荷兰盾
+9. DEM(德文Deutsche Mark)德国马克
+10. BEF(Belgischer Franc)比利时法郎
+11. JPY(Japanese Yen)日元
+12. AUD(Australian Dollar)澳大利亚元
+
 ### TODOLIST ###
 
 1. 总仓用户管理(管理区域分销商和客户) ok
@@ -220,13 +236,14 @@ rails g migration AddRemainToSeckills remain:integer
 rails g migration AddIsCommissionToProducts is_commission:integer
 rails g migration AddIsCommissionToSeckills is_commission:integer
 rails g migration AddIsCommissionToGroups is_commission:integer
-
+rails g money_rails:initializer
 
 rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
 
 
 rails g scaffold Msg title description:text img url msg_type media_id wx_menu_id:integer
-rails g migration change_price_type_in_products
+# rails g migration change_price_type_in_products
+
 ```
 
 ### 功能分析 ###

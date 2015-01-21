@@ -1,4 +1,4 @@
-source 'https://ruby.taobao.org'
+source 'https://rubygems.org'
 
 gem 'rails', '4.1.9'
 
@@ -54,6 +54,8 @@ gem 'wx_ext'
 # gem 'bootstrap-editable-rails'
 
 gem 'font-awesome-rails'
+
+gem 'money-rails'
 
 # 部署
 group :development do
