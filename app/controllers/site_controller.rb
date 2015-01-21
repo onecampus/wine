@@ -36,6 +36,8 @@ class SiteController < CustomerController
     @site_config1 = SiteConfig.where(key: 'CustomerIndexImgConfigKey1', config_type: 'CustomerIndexImgConfig').first
     @site_config2 = SiteConfig.where(key: 'CustomerIndexImgConfigKey2', config_type: 'CustomerIndexImgConfig').first
     @site_config3 = SiteConfig.where(key: 'CustomerIndexImgConfigKey3', config_type: 'CustomerIndexImgConfig').first
+    @last_3_products = Product.last 3
+    @last_2_cats = Cat.last 2
   end
 
   def new_withdraw
@@ -70,7 +72,21 @@ class SiteController < CustomerController
 
   def index_cat_products
     @cat = Cat.find params[:cid]
-    @cat_products = @cat.products
+    @cat_products = nil
+    unless params[:sort].blank?
+      case params[:sort]
+      when 'sales'
+        @cat_products = @cat.products.sort { |x, y| y.orders.count <=> x.orders.count }
+      when 'popularity'
+        @cat_products = @cat.products.sort { |x, y| y.comment_threads.count <=> x.comment_threads.count }
+      when 'time'
+        @cat_products = @cat.products.order('created_at DESC')
+      else
+        @cat_products = @cat.products.sort { |x, y| y.price.to_f <=> x.price.to_f }
+      end
+    else
+      @cat_products = @cat.products.sort { |x, y| y.price.to_f <=> x.price.to_f }
+    end
   end
 
   def show_product

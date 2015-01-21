@@ -226,6 +226,7 @@ rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer butto
 
 
 rails g scaffold Msg title description:text img url msg_type media_id wx_menu_id:integer
+rails g migration change_price_type_in_products
 ```
 
 ### 功能分析 ###

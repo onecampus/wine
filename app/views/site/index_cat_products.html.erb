@@ -195,7 +195,6 @@
 </ul>
 <div class="tabcontent">
   <div class="cat-products contents  activeC">
-    1
     <% @cat_products.each_with_index do |p, index| %>
       <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
         <div class="product">
@@ -209,7 +208,6 @@
     <% end %>
   </div>
   <div class="cat-products contents">
-    2
     <% @cat_products.each_with_index do |p, index| %>
     <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
       <div class="product">
@@ -223,7 +221,6 @@
     <% end %>
   </div>
   <div class="cat-products contents">
-    3
     <% @cat_products.each_with_index do |p, index| %>
     <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
       <div class="product">
@@ -237,7 +234,6 @@
     <% end %>
   </div>
   <div class="cat-products contents">
-    4
     <% @cat_products.each_with_index do |p, index| %>
     <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
       <div class="product">
@@ -256,27 +252,27 @@
 <%= render "site/shared/bottombar" %>
 <script type="text/javascript">
   $( document ).ready(function() {
-      var params = $.url().param( "sort" );
-      var $as = $( ".sortTab > li > a" );
-      var $lis = $( ".sortTab > li" ).removeClass( "activeT" );
-      var $divs = $( ".contents" ).removeClass( "activeC" );
-      var img = $divs.find( "img" ).size();
-      if( !img ) {
-        $divs.append( "<div class='notice'>暂无商品</div>" );
-      }
-      if( params ) {
-        $( "a[title='" + params + "']").parent().addClass( "activeT");
-        var index = $as.index( $( "a[title='" + params + "']") );
-        $( $divs.get(index) ).addClass( "activeC" );
-      } else {
-        $( "a[title='price']" ).parent().addClass( "activeT" );
-        $( ".contents:eq(0)" ).addClass( "activeC" );
-      }
-      $( ".sortTab > li" ).on( "click", function() {
-        var $this = $( this );
-        var param = $this.find( "a" ).attr( "title" );
-        var url = location.protocol + "//" + location.hostname + ":" + location.port + location.pathname + "?sort=" + param;
-        $this.find( "a" ).attr( "href", url );
-      });
+    var params = $.url().param( "sort" );
+    var $as = $( ".sortTab > li > a" );
+    var $lis = $( ".sortTab > li" ).removeClass( "activeT" );
+    var $divs = $( ".contents" ).removeClass( "activeC" );
+    var img = $divs.find( "img" ).size();
+    if( !img ) {
+      $divs.append( "<div class='notice'>暂无商品</div>" );
+    }
+    if( params ) {
+      $( "a[title='" + params + "']").parent().addClass( "activeT");
+      var index = $as.index( $( "a[title='" + params + "']") );
+      $( $divs.get(index) ).addClass( "activeC" );
+    } else {
+      $( "a[title='price']" ).parent().addClass( "activeT" );
+      $( ".contents:eq(0)" ).addClass( "activeC" );
+    }
+    $( ".sortTab > li" ).on( "click", function() {
+      var $this = $( this );
+      var param = $this.find( "a" ).attr( "title" );
+      var url = location.protocol + "//" + location.hostname + ":" + location.port + location.pathname + "?sort=" + param;
+      $this.find( "a" ).attr( "href", url );
+    });
   });
 </script>
