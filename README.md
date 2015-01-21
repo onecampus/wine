@@ -176,8 +176,6 @@ rails g scaffold PrizeUser user_id:integer prize_config_id:integer
 rails g scaffold PrizeUserNumber user_id:integer number:integer prize_act_id:integer
 rails g migration AddGetedToPrizeUsers geted:integer
 
-rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
-
 rails g migration AddFrightToProducts fright:string
 
 
@@ -222,6 +220,12 @@ rails g migration AddRemainToSeckills remain:integer
 rails g migration AddIsCommissionToProducts is_commission:integer
 rails g migration AddIsCommissionToSeckills is_commission:integer
 rails g migration AddIsCommissionToGroups is_commission:integer
+
+
+rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
+
+
+rails g scaffold Msg title description:text img url msg_type media_id wx_menu_id:integer
 ```
 
 ### 功能分析 ###
