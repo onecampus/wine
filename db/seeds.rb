@@ -344,7 +344,6 @@ names3.each do |sn|
   )
   wm_tmp.save!
 end
-=end
 
 wm1 = WxMenu.new(
   name: '购物专区',
@@ -434,6 +433,7 @@ names3.each do |sn|
   )
   wm_tmp.save!
 end
+=end
 
 1.upto(3).each do |i|
   SiteConfig.create(
