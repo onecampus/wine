@@ -224,20 +224,6 @@ $(document).ready(function() {
     $(this).parent().css("background", "#6CB160");
   });
 
-  $(".menu-title").mouseover(function() {
-    $(this).find(".menu-edit").show();
-  });
-  $(".menu-title").mouseout(function() {
-    $(this).find(".menu-edit").hide();
-  });
-  $(".menu-drop-list").mouseover(function() {
-    $(this).find(".menu-drop-edit").show();
-  });
-
-  $(".menu-drop-list").mouseout(function() {
-    $(this).find(".menu-drop-edit").hide();
-  });
-
   $(".menu-edit-add").click(function() {
 
   });

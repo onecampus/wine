@@ -58,6 +58,7 @@
               </div>
             </a>
             <span class="menu-edit">
+              <a class="menu-edit-edit" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
               <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
               <a class="menu-edit-del delete-submenu-btn" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
@@ -70,6 +71,7 @@
                   <i class="fa fa-circle"></i>
                   <a href="#" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
+                    <a href="#" class="edit-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
                     <a href="#" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
                   </span>
                 </li>

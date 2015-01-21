@@ -56,7 +56,6 @@
 
 .menu-drop-edit {
   float: right;
-  display: none;
   margin-right: 10px;
 }
 
@@ -76,10 +75,6 @@
   float: left;
   width: 200px;
   margin-left: 5px;
-}
-
-.menu-edit {
-  display: none;
 }
 
 .menu i {
@@ -302,6 +297,7 @@ p {
 ul li {
   padding: 0;
   list-style: none;
+  line-height: 25px;
 }
 
 .edit-pic-body {
