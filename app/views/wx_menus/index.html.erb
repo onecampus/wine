@@ -29,7 +29,7 @@
         });
         return false;
       });
-
+/*
       $('.sub-menu-add').on('click', function() {
         parent_id = $(this).data("id");
         $("input[name=parent_id]").val(parent_id);
@@ -72,7 +72,7 @@
         return false;
       });
 
-
+*/
       $('.sub-menu-del').on('click', function() {
         _id = $(this).data("id");
         if(_id != undefined && _id != '') {
@@ -153,8 +153,9 @@
 
   .menu {
     padding: 10px 0 0 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ECF0F1;
   }
+
 
   .menu span {
     font-size: 14px;
@@ -165,8 +166,9 @@
   }
 
   .menu-drop-edit {
+    float: right;
     display: none;
-    margin-left: 70px;
+    margin-right: 10px;
   }
 
   .fa {
@@ -284,6 +286,10 @@
     width: 80px;
   }
 
+  .edit-mesg {
+    display: none;
+  }
+
   .edit-mesg-head {
      margin-left: 20px;
      margin-top: 10px;
@@ -306,7 +312,11 @@
     height: 300px;
     background: #fff;
     float: left;
-    display: none;
+  }
+
+  .edit-word {
+    background: #fff;
+    border-top: 2px solid #5CA849;
   }
 
   .mesg-panel {
@@ -490,13 +500,58 @@
     width: 100%;
     height: 390px;
     background: #fff;
+    display: none;
   }
 
   .graphic-history {
+    overflow-y: scroll;
     width: 90%;
     height: 370px;
     margin: 10px auto 0 auto;
     border: 1px solid #ddd;
+  }
+
+  .graphic-item {
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 46%;
+    width: 23.5%;
+    text-align: center;
+  }
+
+  .graphic-item-ba {
+    background-color:#fff;
+    opacity:0.5;
+    filter:Alpha(opacity=50); /* IE8 以及更早的浏览器 */
+  }
+
+  .graphic {
+    position: relative;
+  }
+
+  .graphic-select-ico {
+    position: absolute;
+    left: 70px;
+    top: 50px;
+    background: url("/zhonglian/img/weixin_graphic.png") no-repeat scroll 0 -6085px rgba(0, 0, 0, 0);
+    height: 46px;
+    vertical-align: middle;
+    width: 46px;
+    z-index: 999;
+    display: none;
+  }
+
+
+  .graphic-img {
+    height: 90%;
+    width: 100%;
+  }
+
+  .graphic-title {
+    width: 100%;
+    height: 10%;
+    padding: 0;
   }
 
   .upload-graphic {
@@ -525,6 +580,17 @@
     height: 35px;
     margin-left: 50px;
     width: 80px;
+  }
+
+  .text1 {
+    color: #000;
+    padding: 0 0 0 10px;
+  }
+
+  .text2 {
+    display: none;
+    color: #E76070;
+    padding: 0 0 0 10px;
   }
 </style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
@@ -562,7 +628,7 @@
     <div class="panel-left">
       <div class="left-head">
         <span>菜单管理</span>
-        <a href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
+        <a class="add-menu" href="javascript:void(0)" data-toggle="modal" data-target="#add-menu"><i class="fa fa-plus fa-lg"></i></a>
       </div>
       <div class="left-body">
         <% @wx_menus.each do |mu| %>
@@ -577,8 +643,8 @@
               </div>
             </a>
             <span class="menu-edit">
-              <a class="menu-edit-add" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
-              <a class="menu-edit-edi" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
+              <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
+              <a class="menu-edit-edi" data-toggle="modal" data-target="#edit-menu" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
               <a class="menu-edit-del" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
           </div>
@@ -587,12 +653,12 @@
                <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
                <% subs.each do |submu| %>
                 <li class="menu-drop-list">
-                  <a href="javascript:void(0)">
+                  <a class="submenu" href="javascript:void(0)" data-type="0">
                   <i class="fa fa-circle"></i><%= submu.name %>
                  </a>
                  <span class="menu-drop-edit">
-                   <a href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
-                   <a href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
+                   <a class="edit-submenu-btn" data-toggle="modal" data-target="#edit-submenu" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
+                   <a class="delete-submenu-btn" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
                  </span>
                 </li>
               <% end %>
@@ -610,11 +676,11 @@
         <span>请选择订阅者点击菜单后，公众号做出的相应动作</span>
         <div class="select-action-body">
           <div class="action-mesg">
-            <a href="" class="add-mesg"><div></div></a>
+            <a href="javascript:void(0)" class="add-mesg"><div></div></a>
             <p>发送消息</P>
           </div>
           <div class="action-url">
-            <a href="" class="add-url"><div></div></a>
+            <a href="javascript:void(0)" class="add-url"><div></div></a>
             <p>跳转到网页</P>
           </div>
         </div>
@@ -1030,10 +1096,76 @@
        -->
        <div class="edit-graphic-body">
          <div class="graphic-history">
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
          </div>
          <div class="upload-graphic">
            <div class="graphic-btn">
-             <button class="graphic-add">添加</button>
+             <button class="graphic-add" data-toggle="modal" data-target="#graphicModal">添加</button>
              <button class="graphic-save">保存</button>
            </div>
          </div>
@@ -1078,6 +1210,186 @@
   </div>
 -->
 </div>
+<!-- add-Menu-Modal -->
+<div class="modal fade" id="add-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加一级菜单</h4>
+        <span class="menu-name-mesg text1">最多4个汉字，8个字母</span>
+        <span class="menu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="menu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary menu-add">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add-SubMenu-Modal -->
+<div class="modal fade" id="add-submenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加二级菜单</h4>
+        <span class="submenu-name-mesg text1">最多8个汉字，16个字母</span>
+        <span class="submenu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="submenu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary submenu-add">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit-Menu-Modal -->
+<div class="modal fade" id="edit-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改一级菜单名称</h4>
+        <span class="edit-menu-mesg text1">最多4个汉字，8个字母</span>
+        <span class="editmenu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="edte-menu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary edte-menu-add">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit-SubMenu-Modal -->
+<div class="modal fade" id="edit-submenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改二级菜单名称</h4>
+        <span class="edit-submenu-mesg text1">最多8个汉字，16个字母</span>
+        <span class="editsubmenu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="edte-submenu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary edte-submenu-add">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- upload-graphic Modal -->
+<div class="modal fade" id="graphicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">上传图文</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              标题
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="graphic_title" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              描述
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="graphic_des" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              上传图片
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="file" name="name" id="graphic_picture">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_url" class="col-sm-2 control-label">
+              菜单链接
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" value="" name="url" id="graphic_url" class="form-control">
+            </div>
+            <input type="hidden" name="parent_id" value="" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary save-graphic">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -1118,6 +1430,198 @@
 </div>
 <script>
   $(document).ready(function(){
+    /*
+    添加一级菜单
+    */
+    $(".menu-add").click(function(){
+      var menuName = $("#menu-name").val();
+      if(menuName == "") {
+        $(".menu-mesg").text("菜单名字不能为空");
+        $(".menu-name-mesg").hide();
+        $(".menu-mesg").show();
+        return false;
+      }
+      var length = 0;
+      for(var i = 0; i < menuName.length; i++) {
+        var menuNameLength = menuName.charCodeAt(i);
+        if(menuNameLength >=0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(length > 8) {
+        $(".menu-mesg").text("超出字数范围");
+        $(".menu-name-mesg").hide();
+        $(".menu-mesg").show();
+        return false;
+      }
+    });
+
+    $("#menu-name").focus(function(){
+      $(".menu-name-mesg").show();
+      $(".menu-mesg").hide();
+    });
+
+    /*
+    一级菜单增，删，改
+    */
+
+    /*
+    增加二级菜单
+    */
+    $(".submenu-add").click(function(){
+      var menuName = $("#submenu-name").val();
+      if(menuName == "") {
+        $(".submenu-mesg").text("菜单名字不能为空");
+        $(".submenu-name-mesg").hide();
+        $(".submenu-mesg").show();
+        return false;
+      }
+      var length = 0;
+      for(var i = 0; i < menuName.length; i++) {
+        var menuNameLength = menuName.charCodeAt(i);
+        if(menuNameLength >=0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(length > 16) {
+        $(".submenu-mesg").text("超出字数范围");
+        $(".submenu-name-mesg").hide();
+        $(".submenu-mesg").show();
+        return false;
+      }
+    });
+
+    $("#submenu-name").focus(function(){
+      $(".submenu-name-mesg").show();
+      $(".submenu-mesg").hide();
+    });
+
+    /*
+    编辑一级菜单
+    */
+
+    $(".edte-menu-add").click(function(){
+      var menuName = $("#edte-menu-name").val();
+      if(menuName == "") {
+        $(".editmenu-mesg").text("菜单名字不能为空");
+        $(".edit-menu-mesg").hide();
+        $(".editmenu-mesg").show();
+        return false;
+      }
+      var length = 0;
+      for(var i = 0; i < menuName.length; i++) {
+        var menuNameLength = menuName.charCodeAt(i);
+        if(menuNameLength >=0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(length > 8) {
+        $(".editmenu-mesg").text("超出字数范围");
+        $(".edit-menu-mesg").hide();
+        $(".editmenu-mesg").show();
+        return false;
+      }
+
+    });
+
+    $("#edte-menu-name").focus(function(){
+      $(".edit-menu-mesg").show();
+      $(".editmenu-mesg").hide();
+    });
+
+    /*
+    删除一级菜单
+    */
+    $(".menu-edit-del").click(function(){
+    });
+
+    /*
+    二级菜单编辑
+    */
+    $(".edte-submenu-add").click(function(){
+      var menuName = $("#edte-submenu-name").val();
+      if(menuName == "") {
+        $(".editsubmenu-mesg").text("菜单名字不能为空");
+        $(".edit-submenu-mesg").hide();
+        $(".editsubmenu-mesg").show();
+        return false;
+      }
+      var length = 0;
+      for(var i = 0; i < menuName.length; i++) {
+        var menuNameLength = menuName.charCodeAt(i);
+        if(menuNameLength >=0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(length > 16) {
+        $(".editsubmenu-mesg").text("超出字数范围");
+        $(".edit-submenu-mesg").hide();
+        $(".editsubmenu-mesg").show();
+        return false;
+      }
+    });
+    $("#edte-submenu-name").focus(function(){
+      $(".edit-submenu-mesg").show();
+      $(".editsubmenu-mesg").hide();
+    });
+
+    /*
+    二级菜单删除
+    */
+    $(".delete-submenu-btn").click(function(){
+      if(confirm("你确定要删除该菜单？")) {
+      }
+      else {
+        return false;
+      }   });
+
+    /*
+    二级菜单选择
+    */
+    $(".submenu").click(function(){
+      var type = $(this).data("type");
+      if(type == 0) {
+        $(".edit-url").hide();
+        $(".edit-mesg").hide();
+        $(".select-action").show();
+      }
+      if(type == 1) {
+        $(".select-action").hide();
+        $(".edit-mesg").hide();
+        $(".edit-url").show();
+      }
+      if(type == 2) {
+        $(".select-action").hide();
+        $(".edit-url").hide();
+        $(".edit-mesg").show();
+      }
+    });
+
+
+    /*
+    微信动作选择
+    */
+    $(".add-mesg").click(function(){
+      $(".select-action").hide();
+      $(".edit-url").show();
+    });
+
+    $(".add-url").click(function(){
+      $(".select-action").hide();
+      $(".edit-mesg").show();
+    });
     /*
     文字
     */
@@ -1254,6 +1758,24 @@
       });
       return false;
     });
+
+    /*
+    上传图文
+    */
+    $(".select-graphic").click(function(){
+      var selectGraphicFlag = $(this).find(".selectGraphicFlag").attr("value");
+      if (selectGraphicFlag == "true") {
+        $(this).children(".graphic-item").addClass("graphic-item-ba");
+        $(this).find(".graphic-select-ico").show();
+        $(this).find(".selectGraphicFlag").attr("value","false");
+      }
+      else {
+        $(this).children(".graphic-item").removeClass("graphic-item-ba");
+        $(this).find(".graphic-select-ico").hide();
+        $(this).find(".selectGraphicFlag").attr("value","true");
+      }
+    });
+
     /*
     发送文字
     */
