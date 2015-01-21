@@ -82,8 +82,8 @@
     <% end %>
     <% end %>
     <div>
-      <span class="freight">运费：￥<%= o.freight %>元</span>
-      <span class="sum"><%= o.total_price %></span>
+      <span class="freight">运费：<%= o.freight %>元</span>
+      <span class="sum">合计：<%= o.total_price %>元</span>
       <a href="http://m.kuaidi100.com/index_all.html?type=<%= o.express_company_number %>&postid=<%= o.express_number %>&callbackurl=/customer/users/wait/receive" class="btn-check">查看物流</a>
     </div>
   </div>
