@@ -18,7 +18,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :name, :class => "form-control" %>
+      <%= f.text_field :name, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -27,7 +27,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :price, in: 0.01..20000000.01, step: 0.01, :class => "form-control" %>
+      <%= f.number_field :price, in: 0.01..20000000.01, step: 0.01, placeholder: "请输入一数字，小数位数不超过两位", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -36,7 +36,7 @@
     <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :fright, :class => "form-control" %>
+      <%= f.number_field :fright, in: 0.01..20000000.01, step: 0.01, placeholder: "请输入一数字，小数位数不超过两位", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -46,7 +46,7 @@
     <% end %>
     <div class="col-sm-9">
       <%= image_tag(@product.img_url(:thumb)) if @product.img? %>
-      <%= f.file_field :img %>
+      <%= f.file_field :img, required: "true" %>
       <p class="help-block">请上传特色图片</p>
     </div>
   </div>
@@ -56,7 +56,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= select_tag "product[cat_id]", nested_options(@categories, selected: @product.cat), class: :nested_options %>
+      <%= select_tag "product[cat_id]", nested_options(@categories, selected: @product.cat), required: "true", class: :nested_options %>
     </div>
   </div>
   <div class="form-group">
@@ -65,7 +65,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_area :description, class: 'ue-container', id: 'ue-container' %>
+      <%= f.text_area :description, required: "true", class: 'ue-container', id: 'ue-container' %>
     </div>
   </div>
   <div class="form-group">
@@ -123,7 +123,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :profit, :class => "form-control" %>
+      <%= f.number_field :profit, in: 0.01..20000000.01, step: 0.01, placeholder: "请输入一数字，小数位数不超过两位", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -131,7 +131,7 @@
       <%= t 'activerecord.attributes.product.vip_price' %>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :vip_price, :class => "form-control" %>
+      <%= f.number_field :vip_price, in: 0.01..20000000.01, step: 0.01, placeholder: "请输入一数字，小数位数不超过两位", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -156,7 +156,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :unit, :class => "form-control" %>
+      <%= f.text_field :unit, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">

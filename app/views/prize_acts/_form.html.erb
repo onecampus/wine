@@ -18,7 +18,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :name, :class => "form-control" %>
+      <%= f.text_field :name, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -71,7 +71,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :person_limit, :class => "form-control" %>
+      <%= f.number_field :person_limit, in: 1..20000000, required: "true", placeholder: "请输入一整数", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">

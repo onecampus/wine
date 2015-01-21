@@ -18,7 +18,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :invoice_id, :class => "form-control" %>
+      <%= f.number_field :invoice_id, in: 1..20000000, placeholder: "请输入一正整数，从1开始", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -27,7 +27,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :user_id, :class => "form-control" %>
+      <%= f.number_field :user_id, in: 1..20000000, placeholder: "请输入一整数，从1开始", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -36,7 +36,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :order_number, :class => "form-control" %>
+      <%= f.text_field :order_number, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -45,7 +45,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :ship_address, :class => "form-control" %>
+      <%= f.text_field :ship_address, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -54,7 +54,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :ship_method, :class => "form-control" %>
+      <%= f.text_field :ship_method, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -63,7 +63,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :payment_method, :class => "form-control" %>
+      <%= f.text_field :payment_method, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -72,7 +72,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :freight, :class => "form-control" %>
+      <%= f.number_field :freight, in: 0.01..20000000, placeholder: "请输入一数字，小数位数不超过两位数", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -81,7 +81,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :package_charge, :class => "form-control" %>
+      <%= f.text_field :package_charge, in: 0.01..20000000, placeholder: "请输入一数字，小数位数不超过两位数", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -90,7 +90,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :total_price, :class => "form-control" %>
+      <%= f.text_field :total_price, in: 0.01..20000000, placeholder: "请输入一数字，小数位数不超过两位数", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -108,7 +108,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :order_status, :class => "form-control" %>
+      <%= f.number_field :order_status, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -117,7 +117,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :pay_status, :class => "form-control" %>
+      <%= f.number_field :pay_status, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -126,7 +126,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :logistics_status, :class => "form-control" %>
+      <%= f.number_field :logistics_status, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -135,7 +135,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :operator, :class => "form-control" %>
+      <%= f.number_field :operator, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -144,7 +144,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :cancel_reason, :class => "form-control" %>
+      <%= f.text_field :cancel_reason, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -153,7 +153,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :weixin_open_id, :class => "form-control" %>
+      <%= f.text_field :weixin_open_id, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -162,7 +162,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :receive_name, :class => "form-control" %>
+      <%= f.text_field :receive_name, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -171,7 +171,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :mobile, :class => "form-control" %>
+      <%= f.text_field :mobile, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -180,7 +180,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :tel, :class => "form-control" %>
+      <%= f.text_field :tel, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -189,7 +189,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.number_field :supplier_id, :class => "form-control" %>
+      <%= f.number_field :supplier_id, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
@@ -198,7 +198,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :order_type, :class => "form-control" %>
+      <%= f.text_field :order_type, required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">
