@@ -54,12 +54,13 @@
             <a class="menu-list" href="javascript:void(0)">
               <div class="menu-list-title">
                 <i class="fa fa-chevron-circle-down fa-lg"></i>
-                <a href="#" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
+                <a href="javascript:void(0)" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
               </div>
             </a>
             <span class="menu-edit">
+              <a class="menu-edit-edit" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
               <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
-              <a class="menu-edit-del delete-submenu-btn" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
+              <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
           </div>
           <div class="menu-drop">
@@ -68,9 +69,10 @@
               <% subs.each do |submu| %>
                 <li class="menu-drop-list">
                   <i class="fa fa-circle"></i>
-                  <a href="#" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
+                  <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
-                    <a href="#" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
+                    <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="0"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
                   </span>
                 </li>
               <% end %>
@@ -647,7 +649,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary menu-add">保存</button>
+        <button type="button" class="btn btn-primary menu-add ">保存</button>
       </div>
     </div>
   </div>
@@ -671,6 +673,7 @@
               <span class="symbol required"></span>
             </label>
             <div class="col-sm-9">
+              <input id="submenu-parentId" type="hidden" value="">
               <input type="text" name="name" id="submenu-name" class="form-control">
             </div>
           </div>
@@ -678,39 +681,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary submenu-add">保存</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- edit-SubMenu-Modal -->
-<div class="modal fade" id="edit-submenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">修改二级菜单名称</h4>
-        <span class="edit-submenu-mesg text1">最多8个汉字，16个字母</span>
-        <span class="editsubmenu-mesg text2"></span>
-      </div>
-      <div class="modal-body">
-        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
-          <div class="form-group">
-            <label for="menu-name" class="col-sm-2 control-label">
-              菜单名称
-              <span class="symbol required"></span>
-            </label>
-            <div class="col-sm-9">
-              <input type="text" name="name" id="edte-submenu-name" class="form-control">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary edte-submenu-add">保存</button>
+        <button type="button" class="btn btn-primary submenu-add ">保存</button>
       </div>
     </div>
   </div>
