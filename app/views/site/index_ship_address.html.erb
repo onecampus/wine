@@ -86,6 +86,11 @@
 <%= render "site/shared/bottombar" %>
 <script>
   $(document).ready(function() {
-    var adId = ($("input[type='radio']:checked").val());
+    var $add = $( ".ship-address:has('div')" );
+    if ( !$add.length ) {
+      $( ".ship-address" ).append( "<div>暂无记录！</div>");
+      var $adds = $( ".ship-address").find( "div" );
+      $adds.css( "border", "none" );
+    }
   });
 </script>
