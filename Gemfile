@@ -48,7 +48,7 @@ gem 'actionpack-xml_parser'
 # gem 'weixin_authorize'
 gem 'rest-client'
 
-gem 'wx_ext'
+gem 'wx_ext', '~> 0.1.8'
 
 # bootstrap editable
 # gem 'bootstrap-editable-rails'
