@@ -2,19 +2,22 @@
   商品评论
 <% end %>
 <style type="text/css">
+  body {
+    width: 100%;
+  }
   .comments {
-    padding: 15px;
     background-color: #fff;
     margin: 30px auto 0 auto;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
+    border: 1px solid #ddd;
+    width: 96%;
+    border-radius: 5px;
   }
 
   .comments div {
     border-bottom: 1px solid #ddd;
     clear: both;
     display: block;
-    margin: 5px;
+    margin: 15px;
   }
 
   .comment p {
@@ -47,6 +50,8 @@
     font-weight: bold;
     line-height: 18px;
     padding: 15px 0;
+    background-color: #428bca;
+    border-color: #428bca;
   }
 </style>
 <div class="comments">
@@ -60,3 +65,13 @@
 </div>
 <a href="/customer/products/<%= @product.id %>/comments/new" class="add-comment btn btn-red">添加评论</a>
 <%= render "site/shared/bottombar" %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var $comment = $( ".comments:has('div')" );
+    if ( !$comment.length ) {
+      $( ".comments" ).append( "<div>暂无评论！</div>");
+      var $comments = $( ".comments").find( "div" );
+      $comments.css( "border", "none" );
+    }
+  });
+</script>
