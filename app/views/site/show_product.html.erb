@@ -369,10 +369,7 @@ var jQuery_1_7_2 = $.noConflict(true);
         jsApiList: ['onMenuShareAppMessage','onMenuShareTimeLine','onMenuShareWeibo','onMenuShareQQ']
         });
 
-      alert('<%= @share_hash.url %>');
       alert(window.location.href.split('#')[0]);
-      alert('<%= @share_hash.jsapi_ticket %>');
-      alert('<%= @share_hash.str %>');
 
       // 信息验证成功
       wx.ready(function(){
