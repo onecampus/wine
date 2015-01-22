@@ -51,14 +51,12 @@
         <% @wx_menus.each do |mu| %>
         <div class="menu">
           <div class="menu-title">
-            <a class="menu-list" href="javascript:void(0)">
               <div class="menu-list-title">
-                <i class="fa fa-chevron-circle-down fa-lg"></i>
+                <a><i class="fa fa-chevron-circle-down fa-lg"></i></a>
                 <a href="javascript:void(0)" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
               </div>
-            </a>
             <span class="menu-edit">
-              <a class="menu-edit-edit" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
+              <a class="menu-edit-edit edit-submenu-btn" href="javascript:void(0)" data-id="<%= mu.id %>"data-submenutype="<% if mu.button_type.blank? %>none<% elsif mu.button_type == 'click' %>click<% elsif mu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
               <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
               <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
@@ -68,10 +66,10 @@
             <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
               <% subs.each do |submu| %>
                 <li class="menu-drop-list">
-                  <i class="fa fa-circle"></i>
+                  <a><i class="fa fa-circle"></i></a>
                   <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
-                    <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="0"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
                     <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
                   </span>
                 </li>
@@ -101,8 +99,10 @@
       </div>
       <div class="edit-url">
         <span>订阅者点击该子菜单会跳到以下链接</span>
+        <p class="url-mesg text2">请输入跳转地址</p>
         <div class="url-input">
-          <input type="text" placeholder="输入URL">
+          <input type="hidden" class="menu-id" value="">
+          <input class="url-value"type="text" placeholder="输入URL">
         </div>
         <div class="url-btn">
           <button class="url-back">返回</button>
@@ -110,6 +110,7 @@
         </div>
       </div>
      <div class="edit-mesg">
+       <input type="hidden" class="mesg-menu-id" value="">
        <div class="edit-mesg-head">
          <span>订阅者点击该子菜单会收到以下消息</span>
        </div>
@@ -460,7 +461,7 @@
             </div>
             <div class="upload-pic">
               <a class="upload-pic-btn"><i class='fa fa-camera fa-2x'></i></a>
-              <input id="fileupload" type="file" name="files" />
+              <input id="fileupload" type="file" name="img" />
               <p>上传图片</p>
             </div>
           </div>
@@ -576,6 +577,13 @@
                </div>
              </div>
            </a>
+         </div>
+         <div class="graphic-inf">
+           <p class="pre-graphic-title text3"><span>标题</span>dfgdfgdf</P>
+           <p class="graphic-des text3"><span>描述</span>sfdsfdsfdsf</P>
+           <p class="graphic-url text3"><span>链接</span>士大夫的撒发射的反倒是发</P>
+           <div class="preview-graphic">
+           </div>
          </div>
          <div class="upload-graphic">
            <div class="graphic-btn">
@@ -720,8 +728,11 @@
               上传图片
               <span class="symbol required"></span>
             </label>
-            <div class="col-sm-9">
-              <input type="file" name="name" id="graphic_picture">
+            <div class="col-sm-9 graphic-picture-up">
+              <input type="file" name="img" id="graphic_picture">
+            </div>
+            <input class="graphic-pic-pre-url" type="hidden" value="">
+            <div class="graphic-picture-preview">
             </div>
           </div>
           <div class="form-group">
@@ -738,7 +749,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary save-graphic">保存</button>
+        <button type="button" class="btn btn-primary save-graphic" data-dismiss="modal">保存</button>
       </div>
     </div>
   </div>

@@ -27,8 +27,8 @@ class WxMenusController < ApplicationController
     @wx_menu = WxMenu.new(wx_menu_params)
     if @wx_menu.save
       # 如果添加二级菜单,需要清空一级菜单的事件
-      if params[:level] != 1 && params[:parent_id] != 0
-        parent_menu = WxMenu.find(params[:parent_id])
+      if params[:level].to_i != 1 && params[:parent_id].to_i != 0
+        parent_menu = WxMenu.find(params[:parent_id]) if params[:parent_id].to_i != 0
         parent_menu.button_type = nil
         parent_menu.msg_or_url = nil
         parent_menu.msg_type = nil
@@ -81,7 +81,7 @@ class WxMenusController < ApplicationController
     }
     msg_type = params[:msg_type]  # image, news
     if msg_type == 'image'
-      file = File.new(File.join(image.url), 'rb')
+      file = image.retrieve_from_store!(image.filename)
       res_hash = WxExt::Api::Base.upload_media(set_access_token, 'image', file)
       # {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
       if res_hash['media_id'].blank?

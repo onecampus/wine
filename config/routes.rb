@@ -77,7 +77,6 @@ Rails.application.routes.draw do
     resources :group_orders
     resources :groups
 
-    resources :wx_menus
     match 'wx_menus/name/create/json', to: 'wx_menus#create_menu_name', via: :post
     match 'wx_menus/update/json', to: 'wx_menus#update_via_json', via: :post
     get 'weixin/menus/create/json' => 'wx_menus#create_weixin_menu'
@@ -85,6 +84,7 @@ Rails.application.routes.draw do
     match 'wx_menus/create/json', to: 'wx_menus#create_via_ajax', via: :post
     match 'wx_menus/:id/action/set', to: 'wx_menus#set_menu_action', via: :post
     match 'wx_menus/images/upload', to: 'wx_menus#upload_img', via: :post
+    resources :wx_menus
 
     resources :prize_user_numbers
     resources :prize_users

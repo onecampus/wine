@@ -45,8 +45,8 @@
 }
 
 .menu {
-  padding: 10px 0 0 0;
-  border-bottom: 1px solid #ECF0F1;
+  padding: 0;
+  border-bottom: 1px solid #C6DEAC;
 }
 
 
@@ -54,6 +54,10 @@
   float: right;
   font-size: 14px;
   margin-right: 5px;
+}
+
+.menu-drop {
+  background: #C6DEAC;
 }
 
 .menu-drop-edit {
@@ -66,6 +70,7 @@
 }
 
 .menu-title {
+  background: #6AAF5E;
   padding: 10px 0;
   height: 40px;
 }
@@ -149,7 +154,7 @@ p {
 }
 
 .url-input input {
-  width: 650px;
+  width: 550px;
 }
 
 .url-btn {
@@ -234,7 +239,7 @@ p {
 
 .mesg-btn {
   float: left;
-  margin-left: 300px;
+  margin-left: 250px;
   margin-top: 50px;
 }
 
@@ -314,19 +319,24 @@ ul li {
   float: left;
   height: 360px;
   margin: 20px 0 0 5%;
-  width: 45%;
+  width: 90%;
 }
 
 .preview-pic {
-  width: 90%;
+  width: 70%;
   height: 280px;
-  margin: 10px auto 0 auto;
+  margin: 10px auto;
+}
+
+.preview-pic img {
+  width: 100%;
+  height: 100%;
 }
 
 .upload-pic {
   width: 100%;
   height: 30px;
-  padding: 10px 0 0 170px;
+  padding: 5px 0 0 300px;
   border-top: 1px solid #ddd;
 }
 
@@ -343,6 +353,7 @@ ul li {
   border: 1px solid #ddd;
   border-left: 0;
   overflow-y: scroll;
+  display: none;
 }
 
 .pic-item {
@@ -359,7 +370,7 @@ ul li {
 
 .pic-btn {
   float: left;
-  margin-left: 300px;
+  margin-left: 250px;
   margin-top: 20px;
 }
 
@@ -390,6 +401,7 @@ ul li {
 }
 
 .graphic-history {
+  display: none;
   overflow-y: scroll;
   width: 90%;
   height: 370px;
@@ -397,13 +409,24 @@ ul li {
   border: 1px solid #ddd;
 }
 
+.preview-graphic {
+  height: 280px;
+  margin: 10px auto;
+  width: 70%;
+}
+
+.preview-graphic img {
+  width: 100%;
+  height: 100%;
+}
+
 .graphic-item {
   float: left;
-  margin-top: 10px;
+  height: 42%;
   margin-left: 10px;
-  height: 46%;
-  width: 23.5%;
+  margin-top: 20px;
   text-align: center;
+  width: 23%;
 }
 
 .graphic-item-ba {
@@ -414,11 +437,13 @@ ul li {
 
 .graphic {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .graphic-select-ico {
   position: absolute;
-  left: 70px;
+  left: 60px;
   top: 50px;
   background: url("/zhonglian/img/weixin_graphic.png") no-repeat scroll 0 -6085px rgba(0, 0, 0, 0);
   height: 46px;
@@ -430,7 +455,7 @@ ul li {
 
 
 .graphic-img {
-  height: 90%;
+  height: 100%;
   width: 100%;
 }
 
@@ -447,8 +472,8 @@ ul li {
 }
 
 .graphic-btn {
-  margin-left: 270px;
-  margin-top: 20px;
+  margin-left: 280px;
+  margin-top: -10px;
 }
 
 .graphic-add {
@@ -460,6 +485,7 @@ ul li {
 }
 
 .graphic-save {
+  display: none;
   background: none repeat scroll 0 0 #5ca849;
   border-radius: 5px;
   color: #fff;
@@ -474,7 +500,46 @@ ul li {
 }
 
 .text2 {
-  display: none;
   color: #E76070;
   padding: 0 0 0 10px;
+}
+
+.url-mesg {
+  display: none;
+}
+
+.graphic-picture-up {
+  width: 30%;
+  float: left;
+}
+
+.graphic-picture-preview {
+  float: left;
+  margin-left: 120px;
+  width: 50px;
+  height: 50px;
+}
+
+.graphic-picture-preview img {
+  width: 100%;
+  height: 100%;
+}
+
+.graphic-inf {
+  height: 380px;
+  margin: 10px auto 0 auto;
+  width: 80%;
+}
+
+.menu-drop-list {
+  padding-left: 20px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+.text3 {
+  padding: 0;
+  margin: 0;
 }
