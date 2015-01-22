@@ -144,6 +144,7 @@ $(document).ready(function() {
     });
   }
 
+  // 验空
   var $input = $( "input:text" );
   $( "#btn-add" ).on( "click", function(e){
     $input.each(function(){
@@ -151,6 +152,7 @@ $(document).ready(function() {
       if ( !$this.val() ) {
         $this.focus();
         e.preventDefault();
+        return false;
       }
     });
   });
