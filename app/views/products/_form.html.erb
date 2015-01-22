@@ -46,7 +46,7 @@
     <% end %>
     <div class="col-sm-9">
       <%= image_tag(@product.img_url(:thumb)) if @product.img? %>
-      <%= f.file_field :img, required: "true" %>
+      <%= f.file_field :img %>
       <p class="help-block">请上传特色图片</p>
     </div>
   </div>
