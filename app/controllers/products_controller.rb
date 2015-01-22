@@ -19,9 +19,11 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @categories = Cat.nested_set.select('id, title, content, parent_id')
   end
 
   def create
+    @categories = Cat.nested_set.select('id, title, content, parent_id')
     @product = Product.new(product_params)
     flash[:notice] = '商品创建成功.' if @product.save
     User.with_any_role(:provider, :admin).each do |u|
@@ -55,17 +57,17 @@ class ProductsController < ApplicationController
 
   private
 
-    def set_product
-      @product = Product.find(params[:id])
-      @categories = Cat.nested_set.select('id, title, content, parent_id')
-    end
+  def set_product
+    @product = Product.find(params[:id])
+    @categories = Cat.nested_set.select('id, title, content, parent_id')
+  end
 
-    def product_params
-      params.require(:product).permit(:name, :price, :img, :cat_id,
-                                      :description, :brand, :expiration_date,
-                                      :country, :package_type,
-                                      :product_model, :status, :profit,
-                                      :vip_price, :is_new, :is_boutique,
-                                      :unit, :fright, :is_commission)
-    end
+  def product_params
+    params.require(:product).permit(:name, :price, :img, :cat_id,
+                                    :description, :brand, :expiration_date,
+                                    :country, :package_type,
+                                    :product_model, :status, :profit,
+                                    :vip_price, :is_new, :is_boutique,
+                                    :unit, :fright, :is_commission)
+  end
 end
