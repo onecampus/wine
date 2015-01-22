@@ -4,10 +4,12 @@
 <link rel="stylesheet" href="/zhonglian/css/user_center.css">
 <style type="text/css">
   .btn-check {
+    display: inline-block;
     border-radius: 5px;
     padding: 4px 2px;
     border: 1px solid #f06200;
     color: #f06200;
+    width: 70px;
   }
 </style>
 <div class="main">
@@ -84,7 +86,7 @@
     <div>
       <span class="freight">运费：<%= o.freight %>元</span>
       <span class="sum">合计：<%= o.total_price %>元</span>
-      <a href="http://m.kuaidi100.com/index_all.html?type=<%= o.express_company_number %>&postid=<%= o.express_number %>&callbackurl=/customer/users/wait/receive" class="btn-check">查看物流</a>
+      <a href="http://m.kuaidi100.com/index_all.html?type=<%= o.express_company_number %>&postid=<%= o.express_number %>&callbackurl=http://localhost:3000/customer/users/wait/receive" class="btn-check">查看物流</a>
     </div>
   </div>
   <% end %>
