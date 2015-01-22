@@ -242,6 +242,7 @@ rails g model WxMenu name msg_or_url:integer url title description:text img msg_
 
 # rails g migration change_price_type_in_products
 
+rails g uploader weixin_uploader
 ```
 
 ### 功能分析 ###

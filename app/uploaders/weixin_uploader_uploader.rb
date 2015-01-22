@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-class UeditorImageUploader < CarrierWave::Uploader::Base
+class WeixinUploaderUploader < CarrierWave::Uploader::Base
 
-  include CarrierWave::MiniMagick
+  # include CarrierWave::MiniMagick
 
   storage :file
 
@@ -20,7 +20,6 @@ class UeditorImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    'uploads/ueditor/images'
+    'uploads/weixin/images'
   end
-
 end
