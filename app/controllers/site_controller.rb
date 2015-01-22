@@ -91,7 +91,7 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
-    @share_hash = init_share_hash("/customer/products/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/products/#{params[:id]}/show")
   end
 
   def index_groups_seckills
@@ -101,7 +101,7 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
-    @share_hash = init_share_hash("/customer/groups/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/groups/#{params[:id]}/show")
     @already_sell = 0
     @group.group_orders.each do |go|
       @already_sell += go.group_count
@@ -110,7 +110,7 @@ class SiteController < CustomerController
 
   def show_seckill
     @seckill = Seckill.find params[:id]
-    @share_hash = init_share_hash("/customer/seckills/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/seckills/#{params[:id]}/show")
     @already_sell = 0
     @seckill.seckill_orders.each do |go|
       @already_sell += go.seckill_count
