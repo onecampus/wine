@@ -136,7 +136,7 @@ class SiteController < CustomerController
 
   def index_comments
     @product = Product.find params[:id]
-    @comments = @product.comment_threads
+    @comments = @product.comment_threads.order('id DESC')
   end
 
   def new_ship_address

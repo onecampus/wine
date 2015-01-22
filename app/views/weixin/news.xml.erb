@@ -1,0 +1,15 @@
+<xml>
+  <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+  <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+  <CreateTime><%= Time.now.to_i %></CreateTime>
+  <MsgType><![CDATA[news]]></MsgType>
+  <ArticleCount>1</ArticleCount>
+  <Articles>
+    <item>
+      <Title><![CDATA[<%= @wx_menu.title %>]]></Title>
+      <Description><![CDATA[<%= @wx_menu.description %>]]></Description>
+      <PicUrl><![CDATA[http://203.195.172.200<%= @wx_menu.img %>]]></PicUrl>
+      <Url><![CDATA[<%= @wx_menu.url %>]]></Url>
+    </item>
+  </Articles>
+</xml>
