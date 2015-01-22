@@ -2,91 +2,29 @@
   添加收货地址
 <% end %>
 <style type="text/css">
+  body {
+    width: 100%;
+  }
   .btn-block{
-    margin-top: 20px;
+    margin: 20px auto;
     font-size: 20px;
   }
 
   select{
-    margin:  7px auto;
+    margin:  10px auto 10px 15px;
     float: left;
   }
   .form-box {
     border: 1px solid #ddd;
     width: 96%;
     margin: 30px auto 90px;
+    border-radius: 5px;
+    padding: 0;
+  }
+  .input-group {
+    padding: 0 10px;
   }
 </style>
-<script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
-<script type="text/javascript">
-  function MultilevelSelect(options) {
-    var getKeys = function (o) {
-      var keys = [];
-      var key;
-      for (key in o) {
-        keys.push(key);
-      }
-      return keys;
-    };
-
-    var changeOptions = function (selectNode, options) {
-      var html = '';
-      for (var i = 0; i < options.length; i++) {
-        <% if !@shipaddress.id.nil? %>
-        if ("<%= @shipaddress.province %>" == options[i] || "<%= @shipaddress.city %>" == options[i] || "<%= @shipaddress.region %>" == options[i]) {
-            html += '<option selected="selected">' + options[i] + '</option>';
-        } else {
-            html += '<option>' + options[i] + '</option>';
-        }
-        <% else %>
-        html += '<option>' + options[i] + '</option>';
-        <% end %>
-      }
-      selectNode.html(html);
-    };
-
-    var level1 = getKeys(options.data);
-    changeOptions(options.nodes[0], level1);
-
-    options.nodes[0].on("change", function (e) {
-      var selected = options.nodes[0].val();
-      var keys = getKeys(options.data[selected]);
-      changeOptions(options.nodes[1], keys);
-
-      options.nodes[1].trigger('change');
-    }).trigger("change");
-
-    options.nodes[1].on("change", function () {
-      var selected1 = options.nodes[0].val();
-      if (selected1) {
-        var selected2 = options.nodes[1].val();
-        var keys = options.data[selected1][selected2];
-        changeOptions(options.nodes[2], keys);
-      }
-    }).trigger("change");
-
-    if (options.nodes[0].attr('data-value')) {
-      options.nodes[0].val(options.nodes[0].attr('data-value'));
-      options.nodes[0].trigger('change');
-
-      options.nodes[1].val(options.nodes[1].attr('data-value'));
-      options.nodes[1].trigger('chang');
-
-      options.nodes[2].val(options.nodes[2].attr('data-value'));
-    }
-  }
-
-
-  $(document).ready(function() {
-    if ($('.input-group').length) {
-      MultilevelSelect({
-        data: ADMINISTRATIVE_DIVISION,
-        nodes: [$('#s1'), $('#s2'), $('#s3')]
-      });
-    }
-  });
-
-</script>
 <div class="form-box">
   <%= form_tag({controller: "site", action: "create_ship_address"}, method: "post", class: "input-group") do %>
     <% if @shipaddress.errors.any? %>
@@ -134,7 +72,88 @@
       <label>固定电话</label>
       <input type="text" name="mobile" placeholder="固定电话">
     </div>
-    <button class="btn btn-red btn-block">添加</button>
+    <button class="btn btn-red btn-block" id="btn-add">添加</button>
   <% end %>
 </div>
 <%= render "site/shared/bottombar" %>
+<script src="/backend/assets/js/administrative-division.js" type="text/javascript"></script>
+<script type="text/javascript">
+function MultilevelSelect(options) {
+  var getKeys = function (o) {
+    var keys = [];
+    var key;
+    for (key in o) {
+      keys.push(key);
+    }
+    return keys;
+  };
+
+  var changeOptions = function (selectNode, options) {
+    var html = '';
+    for (var i = 0; i < options.length; i++) {
+      <% if !@shipaddress.id.nil? %>
+      if ("<%= @shipaddress.province %>" == options[i] || "<%= @shipaddress.city %>" == options[i] || "<%= @shipaddress.region %>" == options[i]) {
+        html += '<option selected="selected">' + options[i] + '</option>';
+      } else {
+        html += '<option>' + options[i] + '</option>';
+      }
+      <% else %>
+      html += '<option>' + options[i] + '</option>';
+      <% end %>
+    }
+    selectNode.html(html);
+  };
+
+  var level1 = getKeys(options.data);
+  changeOptions(options.nodes[0], level1);
+
+  options.nodes[0].on("change", function (e) {
+    var selected = options.nodes[0].val();
+    var keys = getKeys(options.data[selected]);
+    changeOptions(options.nodes[1], keys);
+
+    options.nodes[1].trigger('change');
+  }).trigger("change");
+
+  options.nodes[1].on("change", function () {
+    var selected1 = options.nodes[0].val();
+    if (selected1) {
+      var selected2 = options.nodes[1].val();
+      var keys = options.data[selected1][selected2];
+      changeOptions(options.nodes[2], keys);
+    }
+  }).trigger("change");
+
+  if (options.nodes[0].attr('data-value')) {
+    options.nodes[0].val(options.nodes[0].attr('data-value'));
+    options.nodes[0].trigger('change');
+
+    options.nodes[1].val(options.nodes[1].attr('data-value'));
+    options.nodes[1].trigger('chang');
+
+    options.nodes[2].val(options.nodes[2].attr('data-value'));
+  }
+}
+
+
+$(document).ready(function() {
+  if ($('.input-group').length) {
+    MultilevelSelect({
+      data: ADMINISTRATIVE_DIVISION,
+      nodes: [$('#s1'), $('#s2'), $('#s3')]
+    });
+  }
+
+  var $input = $( "input:text" );
+  $( "#btn-add" ).on( "click", function(e){
+    $input.each(function(){
+      var $this = $(this);
+      if ( !$this.val() ) {
+        $this.focus();
+        e.preventDefault();
+      }
+    });
+  });
+});
+
+</script>

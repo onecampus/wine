@@ -24,7 +24,7 @@
   .search-box .q {
     border: 1px solid #e5e5e5;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    border-radius: 5px;
+    border-radius: 18px;
     height: 20px;
     margin-top: 13px;
     width: 85%;
@@ -44,6 +44,7 @@
     position: absolute;
     width: 100%;
     z-index: 99999;
+    text-align: left;
   }
 
   /* 首页导航 */
@@ -51,10 +52,6 @@
     width: 100%;
     height: 100px;
     margin: 5px 0 0 0;
-    clear: both;
-  }
-  .secondt {
-    margin-bottom: 60px;
     clear: both;
   }
   .top-bar .top-bar-item {
@@ -144,6 +141,15 @@
     float: right;
     margin-top: -5px;
   }
+  /* 网站备案 */
+  .website-record {
+    font-size: .6em;
+    text-align: center;
+    margin: 10px auto 60px;
+  }
+  .website-record > a {
+    color: #80b1da;
+  }
 </style>
 
 <div class="search-box" id="top">
@@ -224,27 +230,9 @@
   <a href="/users/sign_up">注册</a>
   <a href="#top" class="goToTop">| 回到顶部</a>
 </div>
-<div class="top-bar secondt">
-  <div class="top-bar-item">
-    <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
-    <p>全部分类</p>
-  </div>
-  <div class="top-bar-item">
-    <p><a href="/customer/users/center"><img src="/zhonglian/img/index/icon_userconter.png"/></a></p>
-    <p>用户中心</p>
-  </div>
-  <div class="top-bar-item">
-    <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png"/></a></p>
-    <p>购物车</p>
-  </div>
-  <div class="top-bar-item">
-    <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png"/></a></p>
-    <p>搜索</p>
-  </div>
-  <div class="top-bar-item">
-    <p><a href="/customer/groups_and_seckills"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
-    <p>团购秒杀</p>
-  </div>
+
+<div class="website-record">
+  <a href="#">网站备案情况</a>
 </div>
 <%= render "site/shared/bottombar" %>
 <script type="text/javascript" src="/zhonglian/js/slide.js"></script>
