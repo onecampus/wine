@@ -125,7 +125,7 @@ hr {
     <div  class="search-box-item">
       <input class="q" type="text" name="q" >
        <img src="/zhonglian/img/search/search-white.png" class="imgsubmit">
-       <p class="search-box-word">搜索</p>
+       <p class="search-box-word">请输入搜索内容...</p>
     </div>
   <% end %>
 </div>
@@ -155,6 +155,10 @@ hr {
 $(document).ready(function() {
   var $q = $( '.q' );
   var $word = $( '.search-box-word' );
+  $word.on( "click", function(){
+    $(this).hide();
+    $q.focus();
+  });
   $q.focus(function(){
     $word.hide();
   });

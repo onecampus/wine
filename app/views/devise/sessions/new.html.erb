@@ -5,11 +5,15 @@
   .remember-me {
     margin: 15px auto 15px 20px;
   }
-  .space2 {
-    height: 150px;
-  }
   .form-box {
-    margin: 0 0 15px;
+    margin: 10px auto;
+    width: 96%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0;
+  }
+  .new_user {
+    padding: 0 5px;
   }
 </style>
 <div class="form-box">
@@ -32,7 +36,6 @@
   <% end %>
   <%= render "devise/shared/links" %>
 </div>
-<div class="space2"></div>
 <nav class="bar bar-tab">
   <a class="tab-item" href="/">
     <span class="icon icon-background-base icon-home"></span>
