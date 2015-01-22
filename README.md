@@ -238,10 +238,8 @@ rails g migration AddIsCommissionToSeckills is_commission:integer
 rails g migration AddIsCommissionToGroups is_commission:integer
 rails g money_rails:initializer
 
-rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
+rails g model WxMenu name msg_or_url:integer url title description:text img msg_type media_id button_type key parent_id:integer level:integer
 
-
-rails g scaffold Msg title description:text img url msg_type media_id wx_menu_id:integer
 # rails g migration change_price_type_in_products
 
 ```
