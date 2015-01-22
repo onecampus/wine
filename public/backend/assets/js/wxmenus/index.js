@@ -1,7 +1,16 @@
 $(document).ready(function() {
+  showMenuEdit();
   /*
   添加一级菜单
   */
+
+  $(".add-menu").click(function(){
+    var length = $(".menu").length;
+    if(length >= 3) {
+      alert("一级菜单最多只能3个");
+      return false;
+    }
+  })
   $(".menu-add").click(function() {
     var menuName = $("#menu-name").val();
     if (menuName == "") {
@@ -15,15 +24,48 @@ $(document).ready(function() {
       var menuNameLength = menuName.charCodeAt(i);
       if (menuNameLength >= 0 && menuNameLength <= 128) {
         length += 1;
-      } else {
+      }
+      else {
         length += 2;
       }
     }
-    if (length > 8) {
+    if(length > 8) {
       $(".menu-mesg").text("超出字数范围");
       $(".menu-name-mesg").hide();
       $(".menu-mesg").show();
       return false;
+    }
+    /*
+    添加菜单对于一级二级菜单通用
+    */
+    else {
+      var parentId = 0;
+      var level = 1;
+      $.ajax({
+        type: "POST",
+        url: "wx_menus/name/create/json",
+        dataType: "json",
+        data: {
+          name: menuName,
+          parent_id: parentId,
+          level: level
+        },
+        success: function(data) {
+          if (data.status == 'success') {
+            alert(data.msg);
+            _href = window.location.href;
+            window.location.href = _href;
+          } else {
+            alert(data.msg);
+          }
+        },
+        complete: function(XMLHttpRequest, textStatus) {
+          // code
+        },
+        error: function() {
+          // code
+        }
+      });
     }
   });
 
@@ -33,14 +75,26 @@ $(document).ready(function() {
   });
 
   /*
-  一级菜单增，删，改
+  一级菜单增，删，改,动作设置
   */
 
   /*
   增加二级菜单
   */
+  $(".menu-edit-add").click(function(){
+    var length = $(this).parents(".menu").find(".menu-drop-list").length;
+    if(length >= 5) {
+      alert("二级菜单最多只能5个");
+      return false;
+    }
+    else {
+      var parentId = $(this).parents(".menu").find(".wx-menu-editable").data("pk");
+      $("#submenu-parentId").attr("value",parentId);
+    }
+  });
   $(".submenu-add").click(function() {
     var menuName = $("#submenu-name").val();
+    var parentId = $("#submenu-parentId").val();
     if (menuName == "") {
       $(".submenu-mesg").text("菜单名字不能为空");
       $(".submenu-name-mesg").hide();
@@ -62,6 +116,38 @@ $(document).ready(function() {
       $(".submenu-mesg").show();
       return false;
     }
+
+    /*
+    添加菜单对于一级二级菜单通用
+    */
+    else {
+      var level = 2;
+      $.ajax({
+        type: "POST",
+        url: "wx_menus/name/create/json",
+        dataType: "json",
+        data: {
+          name: menuName,
+          parent_id: parentId,
+          level: level
+        },
+        success: function(data) {
+          if (data.status == 'success') {
+            alert(data.msg);
+            _href = window.location.href;
+            window.location.href = _href;
+          } else {
+            alert(data.msg);
+          }
+        },
+        complete: function(XMLHttpRequest, textStatus) {
+          // code
+        },
+        error: function() {
+          // code
+        }
+      });
+    }
   });
 
   $("#submenu-name").focus(function() {
@@ -70,81 +156,32 @@ $(document).ready(function() {
   });
 
   /*
+  一级菜单没有二级菜单时动作按钮显示
+  */
+  function showMenuEdit() {
+    $(".menu").each(function(){
+      var length = $(this).find(".menu-drop-list").length;
+      if(length < 0 || length == 0) {
+        $(this).find(".menu-edit-edit").show();
+      }
+      else {
+        $(this).find(".menu-edit-edit").hide();
+      }
+    });
+  }
+
+  /*
   删除一级菜单
   */
-  $(".menu-edit-del").click(function() {});
+  $(".menu-edit-del").click(function() {
 
-  /*
-  二级菜单编辑
-  */
-  $(".edte-submenu-add").click(function() {
-    var menuName = $("#edte-submenu-name").val();
-    if (menuName == "") {
-      $(".editsubmenu-mesg").text("菜单名字不能为空");
-      $(".edit-submenu-mesg").hide();
-      $(".editsubmenu-mesg").show();
-      return false;
-    }
-    var length = 0;
-    for (var i = 0; i < menuName.length; i++) {
-      var menuNameLength = menuName.charCodeAt(i);
-      if (menuNameLength >= 0 && menuNameLength <= 128) {
-        length += 1;
-      } else {
-        length += 2;
-      }
-    }
-    if (length > 16) {
-      $(".editsubmenu-mesg").text("超出字数范围");
-      $(".edit-submenu-mesg").hide();
-      $(".editsubmenu-mesg").show();
-      return false;
-    }
-  });
-  $("#edte-submenu-name").focus(function() {
-    $(".edit-submenu-mesg").show();
-    $(".editsubmenu-mesg").hide();
   });
 
   /*
-  二级菜单删除
+  二级菜单动作编辑
   */
-
-  // 对于一级菜单删除通用.
-  $('.delete-submenu-btn').on('click', function() {
-    _id = $(this).data("id");
-    if (_id !== undefined && _id !== '') {
-      if (confirm("确定删除吗")) {
-        $.ajax({
-          type: "GET",
-          url: "/admin/wx_menus/" + _id + "/del/json",
-          dataType: "json",
-          success: function(data) {
-            if (data.status == 'success') {
-              alert(data.msg);
-              _href = window.location.href;
-              window.location.href = _href;
-            } else {
-              alert(data.msg);
-            }
-          },
-          complete: function(XMLHttpRequest, textStatus) {
-            // code
-          },
-          error: function() {
-            // code
-          }
-        });
-      }
-    }
-    return false;
-  });
-
-  /*
-  二级菜单选择
-  */
-  $(".submenu").click(function() {
-    var type = $(this).data("type");
+  $(".edit-submenu-btn").click(function(){
+    var type = $(this).data("submenutype");
     if (type == 0) {
       $(".edit-url").hide();
       $(".edit-mesg").hide();
@@ -162,6 +199,34 @@ $(document).ready(function() {
     }
   });
 
+  /*
+  二级菜单删除
+  */
+
+  // 对于一级菜单删除通用.
+  $('.delete-submenu-btn').on('click', function() {
+    var id = $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: "/admin/wx_menus/" + id + "/del/json",
+      dataType: "json",
+      success: function(data) {
+        if (data.status == 'success') {
+          alert(data.msg);
+          _href = window.location.href;
+          window.location.href = _href;
+        } else {
+          alert(data.msg);
+        }
+      },
+      complete: function(XMLHttpRequest, textStatus) {
+        // code
+      },
+      error: function() {
+        // code
+      }
+    });
+  });
 
   /*
   微信动作选择
@@ -219,14 +284,6 @@ $(document).ready(function() {
   /*
   菜单导航栏
   */
-  $(".menu-list").click(function() {
-    $(".menu-title").css("background", "#f3f3f3");
-    $(this).parent().css("background", "#6CB160");
-  });
-
-  $(".menu-edit-add").click(function() {
-
-  });
 
   /*
   设置动作导航
@@ -433,7 +490,6 @@ $(document).ready(function() {
   $(document).on('ready page:load', function() {
     $.fn.editable.defaults.mode = 'popup';
     $('.wx-menu-editable').editable();
-/*
     $('.publish-menu').on('click', function() {
       $.ajax({
         type: "GET",
@@ -451,12 +507,13 @@ $(document).ready(function() {
       });
       return false;
     });
-
+    /*
     $('.sub-menu-add').on('click', function() {
       parent_id = $(this).data("id");
       $("input[name=parent_id]").val(parent_id);
     });
-*/
+    */
+    /*
     $('.menu-add').on('click', function() {
       _name = $("input[name=name]").val();
       _url = $("input[name=url]").val();
@@ -493,5 +550,6 @@ $(document).ready(function() {
       }
       return false;
     });
+    */
   });
 }).call(this);

@@ -6,7 +6,7 @@
 }
 
 .panel {
-  width: 1180px;
+  width: 1020px;
   height: 600px;
   border: 1px solid #ddd;
   padding: 10px 5px;
@@ -51,7 +51,9 @@
 
 
 .menu span {
+  float: right;
   font-size: 14px;
+  margin-right: 5px;
 }
 
 .menu-drop-edit {
@@ -73,7 +75,6 @@
 
 .menu-list-title {
   float: left;
-  width: 200px;
   margin-left: 5px;
 }
 
