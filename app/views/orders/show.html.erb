@@ -1,6 +1,18 @@
 <% content_for :page_title do %>
   查看<%=t 'activerecord.models.order' %>
 <% end %>
+<style>
+  .table {
+    border: 1px solid #ddd;
+  }
+  .product-list {
+    width: 100%;
+  }
+  .product {
+    width: 82%;
+    margin-left: 9.5%;
+  }
+</style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
   <ol class="breadcrumb">
@@ -58,14 +70,33 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
+          <% if @order.invoice.nil? %>
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.invoice_id' %></div>
             <div class="col-sm-9">
               <div class="show-control">
-                <%= @order.invoice_id %>
+                不需要
               </div>
             </div>
           </div>
+          <% else %>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">发票抬头</div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @order.invoice.rise %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">发票内容</div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= @order.invoice.content %>
+              </div>
+            </div>
+          </div>
+          <% end %>
           <div class="form-group">
             <div class="col-sm-2 control-label"><%=t 'activerecord.attributes.order.user_id' %></div>
             <div class="col-sm-9">
@@ -87,6 +118,112 @@
             <div class="col-sm-9">
               <div class="show-control">
                 <%= @order.ship_address %>
+              </div>
+            </div>
+          </div>
+          <div class="product-list">
+            <div class="product">
+            <table class="table table-hover" id="sample-table-1">
+              <thead>
+                <tr>
+                  <th>商品名字</th>
+                  <th>商品数量</th>
+                  <th>查看</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% products_price = 0.00 %>
+                <% if @order.order_type == '普通订单' %>
+                  <% @order.product_orders.each do |po| %>
+                  <tr>
+                    <% products_price += po.product.price.to_f * po.product_count %>
+                    <td><%= po.product.name %></td>
+                    <td><%= po.product_count %></td>
+                    <td class="left">
+                      <div class="visible-md visible-lg hidden-sm hidden-xs">
+                        <a href="/admin/products/<%= po.product.id %>" class="btn btn-xs btn-green tooltips" data-placement="top" data-original-title="Share"><i class="fa fa-share"></i></a>
+                      </div>
+                      <div class="visible-xs visible-sm hidden-md hidden-lg">
+                        <div class="btn-group">
+                          <a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
+                            <i class="fa fa-cog"></i> <span class="caret"></span>
+                          </a>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li role="presentation">
+                              <a role="menuitem" tabindex="-1" href="#">
+                                <i class="fa fa-share"></i> Share
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% end %>
+                <% elsif @order.order_type == '团购订单' %>
+                  <% @order.group_orders.each do |po| %>
+                  <tr>
+                    <% products_price += po.group.price.to_f * po.group_count %>
+                    <td><%= po.group.product.name %></td>
+                    <td><%= po.group_count %></td>
+                    <td class="left">
+                      <div class="visible-md visible-lg hidden-sm hidden-xs">
+                        <a href="/admin/groups/<%= po.group.id %>" class="btn btn-xs btn-green tooltips" data-placement="top" data-original-title="Share"><i class="fa fa-share"></i></a>
+                      </div>
+                      <div class="visible-xs visible-sm hidden-md hidden-lg">
+                        <div class="btn-group">
+                          <a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
+                            <i class="fa fa-cog"></i> <span class="caret"></span>
+                          </a>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li role="presentation">
+                              <a role="menuitem" tabindex="-1" href="#">
+                                <i class="fa fa-share"></i> Share
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% end %>
+                <% elsif @order.order_type == '秒杀订单' %>
+                  <% @order.seckill_orders.each do |po| %>
+                  <tr>
+                    <% products_price += po.seckill.price.to_f * po.seckill_count %>
+                    <td><%= po.seckill.product.name %></td>
+                    <td><%= po.seckill_count %></td>
+                    <td class="left">
+                      <div class="visible-md visible-lg hidden-sm hidden-xs">
+                        <a href="/admin/seckills/<%= po.seckill.id %>" class="btn btn-xs btn-green tooltips" data-placement="top" data-original-title="Share"><i class="fa fa-share"></i></a>
+                      </div>
+                      <div class="visible-xs visible-sm hidden-md hidden-lg">
+                        <div class="btn-group">
+                          <a class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
+                            <i class="fa fa-cog"></i> <span class="caret"></span>
+                          </a>
+                          <ul role="menu" class="dropdown-menu pull-right">
+                            <li role="presentation">
+                              <a role="menuitem" tabindex="-1" href="#">
+                                <i class="fa fa-share"></i> Share
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 control-label">商品总额</div>
+            <div class="col-sm-9">
+              <div class="show-control">
+                <%= products_price.round(2) %>
               </div>
             </div>
           </div>

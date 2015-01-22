@@ -1,3 +1,8 @@
+# encoding: UTF-8
+require 'json'
+require 'rest_client'
+require 'digest/sha1'
+
 ##
 # This class is a controller for customer from weixin brower.
 class SiteController < CustomerController
@@ -17,15 +22,48 @@ class SiteController < CustomerController
                                                  :index_order_history,
                                                  :create_order,
                                                  :scratch_off,
-                                                 :big_wheel]
+                                                 :big_wheel,
+                                                 :index_groups_seckills,
+                                                 :show_group]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
                                                         :create_ship_address_via_ajax,
-                                                        :create_invoice_via_ajax]
+                                                        :create_invoice_via_ajax,
+                                                        :create_withdraw]
 
   def index
-    @recommend_products = Product.last 8
+    @site_config1 = SiteConfig.where(key: 'CustomerIndexImgConfigKey1', config_type: 'CustomerIndexImgConfig').first
+    @site_config2 = SiteConfig.where(key: 'CustomerIndexImgConfigKey2', config_type: 'CustomerIndexImgConfig').first
+    @site_config3 = SiteConfig.where(key: 'CustomerIndexImgConfigKey3', config_type: 'CustomerIndexImgConfig').first
+    @last_3_products = Product.last 3
+    @last_2_cats = Cat.last 2
+  end
+
+  def new_withdraw
+    @withdraw = Withdraw.new
+  end
+
+  def index_withdraws
+    @withdraws = current_user.withdraws
+  end
+
+  def create_withdraw
+    withdraw_params = {
+      user_id: current_user.id,
+      bank_card: params[:bank_card],
+      alipay: params[:alipay],
+      we_chat_payment: params[:we_chat_payment],
+      draw_type: params[:draw_type],
+      draw_money: params[:draw_money],
+      draw_status: 0
+    }
+    @withdraw = Withdraw.new(withdraw_params)
+    if @withdraw.save
+      render json: { status: 'success', msg: 'action draw success' }
+    else
+      render json: { status: 'failed', msg: 'action draw failed' }
+    end
   end
 
   def index_cats
@@ -34,11 +72,49 @@ class SiteController < CustomerController
 
   def index_cat_products
     @cat = Cat.find params[:cid]
-    @cat_products = @cat.products
+    @cat_products = nil
+    unless params[:sort].blank?
+      case params[:sort]
+      when 'sales'
+        @cat_products = @cat.products.sort { |x, y| y.orders.count <=> x.orders.count }
+      when 'popularity'
+        @cat_products = @cat.products.sort { |x, y| y.comment_threads.count <=> x.comment_threads.count }
+      when 'time'
+        @cat_products = @cat.products.order('created_at DESC')
+      else
+        @cat_products = @cat.products.sort { |x, y| y.price.to_f <=> x.price.to_f }
+      end
+    else
+      @cat_products = @cat.products.sort { |x, y| y.price.to_f <=> x.price.to_f }
+    end
   end
 
   def show_product
     @product = Product.find params[:id]
+    @share_hash = init_share_hash
+  end
+
+  def index_groups_seckills
+    @groups = Group.all
+    @seckills = Seckill.all
+  end
+
+  def show_group
+    @group = Group.find params[:id]
+    @share_hash = init_share_hash
+    @already_sell = 0
+    @group.group_orders.each do |go|
+      @already_sell += go.group_count
+    end
+  end
+
+  def show_seckill
+    @seckill = Seckill.find params[:id]
+    @share_hash = init_share_hash
+    @already_sell = 0
+    @seckill.seckill_orders.each do |go|
+      @already_sell += go.seckill_count
+    end
   end
 
   def new_comment
@@ -60,7 +136,7 @@ class SiteController < CustomerController
 
   def index_comments
     @product = Product.find params[:id]
-    @comments = @product.comment_threads
+    @comments = @product.comment_threads.order('id DESC')
   end
 
   def new_ship_address
@@ -153,24 +229,12 @@ class SiteController < CustomerController
   end
 
   def create_order
-    # share_link_code
     share_link_code = params[:share_link_code]
+    invite_code = params[:invite_code]
     current_user_profile = current_user.profile
-    unless share_link_code.blank?
-      parent_user = Profile.where(share_link_code: share_link_code).first
-      unless parent_user.nil?
-        current_user_profile.move_to_child_of(parent_user)
-        parent_user.reload
-      end
-    end
 
-    # invite_code
+    # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
     old_orders = current_user.orders
-    if old_orders.blank?
-      invite_code = User.generate_invite_code
-      current_user_profile.invite_code = invite_code
-      current_user_profile.save!
-    end
 
     # shipaddress
     shipaddress = Shipaddress.find params[:ship_address_id]
@@ -182,7 +246,6 @@ class SiteController < CustomerController
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
     invoice_id = invoice.nil? ? nil : invoice.id
 
-    products = params[:products]
     total_price = 0.00
     freight = 0.00
     package_charge = 0.00
@@ -203,52 +266,144 @@ class SiteController < CustomerController
       mobile: shipaddress.mobile,
       tel: shipaddress.tel,
       supplier_id: current_user.profile.supplier_id,
+      order_number: Order.generate_order_number,
       order_type: '普通订单'
     )
+    products = params[:products]
 
-    ProductOrder.transaction do
-      Order.transaction do
-        order.save!
 
-        # product_order
-        p_o_list = []
-        products.each do |_, p|
-          product_id = p[:product_id].to_i
-          product = Product.find(product_id)
-          unit_price = product.price
-          product_count = p[:product_count]
+    if !params[:is_product].blank? && params[:is_product].to_i == 1
+      order.order_type = '普通订单'
+      ProductOrder.transaction do
+        Order.transaction do
+          order.save!
+          invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+          generate_invite_code_or_not(old_orders, current_user_profile)
+          # product_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
+            product = Product.find(product_id)
+            unit_price = product.price
 
-          product_order = ProductOrder.new(
-            order_id: order.id,
-            product_id: product_id,
-            product_count: product_count,
-            unit_price: unit_price
-          )
-          p_o_list.push product_order
+            product_order = ProductOrder.new(
+              order_id: order.id,
+              product_id: product_id,
+              product_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push product_order
 
-          total_price += unit_price.to_f * product_count.to_i
-          freight += product.fright.to_f
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
         end
-
-        puts '-' * 20
-        puts products
-
-        puts '-' * 20
-        puts total_price
-
-        puts '-' * 20
-        puts freight
-
-        total_price = total_price.round(2)
-
-        p_o_list.each(&:save!)
-        order.total_price = total_price
-        order.freight = freight
-        order.package_charge = package_charge
-        order.save!
-        render json: { status: 'success', msg: 'create order success' }
-        return
       end
+    elsif !params[:is_group].blank? && params[:is_group].to_i == 1
+      order.order_type = '团购订单'
+      GroupOrder.transaction do
+        Order.transaction do
+          order.save!
+          invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+          generate_invite_code_or_not(old_orders, current_user_profile)
+          # group_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
+
+            product = Product.find(product_id)
+            group = product.group
+            unit_price = group.price
+
+            group.people += 1
+            group.remain -= product_count.to_i
+            group.save!
+
+
+            group_order = GroupOrder.new(
+              order_id: order.id,
+              group_id: group.id,
+              group_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push group_order
+
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
+        end
+      end
+    elsif !params[:is_seckill].blank? && params[:is_seckill].to_i == 1
+      order.order_type = '秒杀订单'
+      SeckillOrder.transaction do
+        Order.transaction do
+          order.save!
+          invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+          generate_invite_code_or_not(old_orders, current_user_profile)
+          # seckill_order
+          p_o_list = []
+          products.each do |_, p|
+            product_id = p[:product_id].to_i
+            product_count = p[:product_count]
+
+            product = Product.find(product_id)
+            seckill = product.seckill
+            unit_price = seckill.price
+
+            seckill.people += 1
+            seckill.remain -= product_count.to_i
+            seckill.save!
+
+            seckill_order = SeckillOrder.new(
+              order_id: order.id,
+              seckill_id: seckill.id,
+              seckill_count: product_count,
+              unit_price: unit_price
+            )
+            p_o_list.push seckill_order
+
+            total_price += unit_price.to_f * product_count.to_i
+            total_price += product.fright.to_f
+            freight += product.fright.to_f
+          end
+
+          total_price = total_price.round(2)
+
+          p_o_list.each(&:save!)
+          order.total_price = total_price
+          order.freight = freight
+          order.package_charge = package_charge
+          order.save!
+          render json: { status: 'success', msg: 'create order success' }
+          return
+        end
+      end
+    else
+      render json: { status: 'failed', msg: 'order params error' }
     end
   end
 
@@ -256,19 +411,20 @@ class SiteController < CustomerController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_wait_ship
-    @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
+    @orders = Order.find_by_sql(["SELECT * FROM orders WHERE user_id = ? AND (order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1) ORDER BY id DESC", current_user.id])
+    # @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
   end
 
   def index_wait_pay
-    @orders = current_user.orders.where(pay_status: 1)
+    @orders = current_user.orders.where(pay_status: 1).order('id DESC')
   end
 
   def index_wait_receive
-    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2)
+    @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2).order('id DESC')
   end
 
   def index_order_history
-    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3)
+    @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3).order('id DESC')
   end
 
   def big_wheel
@@ -369,9 +525,24 @@ class SiteController < CustomerController
   end
 
   def commission
+    @commissions = current_user.profile.descendants
+    @results = []
+    @commissions.each do |pro|
+      Commission.where(user_id: current_user.id, from_user_id: pro.id).each do |c|
+        @results.push(from_user: pro.user.username, money: c.commission_money)
+      end
+    end
   end
 
   private
+
+  def init_share_hash
+    app_id = ENV['APP_ID']
+    app_secret = ENV['APP_SECRET']
+    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+    url = ENV['APP_JS_URL']
+    WxExt::Api::Js.get_jsapi_config(access_token_hash['access_token'], url, app_id)
+  end
 
   def get_result(prize_hash)
     result = {}
@@ -417,6 +588,11 @@ class SiteController < CustomerController
             _min = min[i].to_i
             _max = max[i].to_i
             result[:angle] = rand(_min.._max)
+            puts '--' * 20
+            puts 'i= ' + i.to_s
+            puts _min
+            puts _max
+            puts result[:angle]
           else
             min = res.min.to_i
             max = res.max.to_i
@@ -474,13 +650,8 @@ class SiteController < CustomerController
         pro_sum += pro_arr[key]
       end
     end
-    puts '-' * 20
-    puts pro_sum
     # 概率数组循环
     pro_arr.each do |key, val|
-      puts '-' * 20
-      puts pro_count[key]
-      puts val
       if pro_count[key] == 0
         next
       else
@@ -494,5 +665,49 @@ class SiteController < CustomerController
       end
     end
     result
+  end
+
+  def generate_invite_code_or_not(old_orders, current_user_profile)
+    if old_orders.blank?
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+    end
+  end
+
+  def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+    if current_user_profile.parent.nil?
+      if !share_link_code.blank? && !invite_code.blank?
+        # invite_code is more import
+        unless invite_code.blank?
+          parent_user = Profile.where(invite_code: invite_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.invite_code = invite_code
+        end
+      elsif !share_link_code.blank? || !invite_code.blank?
+        # share_link_code
+        unless share_link_code.blank?
+          parent_user = Profile.where(share_link_code: share_link_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.share_link_code = share_link_code
+        end
+
+        # invite_code
+        unless invite_code.blank?
+          parent_user = Profile.where(invite_code: invite_code).first
+          unless parent_user.nil?
+            current_user_profile.move_to_child_of(parent_user)
+            parent_user.reload
+          end
+          order.invite_code = invite_code
+        end
+      end
+    end
   end
 end

@@ -1,0 +1,55 @@
+
+<%= form_for(@site_config, :html => {:class => "form-horizontal"}) do |f| %>
+  <% if @site_config.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@site_config.errors.count, "error") %></h2>
+        <ul>
+        <% @site_config.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <div class="form-group">
+                <%= f.label :key, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.site_config.key' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :key, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :val, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.site_config.val' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :val, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :img, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.site_config.img' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :img, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+                <%= f.label :config_type, :class => "col-sm-2 control-label" do %>
+            <%=t 'activerecord.attributes.site_config.config_type' %> <span class="symbol required"></span>
+          <% end %>
+          <div class="col-sm-9">
+            <%= f.text_field :config_type, :class => "form-control" %>
+          </div>
+          </div>
+      <div class="form-group">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
+      </div>
+    </div>
+<% end %>

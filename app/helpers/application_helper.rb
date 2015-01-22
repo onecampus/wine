@@ -43,6 +43,367 @@ module ApplicationHelper
     end
   end
 
+  def express_companies
+    [
+      {
+        code: 'ems',
+        company: 'ems快递'
+      },
+      {
+        code: 'shunfeng',
+        company: '顺丰'
+      },
+      {
+        code: 'shentong',
+        company: '申通'
+      },
+      {
+        code: 'yinjiesudi',
+        company: '银捷速递'
+      },
+      {
+        code: 'zhongtong',
+        company: '中通速递'
+      },
+      {
+        code: 'yuantong',
+        company: '圆通速递'
+      },
+      {
+        code: 'zhaijisong',
+        company: '宅急送'
+      },
+      {
+        code: 'yafengsudi',
+        company: '亚风速递'
+      },
+      {
+        code: 'quanyikuaidi',
+        company: '全一快递'
+      },
+      {
+        code: 'tiantian',
+        company: '天天快递'
+      },
+      {
+        code: 'zhongtiekuaiyun',
+        company: '中铁快运'
+      },
+      {
+        code: 'yunda',
+        company: '韵达快运'
+      },
+      {
+        code: 'sue',
+        company: '速尔物流'
+      },
+      {
+        code: 'aae',
+        company: 'aae全球专递'
+      },
+      {
+        code: 'anjie',
+        company: '安捷快递'
+      },
+      {
+        code: 'anxindakuaixi',
+        company: '安信达快递'
+      },
+      {
+        code: 'biaojikuaidi',
+        company: '彪记快递'
+      },
+      {
+        code: 'bht',
+        company: 'bht'
+      },
+      {
+        code: 'baifudongfang',
+        company: '百福东方国际物流'
+      },
+      {
+        code: 'coe',
+        company: '中国东方（COE）'
+      },
+      {
+        code: 'changyuwuliu',
+        company: '长宇物流'
+      },
+      {
+        code: 'datianwuliu',
+        company: '大田物流'
+      },
+      {
+        code: 'debangwuliu',
+        company: '德邦物流'
+      },
+      {
+        code: 'dhl',
+        company: 'dhl'
+      },
+      {
+        code: 'dpex',
+        company: 'dpex'
+      },
+      {
+        code: 'dsukuaidi',
+        company: 'd速快递'
+      },
+      {
+        code: 'disifang',
+        company: '递四方'
+      },
+      {
+        code: 'fedex',
+        company: 'fedex（国外）'
+      },
+      {
+        code: 'feikangda',
+        company: '飞康达物流'
+      },
+      {
+        code: 'fenghuangkuaidi',
+        company: '凤凰快递'
+      },
+      {
+        code: 'feikuaida',
+        company: '飞快达'
+      },
+      {
+        code: 'guotongkuaidi',
+        company: '国通快递'
+      },
+      {
+        code: 'ganzhongnengda',
+        company: '港中能达物流'
+      },
+      {
+        code: 'guangdongyouzhengwuliu',
+        company: '广东邮政物流'
+      },
+      {
+        code: 'gongsuda',
+        company: '共速达'
+      },
+      {
+        code: 'huitongkuaidi',
+        company: '汇通快运'
+      },
+      {
+        code: 'hengluwuliu',
+        company: '恒路物流'
+      },
+      {
+        code: 'huaxialongwuliu',
+        company: '华夏龙物流'
+      },
+      {
+        code: 'haihongwangsong',
+        company: '海红'
+      },
+      {
+        code: 'haiwaihuanqiu',
+        company: '海外环球'
+      },
+      {
+        code: 'jiayiwuliu',
+        company: '佳怡物流'
+      },
+      {
+        code: 'jinguangsudikuaijian',
+        company: '京广速递'
+      },
+      {
+        code: 'jixianda',
+        company: '急先达'
+      },
+      {
+        code: 'jjwl',
+        company: '佳吉物流'
+      },
+      {
+        code: 'jymwl',
+        company: '加运美物流'
+      },
+      {
+        code: 'jindawuliu',
+        company: '金大物流'
+      },
+      {
+        code: 'jialidatong',
+        company: '嘉里大通'
+      },
+      {
+        code: 'jykd',
+        company: '晋越快递'
+      },
+      {
+        code: 'kuaijiesudi',
+        company: '快捷速递'
+      },
+      {
+        code: 'lianb',
+        company: '联邦快递（国内）'
+      },
+      {
+        code: 'lianhaowuliu',
+        company: '联昊通物流'
+      },
+      {
+        code: 'longbanwuliu',
+        company: '龙邦物流'
+      },
+      {
+        code: 'lijisong',
+        company: '立即送'
+      },
+      {
+        code: 'lejiedi',
+        company: '乐捷递'
+      },
+      {
+        code: 'minghangkuaidi',
+        company: '民航快递'
+      },
+      {
+        code: 'meiguokuaidi',
+        company: '美国快递'
+      },
+      {
+        code: 'menduimen',
+        company: '门对门'
+      },
+      {
+        code: 'ocs',
+        company: 'OCS'
+      },
+      {
+        code: 'peisihuoyunkuaidi',
+        company: '配思货运'
+      },
+      {
+        code: 'quanchenkuaidi',
+        company: '全晨快递'
+      },
+      {
+        code: 'quanfengkuaidi',
+        company: '全峰快递'
+      },
+      {
+        code: 'quanjitong',
+        company: '全际通物流'
+      },
+      {
+        code: 'quanritongkuaidi',
+        company: '全日通快递'
+      },
+      {
+        code: 'rufengda',
+        company: '如风达'
+      },
+      {
+        code: 'santaisudi',
+        company: '三态速递'
+      },
+      {
+        code: 'shenghuiwuliu',
+        company: '盛辉物流'
+      },
+      {
+        code: 'shengfeng',
+        company: '盛丰物流'
+      },
+      {
+        code: 'saiaodi',
+        company: '赛澳递'
+      },
+      {
+        code: 'tiandihuayu',
+        company: '天地华宇'
+      },
+      {
+        code: 'tnt',
+        company: 'tnt'
+      },
+      {
+        code: 'ups',
+        company: 'ups'
+      },
+      {
+        code: 'wanjiawuliu',
+        company: '万家物流'
+      },
+      {
+        code: 'wenjiesudi',
+        company: '文捷航空速递'
+      },
+      {
+        code: 'wuyuan',
+        company: '伍圆'
+      },
+      {
+        code: 'wxwl',
+        company: '万象物流'
+      },
+      {
+        code: 'xinfengwuliu',
+        company: '信丰物流'
+      },
+      {
+        code: 'yibangwuliu',
+        company: '一邦速递'
+      },
+      {
+        code: 'youshuwuliu',
+        company: '优速物流'
+      },
+      {
+        code: 'youzhengguonei',
+        company: '邮政包裹挂号信'
+      },
+      {
+        code: 'youzhengguoji',
+        company: '邮政国际包裹挂号信'
+      },
+      {
+        code: 'yuanchengwuliu',
+        company: '远成物流'
+      },
+      {
+        code: 'yuanweifeng',
+        company: '源伟丰快递'
+      },
+      {
+        code: 'yuanzhijiecheng',
+        company: '元智捷诚快递'
+      },
+      {
+        code: 'yuntongkuaidi',
+        company: '运通快递'
+      },
+      {
+        code: 'yuefengwuliu',
+        company: '越丰物流'
+      },
+      {
+        code: 'yad',
+        company: '源安达'
+      },
+      {
+        code: 'zhongyouwuliu',
+        company: '中邮物流'
+      },
+      {
+        code: 'zhongxinda',
+        company: '忠信达'
+      },
+      {
+        code: 'zhimakaimen',
+        company: '芝麻开门'
+      }
+    ]
+  end
+
   def country_to_select
     [
       "中国",
@@ -170,5 +531,13 @@ module ApplicationHelper
       "越南",
       "赞比亚"
     ]
+  end
+
+  def user_id_of_current_provider
+    user_ids = []
+    Profile.where(supplier_id: current_user.id).each do |p|
+      user_ids.push p.id
+    end
+    user_ids
   end
 end

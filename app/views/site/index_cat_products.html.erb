@@ -31,11 +31,10 @@
 
   .percent-65 {
     height: 170px;
-    margin-top: -10px;
   }
 
   .percent-65 img {
-    height: 170px;
+    height: 160px;
     width: 100%;
   }
 
@@ -52,17 +51,18 @@
 
   .cat-products .product {
     width: 44%;
-    height: 200px;
+    height: 250px;
     margin-left: 16px;
-    margin-bottom: 80px;
-    background-color: #ffffff;
+    margin-bottom: 40px;
+    background-color: #fff;
+    box-shadow: 6px 6px 3px #d5d5d5;
     float: left;
   }
 
   .product-inf {
     width: 100%;
     height: 50px;
-    background-color: #ffffff;
+    background-color: #fff;
     color: #787878;
     float: left;
     text-align: left;
@@ -135,6 +135,37 @@
     height: 90px;
     float: left;
   }
+
+  /* use the tab to sort the product by the popularity and so on */
+  .sortTab {
+    list-style-type: none;
+    float: left;
+    width: 100%;
+    padding: 0;
+  }
+  .sortTab > li {
+    float: left;
+    width: 25%;
+    padding: 5px 0;
+    text-align: center;
+  }
+  .sortTab > li.activeT {
+    background-color: #f06200;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+  .activeT > a {
+    color: #fff;
+  }
+  .contents {
+    clear: both;
+    display: none;
+  }
+  .activeC {
+    display: block;
+  }
 </style>
 <div class="cat-top">
   <div class="cat-even">
@@ -155,20 +186,93 @@
   </div>
 </div>
 <hr class="hr-style">
-<div class="cat-products">
-  <% @cat_products.each_with_index do |p, index| %>
+
+<ul class="sortTab">
+  <li class="tabtitle"><a href="#" title="price">价格</a></li>
+  <li class="tabtitle"><a href="#" title="sales">销量</a></li>
+  <li class="tabtitle"><a href="#" title="popularity">人气</a></li>
+  <li class="tabtitle"><a href="#" title="time">上架时间</a></li>
+</ul>
+<div class="tabcontent">
+  <div class="cat-products contents  activeC">
+    <% @cat_products.each_with_index do |p, index| %>
+      <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
+        <div class="product">
+          <img src="<%= p.img %>">
+          <div class="product-inf">
+            <p class="text3"><%= p.name %></p>
+            <p class="text4">¥<%= p.price %></p>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+  <div class="cat-products contents">
+    <% @cat_products.each_with_index do |p, index| %>
     <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
       <div class="product">
         <img src="<%= p.img %>">
         <div class="product-inf">
           <p class="text3"><%= p.name %></p>
-          <p class="text4">¥
-            <%= p.price %></p>
+          <p class="text4">¥<%= p.price %></p>
         </div>
       </div>
     </a>
-  <% end %>
+    <% end %>
+  </div>
+  <div class="cat-products contents">
+    <% @cat_products.each_with_index do |p, index| %>
+    <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
+      <div class="product">
+        <img src="<%= p.img %>">
+        <div class="product-inf">
+          <p class="text3"><%= p.name %></p>
+          <p class="text4">¥<%= p.price %></p>
+        </div>
+      </div>
+    </a>
+    <% end %>
+  </div>
+  <div class="cat-products contents">
+    <% @cat_products.each_with_index do |p, index| %>
+    <a href="/customer/products/<%= p.id %>/show" data-no-turbolink>
+      <div class="product">
+        <img src="<%= p.img %>">
+        <div class="product-inf">
+          <p class="text3"><%= p.name %></p>
+          <p class="text4">¥<%= p.price %></p>
+        </div>
+      </div>
+    </a>
+    <% end %>
+  </div>
 </div>
 <div class="space">
 </div>
 <%= render "site/shared/bottombar" %>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    var params = $.url().param( "sort" );
+    var $as = $( ".sortTab > li > a" );
+    var $lis = $( ".sortTab > li" ).removeClass( "activeT" );
+    var $divs = $( ".contents" ).removeClass( "activeC" );
+    var img = $divs.find( "img" ).size();
+    if( !img ) {
+      $divs.append( "<div class='notice'>暂无商品</div>" );
+    }
+    if( params ) {
+      $( "a[title='" + params + "']").parent().addClass( "activeT");
+      var index = $as.index( $( "a[title='" + params + "']") );
+      $( $divs.get(index) ).addClass( "activeC" );
+    } else {
+      $( "a[title='price']" ).parent().addClass( "activeT" );
+      $( ".contents:eq(0)" ).addClass( "activeC" );
+    }
+    $( ".sortTab > li" ).on( "click", function() {
+      var $this = $( this );
+      var param = $this.find( "a" ).attr( "title" );
+      var url = location.protocol + "//" + location.hostname + ":" + location.port + location.pathname + "?sort=" + param;
+      $this.find( "a" ).attr( "href", url );
+    });
+  });
+</script>

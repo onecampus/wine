@@ -1,118 +1,15 @@
 <% content_for :page_title do %>
   <%=t 'activerecord.models.wx_menu' %>管理
 <% end %>
+<link href="/backend/assets/js/wxmenus/index.css" rel="stylesheet">
 <link href="/plugins/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 <script src="/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script>
-  (function() {
-    $(document).on('ready page:load', function() {
-      $.fn.editable.defaults.mode = 'popup';
-      $('.wx-menu-editable').editable();
+<script src="/plugins/jqueryfileupload/js/vendor/jquery.ui.widget.js"></script>
+<script src="/plugins/jqueryfileupload/js/jquery.iframe-transport.js"></script>
+<script src="/plugins/jqueryfileupload/js/jquery.fileupload.js"></script>
 
-      $('.publish-menu').on('click', function() {
-        $.ajax({
-          type: "GET",
-          url: "/admin/weixin/menus/create/json",
-          dataType: "json",
-          success: function(data) {
-            alert(data.msg);
-          },
-          complete: function(XMLHttpRequest, textStatus){
-            // code
-          },
-          error: function(){
-            // code
-          }
-        });
-        return false;
-      });
+<script src="/backend/assets/js/wxmenus/index.js"></script>
 
-      $('.sub-menu-add').on('click', function() {
-        parent_id = $(this).data("id");
-        $("input[name=parent_id]").val(parent_id);
-      });
-
-      $('.menu-add').on('click', function() {
-        _name = $("input[name=name]").val();
-        _url = $("input[name=url]").val();
-        _p_id = $("input[name=parent_id]").val();
-        if (_name == '' || _url == '' || _p_id == '') {
-          alert("请填写完整");
-        } else {
-          $.ajax({
-            type: "POST",
-            url: "/admin/wx_menus/create/json",
-            dataType: "json",
-            data: {
-              name: _name,
-              url: _url,
-              parent_id: _p_id,
-              level: 2
-            },
-            success: function(data) {
-              if(data.status == 'success') {
-                alert(data.msg);
-                _href = window.location.href;
-                window.location.href = _href;
-              } else {
-                alert(data.msg);
-              }
-            },
-            complete: function(XMLHttpRequest, textStatus){
-              // code
-            },
-            error: function(){
-              // code
-            }
-          });
-        }
-        return false;
-      });
-
-
-      $('.sub-menu-del').on('click', function() {
-        _id = $(this).data("id");
-        if(_id != undefined && _id != '') {
-          if(confirm("确定删除吗")) {
-            $.ajax({
-              type: "GET",
-              url: "/admin/wx_menus/" + _id + "/del/json",
-              dataType: "json",
-              success: function(data) {
-                if(data.status == 'success') {
-                  alert(data.msg);
-                  _href = window.location.href;
-                  window.location.href = _href;
-                } else {
-                  alert(data.msg);
-                }
-              },
-              complete: function(XMLHttpRequest, textStatus){
-                // code
-              },
-              error: function(){
-                // code
-              }
-            });
-          }
-        }
-        return false;
-      });
-    });
-  }).call(this);
-</script>
-<style>
-  .top-menu {
-    list-style-type: none;
-    margin: 5px 0 5px 0;
-    border: 1px solid #0088cc;
-  }
-
-  ul li {
-    list-style-type: none;
-    margin: 5px 0 5px 0;
-  }
-</style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
   <ol class="breadcrumb">
@@ -144,26 +41,553 @@
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <i class="fa fa-external-link-square"></i>
-    <%=t 'activerecord.models.wx_menu' %>管理
-    <div class="panel-tools">
-      <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
-      </a>
-      <a data-toggle="modal" href="#panel-config" class="btn btn-xs btn-link panel-config">
-        <i class="fa fa-wrench"></i>
-      </a>
-      <a href="#" class="btn btn-xs btn-link panel-refresh">
-        <i class="fa fa-refresh"></i>
-      </a>
-      <a href="#" class="btn btn-xs btn-link panel-expand">
-        <i class="fa fa-resize-full"></i>
-      </a>
-      <a href="#" class="btn btn-xs btn-link panel-close">
-        <i class="fa fa-times"></i>
-      </a>
+  <div class="panel-body">
+    <div class="panel-left">
+      <div class="left-head">
+        <span>菜单管理</span>
+        <a class="add-menu" href="javascript:void(0)" data-toggle="modal" data-target="#add-menu"><i class="fa fa-plus fa-lg"></i></a>
+      </div>
+      <div class="left-body">
+        <% @wx_menus.each do |mu| %>
+        <div class="menu">
+          <div class="menu-title">
+            <a class="menu-list" href="javascript:void(0)">
+              <div class="menu-list-title">
+                <i class="fa fa-chevron-circle-down fa-lg"></i>
+                <a href="javascript:void(0)" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
+              </div>
+            </a>
+            <span class="menu-edit">
+              <a class="menu-edit-edit" href="javascript:void(0)"><i class="fa fa-pencil fa-lg"></i></a>
+              <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
+              <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
+            </span>
+          </div>
+          <div class="menu-drop">
+            <ul>
+            <% subs = WxMenu.where(level: 2, parent_id: mu.id).last 5 %>
+              <% subs.each do |submu| %>
+                <li class="menu-drop-list">
+                  <i class="fa fa-circle"></i>
+                  <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
+                  <span class="menu-drop-edit">
+                    <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="0"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+    <div class="panel-right">
+      <div class="right-head">
+        <span>设置动作</span>
+      </div>
+      <div class="select-action">
+        <span>请选择订阅者点击菜单后，公众号做出的相应动作</span>
+        <div class="select-action-body">
+          <div class="action-mesg">
+            <a href="javascript:void(0)" class="add-mesg"><div></div></a>
+            <p>发送消息</P>
+          </div>
+          <div class="action-url">
+            <a href="javascript:void(0)" class="add-url"><div></div></a>
+            <p>跳转到网页</P>
+          </div>
+        </div>
+      </div>
+      <div class="edit-url">
+        <span>订阅者点击该子菜单会跳到以下链接</span>
+        <div class="url-input">
+          <input type="text" placeholder="输入URL">
+        </div>
+        <div class="url-btn">
+          <button class="url-back">返回</button>
+          <button class="url-save">保存</button>
+        </div>
+      </div>
+     <div class="edit-mesg">
+       <div class="edit-mesg-head">
+         <span>订阅者点击该子菜单会收到以下消息</span>
+       </div>
+       <div class="edit-mesg-title">
+         <a class="edit-word" href="javascript:void(0)">文字</a>
+         <a class="edit-picture" href="javascript:void(0)">图片</a>
+         <a class="edit-graphic" href="javascript:void(0)">图文消息</a>
+       </div>
+       <div class="edit-mesg-body">
+         <div class="mesg-panel mesg-panel-default">
+           <div class="mesg-panel-text" contenteditable="true"></div>
+           <div class="mesg-panel-footer">
+             <a class="icon_emotion" href="javascript:void(0)"><span class="emotion-icon"><img src="/zhonglian/img/emotion.png"></span></a>
+           </div>
+         </div>
+         <div class="expression">
+           <ul class="emotion">
+             <a class="icon-emotion" href="javascript:void(0)">
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/0.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/1.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/2.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/3.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/4.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/5.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/6.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/7.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/8.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/9.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/10.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/11.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/12.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/13.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/14.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/15.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/16.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/17.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/18.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/19.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/20.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/21.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/22.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/23.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/24.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/25.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/26.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/27.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/28.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/29.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/30.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/31.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/32.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/33.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/34.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/35.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/36.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/37.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/38.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/39.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/40.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/41.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/42.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/43.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/44.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/45.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/46.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/47.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/48.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/49.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/50.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/51.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/52.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/53.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/54.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/55.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/56.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/57.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/58.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/59.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/60.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/61.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/62.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/63.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/64.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/65.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/66.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/67.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/68.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/69.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/70.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/71.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/72.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/73.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/74.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/75.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/76.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/77.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/78.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/79.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/80.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/81.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/82.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/83.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/84.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/85.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/86.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/87.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/88.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/89.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/90.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/91.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/92.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/93.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/94.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/95.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/96.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/97.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/98.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/99.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/100.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/101.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/102.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/103.gif">
+               </li>
+               <li class="emotion-item">
+                 <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/104.gif">
+               </li>
+             </a>
+           </ul>
+         </div>
+         <div class="mesg-btn">
+           <button class="mesg-back">返回</button>
+           <button class="mesg-save">保存</button>
+         </div>
+       </div>
+       <!--
+       上传图片
+       -->
+       <div class="edit-pic-body">
+          <div class="edit-pic">
+            <div class="preview-pic">
+            </div>
+            <div class="upload-pic">
+              <a class="upload-pic-btn"><i class='fa fa-camera fa-2x'></i></a>
+              <input id="fileupload" type="file" name="files" />
+              <p>上传图片</p>
+            </div>
+          </div>
+          <div class="upload-history">
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+            <div class="pic-item">
+              <img src="/zhonglian/img/product/p.jpg"></img>
+            </div>
+
+          </div>
+          <div class="pic-btn">
+            <button class="pic-back">返回</button>
+            <button class="pic-save">保存</button>
+          </div>
+       </div>
+       <!--
+        上传图文
+       -->
+       <div class="edit-graphic-body">
+         <div class="graphic-history">
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+           <a href="javascript:void(0)" class="select-graphic">
+             <div class="graphic-item">
+               <input class="selectGraphicFlag" type="hidden" value="true">
+               <div class="graphic">
+                 <div class="graphic-select-ico">
+                 </div>
+                 <img class="graphic-img" src="/zhonglian/img/product/p.jpg">
+                 <p class="graphic-title">图文标题</p>
+               </div>
+             </div>
+           </a>
+         </div>
+         <div class="upload-graphic">
+           <div class="graphic-btn">
+             <button class="graphic-add" data-toggle="modal" data-target="#graphicModal">添加</button>
+             <button class="graphic-save">保存</button>
+           </div>
+         </div>
+       </div>
+     </div>
     </div>
   </div>
+  <!--
   <div class="panel-body">
     <div class="table-responsive">
       <ul class="top-menu">
@@ -196,6 +620,126 @@
         <% end %>
       </ul>
       <%= submit_tag("发布", class: "btn btn-yellow btn-block publish-menu") %>
+    </div>
+  </div>
+-->
+</div>
+<!-- add-Menu-Modal -->
+<div class="modal fade" id="add-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加一级菜单</h4>
+        <span class="menu-name-mesg text1">最多4个汉字，8个字母</span>
+        <span class="menu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="menu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary menu-add ">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add-SubMenu-Modal -->
+<div class="modal fade" id="add-submenu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加二级菜单</h4>
+        <span class="submenu-name-mesg text1">最多8个汉字，16个字母</span>
+        <span class="submenu-mesg text2"></span>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu-name" class="col-sm-2 control-label">
+              菜单名称
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input id="submenu-parentId" type="hidden" value="">
+              <input type="text" name="name" id="submenu-name" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary submenu-add ">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- upload-graphic Modal -->
+<div class="modal fade" id="graphicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">上传图文</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              标题
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="graphic_title" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              描述
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" name="name" id="graphic_des" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_name" class="col-sm-2 control-label">
+              上传图片
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="file" name="name" id="graphic_picture">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="menu_url" class="col-sm-2 control-label">
+              菜单链接
+              <span class="symbol required"></span>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" value="" name="url" id="graphic_url" class="form-control">
+            </div>
+            <input type="hidden" name="parent_id" value="" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary save-graphic">保存</button>
+      </div>
     </div>
   </div>
 </div>

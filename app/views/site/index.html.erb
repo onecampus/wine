@@ -1,37 +1,62 @@
 <% content_for :customer_title do %>
   众联酒业微信商城
 <% end %>
-
+<link rel="stylesheet" type="text/css" href="/zhonglian/css/slide.css">
 <style type="text/css">
   body {
-    background-image: url("/zhonglian/img/index/indexbg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    background-clip: content-box;
-    background-origin: content-box;
+    background-color: #fff;
     width: 100%;
-    height: 1000px;
+  }
+  /* 首页搜索 */
+  .search-box {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+  }
+  .search-box > img {
+    width: 40px;
+    height: 40px;
+    float: left;
+    padding: 10px;
+  }
+  .search-box .query {
+    margin-left: 80px;
+  }
+  .search-box .q {
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    border-radius: 5px;
+    height: 20px;
+    margin-top: 13px;
+    width: 85%;
+    padding: 6px 12px;
+  }
+  /* 幻灯片 */
+  .swiper-slide {
+    position: relative;
+  }
+  .stitle {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 99999;
   }
 
-  .top {
-    height: 300px;
-    width: 100%;
-    margin: 30px 0 0 0;
-    background-image: url("/zhonglian/img/index/indexlogo.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
-    background-clip: content-box;
-    background-origin: content-box;
-  }
-
+  /* 首页导航 */
   .top-bar {
     width: 100%;
     height: 100px;
-    margin: 20px 0 0 0;
+    margin: 5px 0 0 0;
+    clear: both;
   }
-
+  .secondt {
+    margin-bottom: 60px;
+    clear: both;
+  }
   .top-bar .top-bar-item {
     width: 20%;
     height: 60px;
@@ -44,116 +69,205 @@
   }
 
   .top-bar .top-bar-item p {
-    color: #ffffff;
     text-align: center;
     line-height: 16px;
     font-size: 12px;
   }
 
-  .recommend {
-    margin-left: 10px;
-  }
-
-  .recommend .index-btn-block {
+  /* 首页商品和活动列表 */
+  .mproductshow {
     display: block;
-    font-size: 14px;
-    padding: 0 0;
-    width: 30%;
-    height: 24px;
-    margin-left: 4.2%;
+    margin: 5px auto;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    padding-top: 10px;
   }
-
-  .recommend-item {
-    width: 50%;
+  .left {
     float: left;
-    margin-bottom: 30px;
-    margin-left: -5px;
+    width: 55%;
+    border-right: 1px solid #e5e5e5;
+    height: 130px;
+    margin: 0 auto;
     text-align: center;
   }
-
-  .product {
-    width: 90%;
-    height: auto;
-    float: left;
-    text-align: left;
-    margin-left: 10%;
+  .left img {
+    width: 92%;
+    display: inline-block;
+    height: 130px;
+    vertical-align: middle;
+  }
+  .right {
+    margin-left: 55%;
+  }
+  .right img {
+    width: 89%;
+    margin: 0 auto;
+    height: 62px;
+    vertical-align: middle;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+  .right .up {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .right .down {
+    padding-top: 5px;
+  }
+  .oproductshow {
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: center
+  }
+  .oproductshow img {
+    width: 100%;
+    height: 130px;
+    margin: 5px 0;
   }
 
-  .product-inf {
-    width: 90%;
-    height: 50px;
-    background-color: #ffffff;
-    color: #787878;
+  /* 底部login链接 */
+  .loginfooter {
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px;
+    border-bottom: 1px solid #e5e5e5;
   }
-
-
-  .product-img {
-    width: 90%;
-    height: 150px;
+  .loginfooter > a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px;
   }
-
-  .text1 {
-    margin: 0 0 0 4%;
-    width: 90%;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .text2 {
-    margin: 0 0 0 5%;
-    width: 90%;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    font-weight: bold;
+  .goToTop {
+    float: right;
+    margin-top: -5px;
   }
 </style>
 
+<div class="search-box" id="top">
+  <img src="/favicon.ico">
+  <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
+  <div class="query">
+    <input class="q" type="text" name="q" placeholder="请输入需要查找的宝贝" >
+  </div>
+  <% end %>
+</div>
 
-<div class="top"></div>
+<div class="swiper-container " style="text-align: center;">
+  <div class="swiper-wrapper">
+    <% @last_3_products.each do |p| %>
+    <div class="swiper-slide">
+      <a href="/customer/products/<%= p.id %>/show">
+        <img src="<%= p.img_url %>">
+      </a>
+      <div class="stitle">&nbsp;&nbsp;&nbsp;<%= p.name %></div>
+    </div>
+    <% end %>
+  </div>
+</div>
 
 <div class="top-bar">
   <div class="top-bar-item">
     <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
-
     <p>全部分类</p>
   </div>
   <div class="top-bar-item">
     <p><a href="/customer/users/center"><img src="/zhonglian/img/index/icon_userconter.png"/></a></p>
-
     <p>用户中心</p>
   </div>
   <div class="top-bar-item">
     <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png"/></a></p>
-
     <p>购物车</p>
   </div>
   <div class="top-bar-item">
     <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png"/></a></p>
-
     <p>搜索</p>
   </div>
   <div class="top-bar-item">
-    <p><a href="#"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
-
+    <p><a href="/customer/groups_and_seckills"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
     <p>团购秒杀</p>
   </div>
 </div>
 
-<div class="recommend"  data-no-turbolink>
-  <button class="btn btn-red index-btn-block">精选推荐</button>
-  <% @recommend_products.each do |p| %>
-      <a href="customer/products/<%= p.id %>/show">
-        <div class="recommend-item">
-          <div class="product">
-            <img class="product-img" src="<%= p.img_url %>"/>
-            <div class="product-inf">
-              <p class="text1"><%= p.name %></p>
-              <p class="text2">¥ <%= p.price %></p>
-            </div>
-          </div>
-        </div>
-      </a>
-  <% end %>
+<% @last_2_cats.each do |cat| %>
+<% if cat.products.count > 1 %>
+<div class="mproductshow">
+  <div class="left">
+    <a href="/customer/cats/<%= cat.id %>/products"><img src="<%= cat.img_url %>"></a>
+  </div>
+  <div class="right">
+    <div>
+      <a href="/customer/products/<%= cat.products[0].id unless cat.products.blank? %>/show"><img src="<%= cat.products[0].img_url unless cat.products.blank? %>" class="up"></a>
+    </div>
+    <div>
+      <a href="/customer/products/<%= cat.products[1].id unless cat.products.blank? %>/show"><img src="<%= cat.products[1].img_url unless cat.products.blank? %>" class="down"></a>
+    </div>
+  </div>
 </div>
+<% end %>
+<% end %>
+
+<div class="oproductshow">
+  <a href=""><%= image_tag(@site_config1.img_url) if @site_config1.img? %></a>
+</div>
+<div class="oproductshow">
+  <a href=""><%= image_tag(@site_config2.img_url) if @site_config2.img? %></a>
+</div>
+<div class="oproductshow">
+  <a href=""><%= image_tag(@site_config3.img_url) if @site_config3.img? %></a>
+</div>
+
+<div class="loginfooter">
+  <a href="/users/sign_in">登录</a> |
+  <a href="/users/sign_up">注册</a>
+  <a href="#top" class="goToTop">| 回到顶部</a>
+</div>
+<div class="top-bar secondt">
+  <div class="top-bar-item">
+    <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
+    <p>全部分类</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/users/center"><img src="/zhonglian/img/index/icon_userconter.png"/></a></p>
+    <p>用户中心</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/cart"><img src="/zhonglian/img/index/icon_gouwuche.png"/></a></p>
+    <p>购物车</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/products/search"><img src="/zhonglian/img/index/icon_search.png"/></a></p>
+    <p>搜索</p>
+  </div>
+  <div class="top-bar-item">
+    <p><a href="/customer/groups_and_seckills"><img src="/zhonglian/img/index/icon_miaosha.png"/></a></p>
+    <p>团购秒杀</p>
+  </div>
+</div>
+<%= render "site/shared/bottombar" %>
+<script type="text/javascript" src="/zhonglian/js/slide.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $( ".q" ).focus(function(){
+      $(this).css({
+        "border": "1px solid #3385ff"
+      });
+    });
+    $( ".q" ).blur(function(){
+      $(this).css( "border", "1px solid #e5e5e5" );
+    });
+
+    var mySwiper = $( '.swiper-container' ).swiper({
+      mode: 'horizontal',
+      loop: true,
+      autoplay: 1500,
+      speed: 750,
+      calculateHeight: true,
+      paginationClickable: true,
+      autoplayDisableOnInteraction: true,
+      autoplayStopOnLast: true,
+    });
+  });
+</script>

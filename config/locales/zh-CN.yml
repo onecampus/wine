@@ -22,8 +22,80 @@ zh-CN:
       prize_user_number: '用户抽奖次数'
       prize_user: '获奖名单'
       wx_menu: '微信菜单'
+      group: '团购'
+      group_order: '团购订单'
+      seckill: '秒杀'
+      seckill_order: '秒杀订单'
+      site_config: '系统设置'
+      withdraw: '提现'
+      commission: '提成'
 
     attributes:
+      commission:
+        user_id: '提成者'
+        order_id: '订单'
+        commission_money: '提成金额'
+        percent: '提成比例'
+        from_user_id: '购买者'
+
+      withdraw:
+        user_id: '提现用户'
+        bank_card: '银行卡号'
+        alipay: '支付宝'
+        we_chat_payment: '微信支付'
+        draw_type: '提现方式'
+        draw_money: '提成金额'
+        draw_status: '操作状态'
+
+      site_config:
+        key: '键'
+        val : '值'
+        img: '图片'
+        config_type: '类型'
+
+      group:
+        product_id: '商品'
+        start_time: '开始时间'
+        end_time: '截止时间'
+        limit_people_count: '限购人数'
+        limit_product_count: '限购数量'
+        description: '描述'
+        price: '现价'
+        saveup: '节省'
+        discount: '打折'
+        people: '参加人数'
+        limit_per_person: '每人限购'
+        remain: '剩余数量'
+        is_commission: '是否参与提成'
+
+      group_order:
+        order_id: '订单'
+        group_id: '商品'
+        group_count: '商品数量'
+        unit_price: '单价'
+
+      seckill:
+        product_id: '商品'
+        start_time: '开始时间'
+        end_time: '截止时间'
+        limit_people_count: '限购人数'
+        limit_product_count: '限购数量'
+        description: '描述'
+        price: '现价'
+        saveup: '节省'
+        discount: '打折'
+        people: '参加人数'
+        limit_per_person: '每人限购'
+        remain: '剩余数量'
+        is_commission: '是否参与提成'
+
+      seckill_order:
+        order_id: '订单'
+        seckill_id: '商品'
+        seckill_count: '商品数量'
+        unit_price: '单价'
+
+
       wx_menu:
         name: '菜单名称'
         msg: '回复消息'
@@ -50,9 +122,9 @@ zh-CN:
         prize_type: '抽奖类型'
         start_time: '开始时间'
         end_time: '截止时间'
-        is_open: '是否开启状态'
+        is_open: '状态'
         join_num: '参加人数'
-        person_limit: '个人抽奖次数限制'
+        person_limit: '单人抽奖次数限制'
 
       prize_config:
         prize_act_id: '抽奖活动'
@@ -98,8 +170,8 @@ zh-CN:
         source: '来源'
 
       comment:
-        commentable_id: '可评论id'
-        commentable_type: '可评论类型'
+        commentable_id: '评论'
+        commentable_type: '评论类型'
         title: '评论标题'
         body: '评论内容'
         subject: '评论主题'
@@ -161,12 +233,12 @@ zh-CN:
         weixin_open_id: '微信号'
 
       product:
-        name: '商品名称'
-        price: '商品价格'
-        cat_id: '商品所属分类'
-        description: '商品描述'
+        name: '名称'
+        price: '价格'
+        cat_id: '分类'
+        description: '描述'
         profit: '成本'
-        img: '商品图片'
+        img: '图片'
         brand: '品牌'
         expiration_date: '过期时间'
         country: '国家'
@@ -178,11 +250,12 @@ zh-CN:
         is_boutique: '精品'
         unit: '单位'
         fright: '运费'
+        is_commission: '是否参与提成'
 
       inventory:
         user_id: '供应商'
         product_id: '商品'
-        amount: '数量'
+        amount: '库存'
 
       shipaddress:
         user_id: '客户'
@@ -221,6 +294,9 @@ zh-CN:
         tel: '电话'
         supplier_id: '供应商'
         order_type: '订单类型'
+        express_number: '快递号'
+        express_company: '快递公司'
+        express_company_number: '快递公司代码'
 
       product_order:
         order_id: '订单id'

@@ -1,0 +1,480 @@
+
+.top-menu {
+  list-style-type: none;
+  margin: 5px 0 5px 0;
+  border: 1px solid #0088cc;
+}
+
+.panel {
+  width: 1020px;
+  height: 600px;
+  border: 1px solid #ddd;
+  padding: 10px 5px;
+}
+
+.panel-body {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  padding: 0;
+  background: #f3f3f3;
+}
+
+.panel-left {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  height: 100%;
+  border-right: 1px solid #ddd;
+}
+
+.left-head {
+  width: 100%;
+  height: 50px;
+  background: #e7e2e6;
+  padding: 12px 0 0 10px;
+}
+
+.left-head a{
+  margin-left: 105px;
+}
+
+.left-head span {
+  font-size: 16px;
+}
+
+.menu {
+  padding: 10px 0 0 0;
+  border-bottom: 1px solid #ECF0F1;
+}
+
+
+.menu span {
+  float: right;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.menu-drop-edit {
+  float: right;
+  margin-right: 10px;
+}
+
+.fa {
+  margin-right: 5px;
+}
+
+.menu-title {
+  padding: 10px 0;
+  height: 40px;
+}
+.menu-list {
+  .background: #f3f3f3;
+}
+
+.menu-list-title {
+  float: left;
+  margin-left: 5px;
+}
+
+.menu i {
+  margin-left: 5px;
+}
+
+a:focus,a:hover {
+  text-decoration: none;
+}
+
+.panel-right {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 75%;
+  height: 100%;
+}
+.right-head {
+  width: 100%;
+  height: 50px;
+  background: #e7e2e6;
+  padding: 14px 0 0 10px;
+}
+
+.select-action {
+  display: none;
+  padding: 10px 0 0 10px;
+}
+
+.select-action-body {
+  margin-left: 160px;
+  margin-top: 80px;
+}
+
+.action-mesg {
+  float: left;
+  margin-right: 200px;
+}
+
+.action-url {
+  float: left;
+}
+.add-mesg div {
+  width: 115px;
+  height: 115px;
+  background-image: url('/zhonglian/img/weixin_menu.png');
+  background-repeat: no-repeat;
+}
+
+.add-url div {
+  width: 115px;
+  height: 115px;
+  background-image: url('/zhonglian/img/weixin_menu.png');
+  background-position: 0px -247px;
+  background-repeat: no-repeat;
+}
+
+p {
+  padding: 15px 0 0 30px;
+}
+
+.edit-url {
+  margin-left: 20px;
+  margin-top: 10px;
+  display: none;
+}
+
+.url-input {
+  margin-left: 100px;
+  margin-top: 40px;
+}
+
+.url-input input {
+  width: 650px;
+}
+
+.url-btn {
+  margin-left: 280px;
+  margin-top: 100px;
+}
+
+.url-back {
+  height: 35px;
+  width: 80px;
+}
+
+.url-save {
+  background: none repeat scroll 0 0 #5ca849;
+  border-radius: 5px;
+  color: #fff;
+  height: 35px;
+  margin-left: 50px;
+  width: 80px;
+}
+
+.edit-mesg {
+  display: none;
+}
+
+.edit-mesg-head {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.edit-mesg-title {
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.edit-mesg-title a{
+  float: left;
+  padding: 5px 35px 5px 55px;
+}
+
+.edit-mesg-body {
+  width: 100%;
+  height: 300px;
+  background: #fff;
+  float: left;
+}
+
+.edit-word {
+  background: #fff;
+  border-top: 2px solid #5CA849;
+}
+
+.mesg-panel {
+  position: relative;
+  background-color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  height: 100%;
+}
+
+.mesg-panel-text {
+  border: 1px solid #d5d5d5;
+  height: 200px;
+  margin: 30px auto 0 auto;
+  resize: none;
+  width: 85%;
+  font-size: 16px;
+}
+
+.mesg-panel-footer {
+  background: none repeat scroll 0 0 #ddd;
+  border-width: 0 1px 1px;
+  height: 40px;
+  margin: 0 auto;
+  text-align: right;
+  width: 85%;
+}
+
+.mesg-btn {
+  float: left;
+  margin-left: 300px;
+  margin-top: 50px;
+}
+
+.mesg-back {
+  height: 35px;
+  width: 80px;
+}
+
+.mesg-save {
+  background: none repeat scroll 0 0 #5ca849;
+  border-radius: 5px;
+  color: #fff;
+  height: 35px;
+  margin-left: 50px;
+  width: 80px;
+}
+
+.expression {
+  width: 408px;
+  height: 135px;
+  border-top: 1px solid #e7e7eb;
+  border-right: 1px solid #e7e7eb;
+  position: absolute;
+  left: 640px;
+  top: 583px;
+  z-index: 999;
+  display: none;
+}
+
+.emotion-icon {
+  float: left;
+  width: 28px;
+  height: 28px;
+  margin: 5px 0 0 20px;
+}
+
+.emotion-icon img{
+  width: 28px;
+  height: 28px;
+}
+
+.emotion {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-item {
+  float: left;
+  background-color: #fff;
+  border-bottom: 1px solid #e7e7eb;
+  border-left: 1px solid #e7e7eb;
+  font-size: 0;
+  height: 27px;
+  line-height: 27px;
+  text-align: center;
+  width: 27px;
+  padding: 0;
+}
+
+ul li {
+  padding: 0;
+  list-style: none;
+  line-height: 25px;
+}
+
+.edit-pic-body {
+  float: left;
+  width: 100%;
+  height: 390px;
+  background: #fff;
+  display: none;
+}
+
+.edit-pic {
+  border: 1px solid #ddd;
+  float: left;
+  height: 360px;
+  margin: 20px 0 0 5%;
+  width: 45%;
+}
+
+.preview-pic {
+  width: 90%;
+  height: 280px;
+  margin: 10px auto 0 auto;
+}
+
+.upload-pic {
+  width: 100%;
+  height: 30px;
+  padding: 10px 0 0 170px;
+  border-top: 1px solid #ddd;
+}
+
+.upload-pic p {
+  margin-left: -11px;
+  padding: 2px 0 0 0;
+}
+
+.upload-history {
+  float: left;
+  height: 360px;
+  margin-top: 20px;
+  width: 45%;
+  border: 1px solid #ddd;
+  border-left: 0;
+  overflow-y: scroll;
+}
+
+.pic-item {
+  margin: 3% 0 0 3%;
+  float: left;
+  width: 45%;
+  height: 45%;
+}
+
+.pic-item img{
+  width: 100%;
+  height: 100%;
+}
+
+.pic-btn {
+  float: left;
+  margin-left: 300px;
+  margin-top: 20px;
+}
+
+.pic-back {
+  height: 35px;
+  width: 80px;
+}
+
+.pic-save {
+  background: none repeat scroll 0 0 #5ca849;
+  border-radius: 5px;
+  color: #fff;
+  height: 35px;
+  margin-left: 50px;
+  width: 80px;
+}
+
+#fileupload {
+  display: none;
+}
+
+.edit-graphic-body {
+  float: left;
+  width: 100%;
+  height: 390px;
+  background: #fff;
+  display: none;
+}
+
+.graphic-history {
+  overflow-y: scroll;
+  width: 90%;
+  height: 370px;
+  margin: 10px auto 0 auto;
+  border: 1px solid #ddd;
+}
+
+.graphic-item {
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 46%;
+  width: 23.5%;
+  text-align: center;
+}
+
+.graphic-item-ba {
+  background-color:#fff;
+  opacity:0.5;
+  filter:Alpha(opacity=50); /* IE8 以及更早的浏览器 */
+}
+
+.graphic {
+  position: relative;
+}
+
+.graphic-select-ico {
+  position: absolute;
+  left: 70px;
+  top: 50px;
+  background: url("/zhonglian/img/weixin_graphic.png") no-repeat scroll 0 -6085px rgba(0, 0, 0, 0);
+  height: 46px;
+  vertical-align: middle;
+  width: 46px;
+  z-index: 999;
+  display: none;
+}
+
+
+.graphic-img {
+  height: 90%;
+  width: 100%;
+}
+
+.graphic-title {
+  width: 100%;
+  height: 10%;
+  padding: 0;
+}
+
+.upload-graphic {
+  width: 90%;
+  height: 30px;
+  margin: 20px auto;
+}
+
+.graphic-btn {
+  margin-left: 270px;
+  margin-top: 20px;
+}
+
+.graphic-add {
+  height: 35px;
+  width: 80px;
+  background: none repeat scroll 0 0 #5ca849;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.graphic-save {
+  background: none repeat scroll 0 0 #5ca849;
+  border-radius: 5px;
+  color: #fff;
+  height: 35px;
+  margin-left: 50px;
+  width: 80px;
+}
+
+.text1 {
+  color: #000;
+  padding: 0 0 0 10px;
+}
+
+.text2 {
+  display: none;
+  color: #E76070;
+  padding: 0 0 0 10px;
+}

@@ -1,0 +1,309 @@
+<% content_for :customer_title do %>
+  团购
+<% end %>
+<script src="/assets/lib/jquery1.8.3.js"></script>
+<style>
+  body {
+    background-image: url('/zhonglian/img/cat/shopcart-top.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 15%;
+  }
+
+  .group-btn {
+    font-size: 20px;
+    padding: 4px 4px;
+    margin: 20px 0 20px 16px;
+  }
+
+  .group-products .product {
+    width: 44%;
+    height: 270px;
+    margin-left: 16px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 6px 6px 3px #d5d5d5;
+    float: left;
+  }
+
+  .group-products .product-inf {
+    width: 100%;
+    height: 70px;
+    background-color: #fff;
+    color: #787878;
+    float: left;
+  }
+
+  .product img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .price-inf {
+    width: 95%;
+    height: 20px;
+    margin-left: 4%;
+    font-size: 0.8em;
+  }
+
+  .group-price {
+    float: left;
+    color: #f06200;
+  }
+
+  .group-price span{
+    font-weight: bold;
+  }
+  .product-price {
+    float: right;
+    margin-right: 1%;
+  }
+
+  .product-price span{
+    font-weight: bold;
+    text-decoration: line-through;
+  }
+
+  .product-number {
+    position: relative;
+    width: 95%;
+    height: 20px;
+    margin-left: 4%;
+    font-size: 0.8em;
+  }
+
+  .sell-number {
+    float: left;
+  }
+
+  .over-number {
+    float: right;
+    color: #f06200;
+  }
+
+  .seckill-btn {
+    float: left;
+    width: 100%;
+    height: 60px;
+  }
+
+  .seckill-products .product {
+    width: 44%;
+    height: 290px;
+    margin-left: 16px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 6px 6px 3px #d5d5d5;
+    float: left;
+  }
+
+  .seckill-products .product-inf {
+    width: 100%;
+    height: 90px;
+    background-color: #fff;
+    color: #787878;
+    float: left;
+  }
+
+  .seckill-btn button {
+    float: left;
+    font-size: 20px;
+    padding: 4px 4px;
+    margin: 0 0 20px 16px;
+  }
+
+
+  .seckill-time-msg {
+    text-align: center;
+    color: #f06200;
+    font-size: 0.5em;
+  }
+
+  .seckill-time-msg img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .seckill-msg {
+    display: none;
+  }
+
+  .text3 {
+    width: 90%;
+    margin: 0 0 0 4%;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0.8em;
+  }
+
+  .product hr {
+    margin: 0;
+    padding: 0;
+    width: 95%;
+    margin-left: 4%;
+  }
+
+
+</style>
+<div class="group-seckill">
+  <div class="group">
+    <button class="btn btn-red group-btn" type="button">精选团购</button>
+    <div class="group-products">
+      <% @groups.each do |g| %>
+      <% already_sell = 0 %>
+      <% g.group_orders.each do |go| %>
+      <% already_sell += go.group_count %>
+      <% end %>
+    <a href="/customer/groups/<%=g.id%>/show">
+      <div class="product">
+        <img src="<%= g.product.img %>">
+        <div class="product-inf">
+          <p class="text3"><%= g.product.name%></p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              团购价:<span>¥<%= g.price%></span>
+            </div>
+            <div class="product-price">
+              <span>¥<%= g.product.price%></span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span><%= already_sell %></span>件
+            </div>
+            <input class="all-num" type="hidden" value="<%= g.limit_product_count%>">
+            <div class="over-number">
+              剩余:<span></span>件
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+      <% end %>
+    </div>
+    <div class="seckill-products">
+      <div class="seckill-btn"><button class="btn btn-red" type="button">限时秒杀</button></div>
+      <% @seckills.each do |s| %>
+      <% already_sell = 0 %>
+      <% s.seckill_orders.each do |go| %>
+        <% already_sell += go.seckill_count %>
+      <% end %>
+    <a href="/customer/seckills/<%=s.id%>/show">
+      <div class="product">
+        <img src="<%= s.product.img %>">
+        <div class="product-inf">
+          <p class="text3"><%= s.product.name%></p>
+          <hr>
+          <div class="price-inf">
+            <div class="group-price">
+              秒杀价:<span>¥<%= s.price%></span>
+            </div>
+            <div class="product-price">
+              <span>¥<%= s.product.price%></span>
+            </div>
+          </div>
+          <hr>
+          <div class="product-number">
+            <div class="sell-number">
+              已售:<span><%= already_sell %></span>件
+            </div>
+            <input class="all-num" type="hidden" value="<%= s.limit_product_count%>">
+            <div class="over-number">
+              剩余:<span></span>件
+            </div>
+          </div>
+          <hr>
+          <div class="seckill-time-msg">
+            <input class="seckill-endtime" type="hidden" value="<%= s.end_time%>">
+            <div class="seckill-msg"><span>活动已结束！</span></div>
+            <div class="time-inf"><img src="/zhonglian/img/seckill-icon1.png"><span class="remainD"></span>天<span class="remainH"></span>小时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
+          </div>
+        </div>
+      </div>
+    </a>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function () {
+  $(".over-number").each(function(){
+    var allNum = $(this).siblings(".all-num").val();
+    var sellNum = $(this).siblings(".sell-number").children("span").text();
+    allNum = parseInt(allNum);
+    sellNum = parseInt(sellNum);
+    var overNum = allNum - sellNum;
+    $(this).children("span").text(overNum);
+  });
+  //商品秒杀方法定时启动
+  var timer_rt = window.setInterval("GetRTime()", 1000);
+});
+
+function GetRTime(){
+  $(".seckill-time-msg").each(function(){
+    var time = $(this).children(".seckill-endtime").val();
+    time = time.toString();
+    var year = time.substr(0,4);
+    var month = time.substr(5);
+    month = month.substr(0,2);
+    month = parseInt(month) - 1;
+    var day = time.substr(8);
+    day = day.substr(0,2);
+    var hour = time.substr(11);
+    hour = hour.substr(0,2);
+    var minute = time.substr(14);
+    minute = minute.substr(0,2);
+    var second = time.substr(17);
+    second = second.substr(0,2);
+    var startTime = new Date();
+    //定义参数可返回当天的日期和时间
+    startTime.setFullYear(year, month, day);
+    //调用设置年份
+    startTime.setHours(hour);
+    //调用设置指定的时间的小时字段
+    startTime.setMinutes(minute);
+    //调用设置指定时间的分钟字段
+    startTime.setSeconds(second);
+    //调用设置指定时间的秒钟字段
+    startTime.setMilliseconds(000);
+    //调用置指定时间的毫秒字段
+    var EndTime=startTime.getTime();
+    //定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+
+    //定义方法
+    var NowTime = new Date();
+    //定义参数可返回当天的日期和时间
+    var nMS = EndTime - NowTime.getTime();
+    //定义参数 EndTime减去NowTime参数获得返回距 1970 年 1 月 1 日之间的毫秒数
+    var nD = Math.floor(nMS/(1000 * 60 * 60 * 24));
+    //定义参数 获得天数
+    var nH = Math.floor(nMS/(1000*60*60)) % 24;
+    //定义参数 获得小时
+    var nM = Math.floor(nMS/(1000*60)) % 60;
+    //定义参数 获得分钟
+    var nS = Math.floor(nMS/1000) % 60;
+    //定义参数 获得秒钟
+    if (nMS < 0){
+      //如果秒钟大于0
+      $(this).find(".time-inf").hide();
+      //获得天数隐藏
+      $(this).find(".seckill-msg").show();
+      //获得活动截止时间展开
+    }else{
+      //否则
+      $(this).find(".time-inf").show();
+      $(this).find(".seckill-msg").hide();
+      $(this).find(".remainD").text(nD);
+      //显示天数
+      $(this).find(".remainH").text(nH);
+      //显示小时
+      $(this).find(".remainM").text(nM);
+      //显示分钟
+      $(this).find(".remainS").text(nS);
+      //显示秒钟
+    }
+  });
+}
+</script>

@@ -8,6 +8,9 @@
   .space2 {
     height: 150px;
   }
+  .form-box {
+    margin: 0 0 15px;
+  }
 </style>
 <div class="form-box">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'input-group') do |f| %>
@@ -27,8 +30,8 @@
     <% end -%>
     <%= f.submit '登陆', class: 'btn btn-red btn-block' %>
   <% end %>
+  <%= render "devise/shared/links" %>
 </div>
-<%= render "devise/shared/links" %>
 <div class="space2"></div>
 <nav class="bar bar-tab">
   <a class="tab-item" href="/">

@@ -1,6 +1,6 @@
-source 'https://ruby.taobao.org'
+source 'https://rubygems.org'
 
-gem 'rails', '4.1.8'
+gem 'rails', '4.1.9'
 
 gem 'mysql2'
 
@@ -32,9 +32,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'jquery-ui-rails'
 
-# ckeditor 编辑器
-gem 'ckeditor'
-
 # 图片上传和裁剪
 gem 'carrierwave'
 gem 'mini_magick'
@@ -49,12 +46,16 @@ gem 'acts_as_commentable_with_threading'
 # 微信xml解析
 gem 'actionpack-xml_parser'
 # gem 'weixin_authorize'
-gem 'rest_client'
+gem 'rest-client'
+
+gem 'wx_ext'
 
 # bootstrap editable
 # gem 'bootstrap-editable-rails'
 
 gem 'font-awesome-rails'
+
+gem 'money-rails'
 
 # 部署
 group :development do
@@ -63,6 +64,8 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'spring'
+
+  gem 'brakeman', require: false
 end
 
 gem 'sdoc', '~> 0.4.0', group: :doc

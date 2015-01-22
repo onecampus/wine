@@ -344,7 +344,6 @@ names3.each do |sn|
   )
   wm_tmp.save!
 end
-=end
 
 wm1 = WxMenu.new(
   name: '购物专区',
@@ -388,7 +387,7 @@ wm2 = WxMenu.new(
 wm2.save!
 
 names2 = [
-  '有奖转盘 '
+  '有奖转盘'
 ]
 names2.each do |sn|
   wm_tmp = WxMenu.new(
@@ -433,6 +432,16 @@ names3.each do |sn|
     level: 2
   )
   wm_tmp.save!
+end
+=end
+
+1.upto(3).each do |i|
+  SiteConfig.create(
+    key: "CustomerIndexImgConfigKey#{i}",
+    val: "http://203.195.172.200",
+    img: "CustomerIndexImgConfigImg#{i}",
+    config_type: 'CustomerIndexImgConfig'
+  )
 end
 
 time_end = Time.now

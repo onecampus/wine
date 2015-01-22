@@ -17,6 +17,7 @@
   body {
     margin: 0;
     padding: 0;
+    width: 100%;
     overflow-x: hidden;
   }
 
@@ -26,7 +27,7 @@
   }
 
   .order-address {
-    color:#000000;
+    color:#000;
   }
 
   .select-address {
@@ -60,52 +61,52 @@
 
   .address {
     position: absolute;
-    left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background: #f2f2f2;
     display: none;
-    margin-bottom: 30%;
   }
 
   .address-top {
     width: 100%;
     height: 40px;
     text-align: center;
-    background: #ffffff;
+    background: #fff;
     padding-top: 10px;
   }
 
   .address-top span {
     font-size: 20px;
+    padding-left: 15%;
   }
 
   .cancel {
     font-size: 16px;
-    margin-left: 5%;
-  }
-
-  .confirm {
-    font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
   }
 
   .promo-code {
     width: 90%;
     height: 40px;
     align: center;
+    margin-left: 5%;
   }
 
   .promo-code input {
-    width: 60%;
-    height: 20px;
+    width: 65%;
+    height: 28px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
   }
 
-  .promo-code-btn {
-    width: 80px;
-    height: 28px;
-    font-size: 12px;
+  .promo-code span {
+    color: #fff;
+    background: #f06200;
+    border-radius: 5px;
+    padding: 5px;
   }
 
   .product {
@@ -130,10 +131,10 @@
   }
 
   .order-btn {
-    background-color: #aa0c40;
-    border: 1px solid #aa0c40;
+    background-color: #f06200;
+    border: 1px solid #f06200;
     border-radius: 5px;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
   }
 
@@ -183,36 +184,45 @@
 
   .p-r a {
     font-size: 24px;
-    color: #dddddd;
+    color: #ddd;
     margin: auto auto auto 20px;
   }
 
   .address-foot {
-    width: 90%;
-    height: 100px;
+    width: 80%;
     text-align: center;
-    margin-top: 20px;
+    margin: 20px auto 0 auto;
   }
 
   .add-address {
-    background-color: #aa0c40;
-    border: 1px solid #aa0c40;
+    background-color: #f06200;
+    border: 1px solid #f06200;
     border-radius: 5px;
-    color: #ffffff;
+    color: #fff;
     font-size: 25px;
-    margin-left: 15%;
-    margin-bottom: 30%;
-    width: 80%;
+    width: 100%;
+  }
+
+  .cancel-add-addre {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
+    background-color: #f06200;
+    border: 1px solid #f06200;
+    color: #fff;
+    margin-top: 1px;
   }
 
   .address-mesg {
     display: none;
     text-align: center;
-    color: #aa0c40;
-  }
-
-  .address-add-btn {
-    margin-bottom : 30%;
+    color: #f06200;
   }
 
   .form-box {
@@ -226,28 +236,26 @@
     width: 90%;
     height: 40px;
     text-align: center;
-    background: #ffffff;
+    background: #fff;
     padding-top: 10px;
 
   }
 
+  .form-box-top span {
+    margin-left: 20%;
+    font-size: 20px;
+  }
+
   .invoice-history {
-    position: absolute;
-    left: 0;
-    top: 0;
+    float:left;
     width: 100%;
-    height: 100%;
     display: none;
   }
 
   .cancel-history-invoice {
     font-size: 16px;
-    margin-left: 5%;
-  }
-
-  .confirm-history-invoice {
-    font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
   }
 
   .invoice-inf {
@@ -263,24 +271,38 @@
     width: 100%;
     height: 40px;
     text-align: center;
-    background: #ffffff;
+    background: #fff;
     padding-top: 10px;
+    font-size: 20px;
+  }
+
+  .invoice-history .invoice-inf-top span {
+    padding-left: 15%;
   }
 
   .invoice-mesg {
     display: none;
     text-align: center;
-    color: #aa0c40;
+    color: #f06200;
   }
 
   .cancel-invoice {
     font-size: 16px;
     margin-left: 5%;
+    margin-top: 1px;
   }
 
   .confirm-invoice {
     font-size: 16px;
     margin-right: 5%;
+    margin-top: 1px;
+  }
+
+  .invoice-history-select {
+    width: 100%;
+    height: 50px;
+    float: left;
+    margin-top: 15px;
   }
 
   .invoice-item-input {
@@ -292,13 +314,23 @@
     margin-left: 20px;
   }
 
-  .rise,.content {
+  .rise {
     width: 90%;
     height: 25px;
     margin-left: 5%;
     margin-top: 10px;
     font-size: 18px;
   }
+  .content {
+    width: 90%;
+    height: 150px;
+    margin-left: 5%;
+    margin-top: 10px;
+    font-size: 18px;
+    resize: none;
+    overflow-y: visible;
+  }
+
 
   .pull-left {
     float: left;
@@ -316,7 +348,7 @@
   }
 
   .text2 {
-    color: #aa0c40;
+    color: #f06200;
     margin-left: 10px;
   }
 
@@ -330,12 +362,8 @@
     font-size: 18px;
   }
 
-  .btn {
-    margin-bottom: 70px;
-  }
-
   a {
-    color: #000000;
+    color: #000;
   }
 
   .order-message {
@@ -351,13 +379,13 @@
 </style>
 <input type="hidden" name="address-id" class="address-id">
 <input type="hidden" name="invoice-id" class="invoice-id" value="0">
-<a href="#" class="order-address">
+<a href="javascript:void(0)" class="order-address">
   <div class="select-address">
     <span class="pull-left">请选择收货地址</span><br>
     <span class="pull-left confirm-address"></span>
   </div>
 </a>
-<a href="#" class="invoice-need">
+<a href="javascript:void(0)" class="invoice-need">
   <div class="invoice">
     <span class="pull-left">开具发票</span>
     <span class="invoice-not pull-right">不开发票</span>
@@ -365,14 +393,13 @@
 </a>
 <div class="address">
   <div class="address-top">
-    <a href="#" class="cancel pull-left">X</a>
     <span>收货地址</span>
-    <a href="#" class="confirm pull-right">确定</a>
+    <button class="cancel btn btn-red pull-right">X</button>
   </div>
   <div class="ship-address">
     <% @shipaddresses.each do |ad| %>
-      <div>
-        <p class="p-l"><input type="radio" name="shipaddress" value="<%= ad.id %>"/></p>
+      <div class="history-ship-address">
+        <p class="p-l"><input type="radio" class ="shipaddress" name="shipaddress" value="<%= ad.id %>"/></p>
         <p class="p-m">
           <span><%= ad.receive_name %></span>
           <span style="float: right"><%= ad.mobile %></span>
@@ -384,16 +411,19 @@
     <% end %>
   </div>
   <div class="address-foot">
-    <a href="#" class="address-add" data-no-turbolink>
+    <a href="javascript:void(0)" class="address-add" data-no-turbolink>
       <div class="add-address">添加新地址</div>
     </a>
+  </div>
+  <div class="space">
   </div>
 </div>
 <div class="form-box">
   <div class="form-box-top">
     <span>添加新地址</span>
-    <a href="#" class="cancel-add-addre pull-right">X</a>
+    <button class="cancel-add-addre btn-red pull-right">X</button>
   </div>
+  <div>
   <div class="address-mesg"><p></P></div>
   <input type=hidden name=uid value="<%= current_user.id %>">
   <div class="input-row">
@@ -430,19 +460,23 @@
   </div>
   <div class="address-add-btn"><button class="btn-add-address btn btn-red btn-block">添加</button></div>
 </div>
+<div class="space">
+</div>
+</div>
 <div class="invoice-history">
   <div class="invoice-inf-top">
-    <a href="#" class="cancel-history-invoice pull-left">X</a>
     <span>开具发票</span>
-    <a href="#" class="confirm-history-invoice pull-right">确定</a>
+    <button class="cancel-history-invoice btn btn-red pull-right">X</button>
   </div>
   <% @invoices.each do |i| %>
-  <div class="pull-left invoice-item-input">
-    <input type="radio" name="invoice" class="invoice-item-select" value="<%= i.id %>">
-  </div>
-  <div class="pull-left invoice-item-inf">
-    <span>发票抬头：</span><span><%= i.rise %></span><br>
-    <span>发票抬头：</span><span><%= i.content %></span>
+  <div class="invoice-history-select">
+    <div class="pull-left invoice-item-input">
+      <input type="radio" name="invoice" class="invoice-item-select" value="<%= i.id %>">
+    </div>
+    <div class="pull-left invoice-item-inf">
+      <span>发票抬头：</span><span><%= i.rise %></span><br>
+      <span>发票内容：</span><span><%= i.content %></span>
+    </div>
   </div>
   <hr class="invoice-hr pull-left">
   <% end %>
@@ -452,27 +486,27 @@
 </div>
 <div class="invoice-inf">
   <div class="invoice-inf-top">
-    <a href="#" class="cancel-invoice pull-left">X</a>
+    <button class="cancel-invoice btn btn-red pull-left">X</button>
     <span>开具发票</span>
-    <a href="#" class="confirm-invoice pull-right">确定</a>
+    <button  class="confirm-invoice btn btn-red pull-right">确定</button>
   </div>
   <div class="invoice-mesg"><p></P></div>
-  <div>
+  <div class="invoice-rise-content">
     <input class="rise" placeholder="请输入发票抬头">
-    <input class="content" placeholder="请输入发票内容">
   </div>
+  <textarea class="content" placeholder="请输入发票内容"></textarea>
   <div class="space">
   </div>
 </div>
+<div class="promo-code">
+  <span>使用优惠码</span>
+  <input class="invite-code" type="text" placeholder="请输入优惠码">
+</div>
 <div class="order">
-  <div class="promo-code">
-    <input type="text" placeholder="请输入优惠码">
-    <button class="promo-code-btn">使用优惠码</button>
-  </div>
   <hr>
   <div class="submit-order pull-right">
     <span class="text3">总金额：</span>
-    <span class="text2">0</span>
+    <span class="text2"></span>
     <button class="order-btn" type="button">提交订单</button>
   </div>
 </div>

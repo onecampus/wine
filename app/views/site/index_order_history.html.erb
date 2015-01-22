@@ -8,13 +8,10 @@
     text-decoration: none;
     border-radius: 5px;
     padding: 4px 8px;
-    border: 1px solid #aa0c4f;
-    color: #aa0c4f;
+    border: 1px solid #f06200;
+    color: #f06200;
     font-weight: bold;
     margin-top: 10px;
-  }
-  .right span:nth-child(2) {
-    text-align: right;
   }
 </style>
     <div class="main">
@@ -56,6 +53,7 @@
       <% @orders.each do |o| %>
       <div class="history_order">
         <p>订单编号：<span><%= o.order_number %></span></p>
+        <% if o.order_type == '普通订单' %>
         <% o.product_orders.each do |po| %>
         <div class="ordered_product">
           <img src="<%= po.product.img if po.product %>" class="left" />
@@ -69,6 +67,37 @@
             <span><%= po.product.name %></span>
           </p>
         </div>
+        <% end %>
+        <% elsif o.order_type == '团购订单' %>
+        <% o.group_orders.each do |po| %>
+        <div class="ordered_product">
+          <img src="<%= po.group.product.img if po.group %>" class="left" />
+          <p class="right">
+            <span class="order_price"><%= po.group.product.price %></span>
+            <span class="order_num">×<%= po.group_count %></span>
+            <span><a href="/customer/products/<%= po.group.product.id %>/comments/new">评论</a></span>
+          </p>
+          <p class="middle">
+            <span><%= po.group.product.name %></span>
+            <span><%= po.group.product.name %></span>
+          </p>
+        </div>
+        <% end %>
+        <% elsif o.order_type == '秒杀订单' %>
+        <% o.seckill_orders.each do |po| %>
+        <div class="ordered_product">
+          <img src="<%= po.seckill.product.img if po.seckill %>" class="left" />
+          <p class="right">
+            <span class="order_price"><%= po.seckill.product.price %></span>
+            <span class="order_num">×<%= po.seckill_count %></span>
+            <span><a href="/customer/products/<%= po.seckill.product.id %>/comments/new">评论</a></span>
+          </p>
+          <p class="middle">
+            <span><%= po.seckill.product.name %></span>
+            <span><%= po.seckill.product.name %></span>
+          </p>
+        </div>
+        <% end %>
         <% end %>
         <div>
           <span class="freight">运费：￥<%= o.freight %>元</span>

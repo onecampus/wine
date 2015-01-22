@@ -4,7 +4,7 @@
 
 ### 开发介绍 ###
 
-* rails version 4.1.8
+* rails version 4.1.9
 * ruby version 2.1.5
 * apache + passenger
 * mysql5
@@ -70,6 +70,22 @@ respond_to :html, :json
 4. 修改ability
 5. routes.rb
 6. 修改前端页面和controller业务逻辑
+
+
+### 金钱缩写
+
+1. CNY(Chinese Yuan)人民币
+2. FRF(French Franc)法国法郎
+3. HKD(HongKong Dollar)港元
+4. CHF(德文schweizer Franken)瑞士法郎
+5. USD(United States Dollar)美元
+6. CAD(Canadian Dollar)加拿大元
+7. GBP(GreatBritain Pound)英镑
+8. NLG(NetherLandish Guilder)荷兰盾
+9. DEM(德文Deutsche Mark)德国马克
+10. BEF(Belgischer Franc)比利时法郎
+11. JPY(Japanese Yen)日元
+12. AUD(Australian Dollar)澳大利亚元
 
 ### TODOLIST ###
 
@@ -176,8 +192,6 @@ rails g scaffold PrizeUser user_id:integer prize_config_id:integer
 rails g scaffold PrizeUserNumber user_id:integer number:integer prize_act_id:integer
 rails g migration AddGetedToPrizeUsers geted:integer
 
-rails g scaffold WxMenu name:string msg:text url:string msg_or_url:integer button_type:string key:string parent_id:integer level:integer
-
 rails g migration AddFrightToProducts fright:string
 
 
@@ -186,11 +200,49 @@ rails g migration AddVerificationMethodToUsers verification_method :string
 rails g migration AddPhoneCodeToUsers phone_code:string
 rails g migration AddPhoneCodeSentAtToUsers phone_code_sent_at:datetime
 
+rails g scaffold Group product_id:integer start_time:datetime end_time:datetime limit_people_count:integer limit_product_count:integer description:text price saveup discount people:integer
+rails g scaffold Seckill product_id:integer start_time:datetime end_time:datetime limit_people_count:integer limit_product_count:integer description:text price saveup discount people:integer
 
+# rails g migration UserGroup user_id:integer group_id:integer count:integer
+# rails g migration UserSeckill user_id:integer seckill_id:integer count:integer
 
-rails g scaffold Group start_time:datetime end_time:datetime limit_count:integer description:text price:string
+rails g scaffold GroupOrder order_id:integer group_id:integer group_count:integer unit_price:string
+rails g scaffold SeckillOrder order_id:integer seckill_id:integer seckill_count:integer unit_price:string
 
-rails g scaffold ProductGroup group_id:integer product_id:integer
+rails g scaffold SiteConfig key val img config_type
+rails g uploader site_config_img
+
+rails g migration AddInviteCodeToOrders invite_code:string
+rails g migration AddShareLinkCodeToOrders share_link_code:string
+
+rails g scaffold Withdraw user_id:integer bank_card alipay we_chat_payment draw_type
+
+rails g migration AddDrawMoneyToWithdraws draw_money:string
+rails g migration AddDrawStatusToWithdraws draw_status:integer
+
+rails g scaffold Commission user_id:integer order_id:integer commission_money percent
+rails g migration AddFromUserIdToWithdraws from_user_id:integer
+
+rails g migration AddExpressNumberToOrders express_number:string
+rails g migration AddExpressCompanyToOrders express_company:string
+rails g migration AddExpressCompanyNumberToOrders express_company_number:string
+
+rails g migration AddLimitPerPersonToGroups limit_per_person:integer
+rails g migration AddRemainToGroups remain:integer
+
+rails g migration AddLimitPerPersonToSeckills limit_per_person:integer
+rails g migration AddRemainToSeckills remain:integer
+
+rails g migration AddIsCommissionToProducts is_commission:integer
+rails g migration AddIsCommissionToSeckills is_commission:integer
+rails g migration AddIsCommissionToGroups is_commission:integer
+rails g money_rails:initializer
+
+rails g model WxMenu name msg_or_url:integer url title description:text img msg_type media_id button_type key parent_id:integer level:integer
+
+# rails g migration change_price_type_in_products
+
+rails g uploader weixin_uploader
 ```
 
 ### 功能分析 ###
@@ -327,6 +379,20 @@ rails g scaffold ProductGroup group_id:integer product_id:integer
 #### 移动端框架 ####
 * 点击事件框架quojs http://quojs.tapquo.com
 * dom操作框架 jquery2
+
+#### 2015-01-17
+
+* 总仓可以看到其他供应商的库存
+* /admin/profiles?action=index&role=customer&type=all 添加供应商归属
+* 用户资料查看的时候显示基本资料(注册日期), 交易流水(订单记录), 转发次数(待定), 提成记录(提成总额), 导出excel
+* 微信模板告知客户订单状态
+* /admin/orders 添加订单状态, 供应商是否处理等
+* 菜单那里加数字提醒
+* 提成公式分整个商城(和单个商品的, 待定), 商品是否参加提成(按钮)(后台设置)
+* 商品, 团购, 秒杀都参与提成
+* 积分问题(待定)
+* 邀请码用户自己复制输入, 邀请码打折设置, 统一折扣
+* 微信菜单
 
 
 

@@ -4,11 +4,11 @@
     left: -15px;
     width: 13px;
     height: 13px;
-    background: #ffffff;
-    border: 1px solid #7c0045;
+    background: #fff;
+    border: 1px solid #f06200;
     border-radius: 20px;
     font-size: 0.5em;
-    color: #7c0045;
+    color: #f06200;
     text-align: center;
     padding:1px;
     display: none;
@@ -23,20 +23,28 @@
     });
   }
   $(document).ready(function(){
-    var shoppingCart = $.localStorage.get("shoppingCart");
-    console.log("shoppingCart is " + shoppingCart);
-    if(shoppingCart !== null) {
-      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-      var productList = JsonStr.productList;
-      var length = productList.length;
-      if (length > 0) {
-        $(".shopping-cart-mark").show();
-        $(".shopping-cart-mark").text(length);
-      } else {
+      var shoppingCart = $.localStorage.get("shoppingCart");
+      if (shoppingCart === null || shoppingCart === "") {
         $(".shopping-cart-mark").hide();
       }
-    }
-
+      else {
+        console.log("shoppingCart is " + shoppingCart);
+        var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+        var length = 0;
+        var productList = JsonStr.productList;
+        for (i in productList) {
+          if(productList[i].productType == "product") {
+            length = length +1;
+          }
+        }
+        if (length > 0) {
+          $(".shopping-cart-mark").show();
+          $(".shopping-cart-mark").text(length);
+        }
+        else {
+          $(".shopping-cart-mark").hide();
+        }
+      }
     var url = $.url();
     var path = url.attr('path');
     if(path.startWith('/customer/cats')) {

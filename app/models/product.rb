@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   mount_uploader :img, ProductImgUploader
 
-  validates :name, :price, :cat_id, :status, presence: true
+  validates :name, :price, :cat_id, :status, :is_commission, presence: true
   validates :name, uniqueness: true
 
   belongs_to :cat
@@ -14,4 +14,6 @@ class Product < ActiveRecord::Base
 
   acts_as_commentable
 
+  has_one :group
+  has_one :seckill
 end

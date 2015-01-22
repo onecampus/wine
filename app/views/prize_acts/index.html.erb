@@ -66,7 +66,6 @@
         <thead>
           <tr>
             <th><%=t 'activerecord.attributes.prize_act.name' %></th>
-            <th><%=t 'activerecord.attributes.prize_act.desc' %></th>
             <th><%=t 'activerecord.attributes.prize_act.prize_type' %></th>
             <th><%=t 'activerecord.attributes.prize_act.start_time' %></th>
             <th><%=t 'activerecord.attributes.prize_act.end_time' %></th>
@@ -80,7 +79,6 @@
           <% @prize_acts.each do |prize_act| %>
             <tr>
               <td><%= prize_act.name %></td>
-              <td><%= prize_act.desc %></td>
               <td><% if prize_act.prize_type == 'bigwheel' %>大转盘<% elsif prize_act.prize_type == 'scratchoff' %>刮刮乐<% else %>数据错误<% end %></td>
               <td><%= prize_act.start_time.strftime("%Y-%m-%d") %></td>
               <td><%= prize_act.end_time.strftime("%Y-%m-%d") %></td>

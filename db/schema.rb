@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141220085404) do
+ActiveRecord::Schema.define(version: 20150121082156) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -53,22 +53,6 @@ ActiveRecord::Schema.define(version: 20141220085404) do
     t.string   "img"
   end
 
-  create_table "ckeditor_assets", force: true do |t|
-    t.string   "data_file_name",               null: false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.integer  "assetable_id"
-    t.string   "assetable_type",    limit: 30
-    t.string   "type",              limit: 30
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
-
   create_table "comments", force: true do |t|
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -85,6 +69,42 @@ ActiveRecord::Schema.define(version: 20141220085404) do
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "commissions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "order_id"
+    t.string   "commission_money"
+    t.string   "percent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "group_orders", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "group_id"
+    t.integer  "group_count"
+    t.string   "unit_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "limit_people_count"
+    t.integer  "limit_product_count"
+    t.text     "description"
+    t.string   "price"
+    t.string   "saveup"
+    t.string   "discount"
+    t.integer  "people"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "limit_per_person"
+    t.integer  "remain"
+    t.integer  "is_commission"
+  end
 
   create_table "integrals", force: true do |t|
     t.integer  "user_id"
@@ -133,6 +153,11 @@ ActiveRecord::Schema.define(version: 20141220085404) do
     t.string   "order_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "invite_code"
+    t.string   "share_link_code"
+    t.string   "express_number"
+    t.string   "express_company"
+    t.string   "express_company_number"
   end
 
   create_table "prize_acts", force: true do |t|
@@ -205,6 +230,7 @@ ActiveRecord::Schema.define(version: 20141220085404) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "fright"
+    t.integer  "is_commission"
   end
 
   create_table "profiles", force: true do |t|
@@ -241,6 +267,33 @@ ActiveRecord::Schema.define(version: 20141220085404) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "seckill_orders", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "seckill_id"
+    t.integer  "seckill_count"
+    t.string   "unit_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "seckills", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "limit_people_count"
+    t.integer  "limit_product_count"
+    t.text     "description"
+    t.string   "price"
+    t.string   "saveup"
+    t.string   "discount"
+    t.integer  "people"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "limit_per_person"
+    t.integer  "remain"
+    t.integer  "is_commission"
+  end
+
   create_table "shipaddresses", force: true do |t|
     t.integer  "user_id"
     t.string   "receive_name"
@@ -251,6 +304,15 @@ ActiveRecord::Schema.define(version: 20141220085404) do
     t.string   "postcode"
     t.string   "tel"
     t.string   "mobile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "site_configs", force: true do |t|
+    t.string   "key"
+    t.string   "val"
+    t.string   "img"
+    t.string   "config_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -313,11 +375,28 @@ ActiveRecord::Schema.define(version: 20141220085404) do
     t.datetime "updated_at"
   end
 
+  create_table "withdraws", force: true do |t|
+    t.integer  "user_id"
+    t.string   "bank_card"
+    t.string   "alipay"
+    t.string   "we_chat_payment"
+    t.string   "draw_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "draw_money"
+    t.integer  "draw_status"
+    t.integer  "from_user_id"
+  end
+
   create_table "wx_menus", force: true do |t|
     t.string   "name"
-    t.text     "msg"
-    t.string   "url"
     t.integer  "msg_or_url"
+    t.string   "url"
+    t.string   "title"
+    t.text     "description"
+    t.string   "img"
+    t.string   "msg_type"
+    t.string   "media_id"
     t.string   "button_type"
     t.string   "key"
     t.integer  "parent_id"

@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
 
   has_many :orders
 
+  has_many :withdraws
+  has_many :commissions
+
   private
 
   require 'securerandom'

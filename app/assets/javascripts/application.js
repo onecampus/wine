@@ -30,5 +30,3 @@
 //= require bootstrap-tagsinput
 
 //= require backend/geo
-
-//= require ckeditor/init

@@ -8,6 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Wine
   class Application < Rails::Application
+    config.before_initialize do
+      ENV['APP_ID'] = 'wxa2bbd3b7a22039df'
+      ENV['APP_SECRET'] = '724bbaea1bce4c09865c2c47acbf450d'
+      ENV['APP_JS_URL'] = 'http://203.195.222.118'
+    end
+
     config.generators do |g|
       g.orm             :active_record
       g.template_engine :erb
@@ -25,9 +31,6 @@ module Wine
     config.active_record.default_timezone = :local
     config.time_zone = 'Beijing'
     config.encoding = 'utf-8'
-    
-    # ckeditor config
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     config.middleware.insert_after ActionDispatch::ParamsParser, ActionDispatch::XmlParamsParser
   end

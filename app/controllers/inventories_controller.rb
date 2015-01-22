@@ -4,8 +4,13 @@ class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
 
   def index
-    @inventories = Inventory.all.paginate(page: params[:page],
-                                          per_page: 10).order('id DESC')
+    if current_user.has_role? :admin
+      @inventories = Inventory.all.paginate(page: params[:page],
+                                            per_page: 10).order('id DESC')
+    else
+      @inventories = current_user.inventories.paginate(page: params[:page],
+                                                       per_page: 10).order('id DESC')
+    end
   end
 
   def show

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
   root 'site#index'
 
   # product cat
@@ -22,6 +21,12 @@ Rails.application.routes.draw do
   get 'customer/products/:id/comments' => 'site#index_comments'
   get 'customer/products/search' => 'site#index_search_result'
 
+  # group
+  get 'customer/groups/:id/show' => 'site#show_group'
+  get 'customer/groups_and_seckills' => 'site#index_groups_seckills'
+  get 'customer/seckills/:id/show' => 'site#show_seckill'
+
+
   # order
   match 'customer/invoice/create/json', to: 'site#create_invoice_via_ajax', via: :post
   get 'customer/orders/settlement' => 'site#order_settlement'
@@ -38,6 +43,11 @@ Rails.application.routes.draw do
   get 'customer/users/orders/history' => 'site#index_order_history'
   get 'customer/users/vipcard' => 'site#show_vip_card'
 
+  # withdraw
+  get 'customer/withdraws/new' => 'site#new_withdraw'
+  get 'customer/withdraws' => 'site#index_withdraws'
+  match 'customer/withdraws/create', to: 'site#create_withdraw', via: :post
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -51,11 +61,30 @@ Rails.application.routes.draw do
 
   scope '/admin' do
 
+    resources :commissions
+
+    resources :withdraws
+    get 'withdraws/:id/ok' => 'withdraws#ok_withdraw'
+
+    resources :site_configs
+    get 'site_configs/customer/index/imgs/edit' => 'site_configs#edit_index_imgs'
+    get 'site_configs/customer/index/imgs' => 'site_configs#show_index_imgs'
+    match 'site_configs/customer/index/imgs/update', to: 'site_configs#update_index_imgs', via: :post
+
+    resources :seckill_orders
+    resources :seckills
+
+    resources :group_orders
+    resources :groups
+
     resources :wx_menus
+    match 'wx_menus/name/create/json', to: 'wx_menus#create_menu_name', via: :post
     match 'wx_menus/update/json', to: 'wx_menus#update_via_json', via: :post
     get 'weixin/menus/create/json' => 'wx_menus#create_weixin_menu'
     get 'wx_menus/:id/del/json' => 'wx_menus#destroy_via_ajax'
     match 'wx_menus/create/json', to: 'wx_menus#create_via_ajax', via: :post
+    match 'wx_menus/:id/action/set', to: 'wx_menus#set_menu_action', via: :post
+    match 'wx_menus/images/upload', to: 'wx_menus#upload_img', via: :post
 
     resources :prize_user_numbers
     resources :prize_users
@@ -71,6 +100,7 @@ Rails.application.routes.draw do
     get 'orders/wait/sure' => 'orders#index_orders_unsure'
     get 'orders/:id/sure' => 'orders#sure_order', as: :sure_order
     get 'orders/wait/ship' => 'orders#index_orders_wait_ship'
+    match 'orders/:id/express/add', to: 'orders#add_order_express', via: :post
     get 'orders/:id/shiped' => 'orders#ship_order', as: :ship_order
     get 'orders/already/ship' => 'orders#index_orders_already_ship'
     get 'orders/:id/received' => 'orders#receive_order'
@@ -85,6 +115,9 @@ Rails.application.routes.draw do
     resources :inventories
     resources :comments
     resources :tags
+
+    get 'ueditor_uploader/index'
+    match 'ueditor_uploader/index', to: 'ueditor_uploader#index', via: :post
 
     resources :roles
     resources :users

@@ -5,14 +5,92 @@ require 'rest_client'
 class WxMenusController < ApplicationController
   authorize_resource
   respond_to :html, :json
-  before_action :set_wx_menu, only: [:show, :edit, :update, :destroy]
+  before_action :set_wx_menu, only: [:set_menu_action]
 
   skip_before_filter :verify_authenticity_token, only: [:update_via_json,
                                                         :create_via_ajax,
-                                                        :destroy_via_ajax]
+                                                        :destroy_via_ajax,
+                                                        :create_menu_name,
+                                                        :set_menu_action,
+                                                        :upload_img]
 
   def index
     @wx_menus = WxMenu.where(level: 1).last 3
+  end
+
+  def create_menu_name
+    wx_menu_params = {
+      name: params[:name],
+      parent_id: params[:parent_id], # 第一级菜单 0
+      level: params[:level] # 第一级菜单 1
+    }
+    @wx_menu = WxMenu.new(wx_menu_params)
+    if @wx_menu.save
+      # 如果添加二级菜单,需要清空一级菜单的事件
+      if params[:level] != 1 && params[:parent_id] != 0
+        parent_menu = WxMenu.find(params[:parent_id])
+        parent_menu.button_type = nil
+        parent_menu.msg_or_url = nil
+        parent_menu.msg_type = nil
+        parent_menu.save
+      end
+      render json: { status: 'success', msg: 'create menu success' }
+    else
+      render json: { status: 'error', msg: 'create menu failed' }
+    end
+  end
+
+  def set_menu_action
+    button_type = params[:button_type]
+    @wx_menu.button_type = button_type  # click(key), view(url)
+    case button_type
+    when 'click'
+      msg_type = params[:msg_type]  # text, image, news
+      @wx_menu.msg_or_url = 'msg'
+      @wx_menu.key = WxMenu.generate_key
+      @wx_menu.msg_type = msg_type
+      case msg_type
+      when 'text'
+        @wx_menu.description = params[:content]
+      when 'image'
+        @wx_menu.media_id = params[:media_id]
+      when 'news'
+        @wx_menu.title = params[:title]
+        @wx_menu.description = params[:description]
+        @wx_menu.img = params[:img]
+        @wx_menu.url = params[:url]
+      end
+    when 'view'
+      @wx_menu.msg_or_url = 'url'
+      @wx_menu.url = params[:url]
+    end
+    if @wx_menu.save
+      render json: { status: 'success', msg: 'set_menu_action success' }
+    else
+      render json: { status: 'failed', msg: 'set_menu_action failed' }
+    end
+  end
+
+  def upload_img
+    image = WeixinUploaderUploader.new
+    image.store!(params[:img])
+    return_hash = {
+      status: 'success',
+      url: image.url,
+      title: image.filename
+    }
+    msg_type = params[:msg_type]  # image, news
+    if msg_type == 'image'
+      file = File.new(File.join(image.url), 'rb')
+      res_hash = WxExt::Api::Base.upload_media(set_access_token, 'image', file)
+      # {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
+      if res_hash['media_id'].blank?
+        return_hash[:status] = 'weixin_failed'
+      else
+        return_hash[:media_id] = res_hash['media_id']
+      end
+    end
+    render json: return_hash
   end
 
   def update_via_json
@@ -27,9 +105,7 @@ class WxMenusController < ApplicationController
   end
 
   def create_weixin_menu
-    access_token_hash = get_access_token('wxa2bbd3b7a22039df', 'client_credential', '724bbaea1bce4c09865c2c47acbf450d')
-
-    res_hash = create_custom_menu(access_token_hash['access_token'])
+    res_hash = create_custom_menu(set_access_token)
     puts '-' * 20
     puts res_hash
     if res_hash['errcode'] == 0 && res_hash['errmsg'] == 'ok'
@@ -60,40 +136,13 @@ class WxMenusController < ApplicationController
 
   def destroy_via_ajax
     @wx_menu = WxMenu.find(params[:id])
-
+    sub_menus = WxMenu.where(level: 2, parent_id: @wx_menu.id)
     if @wx_menu.destroy
+      sub_menus.each(&:destroy!) unless sub_menus.blank?
       render json: { status: 'success', msg: 'del menu success' }
     else
       render json: { status: 'error', msg: 'del menu failed' }
     end
-  end
-
-  def show
-    respond_with(@wx_menu)
-  end
-
-  def new
-    @wx_menu = WxMenu.new
-    respond_with(@wx_menu)
-  end
-
-  def edit
-  end
-
-  def create
-    @wx_menu = WxMenu.new(wx_menu_params)
-    flash[:notice] = 'WxMenu was successfully created.' if @wx_menu.save
-    respond_with(@wx_menu)
-  end
-
-  def update
-    flash[:notice] = 'WxMenu was successfully updated.' if @wx_menu.update(wx_menu_params)
-    respond_with(@wx_menu)
-  end
-
-  def destroy
-    @wx_menu.destroy
-    respond_with(@wx_menu)
   end
 
   private
@@ -102,20 +151,11 @@ class WxMenusController < ApplicationController
     @wx_menu = WxMenu.find(params[:id])
   end
 
-  def wx_menu_params
-    params.require(:wx_menu).permit(:name, :msg, :url, :msg_or_url, :button_type, :key, :parent_id, :level)
-  end
-
-  def get_access_token(appid = 'wxa2bbd3b7a22039df', grant_type = 'client_credential', secret = '724bbaea1bce4c09865c2c47acbf450d')
-    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=#{grant_type}&appid=#{appid}&secret=#{secret}"
-    res = RestClient.get url
-    JSON.parse res
-  end
-
-  def get_custom_menu(access_token)
-    url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=#{access_token}"
-    res = RestClient.get url
-    JSON.parse res
+  def set_access_token
+    app_id = ENV['APP_ID']
+    app_secret = ENV['APP_SECRET']
+    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+    access_token_hash[:access_token]
   end
 
   def create_custom_menu(access_token)

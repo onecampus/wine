@@ -20,7 +20,6 @@
   }
 
   .p-charge {
-    height: 70px;
     padding: 0 20px;
     color: #787878;
     margin: 0 auto;
@@ -45,7 +44,7 @@
   }
 
   .p-charge .price {
-    color: #aa0c40;
+    color: #f06200;
     font-size: 30px;
   }
 
@@ -122,13 +121,32 @@
   }
 
   .p-purchase .btn-add {
-    background-color: #dfdfdf;
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+    border-radius: 5px;
+    color: #fff;
   }
 
   .p-purchase .btn-red {
-    color: white;
+    color: #fff;
   }
 
+  .buy-now {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+  }
+  #share > button {
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    width: 78%;
+    margin: 0 auto;
+    text-align: cetner;
+    display: block;
+    background-color: #d9534f;
+    border-color: #d9543f;
+  }
   .p-comments {
     padding: 0 20px;
     height: 40px;
@@ -143,11 +161,11 @@
   }
 
   .p-comments .comment-count {
-    background-color: #aa0c40;
+    background-color: #5cb75c;
     border-radius: 3px;
     width: 15px;
     text-align: center;
-    color: white;
+    color: #fff;
   }
 
   .arrow {
@@ -176,7 +194,7 @@
     word-wrap: break-word;
   }
   .p-intro .name{
-    color: #aa0c3f;
+    color: #f06200;
     margin:  0;
     padding: 0;
   }
@@ -193,6 +211,46 @@
   .shoppingcart-animate img {
     width: 25%;
     height: 60%;
+  }
+  .back {
+    z-index: 11;
+    position: fixed;
+    *position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    display: none;
+  }
+  .share_notice {
+    display: none;
+    position: fixed;
+    *position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 80%;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -40%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-bottom: 35px;
+    color: #666;
+    z-index: 100;
+    box-shadow: 0 0 3px #666;
+  }
+  .share_notice > img {
+    width: 90%;
+    height: 180px;
+  }
+  .share_notice > p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
   }
 </style>
 <div class="main">
@@ -224,6 +282,9 @@
     <div class="shoppingcart-animate"><img src="/zhonglian/img/navbar/car-red.png"></div>
     <button class="buy-now btn btn-red" type="button">立即购买</button>
   </div>
+  <div id="share">
+    <button type="button" class='share btn btn-red'>分享获取提成</button>
+  </div>
   <hr/>
   <div class="p-comments">
     <a href="/customer/products/<%= @product.id %>/comments">
@@ -235,32 +296,145 @@
   <div class="p-intro">
     <h4>商品详情</h4>
     <p class="name"><%= @product.name %></p>
-    <div><%= raw @product.description %></div>
+    <div class="desc"><%= raw @product.description %></div>
   </div>
+  <div class="share_notice">
+    <img src="/zhonglian/img/share.png" />
+    <p>分享可获提成</p>
+  </div>
+  <div class="back"></div>
 </div>
 <script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
+<script src="/zhonglian/js/show_product.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 var jQuery_1_7_2 = $.noConflict(true);
 </script>
 <script type="text/javascript">
   jQuery_1_7_2(document).ready(function($) {
+    $( '.share' ).on( 'click', function() {
+      $( '.back' ).show();
+      $( '.share_notice' ).slideDown(800);
+      setTimeout( function() {
+        $( '.back' ).hide();
+        $( '.share_notice' ).slideUp(800);
+      },3000);
+    });
     var minus = $(".action-de");
     var plus = $(".action-plus");
     var numInput = $(".p-num");
     var num = 0;
+    var hostname = location.hostname;
+    var port = location.port;
+    var domain = "http://" + hostname + ':' + port;
+    var desc = $( '.desc' ).text();
+    var img_url = domain + "<%= @product.img_url %>";
+    var link = domain + "/customer/products/<%= @product.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
     plus.on('click', function() {
       num = parseInt(numInput.val());
       num++;
       numInput.val(num);
     });
     minus.on('click', function() {
-      if (num > 0) {
+      if (num > 1) {
         num--;
         numInput.val(num);
       } else {
-        numInput.val(0);
+        numInput.val(1);
+        alert("购物数量不能为0")
       }
     });
-    });
+    function isWechat(){
+      var ua = navigator.userAgent.toLowerCase();
+      if(ua.match( /MicroMessenger/i )=="micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    // 若为微信内置浏览器，才进行各种操作
+    if ( isWechat() ) {
+      var appid = '<%= @share_hash[:app_id] %>';
+      var timestamp= '<%= @share_hash[:timestamp] %>';
+      var noncestr = '<%= @share_hash[:noncestr] %>';
+      var signature = '<%= @share_hash[:signature] %>';
+      // 接口权限配置
+      wx.config({
+        debug: true,
+        appId: appid,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: ['onMenuShareAppMessage','onMenuShareTimeLine','onMenuShareWeibo','onMenuShareQQ']
+        });
+
+      // 信息验证成功
+      wx.ready(function(){
+
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          type: 'link',
+          success: function () {
+            alert('succeed in sharing!');
+          },
+          cancel: function () {
+              alert('cancel');
+          }
+        });
+
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+          title: '诚邀您加入众联酒业微信商城',
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+              alert('cancel')
+          }
+        });
+
+        // 分享到腾讯微博
+        wx.onMenuShareWeibo({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+        // 分享到QQ
+        wx.onMenuShareQQ({
+          title: '诚邀您加入众联酒业微信商城',
+          desc: desc,
+          link: link,
+          imgUrl: img_url,
+          success: function () {
+            alert('share');
+          },
+          cancel: function () {
+            alert('cancel')
+          }
+        });
+
+      });
+
+      // 信息验证失败
+      wx.error(function( res ){
+        alert(res.errMsg);
+      });
+    }
+  });
 </script>
 <%= render "site/shared/bottombar" %>

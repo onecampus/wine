@@ -1,0 +1,245 @@
+<% content_for :customer_title do %>
+    提现
+<% end %>
+<style>
+.withdraw-msg {
+  width: 100%;
+  height: 50px;
+  background: #f2f2f2;
+  color: #f06200;
+  text-align: center;
+}
+.withdraw {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  float: left;
+}
+.bank-group {
+  width: 90%;
+  display: none;
+  margin: 15px 5%;
+  float: left;
+}
+
+.weixin-group {
+  width: 90%;
+  margin: 15px 5%;
+  display: none;
+  float: left;
+}
+
+.alipay-group {
+  width: 90%;
+  display: none;
+  margin: 15px 5%;
+  float: left;
+}
+
+.pay-way {
+  width: 90%;
+  margin: 20px 0 15px 5%;
+  float: left;
+}
+
+.pay-money {
+  width: 90%;
+  margin: 10px 5%;
+  float: left;
+}
+
+
+.col-sm-2 {
+  width: 20%;
+  float: left;
+
+}
+.col-sm-9 {
+  width: 75%;
+  float: left;
+}
+.col-sm-9 input {
+  border: 0;
+  width: 100%;
+}
+
+.btn {
+  padding: 10px 0;
+  font-size: 30px;
+}
+
+.pay-btn {
+  width: 100%;
+  margin: 40px 0 0 5%;
+  float: left;
+}
+ hr {
+   width: 90%;
+   margin: 0 0 0 5%;
+   padding: 0;
+   float: left;
+ }
+
+</style>
+<%= form_for(@withdraw, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if @withdraw.errors.any? %>
+        <div id="error_explanation" class="form-group">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-9">
+            <h2>保存时发生了<%= pluralize(@withdraw.errors.count, "error") %></h2>
+            <ul>
+              <% @withdraw.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+  <div class="withdraw-msg">
+    <span></span>
+  </div>
+  <div class="withdraw">
+    <div class="pay-way">
+      <%= f.label :draw_type, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.draw_type' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.select(:draw_type, options_for_select([['银行卡', '银行卡'], ['支付宝', '支付宝'], ['微信支付', '微信支付']], @withdraw.draw_type)) %>
+      </div>
+    </div>
+    <hr>
+    <div class="bank-group">
+      <%= f.label :bank_card, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.withdraw.bank_card' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :bank_card, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="alipay-group">
+      <%= f.label :alipay, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.withdraw.alipay' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :alipay, :class => "form-control" %>
+      </div>
+    </div>
+    <div class="weixin-group">
+      <%= f.label :we_chat_payment, :class => "col-sm-2 control-label" do %>
+      <%=t 'activerecord.attributes.withdraw.we_chat_payment' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :we_chat_payment, :class => "form-control" %>
+      </div>
+    </div>
+    <hr>
+    <div class="pay-money">
+      <%= f.label :draw_money, :class => "col-sm-2 control-label" do %>
+          <%=t 'activerecord.attributes.withdraw.draw_money' %> <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= f.text_field :draw_money, :class => "form-control" %>
+      </div>
+    </div>
+  </div>
+    <div class="pay-btn">
+      <label class="col-sm-2 control-label" for="submit"></label>
+      <div class="col-sm-9">
+        <%= f.submit("提现", class: "btn btn-red withdraw-now add-withdraw") %>
+      </div>
+    </div>
+<% end %>
+
+<script>
+$(document).ready(function(){
+  $("select").attr("value","银行卡");
+  $(".bank-group").show();
+  $("#withdraw_we_chat_payment").attr("value","");
+  $("#withdraw_alipay").attr("value","");
+  $("#withdraw_bank_card").attr("value","");
+  $("select").change(function(){
+    var value = $(this).val();
+    if(value == "支付宝") {
+      $(".bank-group").hide();
+      $("#withdraw_bank_card").attr("value","");
+      $(".weixin-group").hide();
+      $("#withdraw_we_chat_payment").attr("value","");
+      $(".alipay-group").slideDown(500);
+    }
+    if(value == "银行卡") {
+      $(".weixin-group").hide();
+      $("#withdraw_we_chat_payment").attr("value","");
+      $(".alipay-group").hide();
+      $("#withdraw_alipay").attr("value","");
+      $(".bank-group").slideDown(500);
+    }
+    if(value == "微信支付") {
+      $(".alipay-group").hide();
+      $("#withdraw_alipay").attr("value","");
+      $(".bank-group").hide();
+      $("#withdraw_bank_card").attr("value","");
+      $(".weixin-group").slideDown(500);
+    }
+  });
+  $(".add-withdraw").on('click', function(e){
+    var payWay = $("select").val();
+    var money = $("#withdraw_draw_money").val();
+    if(money == "") {
+      $(".withdraw-msg").children().text("提成现金不能为空！")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    var carId = null;
+    var data = null;
+    carId = $("#withdraw_alipay").val();
+    if(payWay == "支付宝") {
+      carId = $("#withdraw_alipay").val();
+      data = {
+        draw_money: money,
+        draw_type: payWay,
+        alipay: carId
+      };
+    }
+    else if(payWay == "银行卡") {
+      carId = $("#withdraw_bank_card").val();
+      data = {
+        draw_money: money,
+        draw_type: payWay,
+        bank_card: carId
+      };
+    }
+    else {
+      carId = $("#withdraw_we_chat_payment").val();
+      data = {
+        draw_money: money,
+        draw_type: payWay,
+        we_chat_payment: carId
+      };
+    }
+    if(carId == "") {
+      $(".withdraw-msg").children().text("卡号不能为空！")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    $(".withdraw-now").attr("disabled","disabled");
+    $.ajax({
+      type: "POST",
+      url: "/customer/withdraws/create",
+      data: data,
+      dataType: "json",
+      success: function(data) {
+        $(".withdraw-now").removeAttr("disabled");
+        window.location.href = '/customer/withdraws'
+      },
+      error: function() {
+      }
+    });
+    return false;
+  });
+  $("input").focus(function(){
+    $(".withdraw-msg").children().hide();
+  });
+});
+</script>
