@@ -38,8 +38,8 @@ td {
     <% @results.each do |p| %>
     <tr>
       <td>Id</td>
-      <td><%= User.find(p.from_user_id).username %></td>
-      <td><%= p.commission_money %></td>
+      <td><%= p[:from_user] %></td>
+      <td><%= p[:money] %></td>
     </tr>
     <% end %>
   </table>
