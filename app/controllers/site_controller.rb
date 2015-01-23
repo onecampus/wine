@@ -91,7 +91,7 @@ class SiteController < CustomerController
 
   def show_product
     @product = Product.find params[:id]
-    @share_hash = init_share_hash("/customer/products/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/products/#{params[:id]}/show")
   end
 
   def index_groups_seckills
@@ -101,7 +101,7 @@ class SiteController < CustomerController
 
   def show_group
     @group = Group.find params[:id]
-    @share_hash = init_share_hash("/customer/groups/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/groups/#{params[:id]}/show")
     @already_sell = 0
     @group.group_orders.each do |go|
       @already_sell += go.group_count
@@ -110,7 +110,7 @@ class SiteController < CustomerController
 
   def show_seckill
     @seckill = Seckill.find params[:id]
-    @share_hash = init_share_hash("/customer/seckills/<%= params[:id] %>/show")
+    @share_hash = init_share_hash("/customer/seckills/#{params[:id]}/show")
     @already_sell = 0
     @seckill.seckill_orders.each do |go|
       @already_sell += go.seckill_count
@@ -539,10 +539,33 @@ class SiteController < CustomerController
   def init_share_hash(path)
     app_id = ENV['APP_ID']
     app_secret = ENV['APP_SECRET']
-    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+    access_token = nil
+    jsapi_ticket = nil
+    if $redis
+      access_token = $redis.get('access_token')
+      if access_token.blank?
+        access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+        access_token = access_token_hash['access_token']
+        $redis.set('access_token', access_token)
+        $redis.expire('access_token', 7000)
+      end
+      jsapi_ticket = $redis.get('jsapi_ticket')
+      if jsapi_ticket.blank?
+        jsapi_ticket_hash = WxExt::Api::Js.get_jsapi_ticket(access_token)
+        jsapi_ticket = jsapi_ticket_hash['ticket']
+        $redis.set('jsapi_ticket', jsapi_ticket)
+        $redis.expire('jsapi_ticket', 7000)
+      end
+    else
+      access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+      access_token = access_token_hash['access_token']
+
+      jsapi_ticket_hash = WxExt::Api::Js.get_jsapi_ticket(access_token)
+      jsapi_ticket = jsapi_ticket_hash['ticket']
+    end
     url = ENV['APP_JS_URL']
     url = 'http://' + url + path
-    WxExt::Api::Js.get_jsapi_config(access_token_hash['access_token'], url, app_id)
+    WxExt::Api::Js.get_jsapi_config(access_token, url, app_id, jsapi_ticket) unless access_token.nil? && jsapi_ticket.blank?
   end
 
   def get_result(prize_hash)
@@ -589,11 +612,6 @@ class SiteController < CustomerController
             _min = min[i].to_i
             _max = max[i].to_i
             result[:angle] = rand(_min.._max)
-            puts '--' * 20
-            puts 'i= ' + i.to_s
-            puts _min
-            puts _max
-            puts result[:angle]
           else
             min = res.min.to_i
             max = res.max.to_i

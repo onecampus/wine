@@ -48,7 +48,7 @@ gem 'actionpack-xml_parser'
 # gem 'weixin_authorize'
 gem 'rest-client'
 
-gem 'wx_ext', '~> 0.1.8'
+gem 'wx_ext', '~> 0.2.0'
 
 # bootstrap editable
 # gem 'bootstrap-editable-rails'
@@ -56,6 +56,9 @@ gem 'wx_ext', '~> 0.1.8'
 gem 'font-awesome-rails'
 
 gem 'money-rails'
+
+gem 'redis', '~> 3.0.1'
+gem 'hiredis', '~> 0.4.5'
 
 # 部署
 group :development do

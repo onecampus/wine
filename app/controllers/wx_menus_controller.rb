@@ -27,8 +27,8 @@ class WxMenusController < ApplicationController
     @wx_menu = WxMenu.new(wx_menu_params)
     if @wx_menu.save
       # 如果添加二级菜单,需要清空一级菜单的事件
-      if params[:level] != 1 && params[:parent_id] != 0
-        parent_menu = WxMenu.find(params[:parent_id])
+      if params[:level].to_i != 1 && params[:parent_id].to_i != 0
+        parent_menu = WxMenu.find(params[:parent_id]) if params[:parent_id].to_i != 0
         parent_menu.button_type = nil
         parent_menu.msg_or_url = nil
         parent_menu.msg_type = nil
@@ -81,7 +81,7 @@ class WxMenusController < ApplicationController
     }
     msg_type = params[:msg_type]  # image, news
     if msg_type == 'image'
-      file = File.new(File.join(image.url), 'rb')
+      file = image.retrieve_from_store!(image.filename)
       res_hash = WxExt::Api::Base.upload_media(set_access_token, 'image', file)
       # {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
       if res_hash['media_id'].blank?
@@ -154,8 +154,20 @@ class WxMenusController < ApplicationController
   def set_access_token
     app_id = ENV['APP_ID']
     app_secret = ENV['APP_SECRET']
-    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
-    access_token_hash[:access_token]
+    access_token = nil
+    if $redis
+      access_token = $redis.get('access_token')
+      if access_token.blank?
+        access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+        access_token = access_token_hash['access_token']
+        $redis.set('access_token', access_token)
+        $redis.expire('access_token', 7000)
+      end
+    else
+      access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+      access_token = access_token_hash['access_token']
+    end
+    access_token
   end
 
   def create_custom_menu(access_token)

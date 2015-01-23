@@ -43,7 +43,7 @@ $(document).ready(function() {
       var level = 1;
       $.ajax({
         type: "POST",
-        url: "wx_menus/name/create/json",
+        url: "/admin/wx_menus/name/create/json",
         dataType: "json",
         data: {
           name: menuName,
@@ -75,8 +75,9 @@ $(document).ready(function() {
   });
 
   /*
-  一级菜单增，删，改,动作设置
+  一级菜单动作设置
   */
+
 
   /*
   增加二级菜单
@@ -124,7 +125,7 @@ $(document).ready(function() {
       var level = 2;
       $.ajax({
         type: "POST",
-        url: "wx_menus/name/create/json",
+        url: "/admin/wx_menus/name/create/json",
         dataType: "json",
         data: {
           name: menuName,
@@ -171,28 +172,24 @@ $(document).ready(function() {
   }
 
   /*
-  删除一级菜单
-  */
-  $(".menu-edit-del").click(function() {
-
-  });
-
-  /*
   二级菜单动作编辑
   */
   $(".edit-submenu-btn").click(function(){
     var type = $(this).data("submenutype");
-    if (type == 0) {
+    var menuId = $(this).data("id");
+    $(".menu-id").attr("value",menuId);
+    $(".mesg-menu-id").attr("value",menuId);
+    if (type == "none") {
       $(".edit-url").hide();
       $(".edit-mesg").hide();
       $(".select-action").show();
     }
-    if (type == 1) {
+    if (type == "view") {
       $(".select-action").hide();
       $(".edit-mesg").hide();
       $(".edit-url").show();
     }
-    if (type == 2) {
+    if (type == "click") {
       $(".select-action").hide();
       $(".edit-url").hide();
       $(".edit-mesg").show();
@@ -205,27 +202,32 @@ $(document).ready(function() {
 
   // 对于一级菜单删除通用.
   $('.delete-submenu-btn').on('click', function() {
-    var id = $(this).data("id");
-    $.ajax({
-      type: "GET",
-      url: "/admin/wx_menus/" + id + "/del/json",
-      dataType: "json",
-      success: function(data) {
-        if (data.status == 'success') {
-          alert(data.msg);
-          _href = window.location.href;
-          window.location.href = _href;
-        } else {
-          alert(data.msg);
+    if(confirm("你确定要删除该菜单吗？")) {
+      var id = $(this).data("id");
+      $.ajax({
+        type: "GET",
+        url: "/admin/wx_menus/" + id + "/del/json",
+        dataType: "json",
+        success: function(data) {
+          if (data.status == 'success') {
+            alert(data.msg);
+            _href = window.location.href;
+            window.location.href = _href;
+          } else {
+            alert(data.msg);
+          }
+        },
+        complete: function(XMLHttpRequest, textStatus) {
+          // code
+        },
+        error: function() {
+          // code
         }
-      },
-      complete: function(XMLHttpRequest, textStatus) {
-        // code
-      },
-      error: function() {
-        // code
-      }
-    });
+      });
+    }
+    else {
+      return false;
+    }
   });
 
   /*
@@ -233,13 +235,58 @@ $(document).ready(function() {
   */
   $(".add-mesg").click(function() {
     $(".select-action").hide();
-    $(".edit-url").show();
+    $(".edit-mesg").show();
   });
 
   $(".add-url").click(function() {
     $(".select-action").hide();
-    $(".edit-mesg").show();
+    $(".edit-url").show();
   });
+
+  /*
+  菜单设置跳转网页功能
+  */
+
+  $(".url-save").click(function(){
+    var url = $(this).parents(".edit-url").find(".url-value").val();
+    var id =  $(this).parents(".edit-url").find(".menu-id").val();
+    var buttonType ="view";
+    if(url == "") {
+      $(".url-mesg").show();
+      return false;
+    }
+    else {
+      $.ajax({
+        type: "POST",
+        url: "/admin/wx_menus/"+id+"/action/set",
+        dataType: "json",
+        data: {
+          button_type: buttonType,
+          url: url
+        },
+        success: function(data) {
+          if (data.status == 'success') {
+            alert(data.msg);
+            _href = window.location.href;
+            window.location.href = _href;
+          } else {
+            alert(data.msg);
+          }
+        },
+        complete: function(XMLHttpRequest, textStatus) {
+          // code
+        },
+        error: function() {
+          // code
+        }
+      });
+    }
+  });
+
+  $(".url-value").focus(function(){
+    $(".url-mesg").hide();
+  });
+
   /*
   文字
   */
@@ -280,10 +327,6 @@ $(document).ready(function() {
   $("body").click(function() {
     $(".expression").fadeOut("500");
   });
-
-  /*
-  菜单导航栏
-  */
 
   /*
   设置动作导航
@@ -329,24 +372,147 @@ $(document).ready(function() {
   上传图片
   */
   $(".upload-pic-btn").click(function() {
+    $(".preview-pic").empty();
+    var msgType = "image";
     $("#fileupload").trigger("click");
     $("#fileupload").fileupload({
-      url: "/admin/answers/" + question_img_id + "/img/update/json",
+      url: "/admin/wx_menus/images/upload",
+      formData: {
+        msg_type: msgType
+      },
+      dataType: 'json',
       done: function(e, result) {
-        console.log(JSON.stringify(result.result));
         if (result.result.status == "success") {
           var imgUrl = result.result.data;
-          imgNode.html('<img src="' + imgUrl + '" class="q-img" />');
-        } else {
+        }
+        else if (result.result.status == "weixin_failed") {
+          alert("上传微信失败")
+          var imgUrl = result.result.url;
+          var img = $("<img></img>").attr("src",imgUrl);
+          $(".preview-pic").append(img);
+        }
+        else {
           alert("上传失败");
         }
       }
     });
-    return false;
   });
 
   /*
-  上传图文
+  设置发送图片动作
+  */
+  $(".pic-save").click(function(){
+    var buttonType = "click";
+    var msgType = "image";
+    var id = $(".mesg-menu-id").val();
+    $.ajax({
+      type: "POST",
+      url: "/admin/wx_menus/"+id+"/action/set",
+      dataType: "json",
+      data: {
+        button_type: buttonType,
+        msg_type: msgType,
+      },
+      success: function(data) {
+        alert("发送成功");
+        _href = window.location.href;
+        window.location.href = _href;
+      },
+      complete: function(XMLHttpRequest,textStatus) {
+
+      },
+      error: function() {
+
+      }
+    });
+  });
+
+  /*
+  上传图文图片
+  */
+  $("#graphic_picture").click(function(){
+    $(".graphic-picture-preview").empty();
+    var msgType = "news";
+    $("#graphic_picture").fileupload({
+      url: "/admin/wx_menus/images/upload",
+      formData: {
+        msg_type: msgType
+      },
+      dataType: 'json',
+      done: function(e, result) {
+        if (result.result.status == "success") {
+          alert("上传成功");
+          var imgUrl = result.result.url;
+          var img = $("<img></img>").attr("src",imgUrl);
+          $(".graphic-picture-preview").append(img);
+          $(".graphic-pic-pre-url").attr("value",imgUrl);
+        }
+        else {
+          alert("上传失败");
+        }
+      }
+    });
+  });
+
+  /*
+  发送图文
+  */
+  $(".save-graphic").click(function(){
+    $(".preview-graphic").empty();
+    var title = $("#graphic_title").val();
+    var description = $("#graphic_des").val();
+    var url = $("#graphic_url").val();
+    var img = $(".graphic-pic-pre-url").val();
+    if(title == "") {
+      alert("请输入标题");
+      return false;
+    }
+    else if(description == "") {
+      alert("请输入描述");
+      return false;
+    }
+    else if(url == "") {
+      alert("请输入链接");
+      return false;
+    }
+    else if(img == "") {
+      alert("请上传图片");
+      return false;
+    }
+    else {
+      var buttonType = "click";
+      var msgType = "news";
+      var id = $(".mesg-menu-id").val();
+      $.ajax({
+        type: "POST",
+        url: "/admin/wx_menus/"+id+"/action/set",
+        dataType: "json",
+        data: {
+          button_type: buttonType,
+          msg_type: msgType,
+          title: title,
+          description: description,
+          img: img,
+          url: url
+        },
+        success: function(data) {
+          alert("发送成功");
+          var previewimg = $("<img></img>").attr("src",img);
+          $(".preview-graphic").append(previewimg);
+        },
+        complete: function(XMLHttpRequest,textStatus) {
+
+        },
+        error: function() {
+
+        }
+      });
+    }
+
+  });
+
+  /*
+  选择图文
   */
   $(".select-graphic").click(function() {
     var selectGraphicFlag = $(this).find(".selectGraphicFlag").attr("value");
@@ -354,6 +520,9 @@ $(document).ready(function() {
       $(this).children(".graphic-item").addClass("graphic-item-ba");
       $(this).find(".graphic-select-ico").show();
       $(this).find(".selectGraphicFlag").attr("value", "false");
+      $(this).siblings(".select-graphic").children(".graphic-item").removeClass("graphic-item-ba");
+      $(this).siblings(".select-graphic").find(".graphic-select-ico").hide();
+      $(this).siblings(".select-graphic").find(".selectGraphicFlag").attr("value", "true");
     } else {
       $(this).children(".graphic-item").removeClass("graphic-item-ba");
       $(this).find(".graphic-select-ico").hide();
@@ -362,7 +531,16 @@ $(document).ready(function() {
   });
 
   /*
-  发送文字
+  文字输入回车事件
+  */
+  $(".mesg-panel-text").keydown(function(e){
+    if(e.keyCode == 13) {
+      $(".mesg-save").click();
+    }
+  });
+
+  /*
+  文字发送
   */
   function sendMessage() {
     $(".mesg-save").on('click', function() {
@@ -474,12 +652,38 @@ $(document).ready(function() {
         "104": "/右太极"
       };
       var replyContent = $(".mesg-panel-text").html();
-      var that = $(this);
+      if(replyContent.length <= 0) {
+        alert("请输入内容");
+        return false;
+      }
       for (i = 0; i < 105; i++) {
         var code = "" + i + ".gif\">";
         var re = new RegExp("<img class=\"expression-img\" src=\"https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/" + code, "g");
         replyContent = replyContent.replace(re, data[i]);
       }
+      var buttonType = "click";
+      var msgType = "text";
+      var id = $(".mesg-menu-id").val();
+      $.ajax({
+        type: "POST",
+        url: "/admin/wx_menus/"+id+"/action/set",
+        dataType: "json",
+        data: {
+          button_type: buttonType,
+          msg_type: msgType,
+          content: replyContent
+        },
+        success: function(data) {
+          alert("发送成功");
+          $(".mesg-panel-text").empty();
+        },
+        complete: function(XMLHttpRequest,textStatus) {
+
+        },
+        error: function() {
+
+        }
+      });
     });
   }
 });
