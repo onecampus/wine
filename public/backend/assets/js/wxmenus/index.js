@@ -1,5 +1,129 @@
 $(document).ready(function() {
+  /*
+  url地址校验正则
+  */
+  var strRegex = '^((https|http|ftp|rtsp|mms)?://)'
+  + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' //ftp的user@
+  + '(([0-9]{1,3}.){3}[0-9]{1,3}' // IP形式的URL- 199.194.52.184
+  + '|' // 允许IP和DOMAIN（域名）
+  + '([0-9a-z_!~*\'()-]+.)*' // 域名- www.
+  + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].' // 二级域名
+  + '[a-z]{2,6})' // first level domain- .com or .museum
+  + '(:[0-9]{1,4})?' // 端口- :80
+  + '((/?)|' // a slash isn't required if there is no file name
+  + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+  var regUrl = new RegExp(strRegex);
   showMenuEdit();
+  /*
+  表情转换数据
+  */
+  var emotionData = {
+    "0": "/微笑",
+    "1": "/撇嘴",
+    "2": "/色",
+    "3": "/发呆",
+    "4": "/得意",
+    "5": "/流泪",
+    "6": "/害羞",
+    "7": "/闭嘴",
+    "8": "/睡",
+    "9": "/大哭",
+    "10": "/尴尬",
+    "11": "/发怒",
+    "12": "/调皮",
+    "13": "/呲牙",
+    "14": "/惊讶",
+    "15": "/难过",
+    "16": "/酷",
+    "17": "/冷汗",
+    "18": "/抓狂",
+    "19": "/吐",
+    "20": "/偷笑",
+    "21": "/可爱",
+    "22": "/白眼",
+    "23": "/傲慢",
+    "24": "/饥饿",
+    "25": "/困",
+    "26": "/惊恐",
+    "27": "/流汗",
+    "28": "/憨笑",
+    "29": "/大兵",
+    "30": "/奋斗",
+    "31": "/咒骂",
+    "32": "/疑问",
+    "33": "/嘘",
+    "34": "/晕",
+    "35": "/折磨",
+    "36": "/衰",
+    "37": "/骷髅",
+    "38": "/敲打",
+    "39": "/再见",
+    "40": "/擦汗",
+    "41": "/抠鼻",
+    "42": "/鼓掌",
+    "43": "/糗大了",
+    "44": "/坏笑",
+    "45": "/左哼哼",
+    "46": "/右哼哼",
+    "47": "/哈欠",
+    "48": "/鄙视",
+    "49": "/委屈",
+    "50": "/快哭了",
+    "51": "/阴险",
+    "52": "/亲亲",
+    "53": "/吓",
+    "54": "/可怜",
+    "55": "/菜刀",
+    "56": "/西瓜",
+    "57": "/啤酒",
+    "58": "/篮球",
+    "59": "/乒乓",
+    "60": "/咖啡",
+    "61": "/饭",
+    "62": "/猪头",
+    "63": "/玫瑰",
+    "64": "/凋谢",
+    "65": "/示爱",
+    "66": "/爱心",
+    "67": "/心碎",
+    "68": "/蛋糕",
+    "69": "/闪电",
+    "70": "/炸弹",
+    "71": "/刀",
+    "72": "/足球",
+    "73": "/瓢虫",
+    "74": "/便便",
+    "75": "/月亮",
+    "76": "/太阳",
+    "77": "/礼物",
+    "78": "/拥抱",
+    "79": "/强",
+    "80": "/弱",
+    "81": "/握手",
+    "82": "/胜利",
+    "83": "/抱拳",
+    "84": "/勾引",
+    "85": "/拳头",
+    "86": "/差劲",
+    "87": "/爱你",
+    "88": "/NO",
+    "89": "/OK",
+    "90": "/爱情",
+    "91": "/飞吻",
+    "92": "/跳跳",
+    "93": "/发抖",
+    "94": "/怄火",
+    "95": "/转圈",
+    "96": "/磕头",
+    "97": "/回头",
+    "98": "/跳绳",
+    "99": "/挥手",
+    "100": "/激动",
+    "101": "/街舞",
+    "102": "/献吻",
+    "103": "/左太极",
+    "104": "/右太极"
+  };
   /*
   添加一级菜单
   */
@@ -75,9 +199,8 @@ $(document).ready(function() {
   });
 
   /*
-  一级菜单动作设置
+  修改菜单名称
   */
-
 
   /*
   增加二级菜单
@@ -175,24 +298,74 @@ $(document).ready(function() {
   二级菜单动作编辑
   */
   $(".edit-submenu-btn").click(function(){
-    var type = $(this).data("submenutype");
-    var menuId = $(this).data("id");
+    var $this = $(this);
+    var type = $this.data("submenutype");
+    var menuId = $this.data("id");
+    var url = $this.data("url");
+    var title = $this.data("title");
+    var description = $(this).data("description");
+    var msgType = $this.data("msgtype");
+    var img = $this.data("img");
     $(".menu-id").attr("value",menuId);
     $(".mesg-menu-id").attr("value",menuId);
     if (type == "none") {
       $(".edit-url").hide();
       $(".edit-mesg").hide();
       $(".select-action").show();
+      $(".url-value").attr("value","");
+      $(".url-save").text("保存");
+      $(".pre-graphic-title").text("");
+      $(".graphic-des").text("");
+      $(".graphic-url").text("");
+      $(".text3").hide();
+      $(".graphic-add").text("保存");
+      $(".mesg-panel-text").html("");
+      $(".mesg-save").text("保存");
     }
     if (type == "view") {
       $(".select-action").hide();
       $(".edit-mesg").hide();
       $(".edit-url").show();
+      if(url == "") {
+        $(".url-value").attr("value","");
+      }
+      else {
+        $(".url-value").attr("value",url);
+        $(".url-save").text("修改");
+      }
     }
     if (type == "click") {
       $(".select-action").hide();
       $(".edit-url").hide();
       $(".edit-mesg").show();
+      if(msgType == "news") {
+        $(".edit-graphic").click();
+        $(".pre-graphic-title").text(title);
+        $(".graphic-des").text(description);
+        $(".graphic-url").text(url);
+        $(".text3").show();
+        $(".preview-graphic-pic").attr("src",img);
+        $(".preview-graphic-pic").show();
+        $(".graphic-add").text("修改");
+        cleanText();
+        cleanImage();
+      }
+      else if(msgType == "image") {
+        $(".edit-picture").click();
+        cleanText();
+        cleanGraphic();
+      }
+      else if(msgType == "text") {
+        $(".edit-word").click();
+        var htmlText = changeEmotion(description);
+        $(".mesg-panel-text").html(htmlText);
+        $(".mesg-save").text("修改");
+        cleanGraphic();
+        cleanImage();
+      }
+      else {
+
+      }
     }
   });
 
@@ -251,7 +424,13 @@ $(document).ready(function() {
     var url = $(this).parents(".edit-url").find(".url-value").val();
     var id =  $(this).parents(".edit-url").find(".menu-id").val();
     var buttonType ="view";
-    if(url == "") {
+    if(!regUrl.test(url)) {
+      $(".url-mesg").text("请输入正确的跳转地址")
+      $(".url-mesg").show();
+      return false;
+    }
+    else if(url == "") {
+      $(".url-mesg").text("请输入跳转地址")
       $(".url-mesg").show();
       return false;
     }
@@ -267,8 +446,10 @@ $(document).ready(function() {
         success: function(data) {
           if (data.status == 'success') {
             alert(data.msg);
-            _href = window.location.href;
-            window.location.href = _href;
+            $(".url-value").attr("value",url);
+            $("#menu"+id).data("url",url);
+            // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
+            updataMenuInf(id,buttonType,"","","",url,"");
           } else {
             alert(data.msg);
           }
@@ -328,6 +509,7 @@ $(document).ready(function() {
     $(".expression").fadeOut("500");
   });
 
+
   /*
   设置动作导航
   */
@@ -372,7 +554,6 @@ $(document).ready(function() {
   上传图片
   */
   $(".upload-pic-btn").click(function() {
-    $(".preview-pic").empty();
     var msgType = "image";
     $("#fileupload").trigger("click");
     $("#fileupload").fileupload({
@@ -388,8 +569,8 @@ $(document).ready(function() {
         else if (result.result.status == "weixin_failed") {
           alert("上传微信失败")
           var imgUrl = result.result.url;
-          var img = $("<img></img>").attr("src",imgUrl);
-          $(".preview-pic").append(img);
+          $(".image-preview").attr("src",imgUrl);
+          $(".image-preview").show();
         }
         else {
           alert("上传失败");
@@ -458,7 +639,6 @@ $(document).ready(function() {
   发送图文
   */
   $(".save-graphic").click(function(){
-    $(".preview-graphic").empty();
     var title = $("#graphic_title").val();
     var description = $("#graphic_des").val();
     var url = $("#graphic_url").val();
@@ -473,6 +653,10 @@ $(document).ready(function() {
     }
     else if(url == "") {
       alert("请输入链接");
+      return false;
+    }
+    else if (!regUrl.test(url)) {
+      alert("请输入正确的url地址");
       return false;
     }
     else if(img == "") {
@@ -497,8 +681,15 @@ $(document).ready(function() {
         },
         success: function(data) {
           alert("发送成功");
-          var previewimg = $("<img></img>").attr("src",img);
-          $(".preview-graphic").append(previewimg);
+          $(".pre-graphic-title").text(title);
+          $(".graphic-des").text(description);
+          $(".graphic-url").text(url);
+          $(".text3").show();
+          $(".preview-graphic-pic").attr("src",img);
+          $(".preview-graphic-pic").show();
+          // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
+          updataMenuInf(id,buttonType,msgType,title,description,url,img);
+          cleanText();
         },
         complete: function(XMLHttpRequest,textStatus) {
 
@@ -538,119 +729,18 @@ $(document).ready(function() {
       $(".mesg-save").click();
     }
   });
+/*
+编辑器
+*/
+  $.fn.editable.defaults.mode = 'popup';
+  $('.wx-menu-editable').editable();
+
 
   /*
   文字发送
   */
   function sendMessage() {
     $(".mesg-save").on('click', function() {
-      var data = {
-        "0": "/微笑",
-        "1": "/撇嘴",
-        "2": "/色",
-        "3": "/发呆",
-        "4": "/得意",
-        "5": "/流泪",
-        "6": "/害羞",
-        "7": "/闭嘴",
-        "8": "/睡",
-        "9": "/大哭",
-        "10": "/尴尬",
-        "11": "/发怒",
-        "12": "/调皮",
-        "13": "/呲牙",
-        "14": "/惊讶",
-        "15": "/难过",
-        "16": "/酷",
-        "17": "/冷汗",
-        "18": "/抓狂",
-        "19": "/吐",
-        "20": "/偷笑",
-        "21": "/可爱",
-        "22": "/白眼",
-        "23": "/傲慢",
-        "24": "/饥饿",
-        "25": "/困",
-        "26": "/惊恐",
-        "27": "/流汗",
-        "28": "/憨笑",
-        "29": "/大兵",
-        "30": "/奋斗",
-        "31": "/咒骂",
-        "32": "/疑问",
-        "33": "/嘘",
-        "34": "/晕",
-        "35": "/折磨",
-        "36": "/衰",
-        "37": "/骷髅",
-        "38": "/敲打",
-        "39": "/再见",
-        "40": "/擦汗",
-        "41": "/抠鼻",
-        "42": "/鼓掌",
-        "43": "/糗大了",
-        "44": "/坏笑",
-        "45": "/左哼哼",
-        "46": "/右哼哼",
-        "47": "/哈欠",
-        "48": "/鄙视",
-        "49": "/委屈",
-        "50": "/快哭了",
-        "51": "/阴险",
-        "52": "/亲亲",
-        "53": "/吓",
-        "54": "/可怜",
-        "55": "/菜刀",
-        "56": "/西瓜",
-        "57": "/啤酒",
-        "58": "/篮球",
-        "59": "/乒乓",
-        "60": "/咖啡",
-        "61": "/饭",
-        "62": "/猪头",
-        "63": "/玫瑰",
-        "64": "/凋谢",
-        "65": "/示爱",
-        "66": "/爱心",
-        "67": "/心碎",
-        "68": "/蛋糕",
-        "69": "/闪电",
-        "70": "/炸弹",
-        "71": "/刀",
-        "72": "/足球",
-        "73": "/瓢虫",
-        "74": "/便便",
-        "75": "/月亮",
-        "76": "/太阳",
-        "77": "/礼物",
-        "78": "/拥抱",
-        "79": "/强",
-        "80": "/弱",
-        "81": "/握手",
-        "82": "/胜利",
-        "83": "/抱拳",
-        "84": "/勾引",
-        "85": "/拳头",
-        "86": "/差劲",
-        "87": "/爱你",
-        "88": "/NO",
-        "89": "/OK",
-        "90": "/爱情",
-        "91": "/飞吻",
-        "92": "/跳跳",
-        "93": "/发抖",
-        "94": "/怄火",
-        "95": "/转圈",
-        "96": "/磕头",
-        "97": "/回头",
-        "98": "/跳绳",
-        "99": "/挥手",
-        "100": "/激动",
-        "101": "/街舞",
-        "102": "/献吻",
-        "103": "/左太极",
-        "104": "/右太极"
-      };
       var replyContent = $(".mesg-panel-text").html();
       if(replyContent.length <= 0) {
         alert("请输入内容");
@@ -659,7 +749,7 @@ $(document).ready(function() {
       for (i = 0; i < 105; i++) {
         var code = "" + i + ".gif\">";
         var re = new RegExp("<img class=\"expression-img\" src=\"https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/" + code, "g");
-        replyContent = replyContent.replace(re, data[i]);
+        replyContent = replyContent.replace(re, emotionData[i]);
       }
       var buttonType = "click";
       var msgType = "text";
@@ -675,7 +765,9 @@ $(document).ready(function() {
         },
         success: function(data) {
           alert("发送成功");
-          $(".mesg-panel-text").empty();
+          // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
+          updataMenuInf(id,buttonType,msgType,"",replyContent,"","");
+          cleanGraphic();
         },
         complete: function(XMLHttpRequest,textStatus) {
 
@@ -686,74 +778,43 @@ $(document).ready(function() {
       });
     });
   }
+
+
+
+  /*
+  表情编码转换为表情
+  */
+  function changeEmotion(emotionCode) {
+    for (i = 0; i < 105; i++) {
+      var data = new RegExp(emotionData[i], "g");
+      var re = "<img class='expression-img' src='https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/"+i+".gif'>";
+      emotionCode = emotionCode.replace(data, re);
+    }
+    return emotionCode;
+  }
+
+  function updataMenuInf(id,submenutype,msgtype,title,description,url,img) {
+    $("#menu"+id).data("submenutype",submenutype);
+    $("#menu"+id).data("msgtype",msgtype);
+    $("#menu"+id).data("title",title);
+    $("#menu"+id).data("description",description);
+    $("#menu"+id).data("url",url);
+    $("#menu"+id).data("img",img);
+  }
+
+  function cleanGraphic() {
+    $(".pre-graphic-title").text("");
+    $(".graphic-des").text("");
+    $(".graphic-url").text("url");
+    $(".text3").hide();
+    $(".preview-graphic-pic").attr("src","");
+    $(".preview-graphic-pic").hide();
+  }
+  function cleanText() {
+    $(".mesg-panel-text").html("");
+  }
+  function cleanImage() {
+    $(".image-preview").attr("src","");
+    $(".image-preview").hide();
+  }
 });
-
-
-
-(function() {
-  $(document).on('ready page:load', function() {
-    $.fn.editable.defaults.mode = 'popup';
-    $('.wx-menu-editable').editable();
-    $('.publish-menu').on('click', function() {
-      $.ajax({
-        type: "GET",
-        url: "/admin/weixin/menus/create/json",
-        dataType: "json",
-        success: function(data) {
-          alert(data.msg);
-        },
-        complete: function(XMLHttpRequest, textStatus) {
-          // code
-        },
-        error: function() {
-          // code
-        }
-      });
-      return false;
-    });
-    /*
-    $('.sub-menu-add').on('click', function() {
-      parent_id = $(this).data("id");
-      $("input[name=parent_id]").val(parent_id);
-    });
-    */
-    /*
-    $('.menu-add').on('click', function() {
-      _name = $("input[name=name]").val();
-      _url = $("input[name=url]").val();
-      _p_id = $("input[name=parent_id]").val();
-      if (_name === '' || _url === '' || _p_id === '') {
-        alert("请填写完整");
-      } else {
-        $.ajax({
-          type: "POST",
-          url: "/admin/wx_menus/create/json",
-          dataType: "json",
-          data: {
-            name: _name,
-            url: _url,
-            parent_id: _p_id,
-            level: 2
-          },
-          success: function(data) {
-            if (data.status == 'success') {
-              alert(data.msg);
-              _href = window.location.href;
-              window.location.href = _href;
-            } else {
-              alert(data.msg);
-            }
-          },
-          complete: function(XMLHttpRequest, textStatus) {
-            // code
-          },
-          error: function() {
-            // code
-          }
-        });
-      }
-      return false;
-    });
-    */
-  });
-}).call(this);
