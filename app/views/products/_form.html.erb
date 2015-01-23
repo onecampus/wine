@@ -89,7 +89,7 @@
       <%= t 'activerecord.attributes.product.country' %>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :country, :class => "form-control" %>
+      <%= f.select(:country, options_for_select(country_to_select.collect{|p| [p, p]}, @product.country)) %>
     </div>
   </div>
   <div class="form-group">
@@ -156,7 +156,7 @@
       <span class="symbol required"></span>
     <% end %>
     <div class="col-sm-9">
-      <%= f.text_field :unit, required: "true", :class => "form-control" %>
+      <%= f.text_field :unit, value: "瓶", required: "true", :class => "form-control" %>
     </div>
   </div>
   <div class="form-group">

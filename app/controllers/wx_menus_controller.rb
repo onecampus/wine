@@ -178,12 +178,34 @@ class WxMenusController < ApplicationController
         name: tm.name,
         sub_button: []
       }
-      WxMenu.where(level: 2, parent_id: tm.id).last(5).each do |sm|
-        tmp_hash[:sub_button].push(
-          type: 'view',
-          name: sm.name,
-          url: sm.url
-        )
+      sub_menus =  WxMenu.where(level: 2, parent_id: tm.id).last(5)
+      unless sub_menus.blank?
+        sub_menus.each do |sm|
+          if sm.button_type == 'click'
+            tmp_hash[:sub_button].push(
+              type: 'click',
+              name: sm.name,
+              key: sm.key
+            )
+          elsif sm.button_type == 'view'
+            tmp_hash[:sub_button].push(
+              type: 'view',
+              name: sm.name,
+              url: sm.url
+            )
+          end
+        end
+      else
+        tmp_hash = {
+          name: tm.name
+        }
+        if tm.button_type == 'click'
+          tmp_hash[:key] = tm.key
+          tmp_hash[:type] = 'click'
+        elsif tm.button_type == 'view'
+          tmp_hash[:type] ='view'
+          tmp_hash[:url] = tm.url
+        end
       end
       menus[:button].push tmp_hash
     end

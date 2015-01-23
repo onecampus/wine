@@ -62,20 +62,21 @@ Integral.create(user_id: provider.id, amount: 0)
 Vritualcard.create(user_id: provider.id, money: '0.00')
 
 
-customer = User.new(
-  username: 'customer',
-  email: 'customer@gmail.com',
+customer1 = User.new(
+  username: 'customer1',
+  email: 'customer1@gmail.com',
   password: '12345678',
   password_confirmation: '12345678'
 )
-customer.skip_confirmation!
-customer.save!
-customer.add_role :customer
+customer1.skip_confirmation!
+customer1.save!
+customer1.add_role :customer
 Profile.create(
-  user_id: customer.id,
-  mobile: "135604744#{customer.id}",
-  tel: "5555#{customer.id}",
-  invite_code: User.generate_share_link_code,
+  user_id: customer1.id,
+  mobile: "135604744#{customer1.id}",
+  tel: "5555#{customer1.id}",
+  share_link_code: User.generate_share_link_code,
+  invite_code: User.generate_invite_code,
   province: '广东省',
   city: '广州市',
   region: '番禺区',
@@ -83,8 +84,62 @@ Profile.create(
   fax: '55555',
   supplier_id: provider.id
 )
-Integral.create(user_id: customer.id, amount: 0)
-Vritualcard.create(user_id: customer.id, money: '0.00')
+Integral.create(user_id: customer1.id, amount: 0)
+Vritualcard.create(user_id: customer1.id, money: '0.00')
+
+
+customer2 = User.new(
+  username: 'customer2',
+  email: 'customer2@gmail.com',
+  password: '12345678',
+  password_confirmation: '12345678'
+)
+customer2.skip_confirmation!
+customer2.save!
+customer2.add_role :customer
+Profile.create(
+  user_id: customer2.id,
+  mobile: "135604744#{customer2.id}",
+  tel: "5555#{customer2.id}",
+  share_link_code: User.generate_share_link_code,
+  province: '广东省',
+  city: '广州市',
+  region: '番禺区',
+  address: '小谷围',
+  fax: '55555',
+  supplier_id: provider.id
+)
+customer2.profile.move_to_child_of(customer1.profile)
+customer1.profile.reload
+Integral.create(user_id: customer2.id, amount: 0)
+Vritualcard.create(user_id: customer2.id, money: '0.00')
+
+
+customer3 = User.new(
+  username: 'customer3',
+  email: 'customer3@gmail.com',
+  password: '12345678',
+  password_confirmation: '12345678'
+)
+customer3.skip_confirmation!
+customer3.save!
+customer3.add_role :customer
+Profile.create(
+  user_id: customer3.id,
+  mobile: "135604744#{customer3.id}",
+  tel: "5555#{customer3.id}",
+  share_link_code: User.generate_share_link_code,
+  province: '广东省',
+  city: '广州市',
+  region: '番禺区',
+  address: '小谷围',
+  fax: '55555',
+  supplier_id: provider.id
+)
+customer3.profile.move_to_child_of(customer2.profile)
+customer2.profile.reload
+Integral.create(user_id: customer3.id, amount: 0)
+Vritualcard.create(user_id: customer3.id, money: '0.00')
 
 =begin
 1.upto(50).each do |i|

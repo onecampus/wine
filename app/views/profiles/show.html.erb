@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-    查看<%= t 'activerecord.models.profile' %>
+  查看<%= t 'activerecord.models.profile' %>
 <% end %>
 <style>
   .tab-content .row {
@@ -49,35 +49,34 @@
 </style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
-    <ol class="breadcrumb">
-      <li>
-        <i class="clip-pencil"></i>
-        <a href="#">
-          控制面板
+  <ol class="breadcrumb">
+    <li>
+      <i class="clip-pencil"></i>
+      <a href="#">
+        控制面板
         </a>
-      </li>
-      <li class="active">
-        查看<%= t 'activerecord.models.profile' %>
-      </li>
-      <li class="search-box">
-        <form class="sidebar-search">
-          <div class="form-group">
-            <input type="text" placeholder="Start Searching...">
-            <button class="submit">
-              <i class="clip-search-3"></i>
-            </button>
-          </div>
-        </form>
-      </li>
-    </ol>
-    <div class="page-header">
-      <h1>
-        <small></small>
-      </h1>
-    </div>
+    </li>
+    <li class="active">
+      查看<%= t 'activerecord.models.profile' %>
+    </li>
+    <li class="search-box">
+      <form class="sidebar-search">
+        <div class="form-group">
+          <input type="text" placeholder="Start Searching...">
+          <button class="submit">
+            <i class="clip-search-3"></i>
+          </button>
+        </div>
+      </form>
+    </li>
+  </ol>
+  <div class="page-header">
+    <h1>
+      <small></small>
+    </h1>
+  </div>
 <% end %>
 <!-- end: PAGE TITLE & BREADCRUMB -->
-
 <!-- start: PAGE CONTENT -->
 <div class="row">
   <div class="col-sm-6">
@@ -114,125 +113,112 @@
           <div class="row">
             <div class="col-sm-12">
               <!-- start: TEXT FIELDS PANEL -->
-                  <div class="form-horizontal">
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.username' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.user.username %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.email' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.user.email %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.mobile' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.mobile %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.tel' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.tel %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.province' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.province %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.city' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.city %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.region' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.region %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.address' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.address %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.fax' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.fax %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.invite_code' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.invite_code %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.share_link_code' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.share_link_code %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.default_address_id' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.default_address_id %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.weixin_open_id' %></div>
-                      <div class="col-sm-9">
-                        <div class="show-control">
-                          <%= @profile.weixin_open_id %>
-                        </div>
-                      </div>
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.username' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.user.username %>
                     </div>
                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.user.email' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.user.email %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.mobile' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.mobile %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.tel' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.tel %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.province' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.province %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.city' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.city %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.region' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.region %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.address' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.address %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.fax' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.fax %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.invite_code' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.invite_code %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.share_link_code' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.share_link_code %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.default_address_id' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.default_address_id %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"><%= t 'activerecord.attributes.profile.weixin_open_id' %></div>
+                  <div class="col-sm-9">
+                    <div class="show-control">
+                      <%= @profile.weixin_open_id %>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- end: TEXT FIELDS PANEL -->
             </div>
           </div>
@@ -249,15 +235,15 @@
               <th>货物状态</th>
             </tr>
             <% @profile.user.orders.each do |order| %>
-            <tr>
-              <td><%= order.user.username %></td>
-              <td><%= Profile.find(order.user.id).user.username if order.user %></td>
-              <td><%= order.ship_address %></td>
-              <td><%= order.total_price %></td>
-              <td><%= order_status order.order_status %></td>
-              <td><%= pay_status order.pay_status %></td>
-              <td><%= logistics_status order.logistics_status %></td>
-            </tr>
+              <tr>
+                <td><%= order.user.username %></td>
+                <td><%= Profile.find(order.user.id).user.username if order.user %></td>
+                <td><%= order.ship_address %></td>
+                <td><%= order.total_price %></td>
+                <td><%= order_status order.order_status %></td>
+                <td><%= pay_status order.pay_status %></td>
+                <td><%= logistics_status order.logistics_status %></td>
+              </tr>
             <% end %>
           </table>
         </div>
@@ -269,11 +255,11 @@
               <th>提成百分比</th>
             </tr>
             <% @profile.user.commissions.each do |com| %>
-            <tr>
-              <td><%= com.order_id %></td>
-              <td><%= com.commission_money %></td>
-              <td><%= com.percent %></td>
-            </tr>
+              <tr>
+                <td><%= com.order_id %></td>
+                <td><%= com.commission_money %></td>
+                <td><%= com.percent %></td>
+              </tr>
             <% end %>
           </table>
         </div>
@@ -286,12 +272,12 @@
               <th>下家</th>
             </tr>
             <% @profile.user.withdraws.each do |draw| %>
-            <tr>
-              <td><%= draw.draw_type %></td>
-              <td><%= draw.draw_money %></td>
-              <td><%= draw.draw_status %></td>
-              <td><%= User.find(draw.from_user_id).username %></td>
-            </tr>
+              <tr>
+                <td><%= draw.draw_type %></td>
+                <td><%= draw.draw_money %></td>
+                <td><%= draw.draw_status %></td>
+                <td><%= User.find(draw.from_user_id).username %></td>
+              </tr>
             <% end %>
           </table>
         </div>
