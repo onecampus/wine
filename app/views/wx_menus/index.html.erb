@@ -45,7 +45,7 @@
     <div class="panel-left">
       <div class="left-head">
         <span>菜单管理</span>
-        <a class="add-menu" href="javascript:void(0)" data-toggle="modal" data-target="#add-menu"><i class="fa fa-plus fa-lg"></i></a>
+        <a class="add-menu" href="javascript:void(0)" data-toggle="modal" data-target="#add-menu"><i class="fa fa-plus fa-lg" data-toggle="tooltip" data-placement="top" title="添加一级菜单"></i></a>
       </div>
       <div class="left-body">
         <% @wx_menus.each do |mu| %>
@@ -56,9 +56,9 @@
                 <a href="javascript:void(0)" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
               </div>
             <span class="menu-edit">
-              <a class="menu-edit-edit edit-submenu-btn" href="javascript:void(0)" data-id="<%= mu.id %>"data-submenutype="<% if mu.button_type.blank? %>none<% elsif mu.button_type == 'click' %>click<% elsif mu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
-              <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)"><i class="fa fa-plus fa-lg"></i></a>
-              <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg"></i></a>
+              <a class="menu-edit-edit edit-submenu-btn" data-toggle="tooltip" data-placement="top" title="编辑一级菜单动作" href="javascript:void(0)" data-id="<%= mu.id %>"data-submenutype="<% if mu.button_type.blank? %>none<% elsif mu.button_type == 'click' %>click<% elsif mu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
+              <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="添加二级菜单"><i class="fa fa-plus fa-lg"></i></a>
+              <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="删除一级菜单"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
           </div>
           <div class="menu-drop">
@@ -69,8 +69,8 @@
                   <a><i class="fa fa-circle"></i></a>
                   <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
-                    <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
-                    <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
+                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="编辑二级菜单动作" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>" data-toggle="tooltip" data-placement="top" title="删除二级菜单"><i class="fa fa-trash-o fa-lg"></i></a>
                   </span>
                 </li>
               <% end %>
