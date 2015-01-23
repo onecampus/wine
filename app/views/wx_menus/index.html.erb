@@ -56,7 +56,7 @@
                 <a href="javascript:void(0)" data-name="name" class="wx-menu-editable" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= mu.name %></a>
               </div>
             <span class="menu-edit">
-              <a class="menu-edit-edit edit-submenu-btn" data-toggle="tooltip" data-placement="top" title="编辑一级菜单动作" href="javascript:void(0)" data-id="<%= mu.id %>"data-submenutype="<% if mu.button_type.blank? %>none<% elsif mu.button_type == 'click' %>click<% elsif mu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
+              <a id="menu<%= mu.id %>" class="menu-edit-edit edit-submenu-btn" data-toggle="tooltip" data-placement="top" title="编辑一级菜单动作" href="javascript:void(0)" data-id="<%= mu.id %>" data-url="<%= mu.url %>" data-title="<%= mu.title %>" data-description="<%= mu.description %>" data-msgType="<%= mu.msg_type %>" data-img="<%= mu.img %>" data-submenutype="<% if mu.button_type.blank? %>none<% elsif mu.button_type == 'click' %>click<% elsif mu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
               <a class="menu-edit-add" data-toggle="modal" data-target="#add-submenu" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="添加二级菜单"><i class="fa fa-plus fa-lg"></i></a>
               <a class="menu-edit-del delete-submenu-btn" data-id="<%= mu.id %>" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="删除一级菜单"><i class="fa fa-trash-o fa-lg"></i></a>
             </span>
@@ -69,7 +69,7 @@
                   <a><i class="fa fa-circle"></i></a>
                   <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
-                    <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="编辑二级菜单动作" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a id="menu<%= submu.id %>" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="编辑二级菜单动作" class="edit-submenu-btn" data-id="<%= submu.id %>" data-url="<%= submu.url %>" data-title="<%= submu.title %>" data-description="<%= submu.description %>" data-msgType="<%= submu.msg_type %>" data-img="<%= submu.img %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
                     <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>" data-toggle="tooltip" data-placement="top" title="删除二级菜单"><i class="fa fa-trash-o fa-lg"></i></a>
                   </span>
                 </li>
@@ -86,6 +86,7 @@
       </div>
       <div class="select-action">
         <span>请选择订阅者点击菜单后，公众号做出的相应动作</span>
+        <input type="hidden" value="" class="action-menu-id">
         <div class="select-action-body">
           <div class="action-mesg">
             <a href="javascript:void(0)" class="add-mesg"><div></div></a>
@@ -99,13 +100,12 @@
       </div>
       <div class="edit-url">
         <span>订阅者点击该子菜单会跳到以下链接</span>
-        <p class="url-mesg text2">请输入跳转地址</p>
+        <p class="url-mesg text2"></p>
         <div class="url-input">
           <input type="hidden" class="menu-id" value="">
           <input class="url-value"type="text" placeholder="输入URL">
         </div>
         <div class="url-btn">
-          <button class="url-back">返回</button>
           <button class="url-save">保存</button>
         </div>
       </div>
@@ -132,315 +132,523 @@
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/0.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/1.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/2.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/3.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/4.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/5.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/6.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/7.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/8.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/9.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/10.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/11.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/12.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/13.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/14.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/15.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/16.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/17.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/18.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/19.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/20.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/21.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/22.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/23.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/24.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/25.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/26.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/27.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/28.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/29.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/30.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/31.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/32.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/33.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/34.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/35.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/36.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/37.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/38.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/39.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/40.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/41.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/42.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/43.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/44.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/45.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/46.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/47.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/48.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/49.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/50.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/51.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/52.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/53.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/54.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/55.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/56.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/57.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/58.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/59.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/60.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/61.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/62.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/63.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/64.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/65.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/66.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/67.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/68.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/69.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/70.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/71.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/72.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/73.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/74.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/75.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/76.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/77.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/78.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/79.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/80.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/81.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/82.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/83.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/84.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/85.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/86.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/87.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/88.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/89.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/90.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/91.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/92.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/93.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/94.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/95.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/96.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/97.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/98.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/99.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/100.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/101.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/102.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/103.gif">
                </li>
+             </a>
+             <a class="icon-emotion" href="javascript:void(0)">
                <li class="emotion-item">
                  <img class="expression-img" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/104.gif">
                </li>
@@ -448,7 +656,6 @@
            </ul>
          </div>
          <div class="mesg-btn">
-           <button class="mesg-back">返回</button>
            <button class="mesg-save">保存</button>
          </div>
        </div>
@@ -458,6 +665,7 @@
        <div class="edit-pic-body">
           <div class="edit-pic">
             <div class="preview-pic">
+              <img src="" class="image-preview">
             </div>
             <div class="upload-pic">
               <a class="upload-pic-btn"><i class='fa fa-camera fa-2x'></i></a>
@@ -502,7 +710,6 @@
 
           </div>
           <div class="pic-btn">
-            <button class="pic-back">返回</button>
             <button class="pic-save">保存</button>
           </div>
        </div>
@@ -583,6 +790,7 @@
            <p class="text3 text4">描述:<span class="graphic-des">文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件</span></p>
            <p class="text3">链接:<span class="graphic-url">士大夫的撒发射的反倒是发</span></p>
            <div class="preview-graphic">
+             <img class="preview-graphic-pic" src="">
            </div>
          </div>
          <div class="upload-graphic">
