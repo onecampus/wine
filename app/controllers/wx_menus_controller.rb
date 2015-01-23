@@ -154,8 +154,20 @@ class WxMenusController < ApplicationController
   def set_access_token
     app_id = ENV['APP_ID']
     app_secret = ENV['APP_SECRET']
-    access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
-    access_token_hash[:access_token]
+    access_token = nil
+    if $redis
+      access_token = $redis.get('access_token')
+      if access_token.blank?
+        access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+        access_token = access_token_hash['access_token']
+        $redis.set('access_token', access_token)
+        $redis.expire('access_token', 7000)
+      end
+    else
+      access_token_hash = WxExt::Api::Base.get_access_token(app_id, app_secret, 'client_credential')
+      access_token = access_token_hash['access_token']
+    end
+    access_token
   end
 
   def create_custom_menu(access_token)

@@ -374,6 +374,9 @@ var jQuery_1_7_2 = $.noConflict(true);
         });
 
 
+      alert(window.location.href.split('#')[0]);
+
+
       // 信息验证成功
       wx.ready(function(){
 
@@ -385,7 +388,7 @@ var jQuery_1_7_2 = $.noConflict(true);
           imgUrl: img_url,
           type: 'link',
           success: function () {
-            alert('succeed in sharing!');
+            alert(link);
           },
           cancel: function () {
               alert('cancel');
@@ -398,7 +401,7 @@ var jQuery_1_7_2 = $.noConflict(true);
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert('share');
+            alert(url);
           },
           cancel: function () {
               alert('cancel')
@@ -412,7 +415,7 @@ var jQuery_1_7_2 = $.noConflict(true);
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert('share');
+            alert(url);
           },
           cancel: function () {
             alert('cancel')
@@ -426,7 +429,7 @@ var jQuery_1_7_2 = $.noConflict(true);
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert('share');
+            alert(url);
           },
           cancel: function () {
             alert('cancel')

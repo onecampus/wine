@@ -3,19 +3,21 @@
 <% end %>
 <style type="text/css">
   /* 轮动框样式 */
-  select {
+  .input-row > select {
     margin:  10px auto;
     font-size: 16px;
+    width: 150px;
   }
   /* 弹出框样式 */
   .mask {
     display: none;
-    position: absolute;
+    position: fixed;
+    *position: absolute;
     top: 50%;
     left: 50%;
     width: 80%;
-    height: 210px;
-    margin-top: -125px;
+    height: 280px;
+    margin-top: -140px;
     margin-left: -40%;
     background-color: #fff;
     border-radius: 5px;
@@ -23,6 +25,9 @@
     color: #666;
     z-index: 20;
     box-shadow: 0 0 3px #666;
+  }
+  .mask > p {
+    margin-left: 20px;
   }
   #mask {
     display: none;
@@ -110,11 +115,11 @@
     <%= devise_error_messages! %>
     <div class="input-row">
       <%= f.label :username %>
-      <%= f.text_field :username, autofocus: true %>
+      <%= f.text_field :username, autofocus: true, placeholder: "请输入用户名" %>
     </div>
     <div class="input-row">
       <%= f.label :email %>
-      <%= f.email_field :email %>
+      <%= f.email_field :email, placeholder: "请输入邮箱帐号" %>
     </div>
     <div class="">
       <% if @validatable %>
@@ -123,11 +128,11 @@
     </div>
     <div class="input-row">
       <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "off" %>
+      <%= f.password_field :password, autocomplete: "off", placeholder: "请输入密码" %>
     </div>
     <div class="input-row">
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "请确认密码" %>
     </div>
     <input type="hidden" name="province" value="" class="province" />
     <input type="hidden" name="city" value="" class="city" />
@@ -139,6 +144,7 @@
 <div class="back"></div>
 <!-- 用户选择地点弹出框 -->
 <div class="mask">
+  <p>请选择送货地址（这一地址可以登录后修改）</p>
   <div class="input-row">
     <label>省份</label>
     <select name="province" id="s1" ></select>
@@ -314,5 +320,18 @@
     $('.province').val(province);
     $('.city').val(city);
     $('.region').val(region);
+
+    // 验空
+    var $input = $( "input:not(.sign_submit)" );
+    $( ".sign_submit" ).on( "click", function(e){
+      $input.each(function(){
+        var $this = $(this);
+        if ( !$this.val() ) {
+          $this.focus();
+          e.preventDefault();
+          return false;
+        }
+      });
+    });
   });
 </script>
