@@ -109,9 +109,9 @@ class OrdersController < ApplicationController
       Order.transaction do
         @order.save!
         buyer = @order.user
-        commissioner = nil
+        commissioner = nil  # 第一级提成者
         total_price = @order.total_price
-        commission_price = total_price.to_f
+        commission_price = total_price.to_f  # 提成金额
         if @order.order_type == '普通订单'
           @order.products.each do |p|
             commission_price -= p.price if p.is_commission == 0
@@ -131,53 +131,63 @@ class OrdersController < ApplicationController
         elsif !@order.share_link_code.blank?
           commissioner_profile = Profile.where(share_link_code: @order.share_link_code).first
           commissioner = commissioner_profile.user
+        elsif !buyer.profile.parent.blank?
+          commissioner_profile = buyer.profile.parent
+          commissioner = commissioner_profile.user
         end
 
         unless commissioner.blank?
           vritualcard = commissioner.vritualcard
           commissioner_money = vritualcard.money.to_f
-          commission_money = commission_price * 10%
+          commission_money = commission_price * 0.1
           commissioner_money += commission_money
           vritualcard.money = commissioner_money.round(2)
           vritualcard.save!
-
-          commissioner_parent = commissioner.parent
-          vritualcard_parent = commissioner_parent.vritualcard
-          commissioner_money_parent = vritualcard_parent.money.to_f
-          commission_money_parent = commission_price * 5%
-          commissioner_money_parent += commission_money_parent
-          vritualcard_parent.money = commissioner_money_parent.round(2)
-          vritualcard_parent.save!
-
-          commissioner_parent_parent = commissioner_parent.parent
-          vritualcard_parent_parent = commissioner_parent_parent.vritualcard
-          commissioner_money_parent_parent = vritualcard_parent_parent.money.to_f
-          commission_money_parent_parent = commission_price * 1%
-          commissioner_money_parent_parent += commission_money_parent_parent
-          vritualcard_parent_parent.money = commissioner_money_parent_parent.round(2)
-          vritualcard_parent_parent.save!
 
           Commission.create!(
             from_user_id: buyer.id,
             user_id: commissioner.id,
             order_id: @order.id,
             commission_money: commission_money.to_s,
-            percent: '10%'
+            percent: '0.1'
           )
-          Commission.create!(
-            from_user_id: buyer.id,
-            user_id: commissioner_parent.id,
-            order_id: @order.id,
-            commission_money: commission_money_parent.to_s,
-            percent: '5%'
-          )
-          Commission.create!(
-            from_user_id: buyer.id,
-            user_id: commissioner_parent_parent.id,
-            order_id: @order.id,
-            commission_money: commission_money_parent_parent.to_s,
-            percent: '1%'
-          )
+
+          commissioner_parent_profile = commissioner.profile.parent
+          unless commissioner_parent_profile.blank?
+            commissioner_parent = commissioner_parent_profile.user
+            vritualcard_parent = commissioner_parent.vritualcard
+            commissioner_money_parent = vritualcard_parent.money.to_f
+            commission_money_parent = commission_price * 0.05
+            commissioner_money_parent += commission_money_parent
+            vritualcard_parent.money = commissioner_money_parent.round(2)
+            vritualcard_parent.save!
+            Commission.create!(
+              from_user_id: buyer.id,
+              user_id: commissioner_parent.id,
+              order_id: @order.id,
+              commission_money: commission_money_parent.to_s,
+              percent: '0.05'
+            )
+
+
+            commissioner_parent_parent_profile = commissioner_parent.profile.parent
+            unless commissioner_parent_parent_profile.blank?
+              commissioner_parent_parent = commissioner_parent_parent_profile.user
+              vritualcard_parent_parent = commissioner_parent_parent.vritualcard
+              commissioner_money_parent_parent = vritualcard_parent_parent.money.to_f
+              commission_money_parent_parent = commission_price * 0.01
+              commissioner_money_parent_parent += commission_money_parent_parent
+              vritualcard_parent_parent.money = commissioner_money_parent_parent.round(2)
+              vritualcard_parent_parent.save!
+              Commission.create!(
+                from_user_id: buyer.id,
+                user_id: commissioner_parent_parent.id,
+                order_id: @order.id,
+                commission_money: commission_money_parent_parent.to_s,
+                percent: '0.01'
+              )
+            end
+          end
         end
       end
     end

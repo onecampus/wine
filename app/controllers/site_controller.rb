@@ -24,7 +24,8 @@ class SiteController < CustomerController
                                                  :scratch_off,
                                                  :big_wheel,
                                                  :index_groups_seckills,
-                                                 :show_group]
+                                                 :show_group,
+                                                 :show_seckill]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
@@ -229,26 +230,26 @@ class SiteController < CustomerController
   end
 
   def create_order
-    share_link_code = params[:share_link_code]
-    invite_code = params[:invite_code]
-    current_user_profile = current_user.profile
+    share_link_code = params[:share_link_code]  # 分享链接
+    invite_code = params[:invite_code]  # 邀请码
+    current_user_profile = current_user.profile  # 当前用户的额外信息
 
     # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
     old_orders = current_user.orders
 
-    # shipaddress
+    # 收货地址
     shipaddress = Shipaddress.find params[:ship_address_id]
-    # invoice
+    # 发票
     invoice = nil
     invoice = Invoice.find(params[:invoice_id]) unless params[:invoice_id].blank?
 
-    # order
+    # 订单数据
     ship_address = "#{shipaddress.province}:#{shipaddress.city}:#{shipaddress.region}:#{shipaddress.address}:#{shipaddress.postcode}" # 省:市:区:详细地址:postcode邮编
     invoice_id = invoice.nil? ? nil : invoice.id
 
-    total_price = 0.00
-    freight = 0.00
-    package_charge = 0.00
+    total_price = 0.00  # 总价
+    freight = 0.00  # 运费
+    package_charge = 0.00  # 包装费
 
     order = Order.new(
       user_id: current_user.id,
@@ -267,17 +268,18 @@ class SiteController < CustomerController
       tel: shipaddress.tel,
       supplier_id: current_user.profile.supplier_id,
       order_number: Order.generate_order_number,
-      order_type: '普通订单'
     )
+    # 商品列表
     products = params[:products]
-
 
     if !params[:is_product].blank? && params[:is_product].to_i == 1
       order.order_type = '普通订单'
       ProductOrder.transaction do
         Order.transaction do
           order.save!
+          # 判断邀请码和分享链接, 并生成ABC关系
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+          # 判断是否生成邀请码, 即第一次购买东西
           generate_invite_code_or_not(old_orders, current_user_profile)
           # product_order
           p_o_list = []
@@ -331,7 +333,6 @@ class SiteController < CustomerController
             group.people += 1
             group.remain -= product_count.to_i
             group.save!
-
 
             group_order = GroupOrder.new(
               order_id: order.id,
@@ -695,22 +696,20 @@ class SiteController < CustomerController
   end
 
   def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
-    if current_user_profile.parent.nil?
+    if current_user_profile.parent.nil?  # 不存在上家
       if !share_link_code.blank? && !invite_code.blank?
         # invite_code is more import
-        unless invite_code.blank?
-          parent_user = Profile.where(invite_code: invite_code).first
-          unless parent_user.nil?
-            current_user_profile.move_to_child_of(parent_user)
-            parent_user.reload
-          end
-          order.invite_code = invite_code
+        parent_user = Profile.where(invite_code: invite_code).first
+        unless parent_user.blank?
+          current_user_profile.move_to_child_of(parent_user)
+          parent_user.reload
         end
+        order.invite_code = invite_code
       elsif !share_link_code.blank? || !invite_code.blank?
         # share_link_code
         unless share_link_code.blank?
           parent_user = Profile.where(share_link_code: share_link_code).first
-          unless parent_user.nil?
+          unless parent_user.blank?
             current_user_profile.move_to_child_of(parent_user)
             parent_user.reload
           end
@@ -720,7 +719,7 @@ class SiteController < CustomerController
         # invite_code
         unless invite_code.blank?
           parent_user = Profile.where(invite_code: invite_code).first
-          unless parent_user.nil?
+          unless parent_user.blank?
             current_user_profile.move_to_child_of(parent_user)
             parent_user.reload
           end

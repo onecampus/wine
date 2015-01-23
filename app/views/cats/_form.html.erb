@@ -1,42 +1,39 @@
 <%= form_for(@cat, :html => {:class => "form-horizontal"}) do |f| %>
-    <% if @cat.errors.any? %>
-        <div id="error_explanation" class="form-group">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-9">
-            <h2>保存时发生了<%= pluralize(@cat.errors.count, "error") %></h2>
-            <ul>
-              <% @cat.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
+  <% if @cat.errors.any? %>
+    <div id="error_explanation" class="form-group">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+        <h2>保存时发生了<%= pluralize(@cat.errors.count, "error") %></h2>
+        <ul>
+          <% @cat.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.cat.name' %> <span class="symbol required"></span>
     <% end %>
-
-    <div class="form-group">
-      <%= f.label :name, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.cat.name' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.text_field :name, :class => "form-control" %>
-      </div>
+    <div class="col-sm-9">
+      <%= f.text_field :name, :class => "form-control" %>
     </div>
-    <div class="form-group">
-      <%= f.label :img, :class => "col-sm-2 control-label" do %>
-        <%= t 'activerecord.attributes.cat.img' %> <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= image_tag(@cat.img_url(:thumb)) if @cat.img? %>
-        <%= f.file_field :img %>
-        <p class="help-block">请上传特色图片</p>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :img, :class => "col-sm-2 control-label" do %>
+      <%= t 'activerecord.attributes.cat.img' %> <span class="symbol required"></span>
+    <% end %>
+    <div class="col-sm-9">
+      <%= image_tag(@cat.img_url(:thumb)) if @cat.img? %>
+      <%= f.file_field :img %>
+      <p class="help-block">请上传特色图片</p>
     </div>
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="submit"></label>
-
-      <div class="col-sm-9">
-        <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
-      </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="submit"></label>
+    <div class="col-sm-9">
+      <%= f.submit("提交", class: "btn btn-yellow btn-block") %>
     </div>
+  </div>
 <% end %>
