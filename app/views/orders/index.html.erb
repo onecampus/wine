@@ -113,7 +113,7 @@
               <td><%= order.receive_name %></td>
               <td><%= order.mobile %></td>
               <td><%= order.tel %></td>
-              <td><%= Profile.find(order.supplier_id).user.username %></td>
+              <td><%= User.find(order.supplier_id).username %></td>
               <td><%= order.order_type %></td>
               <td class="center">
                 <% if order.order_status == 1 %>
