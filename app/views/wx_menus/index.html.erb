@@ -67,7 +67,7 @@
               <% subs.each do |submu| %>
                 <li class="menu-drop-list">
                   <a><i class="fa fa-circle"></i></a>
-                  <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= mu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
+                  <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
                     <a href="javascript:void(0)" class="edit-submenu-btn" data-id="<%= submu.id %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
                     <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>"><i class="fa fa-trash-o fa-lg"></i></a>
@@ -579,9 +579,9 @@
            </a>
          </div>
          <div class="graphic-inf">
-           <p class="pre-graphic-title text3"><span>标题</span>dfgdfgdf</P>
-           <p class="graphic-des text3"><span>描述</span>sfdsfdsfdsf</P>
-           <p class="graphic-url text3"><span>链接</span>士大夫的撒发射的反倒是发</P>
+           <p class="text3">标题:<span class="pre-graphic-title">dfgdfgdf</span></p>
+           <p class="text3 text4">描述:<span class="graphic-des">文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件</span></p>
+           <p class="text3">链接:<span class="graphic-url">士大夫的撒发射的反倒是发</span></p>
            <div class="preview-graphic">
            </div>
          </div>

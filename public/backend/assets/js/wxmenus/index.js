@@ -497,6 +497,10 @@ $(document).ready(function() {
         },
         success: function(data) {
           alert("发送成功");
+          $(".pre-graphic-title").text(title);
+          $(".graphic-des").text(description);
+          $(".graphic-url").text(url);
+          $(".text3").show();
           var previewimg = $("<img></img>").attr("src",img);
           $(".preview-graphic").append(previewimg);
         },
@@ -695,6 +699,7 @@ $(document).ready(function() {
     $.fn.editable.defaults.mode = 'popup';
     $('.wx-menu-editable').editable();
     $('.publish-menu').on('click', function() {
+      alert("aaa");
       $.ajax({
         type: "GET",
         url: "/admin/weixin/menus/create/json",
