@@ -423,6 +423,7 @@ $(document).ready(function(){
     var signature = '<%= @share_hash[:signature] %>';
     var hostname = location.hostname;
     var port = location.port;
+    var desc = $( '.desc' ).text();
     var domain = "http://" + hostname + ':' + port;
     var link = domain + "/customer/seckills/<%= @seckill.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
     var img_url = domain + "<%= @seckill.product.img_url %>";
@@ -448,7 +449,7 @@ $(document).ready(function(){
         imgUrl: img_url,
         type: 'link',
         success: function () {
-          alert('succeed in sharing!');
+          alert(url);
         },
         cancel: function () {
           alert('cancel');
@@ -461,7 +462,7 @@ $(document).ready(function(){
         link: link,
         imgUrl: img_url,
         success: function () {
-          alert('share');
+          alert(url);
         },
         cancel: function () {
           alert('cancel')
@@ -475,7 +476,7 @@ $(document).ready(function(){
         link: link,
         imgUrl: img_url,
         success: function () {
-          alert('share');
+          alert(url);
         },
         cancel: function () {
           alert('cancel')
@@ -489,7 +490,7 @@ $(document).ready(function(){
         link: link,
         imgUrl: img_url,
         success: function () {
-          alert('share');
+          alert(url);
         },
         cancel: function () {
           alert('cancel')
