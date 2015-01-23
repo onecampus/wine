@@ -7,3 +7,4 @@ $redis = Redis.new(cnfg)
 
 # To clear out the db before each test
 $redis.flushdb if Rails.env == 'test'
+$redis.flushdb if Rails.env == 'development'
