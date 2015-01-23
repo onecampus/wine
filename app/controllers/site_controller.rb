@@ -24,7 +24,8 @@ class SiteController < CustomerController
                                                  :scratch_off,
                                                  :big_wheel,
                                                  :index_groups_seckills,
-                                                 :show_group]
+                                                 :show_group,
+                                                 :show_seckill]
   skip_before_filter :verify_authenticity_token, only: [:create_order,
                                                         :big_wheel_ajax,
                                                         :scratch_off_ajax,
