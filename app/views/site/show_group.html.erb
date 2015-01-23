@@ -160,14 +160,16 @@ body {
 }
 
 #share > button {
-  font-size: 14px;
+  font-size: 20px;
   height: 35px;
   line-height: 35px;
   vertical-align: middle;
-  width: 78%;
+  width: 50%;
   margin: 0 auto;
   text-align: cetner;
   display: block;
+  background-color: #d9534f;
+  border-color: #d9543f;
 }
 .p-comments {
   padding: 0 20px;
@@ -196,16 +198,25 @@ body {
 }
 
 .p-intro {
-  padding: 0 20px;
   height: auto;
   clear: both;
   min-height: 150px;
   margin-bottom: 70px;
+  width: 100%;
 }
-
+.desc > * {
+  width: 96%;
+  margin: 0 auto;
+  word-break: nowrap;
+}
+.desc img {
+  width: 100%;
+  margin: 0 auto;
+}
 .p-intro h4{
   color: #787878;
   font-weight: normal;
+  margin-left: 20px;
 }
 
 .p-intro p {
@@ -313,6 +324,9 @@ body {
   <div class="p-purchase" data-no-turbolink>
     <button class="group-buy-now btn btn-red" type="button">立即购买</button>
   </div>
+  <div id="share">
+    <button type="button" class='share btn btn-red'>分享获取提成</button>
+  </div>
   <hr/>
   <div class="p-comments">
     <a href="/customer/products/<%= @group.product_id %>/comments">
@@ -323,14 +337,28 @@ body {
   <hr/>
   <div class="p-intro">
     <h4>商品详情</h4>
-    <p class="name"><%= @group.product.name %></p>
     <div class="desc"><%= raw @group.description %></div>
+  </div>
+  <!-- 分享弹出框 -->
+  <div class="share_notice">
+    <img src="/zhonglian/img/share.png" />
+    <p>分享可获提成</p>
   </div>
   <div class="back"></div>
 </div>
 <%= render "site/shared/bottombar" %>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
   $(document).ready(function(){
+    // 点击分享按钮，弹出引导框
+    $( '.share' ).on( 'click', function() {
+      $( '.back' ).show();
+      $( '.share_notice' ).slideDown(800);
+      setTimeout( function() {
+        $( '.back' ).hide();
+        $( '.share_notice' ).slideUp(800);
+      },3000);
+    });
     showOverNum();
     var minus = $(".action-de");
     var plus = $(".action-plus");
@@ -381,7 +409,7 @@ body {
     }
 
     // 若为微信内置浏览器，才进行各种操作
-    if ( isWechat() ) {
+    //if ( isWechat() ) {
       var appid = '<%= @share_hash[:app_id] %>';
       var timestamp= '<%= @share_hash[:timestamp] %>';
       var noncestr = '<%= @share_hash[:noncestr] %>';
@@ -390,7 +418,7 @@ body {
       var hostname = location.hostname;
       var port = location.port;
       var domain = "http://" + hostname + ':' + port;
-      var link = domain + "/customer/groups/<%= @group.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
+      var link = domain + "/customer/groups/<%= @group.id %>/show?share_link_code=<%= current_user.profile.share_link_code if current_user %>"
       var img_url = domain + "<%= @group.product.img_url %>";
 
       // 接口权限配置
@@ -414,7 +442,7 @@ body {
           imgUrl: img_url,
           type: 'link',
           success: function () {
-            alert(url);
+            alert(link);
           },
           cancel: function () {
             alert('cancel');
@@ -427,7 +455,7 @@ body {
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert(url);
+            alert(link);
           },
           cancel: function () {
             alert('cancel')
@@ -441,7 +469,7 @@ body {
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert(url);
+            alert(link);
           },
           cancel: function () {
             alert('cancel')
@@ -455,7 +483,7 @@ body {
           link: link,
           imgUrl: img_url,
           success: function () {
-            alert(url);
+            alert(link);
           },
           cancel: function () {
             alert('cancel')
@@ -468,7 +496,7 @@ body {
       wx.error(function( res ){
         alert(res.errMsg);
       });
-    }
+    //}
   });
 
   function showOverNum(){

@@ -6,7 +6,7 @@
     overflow-x: hidden;
     margin-top: -20px;
   }
-
+  /* 顶部商品图片 */
   .top-img {
     width: 100%;
     height: 320px;
@@ -19,6 +19,7 @@
     vertical-align: middle;
   }
 
+  /* 商品名称、价格、运费相关信息 */
   .p-charge {
     padding: 0 20px;
     color: #787878;
@@ -48,6 +49,7 @@
     font-size: 30px;
   }
 
+  /* 商品数量添加、减少 */
   .p-ampunt {
     height: 35px;
     padding: 0;
@@ -104,6 +106,7 @@
     border-radius: 0 5px 5px 0;
   }
 
+  /* 加入购物车和立即购买按钮 */
   .p-purchase {
     position: relative;
     height: 60px;
@@ -135,6 +138,8 @@
     background-color: #f0ad4e;
     border-color: #f0ad4e;
   }
+
+  /* 分享按钮 */
   #share > button {
     font-size: 14px;
     height: 35px;
@@ -147,71 +152,8 @@
     background-color: #d9534f;
     border-color: #d9543f;
   }
-  .p-comments {
-    padding: 0 20px;
-    height: 40px;
-    clear: both;
-  }
 
-  .p-comments p {
-    width: 100%;
-    line-height: 30px;
-    height: 30px;
-    color: #787878;
-  }
-
-  .p-comments .comment-count {
-    background-color: #5cb75c;
-    border-radius: 3px;
-    width: 15px;
-    text-align: center;
-    color: #fff;
-  }
-
-  .arrow {
-    float: right;
-    font-size: 20px;
-  }
-
-  .p-intro {
-    padding: 0 20px;
-    height: auto;
-    clear: both;
-    min-height: 150px;
-    margin-bottom: 70px;
-  }
-
-  .p-intro h4{
-    color: #787878;
-    font-weight: normal;
-  }
-
-  .p-intro p {
-    font-size: 16px;
-    font-weight: normal;
-  }
-  .p-intro div {
-    word-wrap: break-word;
-  }
-  .p-intro .name{
-    color: #f06200;
-    margin:  0;
-    padding: 0;
-  }
-
-  .shoppingcart-animate {
-    position: absolute;
-    left: 41%;
-    top: 25px;
-    width: 25%;
-    height: 60%;
-    display: none;
-  }
-
-  .shoppingcart-animate img {
-    width: 25%;
-    height: 60%;
-  }
+  /* 点击分享按钮后的弹出框 */
   .back {
     z-index: 11;
     position: fixed;
@@ -252,11 +194,76 @@
     font-weight: bold;
     font-size: 24px;
   }
+
+  /* 商品评论链接 */
+  .p-comments {
+    padding: 0 20px;
+    height: 40px;
+    clear: both;
+  }
+
+  .p-comments p {
+    width: 100%;
+    line-height: 30px;
+    height: 30px;
+    color: #787878;
+  }
+
+  .p-comments .comment-count {
+    background-color: #5cb75c;
+    border-radius: 3px;
+    width: 15px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .arrow {
+    float: right;
+    font-size: 20px;
+  }
+
+  /* 商品评价信息 */
+  .p-intro {
+    height: auto;
+    clear: both;
+    min-height: 150px;
+    margin-bottom: 70px;
+    width: 100%;
+  }
+  .desc > * {
+    width: 96%;
+    margin: 0 auto;
+    word-break: nowrap;
+  }
+  .desc img {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .p-intro h4{
+    color: #787878;
+    font-weight: normal;
+    margin-left: 20px;
+  }
+  .p-intro p {
+    font-size: 16px;
+    font-weight: normal;
+  }
+  .p-intro div {
+    word-wrap: break-word;
+  }
+  .p-intro .name{
+    color: #f06200;
+    margin:  0;
+    padding: 0;
+  }
 </style>
 <div class="main">
+  <!-- 顶部商品图片 -->
   <input class="product-id" type="hidden" value="<%= @product.id %>">
   <div class="top-img"><img src="<%= @product.img_url %>"/></div>
   <hr/>
+
+  <!-- 商品名称、价格、运费信息 -->
   <div class="p-charge">
     <div>
       <span class="product-name"><%= @product.name %></span>
@@ -268,6 +275,7 @@
     </div>
   </div>
   <hr/>
+  <!-- 商品数量 -->
   <div class="p-ampunt">
     <div>数量:&nbsp;&nbsp;</div>
     <div class="ampunt-action">
@@ -279,13 +287,13 @@
   <hr/>
   <div class="p-purchase" data-no-turbolink>
     <button id="input-shoppingcart" class="btn btn-add" type="button">加入购物车</button>
-    <div class="shoppingcart-animate"><img src="/zhonglian/img/navbar/car-red.png"></div>
     <button class="buy-now btn btn-red" type="button">立即购买</button>
   </div>
   <div id="share">
     <button type="button" class='share btn btn-red'>分享获取提成</button>
   </div>
   <hr/>
+  <!-- 商品评论链接 -->
   <div class="p-comments">
     <a href="/customer/products/<%= @product.id %>/comments">
       <p>商品评论&nbsp;&nbsp;<span class="comment-count">&nbsp;&nbsp;&nbsp;&nbsp;<%= @product.comment_threads.size %>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="arrow">&gt;</span>
@@ -293,11 +301,14 @@
     </a>
   </div>
   <hr/>
+
+  <!-- 商品评价相关信息 -->
   <div class="p-intro">
     <h4>商品详情</h4>
-    <p class="name"><%= @product.name %></p>
     <div class="desc"><%= raw @product.description %></div>
   </div>
+
+  <!-- 分享弹出框 -->
   <div class="share_notice">
     <img src="/zhonglian/img/share.png" />
     <p>分享可获提成</p>
@@ -312,6 +323,7 @@ var jQuery_1_7_2 = $.noConflict(true);
 </script>
 <script type="text/javascript">
   jQuery_1_7_2(document).ready(function($) {
+    // 点击分享按钮，弹出引导框
     $( '.share' ).on( 'click', function() {
       $( '.back' ).show();
       $( '.share_notice' ).slideDown(800);
@@ -320,16 +332,21 @@ var jQuery_1_7_2 = $.noConflict(true);
         $( '.share_notice' ).slideUp(800);
       },3000);
     });
+
     var minus = $(".action-de");
     var plus = $(".action-plus");
     var numInput = $(".p-num");
     var num = 0;
+
+    // 微信分享的相关设置参数
     var hostname = location.hostname;
     var port = location.port;
     var domain = "http://" + hostname + ':' + port;
     var desc = $( '.desc' ).text();
     var img_url = domain + "<%= @product.img_url %>";
-    var link = domain + "/customer/products/<%= @product.id %>/show?invite_code=<%= current_user.profile.invite_code if current_user %>"
+    var link = domain + "/customer/products/<%= @product.id %>/show?share_link_code=<%= current_user.profile.share_link_code if current_user %>"
+
+    // 商品数量的加减
     plus.on('click', function() {
       num = parseInt(numInput.val());
       num++;
@@ -344,6 +361,8 @@ var jQuery_1_7_2 = $.noConflict(true);
         alert("购物数量不能为0")
       }
     });
+
+    // 判断是否为微信内置浏览器函数
     function isWechat(){
       var ua = navigator.userAgent.toLowerCase();
       if(ua.match( /MicroMessenger/i )=="micromessenger") {
@@ -352,10 +371,6 @@ var jQuery_1_7_2 = $.noConflict(true);
         return false;
       }
     }
-    alert('<%= @share_hash[:url] %>');
-    alert(window.location.href.split('#')[0]);
-    alert('<%= @share_hash[:jsapi_ticket] %>');
-    alert('<%= @share_hash[:str] %>');
 
     // 若为微信内置浏览器，才进行各种操作
     if ( isWechat() ) {
@@ -372,10 +387,6 @@ var jQuery_1_7_2 = $.noConflict(true);
         signature: signature,
         jsApiList: ['onMenuShareAppMessage','onMenuShareTimeLine','onMenuShareWeibo','onMenuShareQQ']
         });
-
-
-      alert(window.location.href.split('#')[0]);
-
 
       // 信息验证成功
       wx.ready(function(){
