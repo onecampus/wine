@@ -81,8 +81,10 @@ class WxMenusController < ApplicationController
     }
     msg_type = params[:msg_type]  # image, news
     if msg_type == 'image'
-      file = image.retrieve_from_store!(image.filename)
+      file_url = File.join(Rails.root, '/public', image.url)
+      file = File.new(file_url, 'rb')
       res_hash = WxExt::Api::Base.upload_media(set_access_token, 'image', file)
+      Rails.logger.info "upload img to weixin server is #{res_hash.to_s}"
       # {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
       if res_hash['media_id'].blank?
         return_hash[:status] = 'weixin_failed'
