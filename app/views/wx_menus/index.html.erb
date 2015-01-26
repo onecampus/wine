@@ -67,7 +67,7 @@
               <% subs.each do |submu| %>
                 <li class="menu-drop-list">
                   <a><i class="fa fa-circle"></i></a>
-                  <a href="javascript:void(0)" data-name="name" class="wx-menu-editable submenu" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
+                  <a href="javascript:void(0)" data-name="name" class="submenu" data-type="text" data-pk="<%= submu.id %>" data-url="/admin/wx_menus/update/json" data-title="修改菜单名称"><%= submu.name %></a>
                   <span class="menu-drop-edit">
                     <a id="menu<%= submu.id %>" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="编辑二级菜单动作" class="edit-submenu-btn" data-id="<%= submu.id %>" data-url="<%= submu.url %>" data-title="<%= submu.title %>" data-description="<%= submu.description %>" data-msgType="<%= submu.msg_type %>" data-img="<%= submu.img %>" data-submenutype="<% if submu.button_type.blank? %>none<% elsif submu.button_type == 'click' %>click<% elsif submu.button_type == 'view' %>view<% end %>"><i class="fa fa-pencil fa-lg"></i></a>
                     <a href="javascript:void(0)" class="delete-submenu-btn" data-id="<%= submu.id %>" data-toggle="tooltip" data-placement="top" title="删除二级菜单"><i class="fa fa-trash-o fa-lg"></i></a>
@@ -83,6 +83,7 @@
     <div class="panel-right">
       <div class="right-head">
         <span>设置动作</span>
+        <button class="menu-publish">菜单发布</button>
       </div>
       <div class="select-action">
         <span>请选择订阅者点击菜单后，公众号做出的相应动作</span>
@@ -115,9 +116,9 @@
          <span>订阅者点击该子菜单会收到以下消息</span>
        </div>
        <div class="edit-mesg-title">
-         <a class="edit-word" href="javascript:void(0)">文字</a>
-         <a class="edit-picture" href="javascript:void(0)">图片</a>
-         <a class="edit-graphic" href="javascript:void(0)">图文消息</a>
+         <a class="edit-word" href="javascript:void(0)"><i class="fa fa-envelope-square"></i>文字</a>
+         <a class="edit-picture" href="javascript:void(0)"><i class="fa fa-camera-retro"></i>图片</a>
+         <a class="edit-graphic" href="javascript:void(0)"><i class="fa fa-folder-open"></i>图文消息</a>
        </div>
        <div class="edit-mesg-body">
          <div class="mesg-panel mesg-panel-default">
@@ -663,6 +664,8 @@
        上传图片
        -->
        <div class="edit-pic-body">
+         <input type="hidden" class="media-id" value="">
+         <input type="hidden" class="picture-url" value="">
           <div class="edit-pic">
             <div class="preview-pic">
               <img src="" class="image-preview">
@@ -786,9 +789,9 @@
            </a>
          </div>
          <div class="graphic-inf">
-           <p class="text3">标题:<span class="pre-graphic-title">dfgdfgdf</span></p>
-           <p class="text3 text4">描述:<span class="graphic-des">文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件文件哦落实党风件</span></p>
-           <p class="text3">链接:<span class="graphic-url">士大夫的撒发射的反倒是发</span></p>
+           <p class="text3">标题:<span class="pre-graphic-title"></span></p>
+           <p class="text3 text4">描述:<span class="graphic-des"></span></p>
+           <p class="text3">链接:<span class="graphic-url"></span></p>
            <div class="preview-graphic">
              <img class="preview-graphic-pic" src="">
            </div>
