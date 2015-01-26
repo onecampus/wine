@@ -409,7 +409,9 @@ body {
     }
 
     // 若为微信内置浏览器，才进行各种操作
-    //if ( isWechat() ) {
+    var share_param = $.url().param( "share_link_code" );
+    if ( isWechat() && share_param ) {
+      alert("worked");
       var appid = '<%= @share_hash[:app_id] %>';
       var timestamp= '<%= @share_hash[:timestamp] %>';
       var noncestr = '<%= @share_hash[:noncestr] %>';
@@ -496,7 +498,7 @@ body {
       wx.error(function( res ){
         alert(res.errMsg);
       });
-    //}
+    }
   });
 
   function showOverNum(){
