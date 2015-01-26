@@ -152,7 +152,94 @@ $(document).ready(function(){
     Cart.buyProduct(product);
     window.location = '/customer/orders/settlement';
   });
+  /*
+  团购时间倒数
+  */
+  GetRTime();
+  //定义方法
+  var timer_rt = window.setInterval("GetRTime()", 1000);
+  //定义参数 显示出GetRTime()方法 1000毫秒以后启动
 });
+/*
+团购时间倒数
+*/
+function GetRTime(){
+  var allNum = $(".all-num").val();
+  var sellNum = $(".sell-num").children().text();
+  allNum = parseInt(allNum);
+  sellNum = parseInt(sellNum);
+  var overNum = allNum - sellNum;
+  var time = $(".group-endtime").val();
+  time = time.toString();
+  var year = time.substr(0,4);
+  var month = time.substr(5);
+  month = month.substr(0,2);
+  month = parseInt(month) - 1;
+  var day = time.substr(8);
+  day = day.substr(0,2);
+  var hour = time.substr(11);
+  hour = hour.substr(0,2);
+  var minute = time.substr(14);
+  minute = minute.substr(0,2);
+  var second = time.substr(17);
+  second = second.substr(0,2);
+  var startTime = new Date();
+  //定义参数可返回当天的日期和时间
+  startTime.setFullYear(year, month, day);
+  //调用设置年份
+  startTime.setHours(hour);
+  //调用设置指定的时间的小时字段
+  startTime.setMinutes(minute);
+  //调用设置指定时间的分钟字段
+  startTime.setSeconds(second);
+  //调用设置指定时间的秒钟字段
+  startTime.setMilliseconds(000);
+  //调用置指定时间的毫秒字段
+  var EndTime=startTime.getTime();
+  //定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+
+  //定义方法
+  var NowTime = new Date();
+  //定义参数可返回当天的日期和时间
+  var nMS = EndTime - NowTime.getTime();
+  //定义参数 EndTime减去NowTime参数获得返回距 1970 年 1 月 1 日之间的毫秒数
+  var nD = Math.floor(nMS/(1000 * 60 * 60 * 24));
+  //定义参数 获得天数
+  var nH = Math.floor(nMS/(1000*60*60)) % 24;
+  //定义参数 获得小时
+  var nM = Math.floor(nMS/(1000*60)) % 60;
+  //定义参数 获得分钟
+  var nS = Math.floor(nMS/1000) % 60;
+  //定义参数 获得秒钟
+  if (nMS < 0){
+    //如果秒钟大于0
+    $(".time-inf").hide();
+    //获得天数隐藏
+    //获得活动截止时间展开
+    $(".group-msg").show();
+    $(".group-buy-now").attr("disabled","disabled");
+  }else{
+    //否则
+    if(overNum < 0 || overNum == 0) {
+      $(".group-buy-now").attr("disabled","disabled");
+    }
+    else {
+      $(".group-buy-now").attr("disabled",false);
+    }
+    $(".time-inf").show();
+    //天数展开
+    $("#daoend").hide();
+    //活动截止时间隐藏
+    $(".remainD").text(nD);
+    //显示天数
+    $(".remainH").text(nH);
+    //显示小时
+    $(".remainM").text(nM);
+    //显示分钟
+    $(".remainS").text(nS);
+    //显示秒钟
+  }
+}
 
 function getCode(name) {
   var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");

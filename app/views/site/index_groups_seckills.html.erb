@@ -17,7 +17,7 @@
 
   .group-products .product {
     width: 44%;
-    height: 270px;
+    height: 290px;
     margin-left: 16px;
     margin-bottom: 30px;
     background-color: #fff;
@@ -27,7 +27,7 @@
 
   .group-products .product-inf {
     width: 100%;
-    height: 70px;
+    height: 90px;
     background-color: #fff;
     color: #787878;
     float: left;
@@ -56,6 +56,21 @@
   .product-price {
     float: right;
     margin-right: 1%;
+  }
+
+  .group-time-msg {
+    text-align: center;
+    color: #f06200;
+    font-size: 0.5em;
+  }
+
+  .group-time-msg img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .group-msg {
+    display: none;
   }
 
   .product-price span{
@@ -178,6 +193,12 @@
               剩余:<span></span>件
             </div>
           </div>
+          <hr>
+          <div class="group-time-msg">
+            <input class="group-endtime" type="hidden" value="<%= g.end_time%>">
+            <div class="group-msg"><span>活动已结束！</span></div>
+            <div class="time-inf"><img src="/zhonglian/img/seckill-icon1.png"><span class="remainD"></span>天<span class="remainH"></span>小时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
+          </div>
         </div>
       </div>
     </a>
@@ -240,8 +261,12 @@ $(document).ready(function () {
   });
   //商品秒杀方法定时启动
   var timer_rt = window.setInterval("GetRTime()", 1000);
+  //商品团购方法定时启动
+  var timer_gt = window.setInterval("GetGroupTime()", 1000);
 });
-
+/*
+秒杀事件
+*/
 function GetRTime(){
   $(".seckill-time-msg").each(function(){
     var time = $(this).children(".seckill-endtime").val();
@@ -296,6 +321,74 @@ function GetRTime(){
       //否则
       $(this).find(".time-inf").show();
       $(this).find(".seckill-msg").hide();
+      $(this).find(".remainD").text(nD);
+      //显示天数
+      $(this).find(".remainH").text(nH);
+      //显示小时
+      $(this).find(".remainM").text(nM);
+      //显示分钟
+      $(this).find(".remainS").text(nS);
+      //显示秒钟
+    }
+  });
+}
+/*
+团购时间
+*/
+function GetGroupTime(){
+  $(".group-time-msg").each(function(){
+    var time = $(this).children(".group-endtime").val();
+    time = time.toString();
+    var year = time.substr(0,4);
+    var month = time.substr(5);
+    month = month.substr(0,2);
+    month = parseInt(month) - 1;
+    var day = time.substr(8);
+    day = day.substr(0,2);
+    var hour = time.substr(11);
+    hour = hour.substr(0,2);
+    var minute = time.substr(14);
+    minute = minute.substr(0,2);
+    var second = time.substr(17);
+    second = second.substr(0,2);
+    var startTime = new Date();
+    //定义参数可返回当天的日期和时间
+    startTime.setFullYear(year, month, day);
+    //调用设置年份
+    startTime.setHours(hour);
+    //调用设置指定的时间的小时字段
+    startTime.setMinutes(minute);
+    //调用设置指定时间的分钟字段
+    startTime.setSeconds(second);
+    //调用设置指定时间的秒钟字段
+    startTime.setMilliseconds(000);
+    //调用置指定时间的毫秒字段
+    var EndTime=startTime.getTime();
+    //定义参数可返回距 1970 年 1 月 1 日之间的毫秒数
+
+    //定义方法
+    var NowTime = new Date();
+    //定义参数可返回当天的日期和时间
+    var nMS = EndTime - NowTime.getTime();
+    //定义参数 EndTime减去NowTime参数获得返回距 1970 年 1 月 1 日之间的毫秒数
+    var nD = Math.floor(nMS/(1000 * 60 * 60 * 24));
+    //定义参数 获得天数
+    var nH = Math.floor(nMS/(1000*60*60)) % 24;
+    //定义参数 获得小时
+    var nM = Math.floor(nMS/(1000*60)) % 60;
+    //定义参数 获得分钟
+    var nS = Math.floor(nMS/1000) % 60;
+    //定义参数 获得秒钟
+    if (nMS < 0){
+      //如果秒钟大于0
+      $(this).find(".time-inf").hide();
+      //获得天数隐藏
+      $(this).find(".group-msg").show();
+      //获得活动截止时间展开
+    }else{
+      //否则
+      $(this).find(".time-inf").show();
+      $(this).find(".group-msg").hide();
       $(this).find(".remainD").text(nD);
       //显示天数
       $(this).find(".remainH").text(nH);

@@ -1,11 +1,4 @@
 $(document).ready(function() {
-  /*
-  url地址校验正则
-  */
-  var strRegex = '^((https|http|ftp|rtsp|mms)?://)'
-  + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' //ftp的user@
-  + '(([0-9]{1,3}.){3}[0-9]{1,3})';
-  var regUrl = new RegExp(strRegex);
   showMenuEdit();
   /*
   表情转换数据
@@ -415,22 +408,23 @@ $(document).ready(function() {
   /*
   菜单设置跳转网页功能
   */
-
-  $(".url-save").click(function(){
-    var url = $(this).parents(".edit-url").find(".url-value").val();
-    var id =  $(this).parents(".edit-url").find(".menu-id").val();
-    var buttonType ="view";
-    if(!regUrl.test(url)) {
-      $(".url-mesg").text("请输入正确的跳转地址")
-      $(".url-mesg").show();
-      return false;
-    }
-    else if(url == "") {
-      $(".url-mesg").text("请输入跳转地址")
-      $(".url-mesg").show();
-      return false;
-    }
-    else {
+  $("#new-url").validate({
+    rules: {
+      url: {
+        required: true,
+        url: true
+      }
+    },
+    messages: {
+      url: {
+        required: "请输入url地址!!!",
+        url: "请输入正确的url地址!!!"
+      }
+    },
+    submitHandler:function(){
+      var url = $(".url-save").parents(".edit-url").find(".url-value").val();
+      var id =  $(".url-save").parents(".edit-url").find(".menu-id").val();
+      var buttonType ="view";
       $.ajax({
         type: "POST",
         url: "/admin/wx_menus/"+id+"/action/set",
@@ -642,11 +636,11 @@ $(document).ready(function() {
 
   /*
   发送图文
-  */
+
   $(".save-graphic").click(function(){
     var title = $("#graphic_title").val();
     var description = $("#graphic_des").val();
-    var url = $("#graphic_url").val();
+    var url = $("#url").val();
     var img = $(".graphic-pic-pre-url").val();
     if(title == "") {
       alert("请输入标题");
@@ -658,10 +652,6 @@ $(document).ready(function() {
     }
     else if(url == "") {
       alert("请输入链接");
-      return false;
-    }
-    else if (!regUrl.test(url)) {
-      alert("请输入正确的url地址");
       return false;
     }
     else if(img == "") {
@@ -696,6 +686,10 @@ $(document).ready(function() {
           $(".text3").show();
           cleanText();
           cleanImage();
+          $("#graphic_title").attr("value","");
+          $("#graphic_des").attr("value","");
+          $("#url").attr("value","");
+          $(".graphic-pic-pre-url").attr("value","");
         },
         complete: function(XMLHttpRequest,textStatus) {
 
@@ -707,6 +701,31 @@ $(document).ready(function() {
     }
 
   });
+  */
+$(".save-graphic").click(function(){
+ $("#new-graphic").validate({
+    rules: {
+      url: {
+        required: true,
+        url: true,
+      },
+      graphic_title: {
+        required: true
+      }
+    },
+    messages: {
+      url: {
+        required: "请输入url地址",
+        url: "请输入正确的url地址"
+      },
+      graphic_title: {
+        required: "请输入标题"
+      }
+    }
+  });
+  var value = $("#new-graphic").valid();
+});
+
 
   /*
   选择图文
