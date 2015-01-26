@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # https://github.com/plataformatec/devise/blob/master/app/controllers/devise/registrations_controller.rb#L14
     build_resource(sign_up_params)
     resource.skip_confirmation!
-    resource.save
+    resource.save!
 
     # yield start
     resource.add_role :customer
@@ -26,14 +26,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
     }
     profile = Profile.new(profile_params)
 
-    User.with_any_role(:provider, :admin).each do |p|
-      if p.profile.province = profile.province && p.profile.city = profile.city && p.profile.region = profile.region
-        profile.supplier_id = p.id
+    User.with_any_role(:provider, :admin).each do |u|
+      p = u.profile
+      if p.province == profile.province && p.city == profile.city && p.region == profile.region
+        profile.supplier_id = u.id
       else
         profile.supplier_id = User.with_role(:admin).first.id
       end
     end
-    profile.save
+    profile.save!
 
     Integral.create(user_id: resource.id, amount: 0)
     Vritualcard.create(user_id: resource.id, money: '0.00')
