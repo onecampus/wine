@@ -12,7 +12,10 @@
     text-align: center;
     padding:1px;
     display: none;
-}
+  }
+  .goback {
+    font-size: 24px;
+  }
 </style>
 <script type="text/javascript">
   function removeH() {
@@ -52,12 +55,7 @@
       var nodeMenu = $('.cat-menu');
       nodeMenu.addClass('active');
       $('.icon', nodeMenu).addClass('icon-cat-hover');
-    } else if(path.startWith('/customer/products/search')) {
-      removeH();
-      var nodeMenu = $('.search-menu');
-      nodeMenu.addClass('active');
-      $('.icon', nodeMenu).addClass('icon-search-hover');
-    } else if(path.startWith('/customer/orders') || path.startWith('/customer/cart')) {
+    }else if(path.startWith('/customer/orders') || path.startWith('/customer/cart')) {
       removeH();
       var nodeMenu = $('.shopcart-menu');
       nodeMenu.addClass('active');
@@ -76,6 +74,9 @@
   });
 </script>
 <nav class="bar bar-tab nav-bar" data-no-turbolink>
+  <a class="tab-item goback" href="javascript:history.back()">
+    &lt;
+  </a>
   <a class="tab-item home-menu" data-icon='home' href="/">
     <span class="icon icon-background-base icon-home"></span>
     <span class="tab-label">主页</span>
@@ -87,10 +88,6 @@
   <a class="tab-item shopcart-menu" data-icon='cart' href="/customer/cart">
     <span class="icon icon-background-base icon-cart"><div class="shopping-cart-mark"></div></span>
     <span class="tab-label">购物车</span>
-  </a>
-  <a class="tab-item search-menu" data-icon='search' href="/customer/products/search">
-    <span class="icon icon-background-base icon-search"></span>
-    <span class="tab-label">搜索</span>
   </a>
   <a class="tab-item cat-menu" data-icon='cat' href="/customer/cats">
     <span class="icon icon-background-base icon-cat"></span>

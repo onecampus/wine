@@ -362,6 +362,14 @@ var jQuery_1_7_2 = $.noConflict(true);
       }
     });
 
+    // 若直接输入商品数量，也得判断
+    numInput.on( "blur", function() {
+      if( numInput.val() == '' || numInput.val() <= 0 || isNaN( numInput.val() ) ) {
+          alert( "请输入正确的商品数量！" );
+          numInput.focus();
+      }
+    });
+
     // 判断是否为微信内置浏览器函数
     function isWechat(){
       var ua = navigator.userAgent.toLowerCase();
