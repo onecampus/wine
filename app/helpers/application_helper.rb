@@ -536,7 +536,7 @@ module ApplicationHelper
   def user_id_of_current_provider
     user_ids = []
     Profile.where(supplier_id: current_user.id).each do |p|
-      user_ids.push p.id
+      user_ids.push p.user.id
     end
     user_ids
   end
