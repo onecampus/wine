@@ -9,7 +9,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    # https://github.com/plataformatec/devise/blob/master/app/controllers/devise/registrations_controller.rb#L14
+    build_resource(sign_up_params)
+    resource.skip_confirmation!
+    resource.save
+
+    # yield start
     resource.add_role :customer
 
     profile_params = {
@@ -28,13 +33,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
         profile.supplier_id = User.with_role(:admin).first.id
       end
     end
-    puts '==' * 20
-    puts profile.supplier_id
-    puts User.with_role(:admin)
     profile.save
 
     Integral.create(user_id: resource.id, amount: 0)
     Vritualcard.create(user_id: resource.id, money: '0.00')
+
+    sign_in(resource) if resource.persisted?
+    # yield end
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_flashing_format?
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
   end
 
   # GET /resource/edit
@@ -82,4 +102,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  def set_minimum_password_length
+    if devise_mapping.validatable?
+      @minimum_password_length = resource_class.password_length.min
+    end
+  end
 end

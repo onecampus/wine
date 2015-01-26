@@ -3,9 +3,10 @@
 <% end %>
 <style>
 .commissions{
-  width: 100%;
+  width: 96%;
   background: #fff;
   text-align: left;
+  margin: 10px auto;
 }
 table {
   margin-left: 2.5%;
@@ -31,15 +32,13 @@ td {
 <div class="commissions">
   <table>
     <tr>
-      <th>ID</th>
       <th>客户</th>
       <th>收益</th>
     </tr>
     <% @results.each do |p| %>
     <tr>
-      <td>Id</td>
-      <td><%= User.find(p.from_user_id).username %></td>
-      <td><%= p.commission_money %></td>
+      <td><%= p[:from_user] %></td>
+      <td><%= p[:money] %></td>
     </tr>
     <% end %>
   </table>

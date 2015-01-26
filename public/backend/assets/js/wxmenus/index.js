@@ -4,14 +4,7 @@ $(document).ready(function() {
   */
   var strRegex = '^((https|http|ftp|rtsp|mms)?://)'
   + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' //ftp的user@
-  + '(([0-9]{1,3}.){3}[0-9]{1,3}' // IP形式的URL- 199.194.52.184
-  + '|' // 允许IP和DOMAIN（域名）
-  + '([0-9a-z_!~*\'()-]+.)*' // 域名- www.
-  + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].' // 二级域名
-  + '[a-z]{2,6})' // first level domain- .com or .museum
-  + '(:[0-9]{1,4})?' // 端口- :80
-  + '((/?)|' // a slash isn't required if there is no file name
-  + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+  + '(([0-9]{1,3}.){3}[0-9]{1,3})';
   var regUrl = new RegExp(strRegex);
   showMenuEdit();
   /*
@@ -176,11 +169,11 @@ $(document).ready(function() {
         },
         success: function(data) {
           if (data.status == 'success') {
-            alert(data.msg);
+            alert("菜单创建成功");
             _href = window.location.href;
             window.location.href = _href;
           } else {
-            alert(data.msg);
+            alert("菜单创建失败");
           }
         },
         complete: function(XMLHttpRequest, textStatus) {
@@ -257,11 +250,11 @@ $(document).ready(function() {
         },
         success: function(data) {
           if (data.status == 'success') {
-            alert(data.msg);
+            alert("菜单创建成功");
             _href = window.location.href;
             window.location.href = _href;
           } else {
-            alert(data.msg);
+            alert("菜单创建失败");
           }
         },
         complete: function(XMLHttpRequest, textStatus) {
@@ -352,6 +345,9 @@ $(document).ready(function() {
       }
       else if(msgType == "image") {
         $(".edit-picture").click();
+        $('.image-preview').attr("src",img);
+        $('.image-preview').show();
+        $(".pic-save").text("修改");
         cleanText();
         cleanGraphic();
       }
@@ -383,11 +379,11 @@ $(document).ready(function() {
         dataType: "json",
         success: function(data) {
           if (data.status == 'success') {
-            alert(data.msg);
+            alert("菜单已删除");
             _href = window.location.href;
             window.location.href = _href;
           } else {
-            alert(data.msg);
+            alert("菜单删除失败");
           }
         },
         complete: function(XMLHttpRequest, textStatus) {
@@ -445,13 +441,13 @@ $(document).ready(function() {
         },
         success: function(data) {
           if (data.status == 'success') {
-            alert(data.msg);
+            alert("地址设置成功");
             $(".url-value").attr("value",url);
             $("#menu"+id).data("url",url);
             // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
             updataMenuInf(id,buttonType,"","","",url,"");
           } else {
-            alert(data.msg);
+            alert("地址设置失败");
           }
         },
         complete: function(XMLHttpRequest, textStatus) {
@@ -564,13 +560,16 @@ $(document).ready(function() {
       dataType: 'json',
       done: function(e, result) {
         if (result.result.status == "success") {
-          var imgUrl = result.result.data;
-        }
-        else if (result.result.status == "weixin_failed") {
-          alert("上传微信失败")
+          alert("上传图片成功");
           var imgUrl = result.result.url;
+          var mediaId = result.result.media_id;
+          $(".media-id").attr("value",mediaId);
+          $(".picture-url").attr("value",imgUrl);
           $(".image-preview").attr("src",imgUrl);
           $(".image-preview").show();
+        }
+        else if (result.result.status == "weixin_failed") {
+          alert("上传微信失败");
         }
         else {
           alert("上传失败");
@@ -586,6 +585,8 @@ $(document).ready(function() {
     var buttonType = "click";
     var msgType = "image";
     var id = $(".mesg-menu-id").val();
+    var mediaId = $(".media-id").val();
+    var imgUrl = $(".picture-url").val();
     $.ajax({
       type: "POST",
       url: "/admin/wx_menus/"+id+"/action/set",
@@ -593,11 +594,15 @@ $(document).ready(function() {
       data: {
         button_type: buttonType,
         msg_type: msgType,
+        media_id: mediaId,
+        img: imgUrl
       },
       success: function(data) {
         alert("发送成功");
-        _href = window.location.href;
-        window.location.href = _href;
+        // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
+        updataMenuInf(id,buttonType,msgType,"","","",imgUrl);
+        cleanGraphic();
+        cleanText();
       },
       complete: function(XMLHttpRequest,textStatus) {
 
@@ -684,12 +689,13 @@ $(document).ready(function() {
           $(".pre-graphic-title").text(title);
           $(".graphic-des").text(description);
           $(".graphic-url").text(url);
-          $(".text3").show();
           $(".preview-graphic-pic").attr("src",img);
           $(".preview-graphic-pic").show();
           // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
           updataMenuInf(id,buttonType,msgType,title,description,url,img);
+          $(".text3").show();
           cleanText();
+          cleanImage();
         },
         complete: function(XMLHttpRequest,textStatus) {
 
@@ -733,8 +739,72 @@ $(document).ready(function() {
 编辑器
 */
   $.fn.editable.defaults.mode = 'popup';
-  $('.wx-menu-editable').editable();
+  $('.wx-menu-editable').editable({
+    validate: function(value) {
+      var length = 0;
+      for (var i = 0; i < value.length; i++) {
+        var menuNameLength = value.charCodeAt(i);
+        if (menuNameLength >= 0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(value == "") {
+        return '菜单名字不能为空';
+      }
+      if(length > 8) {
+        return '菜单名称不能超过4个汉字或8个字母';
+      }
+    }
+  });
 
+  $('.submenu').editable({
+    validate: function(value) {
+      var length = 0;
+      for (var i = 0; i < value.length; i++) {
+        var menuNameLength = value.charCodeAt(i);
+        if (menuNameLength >= 0 && menuNameLength <= 128) {
+          length += 1;
+        }
+        else {
+          length += 2;
+        }
+      }
+      if(value == "") {
+        return '菜单名字不能为空';
+      }
+      if(length > 16) {
+        return '菜单名称不能超过8个汉字或16个字母';
+      }
+    }
+  });
+
+  /*
+  菜单发布
+  */
+  $(".menu-publish").click(function(){
+    $.ajax({
+      type: 'GET',
+      url: 'weixin/menus/create/json',
+      dataType: 'json',
+      success: function(data) {
+        if(data.status == 'success') {
+          alert('菜单发布成功');
+        }
+        else {
+          alert('菜单发布失败');
+        }
+      },
+      complete: function(XMLHttpRequest,textStatus) {
+
+      },
+      error: function() {
+
+      }
+    });
+  });
 
   /*
   文字发送
@@ -768,6 +838,7 @@ $(document).ready(function() {
           // 菜单id，动作（none，view，click），消息类型（text,image,news）,标题，描述，链接，图片
           updataMenuInf(id,buttonType,msgType,"",replyContent,"","");
           cleanGraphic();
+          cleanImage();
         },
         complete: function(XMLHttpRequest,textStatus) {
 
