@@ -1,16 +1,17 @@
 $(document).ready(function() {
   showProduct();
   total();
+  checkShoppingCart();
   $(".checkbox").click(function() {
     total();
   });
   /*全选
    */
   $(".allselect").click(function() {
-    $(".checkbox").each(function() {
-      this.checked = true;
-    });
-    total();
+      $(".checkbox").each(function() {
+        this.checked = true;
+      });
+      total();
   });
   /*
   反选
@@ -25,21 +26,21 @@ $(document).ready(function() {
   number plus
   */
   $(".action-plus").click(function() {
-    var num = parseInt($(this).siblings("p").text());
+    var num = parseInt($(this).siblings("input").val());
     num = num + 1;
     var subtotal = 0;
     var price = $(this).parent().siblings().attr("value");
     price = parseFloat(price);
     subtotal = (Number(num * price)).toFixed(2);
     $(this).parent().siblings().text("¥" + subtotal);
-    $(this).siblings("p").text(num);
+    $(this).siblings("input").attr("value",num);
     total();
   });
   /*
   number dec
   */
   $(".action-de").click(function() {
-    var num = parseInt($(this).siblings("p").text());
+    var num = parseInt($(this).siblings("input").val());
     if (num < 1 || num == 1) {
       $(this).siblings("p").text(1);
       alert("购买数量不能为0");
@@ -50,7 +51,7 @@ $(document).ready(function() {
       price = parseFloat(price);
       subtotal = (Number(price * num)).toFixed(2);
       $(this).parent().siblings().text("¥" + subtotal);
-      $(this).siblings("p").text(num);
+      $(this).siblings("input").attr("value",num);
       total();
     }
   });
@@ -62,13 +63,13 @@ $(document).ready(function() {
     $(".checkbox").each(function() {
       if (($(this).is(':checked')) == true) {
         var id = ($(this).parent().siblings("input").val());
-        var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").text();
+        var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").val();
         updateBuyMark(id, num, true);
         select = select + 1;
       }
       if (($(this).is(':checked')) == false) {
         var id = ($(this).parent().siblings("input").val());
-        var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").text();
+        var num = $(this).parent().parent().children(".p-amount").children(".ampunt-action").children(".number").val();
         updateBuyMark(id, num, false);
       }
     });
@@ -113,6 +114,40 @@ $(document).ready(function() {
       $(".product-total").text(0);
       showProduct();
       showShoppingCartItem();
+      $(".allselect").attr("disabled","disabled");
+      $(".inselect").attr("disabled","disabled");
+      $(".cleancart").attr("disabled","disabled");
+    }
+  });
+  /*
+  数量改变事件
+  */
+  $(".number").on('change',function(){
+    var checkNum = "^[0-9]*[1-9][0-9]*$";
+    var regNum = new RegExp(checkNum);
+    var num = $(this).val();
+    var price = $(this).parent().siblings().attr("value");
+    if(num <= 0 ) {
+      alert("购买数量不能小于1");
+      $(this).attr("value",1);
+      $(this).parent().siblings().text("¥" + price);
+    }
+    else if (isNaN(num)) {
+      alert("请输入整数");
+      $(this).attr("value",1);
+      $(this).parent().siblings().text("¥" + price);
+    }
+    else if (!regNum.test(num)) {
+      alert("请输入整数");
+      $(this).attr("value",1);
+      $(this).parent().siblings().text("¥" + price);
+    }
+    else {
+      var subtotal = 0;
+      price = parseFloat(price);
+      subtotal = (Number(num * price)).toFixed(2);
+      $(this).parent().siblings().text("¥" + subtotal);
+      total();
     }
   });
 
@@ -269,7 +304,7 @@ function showProduct() {
               $("#product" + i).children(".p-intro").children().append("<br/>");
               $("#product" + i).children(".p-intro").children().append(spanenname);
 
-              var pamount = $("<div></div>").addClass("p-amount").addClass("pull-right");
+              var pamount = $("<div></div>").addClass("p-amount");
               $("#product" + i).append(pamount);
               var pprice = $("<div></div>").addClass("price").addClass("text2").text("¥" + subtotal).attr("value", price);
               $("#product" + i).children(".p-amount").append(pprice);
@@ -277,7 +312,7 @@ function showProduct() {
               $("#product" + i).children(".p-amount").append(ampuntaction);
               var buttondec = $("<button></button>").addClass("action-de").attr("type", "button").text("-");
               $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttondec);
-              var number = $("<p></P>").addClass("number").text(num).attr("value", num);
+              var number = $("<input></input>").addClass("number").attr("value", num).attr("type","text");
               $("#product" + i).children(".p-amount").children(".ampunt-action").append(number);
               var buttonplus = $("<button></button>").addClass("action-plus").attr("type", "button").text("+");
               $("#product" + i).children(".p-amount").children(".ampunt-action").append(buttonplus);
@@ -310,5 +345,24 @@ function showShoppingCartItem() {
     else {
         $(".shopping-cart-mark").hide();
       }
+  }
+}
+
+function checkShoppingCart(){
+  var shoppingCart = $.localStorage.get("shoppingCart");
+  if (shoppingCart === null || shoppingCart === "") {
+    $(".allselect").attr("disabled","disabled");
+    $(".inselect").attr("disabled","disabled");
+    $(".cleancart").attr("disabled","disabled");
+  }
+  else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+    var productList = JsonStr.productList;
+    if (productList == null || productList == "") {
+      alert("bb");
+      $(".allselect").attr("disabled","disabled");
+      $(".inselect").attr("disabled","disabled");
+      $(".cleancart").attr("disabled","disabled");
+    }
   }
 }
