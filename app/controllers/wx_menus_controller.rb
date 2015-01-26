@@ -46,7 +46,7 @@ class WxMenusController < ApplicationController
     case button_type
     when 'click'
       msg_type = params[:msg_type]  # text, image, news
-      @wx_menu.msg_or_url = 'msg'
+      @wx_menu.msg_or_url = 1  # 1=msg 0=url
       @wx_menu.key = WxMenu.generate_key
       @wx_menu.msg_type = msg_type
       case msg_type
@@ -54,6 +54,7 @@ class WxMenusController < ApplicationController
         @wx_menu.description = params[:content]
       when 'image'
         @wx_menu.media_id = params[:media_id]
+        @wx_menu.img = params[:img]
       when 'news'
         @wx_menu.title = params[:title]
         @wx_menu.description = params[:description]
@@ -61,7 +62,7 @@ class WxMenusController < ApplicationController
         @wx_menu.url = params[:url]
       end
     when 'view'
-      @wx_menu.msg_or_url = 'url'
+      @wx_menu.msg_or_url = 0  # 1=msg 0=url
       @wx_menu.url = params[:url]
     end
     if @wx_menu.save
