@@ -65,6 +65,8 @@
       var nodeMenu = $('.user-center-menu');
       nodeMenu.addClass('active');
       $('.icon', nodeMenu).addClass('icon-person-hover');
+    } else if ( path.startWith( '/customer/products/search' ) ) {
+      removeH();
     } else {
       removeH();
       var nodeMenu = $('.home-menu');

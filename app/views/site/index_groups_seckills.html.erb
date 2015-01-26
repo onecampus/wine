@@ -1,5 +1,5 @@
 <% content_for :customer_title do %>
-  团购
+  团购秒杀
 <% end %>
 <script src="/assets/lib/jquery1.8.3.js"></script>
 <style>
@@ -90,7 +90,7 @@
     width: 44%;
     height: 290px;
     margin-left: 16px;
-    margin-bottom: 30px;
+    margin-bottom: 70px;
     background-color: #fff;
     box-shadow: 6px 6px 3px #d5d5d5;
     float: left;
@@ -227,6 +227,7 @@
     </div>
   </div>
 </div>
+<%= render "site/shared/bottombar" %>
 <script>
 $(document).ready(function () {
   $(".over-number").each(function(){
