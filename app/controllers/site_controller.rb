@@ -688,6 +688,7 @@ class SiteController < CustomerController
   end
 
   def generate_invite_code_or_not(old_orders, current_user_profile)
+    Rails.logger.info "old_orders is #{old_orders}"
     if old_orders
       invite_code = User.generate_invite_code
       current_user_profile.invite_code = invite_code
@@ -696,6 +697,8 @@ class SiteController < CustomerController
   end
 
   def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
+    Rails.logger.info "share_link_code is #{share_link_code}"
+    Rails.logger.info "invite_code is #{invite_code}"
     if current_user_profile.parent.nil?  # 不存在上家
       if !share_link_code.blank? && !invite_code.blank?
         # invite_code is more import
