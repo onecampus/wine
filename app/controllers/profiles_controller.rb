@@ -41,9 +41,8 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    puts " == " * 20
     @profile = Profile.new(profile_params)
-    @user = User.new({:username => params[:username], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation]})
+    @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
 
     Profile.transaction do
       User.transaction do
@@ -54,7 +53,6 @@ class ProfilesController < ApplicationController
       @profile.user_id = @user.id
       flash[:notice] = '用户创建成功' if @profile.save!
     end
-
     respond_with(@profile)
   end
 
@@ -70,7 +68,6 @@ class ProfilesController < ApplicationController
       @profile.user_id = @user.id
       flash[:notice] = '用户资料更新成功' if @profile.update!(profile_params)
     end
-
     respond_with(@profile)
   end
 
@@ -80,16 +77,16 @@ class ProfilesController < ApplicationController
       @profile.user.destroy!
       @profile.destroy!
     end
-
     redirect_to :back, notice: '删除成功'
   end
 
   private
-    def set_profile
-      @profile = Profile.find(params[:id])
-    end
 
-    def profile_params
-      params.require(:profile).permit(:user_id, :parent_id, :lft, :rgt, :depth, :mobile, :tel, :province, :city, :region, :address, :fax, :invite_code, :share_link_code, :default_address_id, :weixin_open_id)
-    end
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
+
+  def profile_params
+    params.require(:profile).permit(:user_id, :parent_id, :lft, :rgt, :depth, :mobile, :tel, :province, :city, :region, :address, :fax, :invite_code, :share_link_code, :default_address_id, :weixin_open_id)
+  end
 end

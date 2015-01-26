@@ -237,7 +237,7 @@
             <% @profile.user.orders.each do |order| %>
               <tr>
                 <td><%= order.user.username %></td>
-                <td><%= Profile.find(order.user.id).user.username if order.user %></td>
+                <td><%= User.find(order.user.profile.supplier_id).username if order.user %></td>
                 <td><%= order.ship_address %></td>
                 <td><%= order.total_price %></td>
                 <td><%= order_status order.order_status %></td>
