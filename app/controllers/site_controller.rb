@@ -235,7 +235,7 @@ class SiteController < CustomerController
     current_user_profile = current_user.profile  # 当前用户的额外信息
 
     # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
-    old_orders = current_user.orders
+    old_orders = current_user.orders.blank?
 
     # 收货地址
     shipaddress = Shipaddress.find params[:ship_address_id]
@@ -688,7 +688,7 @@ class SiteController < CustomerController
   end
 
   def generate_invite_code_or_not(old_orders, current_user_profile)
-    if old_orders.blank?
+    if old_orders
       invite_code = User.generate_invite_code
       current_user_profile.invite_code = invite_code
       current_user_profile.save!
