@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  updateShareLinkCode();
   var Utils = {
     setParam: function(name, value) {
       $.localStorage.set(name, value);
@@ -125,7 +124,7 @@ $(document).ready(function(){
   };
 
   /*
-  团购购买
+  秒杀时购买
   */
   $(".seckill-buy-now").click(function(){
     var name = $(".product-name").text(),
@@ -149,6 +148,7 @@ $(document).ready(function(){
       'productType': productType
     };
     Cart.buyProduct(product);
+    updateShareLinkCode();
     window.location = '/customer/orders/settlement';
   });
   /*秒杀时间倒数
