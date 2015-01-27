@@ -380,19 +380,10 @@ body {
   <div class="back"></div>
 </div>
 <%= render "site/shared/bottombar" %>
-<script type="text/javascript" src="/zhonglian/js/validateProductsNumber.js"></script>
+<script type="text/javascript" src="/zhonglian/js/pro_sec_group.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
   $(document).ready(function(){
-    // 点击分享按钮，弹出引导框
-    $( '.share' ).on( 'click', function() {
-      $( '.back' ).show();
-      $( '.share_notice' ).slideDown(800);
-      setTimeout( function() {
-        $( '.back' ).hide();
-        $( '.share_notice' ).slideUp(800);
-      },3000);
-    });
     showOverNum();
     var minus = $(".action-de");
     var plus = $(".action-plus");
@@ -433,14 +424,6 @@ body {
         }
       }
     });
-    function isWechat(){
-      var ua = navigator.userAgent.toLowerCase();
-      if(ua.match( /MicroMessenger/i )=="micromessenger") {
-        return true;
-      } else {
-        return false;
-      }
-    }
 
     // 若为微信内置浏览器，才进行各种操作
     var share_param = $.url().param( "share_link_code" );
