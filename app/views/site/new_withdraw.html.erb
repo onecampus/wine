@@ -88,6 +88,12 @@ hr {
    float: left;
  }
 
+.space-place {
+   float: left;
+   width: 100%;
+   height: 80px;
+ }
+
 </style>
 <%= form_for(@withdraw, :html => {:class => "form-horizontal"}) do |f| %>
     <% if @withdraw.errors.any? %>
@@ -166,6 +172,9 @@ hr {
       </div>
     </div>
 <% end %>
+<div class="space-place">
+</div>
+<%= render "site/shared/bottombar" %>
 
 <script>
 $(document).ready(function(){
