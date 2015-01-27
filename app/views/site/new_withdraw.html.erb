@@ -88,6 +88,12 @@ hr {
    float: left;
  }
 
+.space-place {
+   float: left;
+   width: 100%;
+   height: 80px;
+ }
+
 </style>
 <%= form_for(@withdraw, :html => {:class => "form-horizontal"}) do |f| %>
     <% if @withdraw.errors.any? %>
@@ -155,7 +161,7 @@ hr {
           <%=t 'activerecord.attributes.withdraw.draw_money' %> <span class="symbol required"></span>
       <% end %>
       <div class="col-sm-9">
-        <%= f.text_field :draw_money, :class => "form-control" %>
+        <input id="withdraw_draw_money" runat="server" class="form-control easyui-numberbox" precision="2" type="text" name="withdraw[draw_money]">
       </div>
     </div>
   </div>
@@ -166,6 +172,9 @@ hr {
       </div>
     </div>
 <% end %>
+<div class="space-place">
+</div>
+<%= render "site/shared/bottombar" %>
 
 <script>
 $(document).ready(function(){
@@ -202,6 +211,8 @@ $(document).ready(function(){
     var payWay = $("select").val();
     var money = $("#withdraw_draw_money").val();
     var cardMoney = $(".card-money").find("div").text();
+    cardMoney = parseFloat(cardMoney);
+    money = parseFloat(money);
     if(isNaN(money)) {
       $(".withdraw-msg").children().text("提成现金必须为数字")
       $(".withdraw-msg").children().show();
@@ -209,6 +220,11 @@ $(document).ready(function(){
     }
     else if(money == "") {
       $(".withdraw-msg").children().text("提成现金不能为空！")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    else if (money.toString().split(".").length > 1 && money.toString().split(".")[1].length > 2) {
+      $(".withdraw-msg").children().text("提成现金必须为小数点小于2的数字")
       $(".withdraw-msg").children().show();
       return false;
     }
