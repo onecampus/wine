@@ -359,7 +359,6 @@ function checkShoppingCart(){
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
     if (productList == null || productList == "") {
-      alert("bb");
       $(".allselect").attr("disabled","disabled");
       $(".inselect").attr("disabled","disabled");
       $(".cleancart").attr("disabled","disabled");
