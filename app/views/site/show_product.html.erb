@@ -317,6 +317,7 @@
 </div>
 <script type="text/javascript" src="/zhonglian/js/jquery-1.7.2.js"></script>
 <script src="/zhonglian/js/show_product.js"></script>
+<script type="text/javascript" src="/zhonglian/js/validateProductsNumber.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 var jQuery_1_7_2 = $.noConflict(true);
@@ -350,17 +351,6 @@ var jQuery_1_7_2 = $.noConflict(true);
       } else {
         numInput.val(1);
         alert("购物数量不能为0")
-      }
-    });
-    //商品数量改变
-
-    
-
-    // 若直接输入商品数量，也得判断
-    numInput.on( "blur", function() {
-      if( numInput.val() == '' || numInput.val() <= 0 || isNaN( numInput.val() ) ) {
-          alert( "请输入正确的商品数量！" );
-          numInput.focus();
       }
     });
 
