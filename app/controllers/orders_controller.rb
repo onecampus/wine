@@ -130,13 +130,13 @@ class OrdersController < ApplicationController
           commissioner = commissioner_profile.user
         elsif !@order.share_link_code.blank?
           commissioner_profile = Profile.where(share_link_code: @order.share_link_code).first
-          commissioner = commissioner_profile.user
+          commissioner = commissioner_profile.user unless commissioner_profile.blank?
         elsif !buyer.profile.parent.blank?
           commissioner_profile = buyer.profile.parent
           commissioner = commissioner_profile.user
         end
-
         unless commissioner.blank?
+          Rails.logger.info "commissioner is #{commissioner.username}"
           vritualcard = commissioner.vritualcard
           commissioner_money = vritualcard.money.to_f
           commission_money = commission_price * 0.1
@@ -155,6 +155,7 @@ class OrdersController < ApplicationController
           commissioner_parent_profile = commissioner.profile.parent
           unless commissioner_parent_profile.blank?
             commissioner_parent = commissioner_parent_profile.user
+            Rails.logger.info "commissioner_parent is #{commissioner_parent.username}"
             vritualcard_parent = commissioner_parent.vritualcard
             commissioner_money_parent = vritualcard_parent.money.to_f
             commission_money_parent = commission_price * 0.05
@@ -173,6 +174,7 @@ class OrdersController < ApplicationController
             commissioner_parent_parent_profile = commissioner_parent.profile.parent
             unless commissioner_parent_parent_profile.blank?
               commissioner_parent_parent = commissioner_parent_parent_profile.user
+              Rails.logger.info "commissioner_parent_parent is #{commissioner_parent_parent.username}"
               vritualcard_parent_parent = commissioner_parent_parent.vritualcard
               commissioner_money_parent_parent = vritualcard_parent_parent.money.to_f
               commission_money_parent_parent = commission_price * 0.01
@@ -211,7 +213,7 @@ class OrdersController < ApplicationController
   end
 
   def index_orders_canceled
-    @orders = Order.where(order_status: 3, pay_status: 2, user_id: user_id_of_current_provider).paginate(
+    @orders = Order.where(order_status: 4, pay_status: 2, user_id: user_id_of_current_provider).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')

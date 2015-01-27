@@ -290,7 +290,7 @@
               </li>
               <li>
                 <a href="/admin/orders/already/cancel">
-                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 3, pay_status: 2, user_id: user_id_of_current_provider).count %></span>已取消订单列表</span>
+                  <span class="title"><span class="badge pull-right"><%= Order.where(order_status: 4, pay_status: 2, user_id: user_id_of_current_provider).count %></span>已取消订单列表</span>
                 </a>
               </li>
             </ul>
