@@ -526,10 +526,11 @@ class SiteController < CustomerController
   end
 
   def commission
+    # array of all children, children's children, etc.
     @commissions = current_user.profile.descendants
     @results = []
     @commissions.each do |pro|
-      Commission.where(user_id: current_user.id, from_user_id: pro.id).each do |c|
+      Commission.where(user_id: current_user.id, from_user_id: pro.user.id).each do |c|
         @results.push(from_user: pro.user.username, money: c.commission_money)
       end
     end
@@ -693,21 +694,22 @@ class SiteController < CustomerController
       invite_code = User.generate_invite_code
       current_user_profile.invite_code = invite_code
       current_user_profile.save!
+      Rails.logger.info "current_user_profile.invite_code is #{current_user_profile.invite_code}"
     end
   end
 
   def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
     Rails.logger.info "share_link_code is #{share_link_code}"
     Rails.logger.info "invite_code is #{invite_code}"
-    if current_user_profile.parent.nil?  # 不存在上家
+    if current_user_profile.parent.blank?  # 不存在上家
       if !share_link_code.blank? && !invite_code.blank?
         # invite_code is more import
         parent_user = Profile.where(invite_code: invite_code).first
         unless parent_user.blank?
           current_user_profile.move_to_child_of(parent_user)
           parent_user.reload
+          order.invite_code = invite_code
         end
-        order.invite_code = invite_code
       elsif !share_link_code.blank? || !invite_code.blank?
         # share_link_code
         unless share_link_code.blank?
@@ -715,8 +717,8 @@ class SiteController < CustomerController
           unless parent_user.blank?
             current_user_profile.move_to_child_of(parent_user)
             parent_user.reload
+            order.share_link_code = share_link_code
           end
-          order.share_link_code = share_link_code
         end
 
         # invite_code
@@ -725,10 +727,11 @@ class SiteController < CustomerController
           unless parent_user.blank?
             current_user_profile.move_to_child_of(parent_user)
             parent_user.reload
+            order.invite_code = invite_code
           end
-          order.invite_code = invite_code
         end
       end
     end
+    Rails.logger.info "currentuser's parent is #{current_user_profile.parent.user.username}"
   end
 end
