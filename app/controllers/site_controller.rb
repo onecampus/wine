@@ -42,6 +42,7 @@ class SiteController < CustomerController
   end
 
   def new_withdraw
+    @vip_card = current_user.vritualcard
     @withdraw = Withdraw.new
   end
 

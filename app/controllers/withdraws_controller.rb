@@ -6,10 +6,18 @@ class WithdrawsController < ApplicationController
 
   def ok_withdraw
     @withdraw.draw_status = 1
-    if @withdraw.save
-      render json: { status: 'success', msg: 'action draw success' }
-    else
-      render json: { status: 'failed', msg: 'action draw failed' }
+    vritualcard = current_user.vritualcard
+    Withdraw.transaction do
+      Vritualcard.transaction do
+        money = vritualcard.money.to_f
+        money -= @withdraw.draw_money.to_f
+        vritualcard.money = money.round(2)
+        if @withdraw.save && vritualcard.save
+          render json: { status: 'success', msg: 'action draw success' }
+        else
+          render json: { status: 'failed', msg: 'action draw failed' }
+        end
+      end
     end
   end
 

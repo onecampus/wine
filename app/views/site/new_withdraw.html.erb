@@ -50,6 +50,12 @@
   float: left;
 }
 
+.card-money {
+  width: 90%;
+  margin: 10px 5%;
+  float: left;
+}
+
 
 .col-sm-2 {
   width: 20%;
@@ -75,7 +81,7 @@
   margin: 40px 0 0 5%;
   float: left;
 }
- hr {
+hr {
    width: 90%;
    margin: 0 0 0 5%;
    padding: 0;
@@ -135,6 +141,15 @@
       </div>
     </div>
     <hr>
+    <div class="card-money">
+      <%= f.label :draw_money, :class => "col-sm-2 control-label" do %>
+      余额 <span class="symbol required"></span>
+      <% end %>
+      <div class="col-sm-9">
+        <%= @vip_card.money %>
+      </div>
+    </div>
+    <hr>
     <div class="pay-money">
       <%= f.label :draw_money, :class => "col-sm-2 control-label" do %>
           <%=t 'activerecord.attributes.withdraw.draw_money' %> <span class="symbol required"></span>
@@ -186,8 +201,24 @@ $(document).ready(function(){
   $(".add-withdraw").on('click', function(e){
     var payWay = $("select").val();
     var money = $("#withdraw_draw_money").val();
-    if(money == "") {
+    var cardMoney = $(".card-money").find("div").text();
+    if(isNaN(money)) {
+      $(".withdraw-msg").children().text("提成现金必须为数字")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    else if(money == "") {
       $(".withdraw-msg").children().text("提成现金不能为空！")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    else if(money < 100) {
+      $(".withdraw-msg").children().text("提成现金不能小于100！")
+      $(".withdraw-msg").children().show();
+      return false;
+    }
+    else if(money > cardMoney) {
+      $(".withdraw-msg").children().text("提成现金不能大于余额！")
       $(".withdraw-msg").children().show();
       return false;
     }
@@ -241,5 +272,6 @@ $(document).ready(function(){
   $("input").focus(function(){
     $(".withdraw-msg").children().hide();
   });
+
 });
 </script>
