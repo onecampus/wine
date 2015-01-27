@@ -148,7 +148,7 @@ class OrdersController < ApplicationController
             from_user_id: buyer.id,
             user_id: commissioner.id,
             order_id: @order.id,
-            commission_money: commission_money.to_s,
+            commission_money: commission_money.round(2).to_s,
             percent: '0.1'
           )
 
@@ -166,7 +166,7 @@ class OrdersController < ApplicationController
               from_user_id: buyer.id,
               user_id: commissioner_parent.id,
               order_id: @order.id,
-              commission_money: commission_money_parent.to_s,
+              commission_money: commission_money_parent.round(2).to_s,
               percent: '0.05'
             )
 
@@ -185,7 +185,7 @@ class OrdersController < ApplicationController
                 from_user_id: buyer.id,
                 user_id: commissioner_parent_parent.id,
                 order_id: @order.id,
-                commission_money: commission_money_parent_parent.to_s,
+                commission_money: commission_money_parent_parent.round(2).to_s,
                 percent: '0.01'
               )
             end
