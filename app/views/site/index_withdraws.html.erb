@@ -33,6 +33,11 @@
     margin: 20px 0 20px 10%;
     float: left;
   }
+  .space-place {
+    float: left;
+    width: 100%;
+    height: 80px;
+  }
 </style>
 <div class="withdraws">
   <table>
@@ -51,6 +56,9 @@
   </table>
   <button class="withdraw-now btn btn-red" type="button">我要提现</button>
 </div>
+<div class="space-place">
+</div>
+<%= render "site/shared/bottombar" %>
 <script>
   $(document).ready(function(){
     $(".withdraw-now").click(function(){
