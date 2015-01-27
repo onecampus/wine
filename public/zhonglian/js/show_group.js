@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  updateShareLinkCode();
   var Utils = {
     setParam: function(name, value) {
       $.localStorage.set(name, value);
@@ -150,6 +149,7 @@ $(document).ready(function(){
       'productType': productType
     };
     Cart.buyProduct(product);
+    updateShareLinkCode();
     window.location = '/customer/orders/settlement';
   });
   /*
