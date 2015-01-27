@@ -37,14 +37,14 @@ $(document).ready(function(){
       $( '.share_notice' ).slideUp(800);
     },3000);
   });
-
-  // 判断是否为微信内置浏览器函数
-  function isWechat(){
-    var ua = navigator.userAgent.toLowerCase();
-    if(ua.match( /MicroMessenger/i )=="micromessenger") {
-      return true;
-    } else {
-      return false;
-    }
-  }
 });
+
+// 判断是否为微信内置浏览器函数
+function isWechat(){
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.match( /MicroMessenger/i )=="micromessenger") {
+    return true;
+  } else {
+    return false;
+  }
+}
