@@ -30,3 +30,4 @@
 //= require bootstrap-tagsinput
 
 //= require backend/geo
+//= require lib/jquery.validate.min
