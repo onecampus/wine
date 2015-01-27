@@ -636,29 +636,46 @@ $(document).ready(function() {
 
   /*
   发送图文
-
-  $(".save-graphic").click(function(){
-    var title = $("#graphic_title").val();
-    var description = $("#graphic_des").val();
-    var url = $("#url").val();
-    var img = $(".graphic-pic-pre-url").val();
-    if(title == "") {
-      alert("请输入标题");
-      return false;
+  */
+$(".save-graphic").click(function(){
+ $("#new-graphic").validate({
+    rules: {
+      graphic_url: {
+        required: true,
+        url: true,
+      },
+      graphic_title: {
+        required: true
+      },
+      graphic_des: {
+        required: true
+      }
+    },
+    messages: {
+      graphic_url: {
+        required: "请输入url地址",
+        url: "请输入正确的url地址"
+      },
+      graphic_title: {
+        required: "请输入标题"
+      },
+      graphic_des: {
+        required: "请输入描述"
+      }
     }
-    else if(description == "") {
-      alert("请输入描述");
-      return false;
-    }
-    else if(url == "") {
-      alert("请输入链接");
-      return false;
-    }
-    else if(img == "") {
+  });
+  var value = $("#new-graphic").valid();
+  if(value) {
+    var img = $("#graphic_pic").val();
+    if(img == "") {
       alert("请上传图片");
       return false;
     }
     else {
+      var title = $("#graphic_title").val();
+      var description = $("#graphic_des").val();
+      var url = $("#graphic_url").val();
+      var img = $(".graphic-pic-pre-url").val();
       var buttonType = "click";
       var msgType = "news";
       var id = $(".mesg-menu-id").val();
@@ -688,7 +705,7 @@ $(document).ready(function() {
           cleanImage();
           $("#graphic_title").attr("value","");
           $("#graphic_des").attr("value","");
-          $("#url").attr("value","");
+          $("#graphic_url").attr("value","");
           $(".graphic-pic-pre-url").attr("value","");
         },
         complete: function(XMLHttpRequest,textStatus) {
@@ -700,30 +717,10 @@ $(document).ready(function() {
       });
     }
 
-  });
-  */
-$(".save-graphic").click(function(){
- $("#new-graphic").validate({
-    rules: {
-      url: {
-        required: true,
-        url: true,
-      },
-      graphic_title: {
-        required: true
-      }
-    },
-    messages: {
-      url: {
-        required: "请输入url地址",
-        url: "请输入正确的url地址"
-      },
-      graphic_title: {
-        required: "请输入标题"
-      }
-    }
-  });
-  var value = $("#new-graphic").valid();
+  }
+  else {
+    return false;
+  }
 });
 
 
