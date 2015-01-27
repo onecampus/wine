@@ -185,7 +185,7 @@ body {
 }
 
 .p-comments .comment-count {
-  background-color: #f06200;
+  background-color: #5cb75c;
   border-radius: 3px;
   width: 15px;
   text-align: center;
@@ -285,6 +285,32 @@ body {
   font-weight: bold;
   font-size: 24px;
 }
+.group-time {
+  margin: 0 auto;
+  padding: 0 0 0 20px;
+}
+
+.group-time-inf {
+  margin: 0 auto;
+  color: #787878;
+  font-size: 16px;
+}
+
+.group-time .time-inf {
+  color: #f06200;
+  font-size: 18px;
+}
+
+.group-time .time-inf span{
+  padding: 0 5px;
+  background-color: #dfdfdf;
+}
+
+.group-msg {
+  color: #f06200;
+  font-size: 18px;
+  display: none;
+}
 </style>
 <div class="main">
   <input class="product-id" type="hidden" value="<%= @group.product.id %>">
@@ -300,6 +326,13 @@ body {
       <span class="price">¥ <%= @group.product.price %></span>
       <span class="freight">&nbsp;运费: ¥ <span class="freight-price"><% if @group.product.fright %><%= @group.product.fright %><% else %>0<% end %></span>元</span>
     </div>
+  </div>
+  <hr/>
+  <div class="group-time">
+    <input class="group-endtime" type="hidden" value="<%= @group.end_time%>">
+    <div class="group-time-inf"><span>活动剩余时间:</span></div>
+    <div class="group-msg"><span>活动已结束，敬请期待下一次！</span></div>
+    <div class="time-inf"><img src="/zhonglian/img/seckill-icon.png"><span class="remainD"></span>天<span class="remainH"></span>小时<span class="remainM"></span>分<span class="remainS"></span>秒</div>
   </div>
   <hr/>
   <div class="p-ampunt">

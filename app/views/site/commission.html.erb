@@ -7,6 +7,9 @@
   background: #fff;
   text-align: left;
   margin: 10px auto;
+  border: 1px solid #ccc;
+  padding-bottom: 20px;
+  border-radius: 5px;
 }
 table {
   margin-left: 2.5%;
@@ -16,11 +19,8 @@ table {
 tr {
   border-bottom: 1px solid #eee;
 }
-th {
-  padding: 10px 0 0 10px;
-}
-td {
-  padding: 10px 10px;
+th, td {
+  padding: 10px;
 }
 .space {
   width: 100%;
@@ -46,3 +46,11 @@ td {
 <div class="space">
 </div>
 <%= render "site/shared/bottombar" %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $tr = $( "tr" );
+    if ( $tr.length == 1 ) {
+      $( "table" ).append( "<tr><td colspan='2'>暂无记录</td></tr>")
+    }
+  });
+</script>

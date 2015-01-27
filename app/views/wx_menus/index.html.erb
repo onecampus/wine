@@ -3,6 +3,7 @@
 <% end %>
 <link href="/backend/assets/js/wxmenus/index.css" rel="stylesheet">
 <link href="/plugins/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="/assets/lib/jquery.validate.js"></script>
 <script src="/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="/plugins/jqueryfileupload/js/vendor/jquery.ui.widget.js"></script>
 <script src="/plugins/jqueryfileupload/js/jquery.iframe-transport.js"></script>
@@ -102,13 +103,15 @@
       <div class="edit-url">
         <span>订阅者点击该子菜单会跳到以下链接</span>
         <p class="url-mesg text2"></p>
+        <form method="get" id="new-url" action="" accept-charset="UTF-8">
         <div class="url-input">
-          <input type="hidden" class="menu-id" value="">
-          <input class="url-value"type="text" placeholder="输入URL">
+            <input type="hidden" class="menu-id" value="">
+            <input class="url-value" type="url" id="url" name="url" placeholder="输入URL">
         </div>
         <div class="url-btn">
-          <button class="url-save">保存</button>
+          <input type="submit" value="保存" class="url-save submit"></button>
         </div>
+        </form>
       </div>
      <div class="edit-mesg">
        <input type="hidden" class="mesg-menu-id" value="">
@@ -910,19 +913,19 @@
 <div class="modal fade" id="graphicModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+      <form method="get" id="new-graphic" class="form-horizontal" action="" accept-charset="UTF-8">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">上传图文</h4>
       </div>
       <div class="modal-body">
-        <form method="post" id="new_menu" class="form-horizontal" action="" accept-charset="UTF-8">
           <div class="form-group">
             <label for="menu_name" class="col-sm-2 control-label">
               标题
               <span class="symbol required"></span>
             </label>
             <div class="col-sm-9">
-              <input type="text" name="name" id="graphic_title" class="form-control">
+              <input type="text" name="graphic_title" id="graphic_title" required class="form-control">
             </div>
           </div>
           <div class="form-group">
@@ -931,7 +934,7 @@
               <span class="symbol required"></span>
             </label>
             <div class="col-sm-9">
-              <input type="text" name="name" id="graphic_des" class="form-control">
+              <input type="text" name="graphic_des" id="graphic_des" class="form-control">
             </div>
           </div>
           <div class="form-group">
@@ -942,7 +945,7 @@
             <div class="col-sm-9 graphic-picture-up">
               <input type="file" name="img" id="graphic_picture">
             </div>
-            <input class="graphic-pic-pre-url" type="hidden" value="">
+            <input class="graphic-pic-pre-url" type="hidden" name="graphic_pic" id="graphic_pic" value="">
             <div class="graphic-picture-preview">
             </div>
           </div>
@@ -952,16 +955,16 @@
               <span class="symbol required"></span>
             </label>
             <div class="col-sm-9">
-              <input type="text" value="" name="url" id="graphic_url" class="form-control">
+              <input type="text" value="" name="graphic_url" type="url" id="graphic_url" class="form-control">
             </div>
             <input type="hidden" name="parent_id" value="" />
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary save-graphic" data-dismiss="modal">保存</button>
+        <button id="save_graphic" type="button" data-dismiss="modal" class="btn btn-primary save-graphic">保存</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
