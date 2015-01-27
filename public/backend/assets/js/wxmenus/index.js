@@ -317,7 +317,7 @@ $(document).ready(function() {
       }
       else {
         $(".url-value").attr("value",url);
-        $(".url-save").text("修改");
+        $(".url-save").attr("value","修改");
       }
     }
     if (type == "click") {
