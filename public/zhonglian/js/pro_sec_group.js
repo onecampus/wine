@@ -27,4 +27,24 @@ $(document).ready(function(){
   if ( !$p.length ) {
     $( ".desc" ).css( "margin-left", "20px" );
   }
+
+  // 点击分享按钮，弹出引导框
+  $( '.share' ).on( 'click', function() {
+    $( '.back' ).show();
+    $( '.share_notice' ).slideDown(800);
+    setTimeout( function() {
+      $( '.back' ).hide();
+      $( '.share_notice' ).slideUp(800);
+    },3000);
+  });
 });
+
+// 判断是否为微信内置浏览器函数
+function isWechat(){
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.match( /MicroMessenger/i )=="micromessenger") {
+    return true;
+  } else {
+    return false;
+  }
+}
