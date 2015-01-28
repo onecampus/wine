@@ -26,28 +26,27 @@
     });
   }
   $(document).ready(function(){
-      var shoppingCart = $.localStorage.get("shoppingCart");
-      if (shoppingCart === null || shoppingCart === "") {
-        $(".shopping-cart-mark").hide();
+    var shoppingCart = $.localStorage.get("shoppingCart");
+    if (shoppingCart === null || shoppingCart === "") {
+      $(".shopping-cart-mark").hide();
+    }
+    else {
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      var length = 0;
+      var productList = JsonStr.productList;
+      for (i in productList) {
+        if(productList[i].productType == "product") {
+          length = length +1;
+        }
+      }
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
       }
       else {
-        console.log("shoppingCart is " + shoppingCart);
-        var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
-        var length = 0;
-        var productList = JsonStr.productList;
-        for (i in productList) {
-          if(productList[i].productType == "product") {
-            length = length +1;
-          }
-        }
-        if (length > 0) {
-          $(".shopping-cart-mark").show();
-          $(".shopping-cart-mark").text(length);
-        }
-        else {
-          $(".shopping-cart-mark").hide();
-        }
+        $(".shopping-cart-mark").hide();
       }
+    }
     var url = $.url();
     var path = url.attr('path');
     if(path.startWith('/customer/cats')) {

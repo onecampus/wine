@@ -150,6 +150,21 @@
   .website-record > a {
     color: #80b1da;
   }
+
+  .shopping-cart-mark {
+    position: absolute;
+    left: -15px;
+    width: 13px;
+    height: 13px;
+    background: #fff;
+    border: 1px solid #f06200;
+    border-radius: 20px;
+    font-size: 0.5em;
+    color: #f06200;
+    text-align: center;
+    padding:1px;
+    display: none;
+  }
 </style>
 
 <div class="search-box" id="top">
@@ -278,5 +293,29 @@
     var nodeMenu = $('.home-menu');
     nodeMenu.addClass('active');
     $('.icon', nodeMenu).addClass('icon-home-hover');
+    /*
+    购物车数量
+    */
+    var shoppingCart = $.localStorage.get("shoppingCart");
+    if (shoppingCart === null || shoppingCart === "") {
+      $(".shopping-cart-mark").hide();
+    }
+    else {
+      var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
+      var length = 0;
+      var productList = JsonStr.productList;
+      for (i in productList) {
+        if(productList[i].productType == "product") {
+          length = length +1;
+        }
+      }
+      if (length > 0) {
+        $(".shopping-cart-mark").show();
+        $(".shopping-cart-mark").text(length);
+      }
+      else {
+        $(".shopping-cart-mark").hide();
+      }
+    }
   });
 </script>
