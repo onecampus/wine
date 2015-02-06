@@ -733,6 +733,5 @@ class SiteController < CustomerController
         end
       end
     end
-    Rails.logger.info "currentuser's parent is #{current_user_profile.parent.user.username}"
   end
 end
