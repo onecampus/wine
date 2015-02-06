@@ -382,10 +382,11 @@ body {
 <%= render "site/shared/bottombar" %>
 <script type="text/javascript" src="/zhonglian/js/pro_sec_group.js"></script>
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="/zhonglian/js/sharelinkcode.js"></script>
 <script>
 $(document).ready(function(){
   showOverNum();
-
+  updateShareLinkCode();
   // 商品数量的加减
   var minus = $(".action-de");
   var plus = $(".action-plus");
