@@ -20,6 +20,10 @@ bundle install
 rake db:create # 创建数据库
 rake db:migrate # 导入数据库表
 rake db:seed # 导入测试数据
+
+# 启动 redis 服务器
+sudo /etc/init.d/redis_6379 start
+
 rails s # 启动开发服务器
 # 访问 http://127.0.0.1:3000/ 这是手机端, 可以缩小浏览器窗口查看
 # 后台 http://127.0.0.1:3000/admin/products 需要登陆
