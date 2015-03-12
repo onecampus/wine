@@ -250,6 +250,10 @@ rails g uploader weixin_uploader
 
 
 rails g migration AddFromUserIdToCommissions from_user_id:integer
+
+# ===================================================================
+
+rails g migration AddIntegralToProducts integral:integer
 ```
 
 ### 功能分析 ###
