@@ -254,6 +254,10 @@ rails g migration AddFromUserIdToCommissions from_user_id:integer
 # ===================================================================
 
 rails g migration AddIntegralToProducts integral:integer
+
+rails g model Score user_id mark
+
+rails g scaffold ScoreLog user_id mark_log log_type # year/current
 ```
 
 ### 功能分析 ###
