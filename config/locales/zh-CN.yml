@@ -29,8 +29,13 @@ zh-CN:
       site_config: '系统设置'
       withdraw: '提现'
       commission: '提成'
+      score: '提成分数'
 
     attributes:
+      score:
+        user_id: '提成者'
+        mark: '分数'
+
       commission:
         user_id: '提成者'
         order_id: '订单'

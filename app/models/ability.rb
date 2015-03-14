@@ -29,6 +29,7 @@ class Ability
       can :manage, SiteConfig
       can :manage, Withdraw
       can :manage, Commission
+      can :manage, Score
     elsif user.has_role? :provider
       can :manage, User
       can :manage, Profile
