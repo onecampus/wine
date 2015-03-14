@@ -499,6 +499,48 @@ end
   )
 end
 
+SiteConfig.create!(
+  key: 'current_order_commission_a',
+  val: '0.1',
+  img: 'current_order_commission_a',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'current_order_commission_b',
+  val: '0.05',
+  img: 'current_order_commission_b',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'current_order_commission_c',
+  val: '0.01',
+  img: 'current_order_commission_c',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'year_commission_c',
+  val: '0.01',
+  img: 'year_commission_c',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'year_commission_b',
+  val: '0.05',
+  img: 'year_commission_b',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'year_commission_a',
+  val: '0.1',
+  img: 'year_commission_a',
+  config_type: 'commission_config'
+)
+
 time_end = Time.now
 time = time_end - time_start
 puts time.to_s
