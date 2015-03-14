@@ -12,6 +12,7 @@ class CommissionsController < ApplicationController
     respond_with(@commissions)
   end
 
+=begin
   def year_compute_index
     @commissions = Commission.where(commission_type: 'year').paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@commissions)
@@ -40,6 +41,7 @@ class CommissionsController < ApplicationController
     flash[:notice] = '年度结算成功，请不要重复结算，每年一次.'
     redirect_to '/admin/commissions/year/index'
   end
+=end
 
   def show
     respond_with(@commission)
@@ -71,6 +73,7 @@ class CommissionsController < ApplicationController
 
   private
 
+=begin
   def create_year_commisson(from_uid, uid, commission_money, percent, commission_score, money)
     Commission.transaction do
       Vritualcard.transaction do
@@ -91,6 +94,7 @@ class CommissionsController < ApplicationController
       end
     end
   end
+=end
 
     def set_commission
       @commission = Commission.find(params[:id])

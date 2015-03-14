@@ -61,8 +61,8 @@ Rails.application.routes.draw do
 
   scope '/admin' do
 
-    get 'commissions/year/index' => 'commissions#year_compute_index'
-    get 'commissions/year/compute' => 'commissions#year_compute'
+    # get 'commissions/year/index' => 'commissions#year_compute_index'
+    # get 'commissions/year/compute' => 'commissions#year_compute'
 
     resources :commissions
 
