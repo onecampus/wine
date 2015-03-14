@@ -104,6 +104,9 @@ class OrdersController < ApplicationController
   end
 
   def ok_order
+    # 提成三级 A B C D
+    # 购买 -> 找上家 -> C commission_sore=score-last_commission_score_log -> C commission_sore>100 -> C提成计算 -> ...
+    #
     @order.order_status = 3
     Commission.transaction do
       Order.transaction do
