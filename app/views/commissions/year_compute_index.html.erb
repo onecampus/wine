@@ -1,0 +1,91 @@
+<% content_for :page_title do %>
+    年度<%=t 'activerecord.models.commission' %>管理
+<% end %>
+
+<!-- start: PAGE TITLE & BREADCRUMB -->
+<% content_for :page_crumbs do %>
+    <ol class="breadcrumb">
+      <li>
+        <i class="clip-pencil"></i>
+        <a href="#">
+          控制面板
+        </a>
+      </li>
+      <li class="active">
+        年度<%=t 'activerecord.models.commission' %>管理
+      </li>
+      <li class="search-box">
+        <form class="sidebar-search">
+          <div class="form-group">
+            <input type="text" placeholder="Start Searching...">
+            <button class="submit">
+              <i class="clip-search-3"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+    </ol>
+    <div class="page-header">
+      <h1>
+        <small></small>
+      </h1>
+    </div>
+<% end %>
+<!-- end: PAGE TITLE & BREADCRUMB -->
+
+<div class="row"><a href="/admin/commissions/year/compute" style="margin: 10px 5% 25px 5%;" class="btn btn-yellow col-sm-10">点击进行结算(注意每年结算一次)</a></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    年度<%=t 'activerecord.models.commission' %>管理
+    <div class="panel-tools">
+      <a href="#" class="btn btn-xs btn-link panel-collapse collapses">
+      </a>
+      <a data-toggle="modal" href="#panel-config" class="btn btn-xs btn-link panel-config">
+        <i class="fa fa-wrench"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-refresh">
+        <i class="fa fa-refresh"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-expand">
+        <i class="fa fa-resize-full"></i>
+      </a>
+      <a href="#" class="btn btn-xs btn-link panel-close">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table id="" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th><%=t 'activerecord.attributes.commission.user_id' %></th>
+          <th><%=t 'activerecord.attributes.commission.order_id' %></th>
+          <th><%=t 'activerecord.attributes.commission.commission_money' %></th>
+          <th><%=t 'activerecord.attributes.commission.percent' %></th>
+          <th><%=t 'activerecord.attributes.commission.from_user_id' %></th>
+          <th><%=t 'activerecord.attributes.commission.commission_type' %></th>
+          <th><%=t 'activerecord.attributes.commission.commission_score' %></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @commissions.each do |commission| %>
+            <tr>
+              <td><%= commission.user.username %></td>
+              <td><%= commission.order.order_number %></td>
+              <td><%= commission.commission_money %></td>
+              <td><%= commission.percent %></td>
+              <td><%= commission.from_user_id %></td>
+              <td><%= commission.commission_type %></td>
+              <td><%= commission.commission_score %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%= will_paginate @commissions, renderer: BootstrapPagination::Rails %>
+</div>
