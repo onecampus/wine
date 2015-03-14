@@ -139,38 +139,38 @@ class OrdersController < ApplicationController
           Rails.logger.info "commissioner is #{commissioner.username}"
           vritualcard = commissioner.vritualcard
           commissioner_money = vritualcard.money.to_f
-          current_order_commission_a = SiteConfig.where(key: 'current_order_commission_a').first.val
-          commission_money = commission_price * current_order_commission_a
+          c_o_commission_a = SiteConfig.where(key: 'c_o_commission_a').first.val
+          commission_money = commission_price * c_o_commission_a
           commissioner_money += commission_money
           vritualcard.money = commissioner_money.round(2)
           vritualcard.save!
-          create_commission(buyer.id, commissioner.id, @order.id, commission_money.round(2).to_s, current_order_commission_a, commissioner.mark)
+          create_commission(buyer.id, commissioner.id, @order.id, commission_money.round(2).to_s, c_o_commission_a, commissioner.mark)
 
-          commissioner_parent_profile = commissioner.profile.parent
-          unless commissioner_parent_profile.blank?
-            commissioner_parent = commissioner_parent_profile.user
-            Rails.logger.info "commissioner_parent is #{commissioner_parent.username}"
-            vritualcard_parent = commissioner_parent.vritualcard
-            commissioner_money_parent = vritualcard_parent.money.to_f
-            current_order_commission_b = SiteConfig.where(key: 'current_order_commission_b').first.val
-            commission_money_parent = commission_price * current_order_commission_b
-            commissioner_money_parent += commission_money_parent
-            vritualcard_parent.money = commissioner_money_parent.round(2)
-            vritualcard_parent.save!
-            create_commission(buyer.id, commissioner_parent.id, @order.id, commission_money_parent.round(2).to_s, current_order_commission_b, commissioner_parent.mark)
+          commissioner_p_profile = commissioner.profile.parent
+          unless commissioner_p_profile.blank?
+            commissioner_p = commissioner_p_profile.user
+            Rails.logger.info "commissioner_p is #{commissioner_p.username}"
+            vritualcard_p = commissioner_p.vritualcard
+            commissioner_money_p = vritualcard_p.money.to_f
+            c_o_commission_b = SiteConfig.where(key: 'c_o_commission_b').first.val
+            commission_money_p = commission_price * c_o_commission_b
+            commissioner_money_p += commission_money_p
+            vritualcard_p.money = commissioner_money_p.round(2)
+            vritualcard_p.save!
+            create_commission(buyer.id, commissioner_p.id, @order.id, commission_money_p.round(2).to_s, c_o_commission_b, commissioner_p.mark)
 
-            commissioner_parent_parent_profile = commissioner_parent.profile.parent
-            unless commissioner_parent_parent_profile.blank?
-              commissioner_parent_parent = commissioner_parent_parent_profile.user
-              Rails.logger.info "commissioner_parent_parent is #{commissioner_parent_parent.username}"
-              vritualcard_parent_parent = commissioner_parent_parent.vritualcard
-              commissioner_money_parent_parent = vritualcard_parent_parent.money.to_f
-              current_order_commission_c = SiteConfig.where(key: 'current_order_commission_c').first.val
-              commission_money_parent_parent = commission_price * current_order_commission_c
-              commissioner_money_parent_parent += commission_money_parent_parent
-              vritualcard_parent_parent.money = commissioner_money_parent_parent.round(2)
-              vritualcard_parent_parent.save!
-              create_commission(buyer.id, commissioner_parent_parent.id, @order.id, commission_money_parent_parent.round(2).to_s, current_order_commission_c, commissioner_parent_parent.mark)
+            commissioner_p_p_profile = commissioner_p.profile.parent
+            unless commissioner_p_p_profile.blank?
+              commissioner_p_p = commissioner_p_p_profile.user
+              Rails.logger.info "commissioner_p_p is #{commissioner_p_p.username}"
+              vritualcard_p_p = commissioner_p_p.vritualcard
+              commissioner_money_p_p = vritualcard_p_p.money.to_f
+              c_o_commission_c = SiteConfig.where(key: 'c_o_commission_c').first.val
+              commission_money_p_p = commission_price * c_o_commission_c
+              commissioner_money_p_p += commission_money_p_p
+              vritualcard_p_p.money = commissioner_money_p_p.round(2)
+              vritualcard_p_p.save!
+              create_commission(buyer.id, commissioner_p_p.id, @order.id, commission_money_p_p.round(2).to_s, c_o_commission_c, commissioner_p_p.mark)
             end
           end
         end
