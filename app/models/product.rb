@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   mount_uploader :img, ProductImgUploader
 
-  validates :name, :price, :cat_id, :status, :is_commission, presence: true
+  validates :name, :price, :cat_id, :status, :is_commission, :integral, presence: true
   validates :name, uniqueness: true
 
   belongs_to :cat

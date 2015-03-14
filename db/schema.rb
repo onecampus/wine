@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123070045) do
+ActiveRecord::Schema.define(version: 20150314065608) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 20150123070045) do
     t.datetime "updated_at"
     t.string   "fright"
     t.integer  "is_commission"
+    t.integer  "integral"
   end
 
   create_table "profiles", force: true do |t|

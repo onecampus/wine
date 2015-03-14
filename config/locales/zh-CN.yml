@@ -251,6 +251,7 @@ zh-CN:
         unit: '单位'
         fright: '运费'
         is_commission: '是否参与提成'
+        integral: '积分'
 
       inventory:
         user_id: '供应商'
