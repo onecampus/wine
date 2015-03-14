@@ -257,8 +257,8 @@ rails g migration AddIntegralToProducts integral:integer
 
 rails g model Score user_id:integer mark
 
-rails AddCommissionTypeToCommissions commission_type # year/current_order
-rails AddCommissionScoreToCommissions commission_score:integer
+rails g migration AddCommissionTypeToCommissions commission_type # year/current_order
+rails g migration AddCommissionScoreToCommissions commission_score:integer
 
 ```
 

@@ -42,6 +42,8 @@ zh-CN:
         commission_money: '提成金额'
         percent: '提成比例'
         from_user_id: '购买者'
+        commission_type: '提成类型'
+        commission_score: '当前提成分数'
 
       withdraw:
         user_id: '提现用户'

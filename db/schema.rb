@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314070905) do
+ActiveRecord::Schema.define(version: 20150314071250) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20150314070905) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "from_user_id"
+    t.string   "commission_type"
+    t.integer  "commission_score"
   end
 
   create_table "group_orders", force: true do |t|
