@@ -134,14 +134,17 @@ class OrdersController < ApplicationController
         score = buyer.score
         commission_price = total_price * product_score_percent.to_f  # 提成金额
         commission_mark = commission_price.to_i
-        score.mark = commission_mark
+        score.mark += commission_mark
+        score.remain_mark += commission_mark
         score.save!
 
-        if commission_mark >= 100  # 如果购买者分数超过100，就计算提成
+        remain_mark_old = score.remain_mark
+
+        if remain_mark_old >= 100  # 如果购买者分数超过100，就计算提成
 
           # 对分数进行求余
-          remain_mark = commission_mark % 100
-          commission_score = commission_mark - remain_mark
+          remain_mark = remain_mark_old % 100
+          commission_score = remain_mark_old - remain_mark
 
           score.remain_mark = remain_mark
           score.save!
