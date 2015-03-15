@@ -35,6 +35,7 @@ zh-CN:
       score:
         user_id: '提成者'
         mark: '分数'
+        remain_mark: '提成剩余分数'
 
       commission:
         user_id: '提成者'

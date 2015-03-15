@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314071250) do
+ActiveRecord::Schema.define(version: 20150315084514) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(version: 20150314071250) do
     t.string   "mark"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "remain_mark"
   end
 
   create_table "seckill_orders", force: true do |t|

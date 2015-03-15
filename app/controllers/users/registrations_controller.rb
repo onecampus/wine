@@ -38,7 +38,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     Integral.create(user_id: resource.id, amount: 0)
     Vritualcard.create(user_id: resource.id, money: '0.00')
-    Score.create(user_id: resource.id, mark: 0)
+    Score.create(user_id: resource.id, mark: 0, remain_mark: 0)
 
     sign_in(resource) if resource.persisted?
     # yield end
