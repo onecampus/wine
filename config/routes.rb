@@ -74,6 +74,9 @@ Rails.application.routes.draw do
     get 'site_configs/customer/index/imgs' => 'site_configs#show_index_imgs'
     match 'site_configs/customer/index/imgs/update', to: 'site_configs#update_index_imgs', via: :post
 
+    get 'site_configs/commissions/config' => 'site_configs#commissions_config_index'
+    match 'site_configs/commissions/config', to: 'site_configs#commissions_config', via: :post
+
     resources :seckill_orders
     resources :seckills
 
