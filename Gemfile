@@ -1,27 +1,27 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.9'
+gem 'rails', '4.1.10'
 
 gem 'mysql2'
 
-gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
 
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 
 # bootstrap 和 分页
-gem 'bootstrap-sass', '~> 3.3.0'
+gem 'bootstrap-sass', '~> 3.3.4'
 gem 'autoprefixer-rails'
 
-gem 'will_paginate', '~> 3.0'
+gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
 # 权限控制
 gem 'devise'
-gem 'devise-i18n', '~> 0.11.2'
-gem 'cancancan', '~> 1.9' # not cancan
+gem 'devise-i18n'
+gem 'cancancan'
 gem 'rolify'
 
 # 无限级分类------左右值算法
@@ -48,7 +48,7 @@ gem 'actionpack-xml_parser'
 # gem 'weixin_authorize'
 gem 'rest-client'
 
-gem 'wx_ext', '~> 0.2.0'
+gem 'wx_ext', '~> 0.2.2'
 
 gem 'font-awesome-rails'
 
