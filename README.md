@@ -16,6 +16,9 @@ git clone git@github.com:onecampus/wine.git
 cd wine
 cp ./config/database.yml.example ./config/database.yml
 # 编辑 database.yml, 修改为你的 mysql 数据库密码, 其他最好别动
+
+cp ./config/initializers/wx_pay.rb.example ./config/initializers/wx_pay.rb
+
 bundle install
 rake db:create # 创建数据库
 rake db:migrate # 导入数据库表

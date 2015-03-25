@@ -30,3 +30,5 @@
 /backup.html.erb
 
 /wx_pay/
+
+/config/initializers/wx_pay.rb

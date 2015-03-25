@@ -1,0 +1,7 @@
+# required
+WxPay.appid = 'YOUR_APPID'
+WxPay.key = 'YOUR_KEY'
+WxPay.mch_id = 'YOUR_MCH_ID'
+
+# optional - configurations for RestClient timeout, etc.
+WxPay.extra_rest_client_options = {timeout: 2, open_timeout: 3}
