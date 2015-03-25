@@ -57,6 +57,8 @@ gem 'money-rails'
 gem 'redis', '~> 3.0.1'
 gem 'hiredis', '~> 0.4.5'
 
+gem 'wx_pay', :github => 'onecampus/wx_pay'
+
 # 部署
 group :development do
   gem 'capistrano', '~> 3.3.0'

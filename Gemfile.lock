@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/onecampus/wx_pay.git
+  revision: 33f8decf126721e82ce6c6ae93545a670eb025a1
+  specs:
+    wx_pay (0.0.2)
+      activesupport (~> 4)
+      rest-client (~> 1.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -280,3 +288,4 @@ DEPENDENCIES
   will_paginate
   will_paginate-bootstrap
   wx_ext (~> 0.2.2)
+  wx_pay!
