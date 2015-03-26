@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.3.3'
+lock '3.3.5'
 
 # http://capistranorb.com/documentation/getting-started/preparing-your-application/
 # http://robmclarty.com/blog/how-to-deploy-a-rails-4-app-with-git-and-capistrano
