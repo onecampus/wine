@@ -26,8 +26,8 @@ class PayController < CustomerController
     # 下单到微信, 返回 prepay_id
     # required fields
     params_pre_pay = {
-        body: 'test1',
-        out_trade_no: 'test003',  # 商户订单号
+        body: 'test3',
+        out_trade_no: 'test3',  # 商户订单号
         total_fee: 1,  # 总金额
         spbill_create_ip: request.remote_ip,  # 终端IP
         notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
@@ -37,18 +37,6 @@ class PayController < CustomerController
 
     r_hash = WxPay::Service.invoke_unifiedorder params_pre_pay
     @ra = r_hash
-    # => {
-    #      "return_code"=>"SUCCESS",
-    #      "return_msg"=>"OK",
-    #      "appid"=>"YOUR APPID",
-    #      "mch_id"=>"YOUR MCH_ID",
-    #      "nonce_str"=>"8RN7YfTZ3OUgWX5e",
-    #      "sign"=>"623AE90C9679729DDD7407DC7A1151B2",
-    #      "result_code"=>"SUCCESS",
-    #      "prepay_id"=>"wx2014111104255143b7605afb0314593866",
-    #      "trade_type"=>"JSAPI"
-    #    }
-    # 生成 jsapi 参数
     r_hash[:r].success? # => true
 
     @js_noncestr = SecureRandom.uuid.tr('-', '')
