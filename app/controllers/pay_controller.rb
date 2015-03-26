@@ -1,3 +1,5 @@
+require 'digest/md5'
+require 'securerandom'
 ##
 # This class is a controller for customer from weixin brower.
 class PayController < CustomerController
@@ -16,22 +18,24 @@ class PayController < CustomerController
 
     @pid = openid
 
+    @ip = request.remote_ip
+
     # 支付页面
     # 保存订单
 
     # 下单到微信, 返回 prepay_id
     # required fields
-    params = {
-        body: '测试商品1',
+    params_pre_pay = {
+        body: 'test1',
         out_trade_no: 'test003',  # 商户订单号
         total_fee: 1,  # 总金额
-        spbill_create_ip: '127.0.0.1',  # 终端IP
+        spbill_create_ip: request.remote_ip,  # 终端IP
         notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
         trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
         openid: openid  # required when trade_type is `JSAPI`
     }
 
-    r_hash = WxPay::Service.invoke_unifiedorder params
+    r_hash = WxPay::Service.invoke_unifiedorder params_pre_pay
     @ra = r_hash
     # => {
     #      "return_code"=>"SUCCESS",
@@ -46,6 +50,17 @@ class PayController < CustomerController
     #    }
     # 生成 jsapi 参数
     r_hash[:r].success? # => true
+
+    @js_noncestr = SecureRandom.uuid.tr('-', '')
+    @js_timestamp = Time.now.getutc.to_i
+    @app_id = app_id
+
+    params_pre_pay_js = {
+        appid: WxPay.appid,
+        mch_id: WxPay.mch_id,
+        nonce_str: @js_noncestr,
+    }.merge(params_pre_pay)
+    @js_pay_sign = WxPay::Sign.generate(params_pre_pay_js)
 
     # 跳转到支付页面
   end

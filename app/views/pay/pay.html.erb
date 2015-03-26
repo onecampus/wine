@@ -11,18 +11,22 @@
 
 <hr />
 
+ip <%= @ip %>
+
 <a href="/">点击支付</a>
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
   // jsapi 支付
     function onBridgeReady() {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {
-                    "appId": "<%= @ra[:r]['appid'] %>",  // 公众号名称，由商户传入
-                    "timeStamp": "<%= Time.now.getutc.to_i %>",  // 时间戳，自1970年以来的秒数
-                    "nonceStr": "<%= @ra[:r]['nonce_str'] %>",  // 随机串
+                    "appId": "<%= @app_id %>",  // 公众号名称，由商户传入
+                    "timeStamp": "<%= @js_timestamp %>",  // 时间戳，自1970年以来的秒数
+                    "nonceStr": "<%= @js_noncestr %>",  // 随机串
                     "package": "prepay_id=<%= @ra[:r]['prepay_id'] %>",
                     "signType": "MD5",  // 微信签名方式:
-                    "paySign": "<%= @ra[:r]['sign'] %>"  // 微信签名
+                    "paySign": "<%= @js_pay_sign %>"  // 微信签名
                 },
                 function (res) {
                     if (res.err_msg == "get_brand_wcpay_request:ok") {
