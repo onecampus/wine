@@ -14,6 +14,8 @@ class PayController < CustomerController
     @auth_token_hash = WxExt::Api::User.get_oauth2_token_with_code(app_id, app_secret, @code)
     openid = @auth_token_hash['openid']
 
+    @pid = openid
+
     # 支付页面
     # 保存订单
 
