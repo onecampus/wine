@@ -31,8 +31,8 @@ class PayController < CustomerController
         openid: openid  # required when trade_type is `JSAPI`
     }
 
-    r = WxPay::Service.invoke_unifiedorder params
-    @ra = r
+    r_hash = WxPay::Service.invoke_unifiedorder params
+    @ra = r_hash
     # => {
     #      "return_code"=>"SUCCESS",
     #      "return_msg"=>"OK",
@@ -45,7 +45,7 @@ class PayController < CustomerController
     #      "trade_type"=>"JSAPI"
     #    }
     # 生成 jsapi 参数
-    r.success? # => true
+    r_hash[:r].success? # => true
 
     # 跳转到支付页面
   end
