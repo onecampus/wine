@@ -47,7 +47,7 @@ gem 'acts_as_commentable_with_threading'
 gem 'actionpack-xml_parser'
 gem 'rest-client'
 
-gem 'wx_ext', '~> 0.2.2'
+gem 'wx_ext', '~> 0.2.3'
 
 gem 'font-awesome-rails'
 
