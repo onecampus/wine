@@ -4,22 +4,33 @@ class PayController < CustomerController
   layout 'customer'
 
   def pay
+    # 获取openid
+    @code = params[:code]
+    @order = params[:state]
+
+    app_secret = ENV['APP_SECRET']
+    app_id = ENV['APP_ID']
+
+    @auth_token_hash = WxExt::Api::User.get_oauth2_token_with_code(app_id, app_secret, @code)
+    openid = @auth_token_hash['openid']
+
     # 支付页面
     # 保存订单
 
     # 下单到微信, 返回 prepay_id
     # required fields
     params = {
-        body: '测试商品',
-        out_trade_no: 'test003',
-        total_fee: 1,
-        spbill_create_ip: '127.0.0.1',
-        notify_url: 'http://making.dev/notify',
-        trade_type: 'JSAPI', # could be "JSAPI" or "NATIVE",
-        openid: 'OPENID' # required when trade_type is `JSAPI`
+        body: '测试商品1',
+        out_trade_no: 'test003',  # 商户订单号
+        total_fee: 1,  # 总金额
+        spbill_create_ip: '127.0.0.1',  # 终端IP
+        notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
+        trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
+        openid: openid  # required when trade_type is `JSAPI`
     }
 
     r = WxPay::Service.invoke_unifiedorder params
+    @ra = r
     # => {
     #      "return_code"=>"SUCCESS",
     #      "return_msg"=>"OK",
@@ -32,6 +43,7 @@ class PayController < CustomerController
     #      "trade_type"=>"JSAPI"
     #    }
     # 生成 jsapi 参数
+    r.success? # => true
 
     # 跳转到支付页面
   end
@@ -42,6 +54,8 @@ class PayController < CustomerController
 
   def product
     # 订单页面
+    # ajax 提交
+    # 跳转到auth2.0授权
   end
 
   # 异步通知结果

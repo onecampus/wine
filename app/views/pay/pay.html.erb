@@ -1,3 +1,15 @@
+<%= @code %><br />
+<%= @order %><br />
+
+<% @ra.each do |key, val| %>
+    <%= key %> | <%= val %>
+<% end %>
+
+<%= @auth_token_hash %><br />
+
+<hr />
+
+<%= @ra.success? %>
 
 <a href="/">点击支付</a>
 <script>

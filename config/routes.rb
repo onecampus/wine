@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  # wechat pay test
+  get 'testpay/js_api_call_pay' => 'pay#pay'
+  post "testpay/notify" => "pay#notify"
+
   root 'site#index'
 
   # product cat

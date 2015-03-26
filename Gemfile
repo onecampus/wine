@@ -45,7 +45,6 @@ gem 'acts_as_commentable_with_threading'
 
 # 微信xml解析
 gem 'actionpack-xml_parser'
-# gem 'weixin_authorize'
 gem 'rest-client'
 
 gem 'wx_ext', '~> 0.2.2'
