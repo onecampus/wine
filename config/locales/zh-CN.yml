@@ -29,14 +29,22 @@ zh-CN:
       site_config: '系统设置'
       withdraw: '提现'
       commission: '提成'
+      score: '提成分数'
 
     attributes:
+      score:
+        user_id: '提成者'
+        mark: '分数'
+        remain_mark: '提成剩余分数'
+
       commission:
         user_id: '提成者'
         order_id: '订单'
         commission_money: '提成金额'
         percent: '提成比例'
         from_user_id: '购买者'
+        commission_type: '提成类型'
+        commission_score: '当前提成分数'
 
       withdraw:
         user_id: '提现用户'
@@ -251,6 +259,7 @@ zh-CN:
         unit: '单位'
         fright: '运费'
         is_commission: '是否参与提成'
+        integral: '积分'
 
       inventory:
         user_id: '供应商'

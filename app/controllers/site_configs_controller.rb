@@ -32,6 +32,31 @@ class SiteConfigsController < ApplicationController
     redirect_to action: :show_index_imgs
   end
 
+  def commissions_config_index
+    @a = SiteConfig.where(key: 'current_order_commission_a', config_type: 'commission_config').first
+    @b = SiteConfig.where(key: 'current_order_commission_b', config_type: 'commission_config').first
+    @c = SiteConfig.where(key: 'current_order_commission_c', config_type: 'commission_config').first
+    @sp = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first
+  end
+
+  def commissions_config
+    @a = SiteConfig.where(key: 'current_order_commission_a', config_type: 'commission_config').first
+    @b = SiteConfig.where(key: 'current_order_commission_b', config_type: 'commission_config').first
+    @c = SiteConfig.where(key: 'current_order_commission_c', config_type: 'commission_config').first
+    @sp = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first
+
+    @a.val = params[:a]
+    @a.save!
+    @b.val = params[:b]
+    @b.save!
+    @c.val = params[:c]
+    @c.save!
+    @sp.val = params[:sp]
+    @sp.save!
+    flash.notice = '提成设置成功'
+    redirect_to action: :commissions_config_index
+  end
+
   def index
     @site_configs = SiteConfig.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@site_configs)

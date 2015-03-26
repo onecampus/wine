@@ -86,6 +86,7 @@ Profile.create(
 )
 Integral.create(user_id: customer1.id, amount: 0)
 Vritualcard.create(user_id: customer1.id, money: '0.00')
+Score.create(user_id: customer1.id, mark: 0, remain_mark: 0)
 
 
 customer2 = User.new(
@@ -113,6 +114,7 @@ customer2.profile.move_to_child_of(customer1.profile)
 customer1.profile.reload
 Integral.create(user_id: customer2.id, amount: 0)
 Vritualcard.create(user_id: customer2.id, money: '0.00')
+Score.create(user_id: customer2.id, mark: 0, remain_mark: 0)
 
 
 customer3 = User.new(
@@ -140,6 +142,7 @@ customer3.profile.move_to_child_of(customer2.profile)
 customer2.profile.reload
 Integral.create(user_id: customer3.id, amount: 0)
 Vritualcard.create(user_id: customer3.id, money: '0.00')
+Score.create(user_id: customer3.id, mark: 0, remain_mark: 0)
 
 =begin
 1.upto(50).each do |i|
@@ -498,6 +501,35 @@ end
     config_type: 'CustomerIndexImgConfig'
   )
 end
+
+SiteConfig.create!(
+  key: 'current_order_commission_a',
+  val: '0.1',
+  img: 'current_order_commission_a',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'current_order_commission_b',
+  val: '0.05',
+  img: 'current_order_commission_b',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'current_order_commission_c',
+  val: '0.01',
+  img: 'current_order_commission_c',
+  config_type: 'commission_config'
+)
+
+SiteConfig.create!(
+  key: 'product_score_percent',
+  val: '0.8',
+  img: 'product_score_percent',
+  config_type: 'commission_config'
+)
+
 
 time_end = Time.now
 time = time_end - time_start

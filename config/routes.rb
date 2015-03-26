@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  # wechat pay test
+  get 'testpay/js_api_call_pay' => 'pay#pay'
+  post "testpay/notify" => "pay#notify"
+
   root 'site#index'
 
   # product cat
@@ -61,6 +65,9 @@ Rails.application.routes.draw do
 
   scope '/admin' do
 
+    # get 'commissions/year/index' => 'commissions#year_compute_index'
+    # get 'commissions/year/compute' => 'commissions#year_compute'
+
     resources :commissions
 
     resources :withdraws
@@ -70,6 +77,9 @@ Rails.application.routes.draw do
     get 'site_configs/customer/index/imgs/edit' => 'site_configs#edit_index_imgs'
     get 'site_configs/customer/index/imgs' => 'site_configs#show_index_imgs'
     match 'site_configs/customer/index/imgs/update', to: 'site_configs#update_index_imgs', via: :post
+
+    get 'site_configs/commissions/config' => 'site_configs#commissions_config_index'
+    match 'site_configs/commissions/config', to: 'site_configs#commissions_config', via: :post
 
     resources :seckill_orders
     resources :seckills

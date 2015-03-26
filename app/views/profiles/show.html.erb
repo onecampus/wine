@@ -248,6 +248,8 @@
               <th>订单号</th>
               <th>提成金额</th>
               <th>提成百分比</th>
+              <th>提成类型</th>
+              <th>当前提成分数</th>
               <th>下家</th>
             </tr>
             <% @profile.user.commissions.each do |com| %>
@@ -255,6 +257,8 @@
                 <td><%= com.order_id %></td>
                 <td><%= com.commission_money %></td>
                 <td><%= com.percent %></td>
+                <td><%= com.commission_type %></td>
+                <td><%= com.commission_score %></td>
                 <td><%= User.find(com.from_user_id).username %></td>
               </tr>
             <% end %>

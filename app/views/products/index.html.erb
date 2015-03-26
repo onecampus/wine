@@ -69,6 +69,7 @@
           <tr>
             <th><%= t 'activerecord.attributes.product.name' %></th>
             <th><%= t 'activerecord.attributes.product.price' %></th>
+            <th><%= t 'activerecord.attributes.product.integral' %></th>
             <th><%= t 'activerecord.attributes.product.fright' %></th>
             <th><%= t 'activerecord.attributes.product.cat_id' %></th>
             <th><%= t 'activerecord.attributes.product.is_commission' %></th>
@@ -92,6 +93,7 @@
             <tr>
               <td><%= product.name %></td>
               <td><%= product.price %></td>
+              <td><%= product.integral %></td>
               <td><%= product.fright %></td>
               <td><%= product.cat.name %></td>
               <td><% if product.is_commission == 1 %>参与提成<% elsif product.is_commission == 0 %>不参与提成<% end %></td>

@@ -104,90 +104,98 @@ class OrdersController < ApplicationController
   end
 
   def ok_order
+    # 提成三级 A B C D
+    # 购买 -> 购买成功 -> 购买者分数累加计算 -> 判断>100 -> 计算C提成 -> C提成金额 -> 提成记录 -> AB
+    #
     @order.order_status = 3
     Commission.transaction do
       Order.transaction do
         @order.save!
-        buyer = @order.user
+        buyer = @order.user  # 购买者
         commissioner = nil  # 第一级提成者
         total_price = @order.total_price
-        commission_price = total_price.to_f  # 提成金额
+        product_score_percent = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first.val
+
+        total_price = total_price.to_f  # 提成金额
         if @order.order_type == '普通订单'
           @order.products.each do |p|
-            commission_price -= p.price if p.is_commission == 0
+            total_price -= p.price if p.is_commission == 0
           end
         elsif @order.order_type == '团购订单'
           @order.groups.each do |g|
-            commission_price -= g.price if g.is_commission == 0
+            total_price -= g.price if g.is_commission == 0
           end
         elsif @order.order_type == '秒杀订单'
           @order.seckills.each do |s|
-            commission_price -= s.price if s.is_commission == 0
+            total_price -= s.price if s.is_commission == 0
           end
         end
-        if !@order.invite_code.blank?
-          commissioner_profile = Profile.where(invite_code: @order.invite_code).first
-          commissioner = commissioner_profile.user
-        elsif !@order.share_link_code.blank?
-          commissioner_profile = Profile.where(share_link_code: @order.share_link_code).first
-          commissioner = commissioner_profile.user unless commissioner_profile.blank?
-        elsif !buyer.profile.parent.blank?
-          commissioner_profile = buyer.profile.parent
-          commissioner = commissioner_profile.user
-        end
-        unless commissioner.blank?
-          Rails.logger.info "commissioner is #{commissioner.username}"
-          vritualcard = commissioner.vritualcard
-          commissioner_money = vritualcard.money.to_f
-          commission_money = commission_price * 0.1
-          commissioner_money += commission_money
-          vritualcard.money = commissioner_money.round(2)
-          vritualcard.save!
 
-          Commission.create!(
-            from_user_id: buyer.id,
-            user_id: commissioner.id,
-            order_id: @order.id,
-            commission_money: commission_money.round(2).to_s,
-            percent: '0.1'
-          )
+        score = buyer.score
+        commission_price = total_price * product_score_percent.to_f  # 提成金额
+        commission_mark = commission_price.to_i
+        score.mark += commission_mark
+        score.remain_mark += commission_mark
+        score.save!
 
-          commissioner_parent_profile = commissioner.profile.parent
-          unless commissioner_parent_profile.blank?
-            commissioner_parent = commissioner_parent_profile.user
-            Rails.logger.info "commissioner_parent is #{commissioner_parent.username}"
-            vritualcard_parent = commissioner_parent.vritualcard
-            commissioner_money_parent = vritualcard_parent.money.to_f
-            commission_money_parent = commission_price * 0.05
-            commissioner_money_parent += commission_money_parent
-            vritualcard_parent.money = commissioner_money_parent.round(2)
-            vritualcard_parent.save!
-            Commission.create!(
-              from_user_id: buyer.id,
-              user_id: commissioner_parent.id,
-              order_id: @order.id,
-              commission_money: commission_money_parent.round(2).to_s,
-              percent: '0.05'
-            )
+        remain_mark_old = score.remain_mark
 
+        if remain_mark_old >= 100  # 如果购买者分数超过100，就计算提成
 
-            commissioner_parent_parent_profile = commissioner_parent.profile.parent
-            unless commissioner_parent_parent_profile.blank?
-              commissioner_parent_parent = commissioner_parent_parent_profile.user
-              Rails.logger.info "commissioner_parent_parent is #{commissioner_parent_parent.username}"
-              vritualcard_parent_parent = commissioner_parent_parent.vritualcard
-              commissioner_money_parent_parent = vritualcard_parent_parent.money.to_f
-              commission_money_parent_parent = commission_price * 0.01
-              commissioner_money_parent_parent += commission_money_parent_parent
-              vritualcard_parent_parent.money = commissioner_money_parent_parent.round(2)
-              vritualcard_parent_parent.save!
-              Commission.create!(
-                from_user_id: buyer.id,
-                user_id: commissioner_parent_parent.id,
-                order_id: @order.id,
-                commission_money: commission_money_parent_parent.round(2).to_s,
-                percent: '0.01'
-              )
+          # 对分数进行求余
+          remain_mark = remain_mark_old % 100
+          commission_score = remain_mark_old - remain_mark
+
+          score.remain_mark = remain_mark
+          score.save!
+
+          if !@order.invite_code.blank?
+            commissioner_profile = Profile.where(invite_code: @order.invite_code).first
+            commissioner = commissioner_profile.user
+          elsif !@order.share_link_code.blank?
+            commissioner_profile = Profile.where(share_link_code: @order.share_link_code).first
+            commissioner = commissioner_profile.user unless commissioner_profile.blank?
+          elsif !buyer.profile.parent.blank?
+            commissioner_profile = buyer.profile.parent
+            commissioner = commissioner_profile.user
+          end
+          unless commissioner.blank?
+            Rails.logger.info "commissioner is #{commissioner.username}"
+            vritualcard = commissioner.vritualcard  # 会员卡
+            commissioner_money = vritualcard.money.to_f  # 会员卡金额
+            c_o_commission_a = SiteConfig.where(key: 'c_o_commission_a').first.val
+            commission_money = commission_score * c_o_commission_a
+            commissioner_money += commission_money
+            vritualcard.money = commissioner_money.round(2)
+            vritualcard.save!
+            create_commission(buyer.id, commissioner.id, @order.id, commission_money.round(2).to_s, c_o_commission_a, commission_score)
+
+            commissioner_p_profile = commissioner.profile.parent
+            unless commissioner_p_profile.blank?
+              commissioner_p = commissioner_p_profile.user
+              Rails.logger.info "commissioner_p is #{commissioner_p.username}"
+              vritualcard_p = commissioner_p.vritualcard
+              commissioner_money_p = vritualcard_p.money.to_f
+              c_o_commission_b = SiteConfig.where(key: 'c_o_commission_b').first.val
+              commission_money_p = commission_score * c_o_commission_b
+              commissioner_money_p += commission_money_p
+              vritualcard_p.money = commissioner_money_p.round(2)
+              vritualcard_p.save!
+              create_commission(buyer.id, commissioner_p.id, @order.id, commission_money_p.round(2).to_s, c_o_commission_b, commission_score)
+
+              commissioner_p_p_profile = commissioner_p.profile.parent
+              unless commissioner_p_p_profile.blank?
+                commissioner_p_p = commissioner_p_p_profile.user
+                Rails.logger.info "commissioner_p_p is #{commissioner_p_p.username}"
+                vritualcard_p_p = commissioner_p_p.vritualcard
+                commissioner_money_p_p = vritualcard_p_p.money.to_f
+                c_o_commission_c = SiteConfig.where(key: 'c_o_commission_c').first.val
+                commission_money_p_p = commission_score * c_o_commission_c
+                commissioner_money_p_p += commission_money_p_p
+                vritualcard_p_p.money = commissioner_money_p_p.round(2)
+                vritualcard_p_p.save!
+                create_commission(buyer.id, commissioner_p_p.id, @order.id, commission_money_p_p.round(2).to_s, c_o_commission_c, commission_score)
+              end
             end
           end
         end
@@ -220,6 +228,18 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def create_commission(from_user_id, user_id, order_id, commission_money, percent, commission_score)
+    Commission.create!(
+      from_user_id: from_user_id,
+      user_id: user_id,
+      order_id: order_id,
+      commission_money: commission_money,
+      percent: percent,
+      commission_type: 'current_order',
+      commission_score: commission_score
+    )
+  end
 
   def user_id_of_current_provider
     user_ids = []

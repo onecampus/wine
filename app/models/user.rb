@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   has_many :withdraws
   has_many :commissions
 
+  has_one :score
+
   private
 
   require 'securerandom'

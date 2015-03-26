@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123070045) do
+ActiveRecord::Schema.define(version: 20150315084514) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20150123070045) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "from_user_id"
+    t.string   "commission_type"
+    t.integer  "commission_score"
   end
 
   create_table "group_orders", force: true do |t|
@@ -232,6 +234,7 @@ ActiveRecord::Schema.define(version: 20150123070045) do
     t.datetime "updated_at"
     t.string   "fright"
     t.integer  "is_commission"
+    t.integer  "integral"
   end
 
   create_table "profiles", force: true do |t|
@@ -267,6 +270,14 @@ ActiveRecord::Schema.define(version: 20150123070045) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "scores", force: true do |t|
+    t.integer  "user_id"
+    t.string   "mark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "remain_mark"
+  end
 
   create_table "seckill_orders", force: true do |t|
     t.integer  "order_id"

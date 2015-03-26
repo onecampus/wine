@@ -16,10 +16,17 @@ git clone git@github.com:onecampus/wine.git
 cd wine
 cp ./config/database.yml.example ./config/database.yml
 # 编辑 database.yml, 修改为你的 mysql 数据库密码, 其他最好别动
+
+cp ./config/initializers/wx_pay.rb.example ./config/initializers/wx_pay.rb
+
 bundle install
 rake db:create # 创建数据库
 rake db:migrate # 导入数据库表
 rake db:seed # 导入测试数据
+
+# 启动 redis 服务器
+sudo /etc/init.d/redis_6379 start
+
 rails s # 启动开发服务器
 # 访问 http://127.0.0.1:3000/ 这是手机端, 可以缩小浏览器窗口查看
 # 后台 http://127.0.0.1:3000/admin/products 需要登陆
@@ -246,6 +253,17 @@ rails g uploader weixin_uploader
 
 
 rails g migration AddFromUserIdToCommissions from_user_id:integer
+
+# ===================================================================
+
+rails g migration AddIntegralToProducts integral:integer
+
+rails g model Score user_id:integer mark
+rails g migration AddRemainMarkToScores remain_mark:integer
+
+rails g migration AddCommissionTypeToCommissions commission_type # current_order
+rails g migration AddCommissionScoreToCommissions commission_score:integer
+
 ```
 
 ### 功能分析 ###
@@ -397,7 +415,11 @@ rails g migration AddFromUserIdToCommissions from_user_id:integer
 * 邀请码用户自己复制输入, 邀请码打折设置, 统一折扣
 * 微信菜单
 
+#### 提成公式 ####
 
+1. 产生购买之后就意味着开启ABC分销制度，在此提成制度里面以分数计算提成：销售额x0.8=分数（A把链接给B购买成功后，100元的订单B就有80分，A可以获得80X0.6=4.8远的提成）至于C就如此类推
+2. 到年底按照B和C的总分数分别再给A和B 1%、3%的年终提成
+3. 任何人购买任意产品满100元可获得10积分 这个积分和提成的那个积分无关 这个积分可以用来购买商城产品
 
 
 ### 测试 ###
