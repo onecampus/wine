@@ -240,7 +240,7 @@ GEM
     will_paginate (3.0.7)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
-    wx_ext (0.2.2)
+    wx_ext (0.2.3)
       nokogiri (~> 1.6)
       rest-client (~> 1.7)
 
@@ -287,5 +287,5 @@ DEPENDENCIES
   uglifier
   will_paginate
   will_paginate-bootstrap
-  wx_ext (~> 0.2.2)
+  wx_ext (~> 0.2.3)
   wx_pay!
