@@ -5,66 +5,63 @@ require 'securerandom'
 class PayController < CustomerController
   layout 'customer'
 
+  skip_before_filter :authenticate_user!, only: [:notify]
+  skip_before_filter :verify_authenticity_token, only: [:notify]
+
   def pay
     # 获取openid
-    @code = params[:code]
-    @order = params[:state]
-
+    code = params[:code]
+    order_number = params[:state]
     app_secret = ENV['APP_SECRET']
     app_id = ENV['APP_ID']
+    auth_token_hash = WxExt::Api::User.get_oauth2_token_with_code(app_id, app_secret, code)
+    openid = auth_token_hash['openid']
 
-    @auth_token_hash = WxExt::Api::User.get_oauth2_token_with_code(app_id, app_secret, @code)
-    openid = @auth_token_hash['openid']
+    # 用户ip
+    ip = request.remote_ip
 
-    @pid = openid
+    # 查找订单
+    order_native = Order.where(order_number: order_number).first
+    price = (order_native.total_price * 100).to_i
 
-    @ip = request.remote_ip
-
-    # 支付页面
-    # 保存订单
+    # 保存用户openid
+    order_native.weixin_open_id = openid
+    order_native.save!
 
     # 下单到微信, 返回 prepay_id
-    # required fields
     params_pre_pay = {
-        body: 'test3',
-        out_trade_no: 'test3',  # 商户订单号
-        total_fee: 1,  # 总金额
-        spbill_create_ip: request.remote_ip,  # 终端IP
+        body: order_number,
+        out_trade_no: order_number,  # 商户订单号
+        total_fee: price,  # 总金额, 单位为分
+        spbill_create_ip: ip,  # 终端IP
         notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
         trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
         openid: openid  # required when trade_type is `JSAPI`
     }
-
     r_hash = WxPay::Service.invoke_unifiedorder params_pre_pay
-    @ra = r_hash
-    r_hash[:r].success? # => true
 
-    @js_noncestr = SecureRandom.uuid.tr('-', '')
-    @js_timestamp = Time.now.getutc.to_i.to_ss
-    @app_id = app_id
-    @package = "prepay_id=#{@ra[:r]['prepay_id']}"
+    if r_hash[:r].success?
+      @js_noncestr = SecureRandom.uuid.tr('-', '')
+      @js_timestamp = Time.now.getutc.to_i.to_s
+      @app_id = app_id
+      @package = "prepay_id=#{@ra[:r]['prepay_id']}"
 
-    params_pre_pay_js = {
-        appid: WxPay.appid,
-        appkey: WxPay.key,
-        nonce_str: @js_noncestr,
-        package: @package,
-        timestamp: @js_timestamp
-    }
-
-    @js_pay_sign = WxPay::Sign.generate(params_pre_pay_js)
-
-    # 跳转到支付页面
+      params_pre_pay_js = {
+          appId: @app_id,
+          nonceStr: @js_noncestr,
+          package: @package,
+          timeStamp: @js_timestamp,
+          signType: 'MD5'
+      }
+      @js_pay_sign = WxPay::Sign.generate(params_pre_pay_js)
+      flash.now[:alert] = '下单成功'
+    else
+      flash.now[:alert] = '下单失败'
+    end
   end
 
   def pay_success
     # 支付成功
-  end
-
-  def product
-    # 订单页面
-    # ajax 提交
-    # 跳转到auth2.0授权
   end
 
   # 异步通知结果
@@ -73,7 +70,16 @@ class PayController < CustomerController
 
     if WxPay::Sign.verify?(result)
 
-      # find your order and process the post-paid logic.
+      # 支付成功，处理订单罗辑
+      order_number = result[:out_trade_no]
+      # 查找订单
+      # order_status: {1: 未处理, 2: 已确定, 3: 已完成, 4: 已取消}
+      # pay_status: {1: 未付款, 2: 已付款}
+      # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
+      order_native = Order.where(order_number: order_number).first
+      order_native.payment_method = 'weixinpayment'
+      order_native.pay_status = 2
+      order_native.save!
 
       render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
     else
