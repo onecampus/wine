@@ -40,14 +40,18 @@ class PayController < CustomerController
     r_hash[:r].success? # => true
 
     @js_noncestr = SecureRandom.uuid.tr('-', '')
-    @js_timestamp = Time.now.getutc.to_i
+    @js_timestamp = Time.now.getutc.to_i.to_ss
     @app_id = app_id
+    @package = "prepay_id=#{@ra[:r]['prepay_id']}"
 
     params_pre_pay_js = {
         appid: WxPay.appid,
-        mch_id: WxPay.mch_id,
+        appkey: WxPay.key,
         nonce_str: @js_noncestr,
-    }.merge(params_pre_pay)
+        package: @package,
+        timestamp: @js_timestamp
+    }
+
     @js_pay_sign = WxPay::Sign.generate(params_pre_pay_js)
 
     # 跳转到支付页面
