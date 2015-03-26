@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/onecampus/wx_pay.git
-  revision: 33f8decf126721e82ce6c6ae93545a670eb025a1
+  revision: 24c8d569d4ba303407a79bbd2ce51bb3070468a9
   specs:
-    wx_pay (0.0.2)
+    wx_pay (0.0.3)
       activesupport (~> 4)
       rest-client (~> 1.7)
 
