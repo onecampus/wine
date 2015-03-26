@@ -174,7 +174,7 @@ $(document).ready(function() {
             var produckMark = productList[i].productMark;
             products.push({
               "product_id": id,
-              "product_count": num,
+              "product_count": num
             });
           }
         }
@@ -287,7 +287,7 @@ $(document).ready(function() {
           dataType: "json",
           success: function(data) {
             // code
-            if(data.status == "error") {
+            if(data.status === 'fail') {
               orderError();
               return false;
             }
@@ -301,7 +301,8 @@ $(document).ready(function() {
               $(".order-btn").attr("disabled",false);
               showShoppingCartItem();
               cleanShareLinkCode();
-              orderSuccessHan();
+              orderNumber = data.data.order_number;
+              orderSuccessHan(orderNumber);
             }
           },
           complete: function(XMLHttpRequest, textStatus) {
@@ -348,9 +349,9 @@ function deleteProduct(id) {
   }
 }
 
-function orderSuccessHan() {
+function orderSuccessHan(orderNumber) {
   alert("您的商品购买成功！");
-  location.href="/customer/users/wait/ship";
+  location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://zhonglian.thecampus.cc/testpay/js_api_call_pay&response_type=code&scope=snsapi_base&state=" + orderNumber + "#wechat_redirect";
 }
 
 function orderErrorHan(XMLHttpRequest, textStatus) {
