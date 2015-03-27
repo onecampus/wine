@@ -33,6 +33,7 @@ class SiteController < CustomerController
                                                         :create_invoice_via_ajax,
                                                         :create_withdraw]
 
+  # 首页
   def index
     @site_config1 = SiteConfig.where(key: 'CustomerIndexImgConfigKey1', config_type: 'CustomerIndexImgConfig').first
     @site_config2 = SiteConfig.where(key: 'CustomerIndexImgConfigKey2', config_type: 'CustomerIndexImgConfig').first
@@ -41,15 +42,18 @@ class SiteController < CustomerController
     @last_2_cats = Cat.last 2
   end
 
+  # 提现
   def new_withdraw
     @vip_card = current_user.vritualcard
     @withdraw = Withdraw.new
   end
 
+  # 提现记录列表
   def index_withdraws
     @withdraws = current_user.withdraws
   end
 
+  # 创建提现
   def create_withdraw
     withdraw_params = {
       user_id: current_user.id,
@@ -68,10 +72,12 @@ class SiteController < CustomerController
     end
   end
 
+  # 分类列表
   def index_cats
     @cats = Cat.all
   end
 
+  # 单个分类下的商品列表
   def index_cat_products
     @cat = Cat.find params[:cid]
     @cat_products = nil
@@ -91,16 +97,19 @@ class SiteController < CustomerController
     end
   end
 
+  # 商品展示
   def show_product
     @product = Product.find params[:id]
     @share_hash = init_share_hash("/customer/products/#{params[:id]}/show")
   end
 
+  # 团购秒杀列表
   def index_groups_seckills
     @groups = Group.all
     @seckills = Seckill.all
   end
 
+  # 团购展示
   def show_group
     @group = Group.find params[:id]
     @share_hash = init_share_hash("/customer/groups/#{params[:id]}/show")
@@ -110,6 +119,7 @@ class SiteController < CustomerController
     end
   end
 
+  # 秒杀展示
   def show_seckill
     @seckill = Seckill.find params[:id]
     @share_hash = init_share_hash("/customer/seckills/#{params[:id]}/show")
@@ -119,10 +129,12 @@ class SiteController < CustomerController
     end
   end
 
+  # 添加评论
   def new_comment
     @product = Product.find params[:id]
   end
 
+  # 创建评论
   def create_comment
     @product = Product.find params[:id]
     @user_who_commented = current_user
@@ -136,15 +148,18 @@ class SiteController < CustomerController
     end
   end
 
+  # 评论列表
   def index_comments
     @product = Product.find params[:id]
     @comments = @product.comment_threads.order('id DESC')
   end
 
+  # 天加收货地址
   def new_ship_address
     @shipaddress = Shipaddress.new(params[:shipaddress])
   end
 
+  # 创建收货地址
   def create_ship_address
     shipaddress_params = {
       user_id: current_user.id,
@@ -167,6 +182,7 @@ class SiteController < CustomerController
     end
   end
 
+  # ajax 创建收货地址接口
   def create_ship_address_via_ajax
     shipaddress_params = {
       user_id: current_user.id,
@@ -187,17 +203,21 @@ class SiteController < CustomerController
     end
   end
 
+  # 收货地址列表
   def index_ship_address
     @shipaddresses = current_user.shipaddresses
   end
 
+  # 购物车
   def index_shopping_cart
   end
 
+  # 用户中心
   def user_center
     @user = current_user
   end
 
+  # 搜索结果列表
   def index_search_result
     q = params[:q]
     if q && q != ''
@@ -207,15 +227,18 @@ class SiteController < CustomerController
     end
   end
 
+  # 会员卡
   def show_vip_card
     @user = current_user
   end
 
+  # 订单处理
   def order_settlement
     @shipaddresses = current_user.shipaddresses
     @invoices = current_user.invoices
   end
 
+  # ajax添加发票
   def create_invoice_via_ajax
     @invoice = Invoice.new(
       rise: params[:rise],
@@ -411,6 +434,7 @@ class SiteController < CustomerController
     end
   end
 
+  # 待发货
   # order_status: {1: 未处理, 2: 已确定, 3: 已完成, 4: 已取消}
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
@@ -419,18 +443,22 @@ class SiteController < CustomerController
     # @orders = current_user.orders.where("(order_status = 1 OR order_status = 2) AND pay_status = 2 AND (logistics_status = 0 OR logistics_status = 1)")
   end
 
+  # 带付款
   def index_wait_pay
     @orders = current_user.orders.where(pay_status: 1).order('id DESC')
   end
 
+  # 待收货
   def index_wait_receive
     @orders = current_user.orders.where(order_status: 2, pay_status: 2, logistics_status: 2).order('id DESC')
   end
 
+  # 历史订单
   def index_order_history
     @orders = current_user.orders.where(order_status: 3, pay_status: 2, logistics_status: 3).order('id DESC')
   end
 
+  # 大转盘
   def big_wheel
     # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
@@ -447,6 +475,7 @@ class SiteController < CustomerController
     end
   end
 
+  # ajax大转盘接口
   def big_wheel_ajax
     prize_act = PrizeAct.where(prize_type: 'bigwheel', is_open: 1).last(1)[0]
 
@@ -479,6 +508,7 @@ class SiteController < CustomerController
     render json: @result
   end
 
+  # 刮刮乐
   def scratch_off
     # 抽奖活动
     @prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
@@ -495,6 +525,7 @@ class SiteController < CustomerController
     end
   end
 
+  # 刮刮乐ajax接口
   def scratch_off_ajax
     prize_act = PrizeAct.where(prize_type: 'scratchoff', is_open: 1).last(1)[0]
 
@@ -528,6 +559,7 @@ class SiteController < CustomerController
     render json: @result
   end
 
+  # 提成记录
   def commission
     # array of all children, children's children, etc.
     @commissions = current_user.profile.descendants
@@ -541,6 +573,7 @@ class SiteController < CustomerController
 
   private
 
+  # 活取js sdk hash
   def init_share_hash(path)
     app_id = ENV['APP_ID']
     app_secret = ENV['APP_SECRET']
@@ -573,6 +606,7 @@ class SiteController < CustomerController
     WxExt::Api::Js.get_jsapi_config(access_token, url, app_id, jsapi_ticket) unless access_token.nil? && jsapi_ticket.blank?
   end
 
+  # 结果
   def get_result(prize_hash)
     result = {}
     hash = {}
@@ -663,6 +697,7 @@ class SiteController < CustomerController
     result
   end
 
+  # 随机数生成，用户大转盘和刮刮乐
   def get_rand(pro_arr, pro_count)
     result = 0
     pro_sum = 0
@@ -691,6 +726,7 @@ class SiteController < CustomerController
     result
   end
 
+  # 是都生成邀请码
   def generate_invite_code_or_not(old_orders, current_user_profile)
     Rails.logger.info "old_orders is #{old_orders}"
     if old_orders
@@ -701,6 +737,7 @@ class SiteController < CustomerController
     end
   end
 
+  # 处理订单中含有邀请码和分享链接的函数
   def invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
     Rails.logger.info "share_link_code is #{share_link_code}"
     Rails.logger.info "invite_code is #{invite_code}"
