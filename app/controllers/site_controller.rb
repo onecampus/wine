@@ -660,7 +660,6 @@ class SiteController < CustomerController
         end
       else
         result[:num] = 0
-
         min = res.min
         max = res.max
 
@@ -726,7 +725,7 @@ class SiteController < CustomerController
     result
   end
 
-  # 是都生成邀请码
+  # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_codes
   def generate_invite_code_or_not(old_orders, current_user_profile)
     Rails.logger.info "old_orders is #{old_orders}"
     if old_orders
