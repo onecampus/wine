@@ -111,9 +111,17 @@ class OrdersController < ApplicationController
     Commission.transaction do
       Order.transaction do
         @order.save!
+
         buyer = @order.user  # 购买者
+        buyer_profile = buyer.profile  # 当前用户的额外信息
+
+        # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
+        old_orders = buyer.orders.blank?
+        generate_invite_code_or_not(old_orders, buyer_profile)
+
         commissioner = nil  # 第一级提成者
-        total_price = @order.total_price
+        total_price = @order.total_price  # 总价
+        # 购买积分计算百分比
         product_score_percent = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first.val
 
         total_price = total_price.to_f  # 提成金额
@@ -255,5 +263,16 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:invoice_id, :user_id, :order_number, :ship_address, :ship_method, :payment_method, :freight, :package_charge, :total_price, :buy_date, :order_status, :pay_status, :logistics_status, :operator, :cancel_reason, :weixin_open_id, :receive_name, :mobile, :tel, :supplier_id, :order_type)
+  end
+
+  # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_codes
+  def generate_invite_code_or_not(old_orders, current_user_profile)
+    Rails.logger.info "old_orders is #{old_orders}"
+    if old_orders
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+      Rails.logger.info "current_user_profile.invite_code is #{current_user_profile.invite_code}"
+    end
   end
 end

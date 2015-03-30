@@ -258,9 +258,6 @@ class SiteController < CustomerController
     invite_code = params[:invite_code]  # 邀请码
     current_user_profile = current_user.profile  # 当前用户的额外信息
 
-    # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
-    old_orders = current_user.orders.blank?
-
     # 收货地址
     shipaddress = Shipaddress.find params[:ship_address_id]
     # 发票
@@ -305,8 +302,6 @@ class SiteController < CustomerController
           order.save!
           # 判断邀请码和分享链接, 并生成ABC关系
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
-          # 判断是否生成邀请码, 即第一次购买东西
-          generate_invite_code_or_not(old_orders, current_user_profile)
           # product_order
           p_o_list = []
           products.each do |_, p|
@@ -345,7 +340,6 @@ class SiteController < CustomerController
         Order.transaction do
           order.save!
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
-          generate_invite_code_or_not(old_orders, current_user_profile)
           # group_order
           p_o_list = []
           products.each do |_, p|
@@ -390,7 +384,6 @@ class SiteController < CustomerController
         Order.transaction do
           order.save!
           invite_and_share_link_code(share_link_code, invite_code, current_user_profile, order)
-          generate_invite_code_or_not(old_orders, current_user_profile)
           # seckill_order
           p_o_list = []
           products.each do |_, p|
@@ -723,17 +716,6 @@ class SiteController < CustomerController
       end
     end
     result
-  end
-
-  # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_codes
-  def generate_invite_code_or_not(old_orders, current_user_profile)
-    Rails.logger.info "old_orders is #{old_orders}"
-    if old_orders
-      invite_code = User.generate_invite_code
-      current_user_profile.invite_code = invite_code
-      current_user_profile.save!
-      Rails.logger.info "current_user_profile.invite_code is #{current_user_profile.invite_code}"
-    end
   end
 
   # 处理订单中含有邀请码和分享链接的函数
