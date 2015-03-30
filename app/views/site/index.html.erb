@@ -1,6 +1,8 @@
 <% content_for :customer_title do %>
   众联酒业微信商城
 <% end %>
+
+<!-- 该页面css -->
 <link rel="stylesheet" type="text/css" href="/zhonglian/css/slide.css">
 <style type="text/css">
   body {
@@ -167,6 +169,7 @@
   }
 </style>
 
+<!-- 主页搜索框 -->
 <div class="search-box" id="top">
   <img src="/favicon.ico">
   <%= form_tag({controller: "site", action: "index_search_result"}, method: "get", class: "search-form") do %>
@@ -176,6 +179,7 @@
   <% end %>
 </div>
 
+<!-- 主页slider(最新的三张产品图) -->
 <div class="swiper-container " style="text-align: center;">
   <div class="swiper-wrapper">
     <% @last_3_products.each do |p| %>
@@ -189,6 +193,7 @@
   </div>
 </div>
 
+<!-- 顶部tabs-bar -->
 <div class="top-bar">
   <div class="top-bar-item">
     <p><a href="/customer/cats"><img src="/zhonglian/img/index/icon_fenlei.png"/></a></p>
@@ -212,24 +217,26 @@
   </div>
 </div>
 
+<!-- 最新两个分类的图片和该分类下面的两个产品 -->
 <% @last_2_cats.each do |cat| %>
-<% if cat.products.count > 1 %>
-<div class="mproductshow">
-  <div class="left">
-    <a href="/customer/cats/<%= cat.id %>/products"><img src="<%= cat.img_url %>"></a>
-  </div>
-  <div class="right">
-    <div>
-      <a href="/customer/products/<%= cat.products[0].id unless cat.products.blank? %>/show"><img src="<%= cat.products[0].img_url unless cat.products.blank? %>" class="up"></a>
+  <% if cat.products.count > 1 %>
+    <div class="mproductshow">
+      <div class="left">
+        <a href="/customer/cats/<%= cat.id %>/products"><img src="<%= cat.img_url %>"></a>
+      </div>
+      <div class="right">
+        <div>
+          <a href="/customer/products/<%= cat.products[0].id unless cat.products.blank? %>/show"><img src="<%= cat.products[0].img_url unless cat.products.blank? %>" class="up"></a>
+        </div>
+        <div>
+          <a href="/customer/products/<%= cat.products[1].id unless cat.products.blank? %>/show"><img src="<%= cat.products[1].img_url unless cat.products.blank? %>" class="down"></a>
+        </div>
+      </div>
     </div>
-    <div>
-      <a href="/customer/products/<%= cat.products[1].id unless cat.products.blank? %>/show"><img src="<%= cat.products[1].img_url unless cat.products.blank? %>" class="down"></a>
-    </div>
-  </div>
-</div>
-<% end %>
+  <% end %>
 <% end %>
 
+<!-- 三张展示图片,后台可设置 -->
 <div class="oproductshow">
   <a href=""><%= image_tag(@site_config1.img_url) if @site_config1.img? %></a>
 </div>
@@ -240,15 +247,19 @@
   <a href=""><%= image_tag(@site_config3.img_url) if @site_config3.img? %></a>
 </div>
 
+<!-- 注册登录返回顶部 -->
 <div class="loginfooter">
   <a href="/users/sign_in">登录</a> |
   <a href="/users/sign_up">注册</a>
   <a href="#top" class="goToTop">| 回到顶部</a>
 </div>
 
+<!-- 备案信息 -->
 <div class="website-record">
   <a href="#">网站备案情况</a>
 </div>
+
+<!-- 顶部公用tab-bar -->
 <nav class="bar bar-tab nav-bar" data-no-turbolink>
   <a class="tab-item home-menu" data-icon='home' href="/">
     <span class="icon icon-background-base icon-home"></span>
@@ -267,6 +278,8 @@
     <span class="tab-label">分类</span>
   </a>
 </nav>
+
+<!-- 该页面js -->
 <script type="text/javascript" src="/zhonglian/js/slide.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
