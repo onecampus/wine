@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_orders_unsure
-    @orders = Order.where(order_status: 1, pay_status: 2, logistics_status: 0, user_id: user_id_of_current_provider).paginate(
+    @orders = Order.where(order_status: 1, logistics_status: 0, user_id: user_id_of_current_provider).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -49,11 +49,16 @@ class OrdersController < ApplicationController
 
   # 确定订单
   def sure_order
-    @order.order_status = 2
-    @order.logistics_status = 1
-    @order.save
-    flash[:notice] = '确定成功, 该订单已进入备货阶段'
-    redirect_to action: :index_orders_unsure
+    if @order.pay_status == 2
+      @order.order_status = 2
+      @order.logistics_status = 1
+      @order.save
+      flash[:notice] = '确定成功, 该订单已进入备货阶段'
+      redirect_to action: :index_orders_unsure
+    else
+      flash[:notice] = '该订单尚未付款,不能进行确认'
+      redirect_to action: :index_orders_unsure
+    end
   end
 
   # 添加快递号
