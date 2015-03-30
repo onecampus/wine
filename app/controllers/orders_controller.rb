@@ -106,7 +106,6 @@ class OrdersController < ApplicationController
   def ok_order
     # 提成三级 A B C D
     # 购买 -> 购买成功 -> 购买者分数累加计算 -> 判断>100 -> 计算C提成 -> C提成金额 -> 提成记录 -> AB
-    #
     @order.order_status = 3
     Commission.transaction do
       Order.transaction do
