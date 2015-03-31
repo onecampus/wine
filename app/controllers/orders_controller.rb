@@ -131,13 +131,6 @@ class OrdersController < ApplicationController
 
         total_price = total_price.to_f  # 提成金额
 
-        # 用戶積分結算
-        if total_price > 100
-          integral = buyer.integral
-          integral.amount = (total_price % 100).to_i
-          integral.save!
-        end
-
         if @order.order_type == '普通订单'
           @order.products.each do |p|
             total_price -= p.price if p.is_commission == 0
@@ -155,19 +148,21 @@ class OrdersController < ApplicationController
         score = buyer.score
         commission_price = total_price * product_score_percent.to_f  # 提成金额
         commission_mark = commission_price.to_i
-        p '=' * 20
-        p commission_mark
         score.mark = score.mark.to_i + commission_mark  # 总分
         score.remain_mark += commission_mark  # 保留分数
         score.save!
 
         remain_mark_old = score.remain_mark
-        p remain_mark_old
 
         if remain_mark_old >= 100  # 如果购买者分数超过100，就计算提成
           # 对分数进行求余
           remain_mark = remain_mark_old % 100
           commission_score = remain_mark_old - remain_mark
+
+          # 用戶積分結算
+          integral = buyer.integral
+          integral.amount = integral.amount.to_i + commission_score
+          integral.save!
 
           score.remain_mark = remain_mark
           score.save!
