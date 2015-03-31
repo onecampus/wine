@@ -30,13 +30,13 @@ class PayController < CustomerController
 
     # 下单到微信, 返回 prepay_id
     params_pre_pay = {
-        body: order_number,
-        out_trade_no: order_number,  # 商户订单号
-        total_fee: price,  # 总金额, 单位为分
-        spbill_create_ip: ip,  # 终端IP
-        notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
-        trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
-        openid: openid  # required when trade_type is `JSAPI`
+      body: order_number,
+      out_trade_no: order_number,  # 商户订单号
+      total_fee: price,  # 总金额, 单位为分
+      spbill_create_ip: ip,  # 终端IP
+      notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
+      trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
+      openid: openid  # required when trade_type is `JSAPI`
     }
     r_hash = WxPay::Service.invoke_unifiedorder params_pre_pay
 
@@ -44,14 +44,14 @@ class PayController < CustomerController
       @js_noncestr = SecureRandom.uuid.tr('-', '')
       @js_timestamp = Time.now.getutc.to_i.to_s
       @app_id = app_id
-      @package = "prepay_id=#{@ra[:r]['prepay_id']}"
+      @package = "prepay_id=#{r_hash[:r]['prepay_id']}"
 
       params_pre_pay_js = {
-          appId: @app_id,
-          nonceStr: @js_noncestr,
-          package: @package,
-          timeStamp: @js_timestamp,
-          signType: 'MD5'
+        appId: @app_id,
+        nonceStr: @js_noncestr,
+        package: @package,
+        timeStamp: @js_timestamp,
+        signType: 'MD5'
       }
       @js_pay_sign = WxPay::Sign.generate(params_pre_pay_js)
       flash.now[:alert] = '下单成功'
@@ -81,9 +81,9 @@ class PayController < CustomerController
       order_native.pay_status = 2
       order_native.save!
 
-      render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
+      render :xml => {return_code: 'SUCCESS'}.to_xml(root: 'xml', dasherize: false)
     else
-      render :xml => {return_code: "SUCCESS", return_msg: "签名失败"}.to_xml(root: 'xml', dasherize: false)
+      render :xml => {return_code: 'SUCCESS', return_msg: '签名失败'}.to_xml(root: 'xml', dasherize: false)
     end
   end
 
