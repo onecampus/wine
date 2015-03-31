@@ -46,6 +46,24 @@
     border-right: 1px solid #ddd;
     padding: 10px;
   }
+
+  #user-integral td {
+    padding: 10px 5px 10px 10px;
+    border-right: 1px solid #ddd;
+  }
+  #user-integral th {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  #user-score td {
+    padding: 10px 5px 10px 10px;
+    border-right: 1px solid #ddd;
+  }
+  #user-score th {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+  }
 </style>
 <!-- start: PAGE TITLE & BREADCRUMB -->
 <% content_for :page_crumbs do %>
@@ -100,6 +118,16 @@
         <li class="">
           <a href="#panel_tab4_example4" data-toggle="tab">
             <i class="fa fa-usd"></i> 提现记录
+          </a>
+        </li>
+        <li class="">
+          <a href="#user-score" data-toggle="tab">
+            <i class="fa fa-usd"></i> 用户分数
+          </a>
+        </li>
+        <li class="">
+          <a href="#user-integral" data-toggle="tab">
+            <i class="fa fa-usd"></i> 用户积分
           </a>
         </li>
       </ul>
@@ -278,6 +306,28 @@
                 <td><% if draw.draw_status == 0 %>未处理<% elsif draw.draw_status == 1 %>已处理<% end %></td>
               </tr>
             <% end %>
+          </table>
+        </div>
+        <div class="tab-pane" id="user-score">
+          <table>
+            <tr>
+              <th>总分</th>
+              <th>剩余分数</th>
+            </tr>
+            <tr>
+              <td><%= @profile.user.score.mark %></td>
+              <td><%= @profile.user.score.remain_mark %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="tab-pane" id="user-integral">
+          <table>
+            <tr>
+              <th>积分</th>
+            </tr>
+            <tr>
+              <td><%= @profile.user.integral.amount %></td>
+            </tr>
           </table>
         </div>
       </div>
