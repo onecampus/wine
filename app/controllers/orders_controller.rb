@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
   # pay_status: {1: 未付款, 2: 已付款}
   # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
   def index_orders_unsure
-    @orders = Order.where(order_status: 1, pay_status: 2, logistics_status: 0, user_id: user_id_of_current_provider).paginate(
+    @orders = Order.where(order_status: 1, logistics_status: 0, user_id: user_id_of_current_provider).paginate(
       page: params[:page],
       per_page: 10
     ).order('id DESC')
@@ -49,11 +49,16 @@ class OrdersController < ApplicationController
 
   # 确定订单
   def sure_order
-    @order.order_status = 2
-    @order.logistics_status = 1
-    @order.save
-    flash[:notice] = '确定成功, 该订单已进入备货阶段'
-    redirect_to action: :index_orders_unsure
+    if @order.pay_status == 2
+      @order.order_status = 2
+      @order.logistics_status = 1
+      @order.save
+      flash[:notice] = '确定成功, 该订单已进入备货阶段'
+      redirect_to action: :index_orders_unsure
+    else
+      flash[:notice] = '该订单尚未付款,不能进行确认'
+      redirect_to action: :index_orders_unsure
+    end
   end
 
   # 添加快递号
@@ -106,14 +111,21 @@ class OrdersController < ApplicationController
   def ok_order
     # 提成三级 A B C D
     # 购买 -> 购买成功 -> 购买者分数累加计算 -> 判断>100 -> 计算C提成 -> C提成金额 -> 提成记录 -> AB
-    #
     @order.order_status = 3
     Commission.transaction do
       Order.transaction do
         @order.save!
+
         buyer = @order.user  # 购买者
+        buyer_profile = buyer.profile  # 当前用户的额外信息
+
+        # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_code
+        old_orders = buyer.orders.blank?
+        generate_invite_code_or_not(old_orders, buyer_profile)
+
         commissioner = nil  # 第一级提成者
-        total_price = @order.total_price
+        total_price = @order.total_price  # 总价
+        # 购买积分计算百分比
         product_score_percent = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first.val
 
         total_price = total_price.to_f  # 提成金额
@@ -255,5 +267,16 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:invoice_id, :user_id, :order_number, :ship_address, :ship_method, :payment_method, :freight, :package_charge, :total_price, :buy_date, :order_status, :pay_status, :logistics_status, :operator, :cancel_reason, :weixin_open_id, :receive_name, :mobile, :tel, :supplier_id, :order_type)
+  end
+
+  # 之前有没有购买过东西, 如果没有, 那么是第一次购买, 生成 invite_codes
+  def generate_invite_code_or_not(old_orders, current_user_profile)
+    Rails.logger.info "old_orders is #{old_orders}"
+    if old_orders
+      invite_code = User.generate_invite_code
+      current_user_profile.invite_code = invite_code
+      current_user_profile.save!
+      Rails.logger.info "current_user_profile.invite_code is #{current_user_profile.invite_code}"
+    end
   end
 end
