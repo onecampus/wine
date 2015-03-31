@@ -7,6 +7,7 @@ $(document).ready(function() {
     $(".invoice-mesg").hide();
   });
 
+  // 添加收货地址
   $(".btn-add-address").click(function() {
     var uid = $("[name='uid']").val();
     receive_name = $(".receive_name").val(),
@@ -72,6 +73,7 @@ $(document).ready(function() {
     });
   });
 
+  // 添加发票
   $(".confirm-invoice").click(function() {
     var rise = $(".rise").val();
     var content = $(".content").val();
@@ -190,8 +192,7 @@ $(document).ready(function() {
               is_group: isGroup,
               is_seckill: isSeckill
             };
-        }
-        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == "")){
+        } else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == "")){
             data = {
               ship_address_id: addressId,
               ship_method: 'express',
@@ -202,8 +203,7 @@ $(document).ready(function() {
               is_group: isGroup,
               is_seckill: isSeckill
             };
-        }
-        else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != "")){
+        } else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != "")){
           data = {
             ship_address_id: addressId,
             ship_method: 'express',
@@ -214,8 +214,7 @@ $(document).ready(function() {
             is_group: isGroup,
             is_seckill: isSeckill
           };
-        }
-        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == "")){
+        } else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == "")){
             data = {
               ship_address_id: addressId,
               invoice_id: invoiceId,
@@ -226,8 +225,7 @@ $(document).ready(function() {
               is_group: isGroup,
               is_seckill: isSeckill
             };
-        }
-        else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == "")){
+        } else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == "")){
           data = {
             ship_address_id: addressId,
             invoice_id: invoiceId,
@@ -239,8 +237,7 @@ $(document).ready(function() {
             is_group: isGroup,
             is_seckill: isSeckill
           };
-        }
-        else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != "")){
+        } else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != "")){
           data = {
             ship_address_id: addressId,
             invoice_id: invoiceId,
@@ -252,8 +249,7 @@ $(document).ready(function() {
             is_group: isGroup,
             is_seckill: isSeckill
           };
-        }
-        else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != "")){
+        } else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != "")){
           data = {
             invoice_id: invoiceId,
             ship_method: 'express',
@@ -265,8 +261,7 @@ $(document).ready(function() {
             is_group: isGroup,
             is_seckill: isSeckill
           };
-        }
-        else {
+        } else {
             data = {
               ship_address_id: addressId,
               invoice_id: invoiceId,
@@ -290,8 +285,7 @@ $(document).ready(function() {
             if(data.status === 'fail') {
               orderError();
               return false;
-            }
-            else{
+            } else{
               for (var i in productList) {
                 if (productList[i].buyMark == true) {
                   var productId = productList[i].id;
@@ -326,13 +320,11 @@ function deleteProduct(id) {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
     var orderType = JsonStr.order_type;
-    if(orderType == "is_product") {
+    if(orderType === "is_product") {
       orderType = "product";
-    }
-    else if (orderType == "is_group") {
+    } else if (orderType === "is_group") {
       orderType = "group";
-    }
-    else {
+    } else {
       orderType = "seckill";
     }
     var list = [];
@@ -349,6 +341,8 @@ function deleteProduct(id) {
   }
 }
 
+// 订单成功处理函数, 跳转到支付页面
+// 添加判断，是否跳转到支付
 function orderSuccessHan(orderNumber) {
   alert("您的商品购买成功！");
   location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://zhonglian.thecampus.cc/testpay/js_api_call_pay&response_type=code&scope=snsapi_base&state=" + orderNumber + "#wechat_redirect";
@@ -373,6 +367,7 @@ function orderErrorHan(XMLHttpRequest, textStatus) {
   }
 }
 
+// 订单错误处理函数
 function orderError(){
   $("#order-message p").text("订单创建失败!");
   $.blockUI({
@@ -390,14 +385,13 @@ function orderError(){
   setTimeout($.unblockUI, 2500);
 }
 
-
+// 购物车
 function showShoppingCartItem() {
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
     $(".shopping-cart-mark").hide();
   }
   else {
-    console.log("shoppingCart is " + shoppingCart);
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var length = 0;
     var productList = JsonStr.productList;
@@ -416,6 +410,7 @@ function showShoppingCartItem() {
   }
 }
 
+// 清除分享链接
 function cleanShareLinkCode(){
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
