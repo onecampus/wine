@@ -121,7 +121,7 @@ $(document).ready(function() {
   // products: [{product_id, product_count}, {product_id, product_count}]
   $(".order-btn").click(function() {
     var address = $(".confirm-address").text();
-    if (address == "") {
+    if (address === "") {
       $("#order-message p").text("地址不能为空!");
       $.blockUI({
         message: $('#order-message'),
@@ -136,30 +136,28 @@ $(document).ready(function() {
         }
       });
       setTimeout($.unblockUI, 1500);
-    }
-    else {
+    } else {
       var addressId = $(".address-id").val();
       var shoppingCart = $.localStorage.get("shoppingCart");
       if (shoppingCart === null || shoppingCart === "") {
         return;
-      }
-      else {
+      } else {
         var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
         var orderType = JsonStr.order_type;
         var isProduct = null;
         var isGroup = null;
         var isSeckill = null;
-        if (orderType == "is_product") {
+        if (orderType === "is_product") {
           isProduct = 1;
           isGroup = 0;
           isSeckill = 0;
         }
-        if (orderType == "is_group") {
+        if (orderType === "is_group") {
           isProduct = 0;
           isGroup = 1;
           isSeckill = 0;
         }
-        if (orderType == "is_seckill") {
+        if (orderType === "is_seckill") {
           isProduct = 0;
           isGroup = 0;
           isSeckill = 1;
@@ -170,7 +168,7 @@ $(document).ready(function() {
         var inviteCode = $(".invite-code").val();
         var products = [];
         for (var i in productList) {
-          if (productList[i].buyMark == true) {
+          if (productList[i].buyMark === true) {
             var id = productList[i].id;
             var num = parseInt(productList[i].num);
             var produckMark = productList[i].productMark;
@@ -181,99 +179,33 @@ $(document).ready(function() {
           }
         }
         $(this).attr("disabled","disabled");
-        var data =null;
-        if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode == "")){
-            data = {
-              ship_address_id: addressId,
-              ship_method: 'express',
-              payment_method: 'weixinpayment',
-              products: products,
-              is_product: isProduct,
-              is_group: isGroup,
-              is_seckill: isSeckill
-            };
-        } else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode == "")){
-            data = {
-              ship_address_id: addressId,
-              ship_method: 'express',
-              payment_method: 'weixinpayment',
-              products: products,
-              share_link_code: shareLinkCode,
-              is_product: isProduct,
-              is_group: isGroup,
-              is_seckill: isSeckill
-            };
-        } else if((invoiceId == 0) && (shareLinkCode == null) && (inviteCode != "")){
-          data = {
-            ship_address_id: addressId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products,
-            invite_code: inviteCode,
-            is_product: isProduct,
-            is_group: isGroup,
-            is_seckill: isSeckill
-          };
-        } else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode == "")){
-            data = {
-              ship_address_id: addressId,
-              invoice_id: invoiceId,
-              ship_method: 'express',
-              payment_method: 'weixinpayment',
-              products: products,
-              is_product: isProduct,
-              is_group: isGroup,
-              is_seckill: isSeckill
-            };
-        } else if((invoiceId != 0) && (shareLinkCode != null) && (inviteCode == "")){
-          data = {
-            ship_address_id: addressId,
-            invoice_id: invoiceId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products,
-            share_link_code: shareLinkCode,
-            is_product: isProduct,
-            is_group: isGroup,
-            is_seckill: isSeckill
-          };
-        } else if((invoiceId != 0) && (shareLinkCode == null) && (inviteCode != "")){
-          data = {
-            ship_address_id: addressId,
-            invoice_id: invoiceId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products,
-            invite_code: inviteCode,
-            is_product: isProduct,
-            is_group: isGroup,
-            is_seckill: isSeckill
-          };
-        } else if((invoiceId == 0) && (shareLinkCode != null) && (inviteCode != "")){
-          data = {
-            invoice_id: invoiceId,
-            ship_method: 'express',
-            payment_method: 'weixinpayment',
-            products: products,
-            share_link_code: shareLinkCode,
-            invite_code: inviteCode,
-            is_product: isProduct,
-            is_group: isGroup,
-            is_seckill: isSeckill
-          };
+        var data = {
+          ship_address_id: addressId,
+          ship_method: 'express',
+          payment_method: 'weixinpayment',
+          products: products,
+          is_product: isProduct,
+          is_group: isGroup,
+          is_seckill: isSeckill
+        };
+        if((invoiceId === 0) && (shareLinkCode === null) && (inviteCode === "")){
+          //
+        } else if((invoiceId === 0) && (shareLinkCode !== null) && (inviteCode === "")) {
+          data.share_link_code = shareLinkCode;
+        } else if((invoiceId === 0) && (shareLinkCode === null) && (inviteCode !== "")){
+          data.invite_code = inviteCode;
+        } else if((invoiceId !== 0) && (shareLinkCode === null) && (inviteCode === "")){
+          //
+        } else if((invoiceId !== 0) && (shareLinkCode !== null) && (inviteCode === "")){
+          data.share_link_code = shareLinkCode;
+        } else if((invoiceId !== 0) && (shareLinkCode === null) && (inviteCode !== "")){
+          data.invite_code = inviteCode;
+        } else if((invoiceId === 0) && (shareLinkCode !== null) && (inviteCode !== "")){
+          data.share_link_code = shareLinkCode;
+          data.invite_code = inviteCode;
         } else {
-            data = {
-              ship_address_id: addressId,
-              invoice_id: invoiceId,
-              ship_method: 'express',
-              payment_method: 'weixinpayment',
-              products: products,
-              share_link_code: shareLinkCode,
-              invite_code: inviteCode,
-              is_product: isProduct,
-              is_group: isGroup,
-              is_seckill: isSeckill
-            };
+          data.share_link_code = shareLinkCode;
+          data.invite_code = inviteCode;
         }
         $.ajax({
           type: "POST",
