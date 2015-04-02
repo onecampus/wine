@@ -116,7 +116,6 @@ Integral.create(user_id: customer2.id, amount: 0)
 Vritualcard.create(user_id: customer2.id, money: '0.00')
 Score.create(user_id: customer2.id, mark: 0, remain_mark: 0)
 
-
 customer3 = User.new(
   username: 'customer3',
   email: 'customer3@gmail.com',
@@ -493,6 +492,7 @@ names3.each do |sn|
 end
 =end
 
+# 用户首页图片设置
 1.upto(3).each do |i|
   SiteConfig.create(
     key: "CustomerIndexImgConfigKey#{i}",
@@ -502,20 +502,21 @@ end
   )
 end
 
+# 第一级提成者百分比
 SiteConfig.create!(
   key: 'current_order_commission_a',
   val: '0.1',
   img: 'current_order_commission_a',
   config_type: 'commission_config'
 )
-
+# 第二级提成者百分比
 SiteConfig.create!(
   key: 'current_order_commission_b',
   val: '0.05',
   img: 'current_order_commission_b',
   config_type: 'commission_config'
 )
-
+# 第仨级提成者百分比
 SiteConfig.create!(
   key: 'current_order_commission_c',
   val: '0.01',
@@ -523,11 +524,28 @@ SiteConfig.create!(
   config_type: 'commission_config'
 )
 
+# 用户提成分数计算，销售额x0.8=分数
 SiteConfig.create!(
   key: 'product_score_percent',
   val: '0.8',
   img: 'product_score_percent',
   config_type: 'commission_config'
+)
+
+# 用户积分计算，任何人购买任意产品提成分数满100分可获得10积分
+SiteConfig.create!(
+  key: 'integral_score_percent',
+  val: '10',
+  img: 'integral_score_percent',
+  config_type: 'integral_config'
+)
+
+# 用户积分和金钱对换计算，任何人的积分满100分可兑换10元钱用于支付
+SiteConfig.create!(
+  key: 'integral_to_money_percent',
+  val: '10',
+  img: 'integral_to_money_percent',
+  config_type: 'integral_config'
 )
 
 

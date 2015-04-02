@@ -30,15 +30,6 @@
       <%= f.number_field :price, in: 0.01..20000000.01, step: 0.01, placeholder: "请输入一数字，小数位数不超过两位", required: "true", :class => "form-control" %>
     </div>
   </div>
-    <div class="form-group">
-      <%= f.label :integral, :class => "col-sm-2 control-label" do %>
-          <%= t 'activerecord.attributes.product.integral' %>
-          <span class="symbol required"></span>
-      <% end %>
-      <div class="col-sm-9">
-        <%= f.number_field :integral, in: 0..20000000, step: 1, placeholder: "请输入一数字", required: "true", :class => "form-control" %>
-      </div>
-    </div>
   <div class="form-group">
     <%= f.label :fright, :class => "col-sm-2 control-label" do %>
     <%= t 'activerecord.attributes.product.fright' %>

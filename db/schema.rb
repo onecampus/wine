@@ -234,7 +234,6 @@ ActiveRecord::Schema.define(version: 20150315084514) do
     t.datetime "updated_at"
     t.string   "fright"
     t.integer  "is_commission"
-    t.integer  "integral"
   end
 
   create_table "profiles", force: true do |t|
