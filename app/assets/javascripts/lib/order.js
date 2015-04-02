@@ -18,22 +18,22 @@ $(document).ready(function() {
       postcode = $("[name='postcode']").val(),
       tel = $("[name='tel']").val(),
       mobile = $("[name='mobile']").val();
-    if (receive_name == "") {
+    if (receive_name === "") {
       $(".address-mesg").children().text("用户名不能为空");
       $(".address-mesg").show();
       return;
     }
-    if (address == "") {
+    if (address === "") {
       $(".address-mesg").children().text("地址不能为空");
       $(".address-mesg").show();
       return;
     }
-    if (postcode == "") {
+    if (postcode === "") {
       $(".address-mesg").children().text("邮政编码不能为空");
       $(".address-mesg").show();
       return;
     }
-    if (tel == "") {
+    if (tel === "") {
       $(".address-mesg").children().text("手机不能为空");
       $(".address-mesg").show();
       return;
@@ -68,7 +68,7 @@ $(document).ready(function() {
         $(".btn-add-address").attr("disabled",false);
       },
       error: function() {
-        // code
+        alert("收货地址添加失败");
       }
     });
   });
@@ -77,12 +77,12 @@ $(document).ready(function() {
   $(".confirm-invoice").click(function() {
     var rise = $(".rise").val();
     var content = $(".content").val();
-    if (rise == "") {
+    if (rise === "") {
       $(".invoice-mesg").text("发票抬头不能为空");
       $(".invoice-mesg").show();
       return;
     }
-    if (content == "") {
+    if (content === "") {
       $(".invoice-mesg").text("发票内容不能为空");
       $(".invoice-mesg").show();
       return;
@@ -110,7 +110,7 @@ $(document).ready(function() {
         $(".confirm-invoice").attr("disabled",false);
       },
       error: function() {
-        alert("errors")
+        alert("发票添加失败");
       }
     });
   });
@@ -231,9 +231,6 @@ $(document).ready(function() {
               orderSuccessHan(orderNumber);
             }
           },
-          complete: function(XMLHttpRequest, textStatus) {
-            // orderErrorHan(XMLHttpRequest, textStatus);
-          },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             orderErrorHan(XMLHttpRequest, textStatus);
           }
@@ -252,12 +249,12 @@ function deleteProduct(id) {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
     var orderType = JsonStr.order_type;
-    if(orderType === "is_product") {
-      orderType = "product";
-    } else if (orderType === "is_group") {
-      orderType = "group";
+    if(orderType === 'is_product') {
+      orderType = 'product';
+    } else if (orderType === 'is_group') {
+      orderType = 'group';
     } else {
-      orderType = "seckill";
+      orderType = 'seckill';
     }
     var list = [];
     for (var i in productList) {
@@ -329,14 +326,13 @@ function showShoppingCartItem() {
     var productList = JsonStr.productList;
     for (i in productList) {
       if(productList[i].productType == "product") {
-        length = length +1;
+        length += 1;
       }
     }
     if (length > 0) {
       $(".shopping-cart-mark").show();
       $(".shopping-cart-mark").text(length);
-    }
-    else {
+    } else {
       $(".shopping-cart-mark").hide();
     }
   }
