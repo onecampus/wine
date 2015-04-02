@@ -9,15 +9,16 @@ $(document).ready(function() {
 
   // 添加收货地址
   $(".btn-add-address").click(function() {
-    var uid = $("[name='uid']").val();
-    receive_name = $(".receive_name").val(),
-      province = $("#s1 option:selected").text(),
-      city = $("#s2 option:selected").text(),
-      region = $("#s3 option:selected").text(),
-      address = $("[name='address']").val(),
-      postcode = $("[name='postcode']").val(),
-      tel = $("[name='tel']").val(),
-      mobile = $("[name='mobile']").val();
+    var uid = $("[name='uid']").val(),
+        receive_name = $(".receive_name").val(),
+        province = $("#s1 option:selected").text(),
+        city = $("#s2 option:selected").text(),
+        region = $("#s3 option:selected").text(),
+        address = $("[name='address']").val(),
+        postcode = $("[name='postcode']").val(),
+        tel = $("[name='tel']").val(),
+        mobile = $("[name='mobile']").val();
+
     if (receive_name === "") {
       $(".address-mesg").children().text("用户名不能为空");
       $(".address-mesg").show();
