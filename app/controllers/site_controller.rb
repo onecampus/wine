@@ -232,10 +232,11 @@ class SiteController < CustomerController
     @user = current_user
   end
 
-  # 订单处理
+  # 订单处理页面
   def order_settlement
     @shipaddresses = current_user.shipaddresses
     @invoices = current_user.invoices
+    @current_integral = current_user.integral
   end
 
   # ajax添加发票

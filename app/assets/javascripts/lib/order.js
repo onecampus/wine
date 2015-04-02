@@ -347,3 +347,19 @@ function cleanShareLinkCode(){
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
   }
 }
+
+// blockUI
+function blockUIAlert() {
+  $.blockUI({
+    message: $('#order-message'),
+    css: {
+      border: 'none',
+      padding: '15px',
+      backgroundColor: '#000',
+      '-webkit-border-radius': '10px',
+      '-moz-border-radius': '10px',
+      opacity: 0.5,
+      color: '#fff'
+    }
+  });
+}
