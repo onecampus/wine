@@ -273,6 +273,8 @@ class SiteController < CustomerController
     freight = 0.00  # 运费
     package_charge = 0.00  # 包装费
 
+    payment_method = params[:payment_method]
+
     # order_status: {1: 未处理, 2: 已确定, 3: 已完成, 4: 已取消}
     # pay_status: {1: 未付款, 2: 已付款}
     # logistics_status: {0: 订单还未处理, 1: 备货中, 2: 已发货, 3: 已收货, 4: 已退货}
@@ -280,7 +282,7 @@ class SiteController < CustomerController
       user_id: current_user.id,
       ship_address: ship_address,
       ship_method: params[:ship_method],
-      payment_method: params[:payment_method],
+      payment_method: payment_method,
       invoice_id: invoice_id,
       total_price: total_price,
       buy_date: Time.now,
@@ -326,6 +328,9 @@ class SiteController < CustomerController
 
           total_price = total_price.round(2)
 
+          # 计算积分兑换金钱
+          total_price = integral_to_money(payment_method, total_price, current_user)
+
           p_o_list.each(&:save!)
           order.total_price = total_price
           order.freight = freight
@@ -370,6 +375,9 @@ class SiteController < CustomerController
 
           total_price = total_price.round(2)
 
+          # 计算积分兑换金钱
+          total_price = integral_to_money(payment_method, total_price, current_user)
+
           p_o_list.each(&:save!)
           order.total_price = total_price
           order.freight = freight
@@ -413,6 +421,9 @@ class SiteController < CustomerController
           end
 
           total_price = total_price.round(2)
+
+          # 计算积分兑换金钱
+          total_price = integral_to_money(payment_method, total_price, current_user)
 
           p_o_list.each(&:save!)
           order.total_price = total_price
@@ -717,6 +728,29 @@ class SiteController < CustomerController
       end
     end
     result
+  end
+
+  # 计算积分兑换金钱
+  def integral_to_money(payment_method, total_price, current_user)
+    if payment_method == 'integralpayment'
+      integral = current_user.integral unless current_user.blank?
+      integral_to_money = SiteConfig.where(key: integral_to_money_percent).first
+      integral_to_money_percent = integral_to_money.val.to_i.round(2)/100
+
+      amount = integral.amount.to_i unless integral.blank?
+
+      if amount >= 100
+        # 对分数进行求余
+        remainder = amount % 100
+        cal_amount = amount - remainder
+        # 减去用户积分
+        integral.amount = remainder
+        integral.save!
+        # 兑换后减去总价
+        total_price -= cal_amount * integral_to_money_percent
+      end
+      total_price.round(2)
+    end
   end
 
   # 处理订单中含有邀请码和分享链接的函数

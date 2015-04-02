@@ -183,7 +183,7 @@ $(document).ready(function() {
         var data = {
           ship_address_id: addressId,
           ship_method: 'express',
-          payment_method: 'weixinpayment',
+          payment_method: $('#payment-method').val(),
           products: products,
           is_product: isProduct,
           is_group: isGroup,
