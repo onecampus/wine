@@ -734,7 +734,7 @@ class SiteController < CustomerController
   def integral_to_money(payment_method, total_price, current_user)
     if payment_method == 'integralpayment'
       integral = current_user.integral unless current_user.blank?
-      integral_to_money = SiteConfig.where(key: integral_to_money_percent).first
+      integral_to_money = SiteConfig.where(key: 'integral_to_money_percent').first
       integral_to_money_percent = integral_to_money.val.to_i.round(2)/100
 
       amount = integral.amount.to_i unless integral.blank?
