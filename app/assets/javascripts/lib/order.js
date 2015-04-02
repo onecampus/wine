@@ -126,13 +126,13 @@ $(document).ready(function() {
       $.blockUI({
         message: $('#order-message'),
         css: {
-        border: 'none',
-        padding: '15px',
-        backgroundColor: '#000',
-        '-webkit-border-radius': '10px',
-        '-moz-border-radius': '10px',
-        opacity: .5,
-        color: '#fff'
+          border: 'none',
+          padding: '15px',
+          backgroundColor: '#000',
+          '-webkit-border-radius': '10px',
+          '-moz-border-radius': '10px',
+          opacity: 0.5,
+          color: '#fff'
         }
       });
       setTimeout($.unblockUI, 1500);
@@ -213,7 +213,6 @@ $(document).ready(function() {
           data: data,
           dataType: "json",
           success: function(data) {
-            // code
             if(data.status === 'fail') {
               orderError();
               return false;
@@ -244,8 +243,7 @@ function deleteProduct(id) {
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
     return;
-  }
-  else {
+  } else {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var productList = JsonStr.productList;
     var orderType = JsonStr.order_type;
@@ -278,7 +276,7 @@ function orderSuccessHan(orderNumber) {
 }
 
 function orderErrorHan(XMLHttpRequest, textStatus) {
-  if(XMLHttpRequest.status == 422 && textStatus == 'error') {
+  if(XMLHttpRequest.status === 422 && textStatus === 'error') {
     $("#order-message p").text("订单创建失败, 您是供应商, 不能自己创建订单");
     $.blockUI({
       message: $('#order-message'),
@@ -288,7 +286,7 @@ function orderErrorHan(XMLHttpRequest, textStatus) {
         backgroundColor: '#000',
         '-webkit-border-radius': '10px',
         '-moz-border-radius': '10px',
-        opacity: .5,
+        opacity: 0.5,
         color: '#fff'
       }
     });
@@ -307,7 +305,7 @@ function orderError(){
       backgroundColor: '#000',
       '-webkit-border-radius': '10px',
       '-moz-border-radius': '10px',
-      opacity: .5,
+      opacity: 0.5,
       color: '#fff'
     }
   });
@@ -319,8 +317,7 @@ function showShoppingCartItem() {
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
     $(".shopping-cart-mark").hide();
-  }
-  else {
+  } else {
     var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     var length = 0;
     var productList = JsonStr.productList;
@@ -343,9 +340,8 @@ function cleanShareLinkCode(){
   var shoppingCart = $.localStorage.get("shoppingCart");
   if (shoppingCart === null || shoppingCart === "") {
     return;
-  }
-  else {
-    var JsonStr = JSON.parse(shoppingCart.substr(1,shoppingCart.length));
+  } else {
+    var JsonStr = JSON.parse(shoppingCart.substr(1, shoppingCart.length));
     JsonStr.shareLinkCode = null;
     $.localStorage.set("shoppingCart", "'" + JSON.stringify(JsonStr));
   }
