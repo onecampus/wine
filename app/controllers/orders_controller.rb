@@ -126,7 +126,7 @@ class OrdersController < ApplicationController
         commissioner = nil  # 第一级提成者
         total_price = @order.total_price  # 总价
 
-        # 购买积分计算百分比
+        # 用户提成分数计算，销售额x0.8=分数
         product_score_percent = SiteConfig.where(key: 'product_score_percent', config_type: 'commission_config').first.val
 
         total_price = total_price.to_f  # 提成金额
@@ -146,10 +146,10 @@ class OrdersController < ApplicationController
         end
 
         score = buyer.score
-        commission_price = total_price * product_score_percent.to_f  # 提成金额
+        commission_price = total_price * product_score_percent.to_f  # 提成分数
         commission_mark = commission_price.to_i
-        score.mark = score.mark.to_i + commission_mark  # 总分
-        score.remain_mark += commission_mark  # 保留分数
+        score.mark = score.mark.to_i + commission_mark  # 总提成分
+        score.remain_mark += commission_mark  # 剩余提成分数
         score.save!
 
         remain_mark_old = score.remain_mark
@@ -160,8 +160,10 @@ class OrdersController < ApplicationController
           commission_score = remain_mark_old - remain_mark
 
           # 用戶積分結算
+          integral_score_scale = SiteConfig.where(key: 'integral_score_percent').first.val
+          integral_score_percent = integral_score_scale.to_i.round(2)/100
           integral = buyer.integral
-          integral.amount = integral.amount.to_i + commission_score
+          integral.amount = integral.amount.to_i + (commission_score * integral_score_percent).to_i
           integral.save!
 
           score.remain_mark = remain_mark
