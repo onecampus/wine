@@ -9,6 +9,8 @@ module ApplicationHelper
       when 2
         '已确定'
       when 3
+        '已完成'
+      when 4
         '已取消'
       else
         '未知错误'
