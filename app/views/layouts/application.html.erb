@@ -306,12 +306,17 @@
                 <a href="/admin/profiles/new?action=new&role=provider">
                   <span class="title">添加区域商</span>
                 </a>
-              </li>
+	      </li>
+              <% end %>
+	      <% if current_user.has_role?(:admin) && !Role.find_by_name('provider').blank? %>
               <li>
                 <a href="/admin/profiles?action=index&role=provider&type=all">
                   <span class="title"><span class="badge pull-right"><%= Role.find_by_name('provider').users.count %></span>区域商管理</span>
                 </a>
-              </li>
+	      </li>
+
+              <% end %>
+	      <% if current_user.has_role?(:admin) %>
               <li>
                 <a href="/admin/profiles?action=index&role=customer&type=all">
                   <span class="title"><span class="badge pull-right"><%= User.all.count %></span>所有客户管理</span>
