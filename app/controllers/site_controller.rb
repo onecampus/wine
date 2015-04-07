@@ -750,6 +750,8 @@ class SiteController < CustomerController
         total_price -= cal_amount * integral_to_money_percent
       end
       total_price.round(2)
+    else
+      total_price.round(2)
     end
   end
 

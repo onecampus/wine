@@ -38,7 +38,7 @@ Profile.create(
 Integral.create(user_id: u.id, amount: 0)
 Vritualcard.create(user_id: u.id, money: '0.00')
 
-
+=begin
 provider = User.new(
   username: 'provider',
   email: 'provider@gmail.com',
@@ -142,6 +142,7 @@ customer2.profile.reload
 Integral.create(user_id: customer3.id, amount: 0)
 Vritualcard.create(user_id: customer3.id, money: '0.00')
 Score.create(user_id: customer3.id, mark: 0, remain_mark: 0)
+=end
 
 =begin
 1.upto(50).each do |i|
