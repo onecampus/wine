@@ -22,7 +22,7 @@ class PayController < CustomerController
 
     # 查找订单
     order_native = Order.where(order_number: order_number).first
-    price = (order_native.total_price * 100).to_i
+    price = (order_native.total_price.to_f * 100).to_i
 
     # 保存用户openid
     order_native.weixin_open_id = openid
@@ -38,12 +38,17 @@ class PayController < CustomerController
       trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
       openid: openid  # required when trade_type is `JSAPI`
     }
+
+    Rails.logger.info "-----------params_pre_pay is  #{params_pre_pay}----------"
+
     r_hash = WxPay::Service.invoke_unifiedorder params_pre_pay
+
+    Rails.logger.info "===========r_hash is  #{r_hash}========="
 
     if r_hash[:r].success?
       @js_noncestr = SecureRandom.uuid.tr('-', '')
       @js_timestamp = Time.now.getutc.to_i.to_s
-      @app_id = app_id
+      @app_id = ENV['APP_ID']
       @package = "prepay_id=#{r_hash[:r]['prepay_id']}"
 
       params_pre_pay_js = {
