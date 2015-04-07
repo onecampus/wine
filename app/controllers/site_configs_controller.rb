@@ -57,6 +57,27 @@ class SiteConfigsController < ApplicationController
     redirect_to action: :commissions_config_index
   end
 
+  def integral_config_index
+    # 用户积分计算
+    @integral_score_percent = SiteConfig.where(key: 'integral_score_percent', config_type: 'integral_config').first
+    # 用户积分和金钱对换计算
+    @integral_to_money_percent = SiteConfig.where(key: 'integral_to_money_percent', config_type: 'integral_config').first
+  end
+
+  def integral_config
+    # 用户积分计算
+    @integral_score_percent = SiteConfig.where(key: 'integral_score_percent', config_type: 'integral_config').first
+    # 用户积分和金钱对换计算
+    @integral_to_money_percent = SiteConfig.where(key: 'integral_to_money_percent', config_type: 'integral_config').first
+
+    @integral_score_percent.val = params[:integral_score_percent]
+    @integral_to_money_percent.val = params[:integral_to_money_percent]
+    @integral_score_percent.save!
+    @integral_to_money_percent.save!
+    flash.notice = '积分设置成功'
+    redirect_to action: :integral_config_index
+  end
+
   def index
     @site_configs = SiteConfig.all.paginate(page: params[:page], per_page: 10).order('id DESC')
     respond_with(@site_configs)

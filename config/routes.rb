@@ -82,6 +82,9 @@ Rails.application.routes.draw do
     get 'site_configs/commissions/config' => 'site_configs#commissions_config_index'
     match 'site_configs/commissions/config', to: 'site_configs#commissions_config', via: :post
 
+    get 'site_configs/integrals/config' => 'site_configs#integral_config_index'
+    match 'site_configs/integrals/config', to: 'site_configs#integral_config', via: :post
+
     resources :seckill_orders
     resources :seckills
 
