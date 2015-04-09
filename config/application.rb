@@ -12,7 +12,7 @@ module Wine
       ENV['APP_ID'] = 'wxa2bbd3b7a22039df'
       ENV['APP_SECRET'] = '724bbaea1bce4c09865c2c47acbf450d'
       ENV['APP_JS_URL'] = 'shop.fszljy.com'
-      ENV['NOTIFY_URL'] = 'http://shop.fszljy.com/wechatpay/notify'
+      ENV['NOTIFY_URL'] = 'http://shop.fszljy.com/testpay/notify'
     end
 
     config.generators do |g|
