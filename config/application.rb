@@ -11,7 +11,7 @@ module Wine
     config.before_initialize do
       ENV['APP_ID'] = 'wxa2bbd3b7a22039df'
       ENV['APP_SECRET'] = '724bbaea1bce4c09865c2c47acbf450d'
-      ENV['APP_JS_URL'] = 'zhonglian.thecampus.cc'
+      ENV['APP_JS_URL'] = 'shop.fszljy.com'
     end
 
     config.generators do |g|
