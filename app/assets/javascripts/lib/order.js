@@ -273,7 +273,7 @@ function deleteProduct(id) {
 // 添加判断，是否跳转到支付
 function orderSuccessHan(orderNumber) {
   alert("您的商品购买成功！");
-  location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://zhonglian.thecampus.cc/testpay/js_api_call_pay&response_type=code&scope=snsapi_base&state=" + orderNumber + "#wechat_redirect";
+  location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2bbd3b7a22039df&redirect_uri=http://shop.fszljy.com/testpay/js_api_call_pay&response_type=code&scope=snsapi_base&state=" + orderNumber + "#wechat_redirect";
 }
 
 function orderErrorHan(XMLHttpRequest, textStatus) {
