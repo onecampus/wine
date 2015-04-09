@@ -34,7 +34,7 @@ class PayController < CustomerController
       out_trade_no: order_number,  # 商户订单号
       total_fee: price,  # 总金额, 单位为分
       spbill_create_ip: ip,  # 终端IP
-      notify_url: 'http://zhonglian.thecampus.cc/testpay/notify',
+      notify_url: ENV['NOTIFY_URL'],
       trade_type: 'JSAPI',  # could be "JSAPI" or "NATIVE",
       openid: openid  # required when trade_type is `JSAPI`
     }
